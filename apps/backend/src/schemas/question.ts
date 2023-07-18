@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+export const getQuestion = z.object({
+  params: z.object({
+    questionId: z.string().nonempty(),
+  }),
+});
+export type GetQuestion = z.infer<typeof getQuestion>;
+
 export const createQuestion = z.object({
   body: z.object({
     question: z.string().min(3),

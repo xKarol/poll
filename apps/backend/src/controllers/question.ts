@@ -1,7 +1,30 @@
 import type { NextFunction, Request, Response } from "express";
 
-import { createQuestion, deleteQuestion } from "../services/question";
-import type { CreateQuestionData, DeleteQuestionData } from "../types/question";
+import {
+  createQuestion,
+  deleteQuestion,
+  getQuestion,
+} from "../services/question";
+import type {
+  CreateQuestionData,
+  DeleteQuestionData,
+  GetQuestionData,
+} from "../types/question";
+
+export const GetOne = async (
+  req: Request<GetQuestionData>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { questionId } = req.params;
+    const data = await getQuestion(questionId);
+
+    return res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const Create = async (
   req: Request<unknown, unknown, CreateQuestionData>,

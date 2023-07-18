@@ -6,3 +6,7 @@ export type CreateQuestionData = {
 export type DeleteQuestionData = {
   questionId: string;
 };
+
+export type GetQuestionData = {
+  questionId: string;
+};
