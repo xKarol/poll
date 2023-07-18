@@ -7,7 +7,7 @@ import * as QuestionSchema from "../schemas/question";
 const router = express.Router();
 
 router.post(
-  "/photos",
+  "/question",
   validateSchema(QuestionSchema.create),
   QuestionController.create
 );

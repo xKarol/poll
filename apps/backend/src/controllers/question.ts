@@ -1,10 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 
-import type * as Schema from "../schemas/question";
 import { createQuestion } from "../services/question";
+import type { CreateQuestionData } from "../types/question";
 
 export const create = async (
-  req: Request<unknown, unknown, Schema.Create["body"]>,
+  req: Request<unknown, unknown, CreateQuestionData>,
   res: Response,
   next: NextFunction
 ) => {
