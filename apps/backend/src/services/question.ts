@@ -18,3 +18,14 @@ export const createQuestion = async (data: CreateQuestionData) => {
     throw createError(400, "Could not create question.");
   }
 };
+
+export const deleteQuestion = async (questionId: string) => {
+  try {
+    const response = await prisma.question.delete({
+      where: { id: questionId },
+    });
+    return response;
+  } catch {
+    throw createError(400, "Could not delete question.");
+  }
+};

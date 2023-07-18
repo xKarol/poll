@@ -8,8 +8,14 @@ const router = express.Router();
 
 router.post(
   "/question",
-  validateSchema(QuestionSchema.create),
-  QuestionController.create
+  validateSchema(QuestionSchema.createQuestion),
+  QuestionController.Create
+);
+
+router.post(
+  "/question/:questionId",
+  validateSchema(QuestionSchema.deleteQuestion),
+  QuestionController.Delete
 );
 
 export default router;
