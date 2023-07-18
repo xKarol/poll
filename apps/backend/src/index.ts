@@ -5,6 +5,7 @@ import routes from "./routes";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import { errorHandler } from "./middlewares/error-handler";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(routes);
+app.use(errorHandler);
 
 const PORT = process.env["PORT"] || 4000;
 

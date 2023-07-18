@@ -7,7 +7,8 @@ import pollRoutes from "./poll";
 const router = express.Router();
 
 router.use(healthCheckRoute);
-router.use(notFoundRoutes);
 router.use(pollRoutes);
+// must be the last
+router.use(notFoundRoutes);
 
 export default router;

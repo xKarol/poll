@@ -21,7 +21,7 @@ export const createPoll = async (data: CreatePollData) => {
   try {
     const response = await prisma.poll.create({
       data: {
-        poll: data.poll,
+        question: data.poll,
         answers: {
           createMany: { data: data.answers },
         },
