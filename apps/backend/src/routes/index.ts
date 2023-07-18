@@ -2,12 +2,12 @@ import express from "express";
 
 import notFoundRoutes from "./404";
 import healthCheckRoute from "./health-check";
-import questionRoutes from "./question";
+import pollRoutes from "./poll";
 
 const router = express.Router();
 
 router.use(healthCheckRoute);
 router.use(notFoundRoutes);
-router.use(questionRoutes);
+router.use(pollRoutes);
 
 export default router;

@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Question {
+model Poll {
   id        String   @id @unique @default(cuid())
   question  String
   answers   Answer[]
@@ -16,11 +16,11 @@ model Question {
 }
 
 model Answer {
-  id         String    @id @unique @default(cuid())
-  text       String
-  votes      BigInt    @default(0)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String?
+  id        String   @id @unique @default(cuid())
+  text      String
+  votes     BigInt   @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId    String?
 }
