@@ -7,19 +7,19 @@ import * as QuestionSchema from "../schemas/question";
 const router = express.Router();
 
 router.get(
-  "/question/:questionId",
+  "/poll/:questionId",
   validateSchema(QuestionSchema.getQuestion),
   QuestionController.GetOne
 );
 
 router.post(
-  "/question",
+  "/poll",
   validateSchema(QuestionSchema.createQuestion),
   QuestionController.Create
 );
 
 router.delete(
-  "/question/:questionId",
+  "/poll/:questionId",
   validateSchema(QuestionSchema.deleteQuestion),
   QuestionController.Delete
 );

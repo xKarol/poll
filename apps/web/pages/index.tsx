@@ -1,5 +1,6 @@
 import { Button, Header } from "ui";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useCreatePoll } from "../hooks/use-create-poll";
 
 type FormValues = {
   question: string;
@@ -12,9 +13,12 @@ export default function Page() {
     control,
     name: "answers",
   });
+  const { mutate } = useCreatePoll();
 
+  // TODO fix data undefined type
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    mutate(data);
   });
 
   return (
