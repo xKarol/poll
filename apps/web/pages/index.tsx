@@ -13,12 +13,13 @@ export default function Page() {
     control,
     name: "answers",
   });
-  const { mutate } = useCreatePoll();
+  const { mutateAsync } = useCreatePoll();
 
   // TODO fix data undefined type
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
-    mutate(data);
+    const response = await mutateAsync(data);
+    console.log(response);
   });
 
   return (
