@@ -1,7 +1,6 @@
+import type * as PollSchema from "../schemas/poll";
 import createError from "http-errors";
-
-import { prisma } from "../lib/prisma";
-import type { CreatePollData } from "../types/poll";
+import prisma from "prisma";
 
 export const getPoll = async (pollId: string) => {
   try {
@@ -17,11 +16,11 @@ export const getPoll = async (pollId: string) => {
   }
 };
 
-export const createPoll = async (data: CreatePollData) => {
+export const createPoll = async (data: PollSchema.CreatePoll["body"]) => {
   try {
     const response = await prisma.poll.create({
       data: {
-        question: data.poll,
+        question: data.question,
         answers: {
           createMany: { data: data.answers },
         },

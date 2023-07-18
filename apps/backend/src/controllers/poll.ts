@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-
+import type * as PollSchema from "../schemas/poll";
 import { createPoll, deletePoll, getPoll } from "../services/poll";
 import type {
   CreatePollData,
@@ -8,7 +8,7 @@ import type {
 } from "../types/poll";
 
 export const GetOne = async (
-  req: Request<GetPollData>,
+  req: Request<PollSchema.GetPoll["params"]>,
   res: Response,
   next: NextFunction
 ) => {
@@ -23,7 +23,7 @@ export const GetOne = async (
 };
 
 export const Create = async (
-  req: Request<unknown, unknown, CreatePollData>,
+  req: Request<unknown, unknown, PollSchema.CreatePoll["body"]>,
   res: Response,
   next: NextFunction
 ) => {
@@ -38,7 +38,7 @@ export const Create = async (
 };
 
 export const Delete = async (
-  req: Request<DeletePollData>,
+  req: Request<PollSchema.DeletePoll["params"]>,
   res: Response,
   next: NextFunction
 ) => {

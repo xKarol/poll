@@ -9,7 +9,8 @@ export type GetPoll = z.infer<typeof getPoll>;
 
 export const createPoll = z.object({
   body: z.object({
-    poll: z.string().min(3),
+    question: z.string().min(3),
+    answers: z.array(z.object({ text: z.string().nonempty() })),
   }),
 });
 export type CreatePoll = z.infer<typeof createPoll>;
