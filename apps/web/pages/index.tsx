@@ -26,7 +26,7 @@ export default function Page() {
     <>
       <Header text="Web" />
       <Button />
-      <form className="flex flex-col space-y-2" onClick={onSubmit}>
+      <form className="flex flex-col space-y-2" onSubmit={onSubmit}>
         <input
           className="text-2xl"
           type="text"
