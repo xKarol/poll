@@ -10,7 +10,15 @@ export type GetPoll = z.infer<typeof getPoll>;
 export const createPoll = z.object({
   body: z.object({
     question: z.string().min(3),
-    answers: z.array(z.object({ text: z.string().nonempty() })),
+    answers: z
+      .array(
+        z.object({
+          text: z
+            .string({ required_error: "Answer should not be empty" })
+            .nonempty(),
+        })
+      )
+      .min(2),
   }),
 });
 export type CreatePoll = z.infer<typeof createPoll>;

@@ -1,6 +1,7 @@
-import { Button, Header } from "ui";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useCreatePoll } from "../hooks/use-create-poll";
+import { Alert } from "@mui/material";
+import { getErrorMessage } from "../utils/error";
 
 type FormValues = {
   question: string;
@@ -8,7 +9,13 @@ type FormValues = {
 };
 
 export default function Page() {
-  const { handleSubmit, control, register } = useForm<FormValues>();
+  const {
+    handleSubmit,
+    control,
+    register,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>();
   const { fields, append } = useFieldArray({
     control,
     name: "answers",
@@ -17,16 +24,21 @@ export default function Page() {
 
   // TODO fix data undefined type
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    const response = await mutateAsync(data);
-    console.log(response);
+    try {
+      console.log(data);
+      const response = await mutateAsync(data);
+      console.log(response);
+    } catch (error) {
+      setError("root", { message: getErrorMessage(error) });
+    }
   });
 
   return (
     <>
-      <Header text="Web" />
-      <Button />
       <form className="flex flex-col space-y-2" onSubmit={onSubmit}>
+        {errors.root?.message ? (
+          <Alert severity="error">{errors.root.message}</Alert>
+        ) : null}
         <input
           className="text-2xl"
           type="text"
