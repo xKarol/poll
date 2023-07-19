@@ -1,8 +1,8 @@
-import type * as PollSchema from "../schemas/poll";
 import createError from "http-errors";
 import prisma from "prisma";
+import type { Poll } from "types";
 
-export const getPoll = async (pollId: string) => {
+export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
   try {
     const response = await prisma.poll.findUniqueOrThrow({
       where: {
@@ -16,7 +16,7 @@ export const getPoll = async (pollId: string) => {
   }
 };
 
-export const createPoll = async (data: PollSchema.CreatePoll["body"]) => {
+export const createPoll: Poll.Services["createPoll"] = async (data) => {
   try {
     const response = await prisma.poll.create({
       data: {
@@ -32,12 +32,11 @@ export const createPoll = async (data: PollSchema.CreatePoll["body"]) => {
   }
 };
 
-export const deletePoll = async (pollId: string) => {
+export const deletePoll: Poll.Services["deletePoll"] = async (pollId) => {
   try {
-    const response = await prisma.poll.delete({
+    await prisma.poll.delete({
       where: { id: pollId },
     });
-    return response;
   } catch {
     throw createError(400, "Could not delete poll.");
   }

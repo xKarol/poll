@@ -1,13 +1,14 @@
 import { z } from "zod";
+import type { Poll } from "types";
 
-export const getPoll = z.object({
+export const getPoll: z.Schema<{ params: Poll.GetPollData }> = z.object({
   params: z.object({
     pollId: z.string().nonempty(),
   }),
 });
 export type GetPoll = z.infer<typeof getPoll>;
 
-export const createPoll = z.object({
+export const createPoll: z.Schema<{ body: Poll.CreatePollData }> = z.object({
   body: z.object({
     question: z.string().min(3),
     answers: z
@@ -23,7 +24,7 @@ export const createPoll = z.object({
 });
 export type CreatePoll = z.infer<typeof createPoll>;
 
-export const deletePoll = z.object({
+export const deletePoll: z.Schema<{ params: Poll.DeletePollData }> = z.object({
   params: z.object({
     pollId: z.string().nonempty(),
   }),

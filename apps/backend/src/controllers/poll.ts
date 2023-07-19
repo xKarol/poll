@@ -1,14 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
-import type * as PollSchema from "../schemas/poll";
 import { createPoll, deletePoll, getPoll } from "../services/poll";
-import type {
-  CreatePollData,
-  DeletePollData,
-  GetPollData,
-} from "../types/poll";
+import type { Poll } from "types";
 
 export const GetOne = async (
-  req: Request<PollSchema.GetPoll["params"]>,
+  req: Request<Poll.GetPollData>,
   res: Response,
   next: NextFunction
 ) => {
@@ -23,7 +18,7 @@ export const GetOne = async (
 };
 
 export const Create = async (
-  req: Request<unknown, unknown, PollSchema.CreatePoll["body"]>,
+  req: Request<unknown, unknown, Poll.CreatePollData>,
   res: Response,
   next: NextFunction
 ) => {
@@ -38,7 +33,7 @@ export const Create = async (
 };
 
 export const Delete = async (
-  req: Request<PollSchema.DeletePoll["params"]>,
+  req: Request<Poll.DeletePollData>,
   res: Response,
   next: NextFunction
 ) => {

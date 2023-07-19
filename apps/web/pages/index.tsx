@@ -2,11 +2,9 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useCreatePoll } from "../hooks/use-create-poll";
 import { Alert } from "@mui/material";
 import { getErrorMessage } from "../utils/error";
+import type { Poll } from "types";
 
-type FormValues = {
-  question: string;
-  answers: { value: string }[];
-};
+type FormValues = Poll.CreatePollData;
 
 export default function Page() {
   const {
@@ -16,15 +14,14 @@ export default function Page() {
     setError,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ defaultValues: { answers: [{ value: "" }] } });
+  } = useForm<FormValues>({ defaultValues: { answers: [{ text: "" }] } });
   const { fields, append } = useFieldArray({
     control,
     name: "answers",
   });
   const { mutateAsync } = useCreatePoll();
 
-  // TODO fix data undefined type
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
       console.log(data);
       const response = await mutateAsync(data);
@@ -51,12 +48,12 @@ export default function Page() {
           <input
             className="border border-black px-4 py-2 w-full"
             key={field.id}
-            {...register(`answers.${index}.value` as const)}
+            {...register(`answers.${index}.text` as const)}
             placeholder={`Answer ${index}`}
           />
         ))}
 
-        <button type="button" onClick={() => append({ value: "" })}>
+        <button type="button" onClick={() => append({ text: "" })}>
           Add new option
         </button>
         <button type="submit">Submit</button>
