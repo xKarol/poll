@@ -1,4 +1,4 @@
-import type { Poll } from "prisma";
+import type { Poll, Answer } from "prisma";
 
 export type CreatePollData = {
   question: string;
@@ -14,7 +14,7 @@ export type GetPollData = {
 };
 
 export type Services = {
-  getPoll: (pollId: string) => Promise<Poll>;
+  getPoll: (pollId: string) => Promise<Poll & { answers: Answer[] }>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
 };
