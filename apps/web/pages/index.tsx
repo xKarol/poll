@@ -14,8 +14,9 @@ export default function Page() {
     control,
     register,
     setError,
+    reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ defaultValues: { answers: [{ value: "" }] } });
   const { fields, append } = useFieldArray({
     control,
     name: "answers",
@@ -28,6 +29,7 @@ export default function Page() {
       console.log(data);
       const response = await mutateAsync(data);
       console.log(response);
+      reset();
     } catch (error) {
       setError("root", { message: getErrorMessage(error) });
     }
