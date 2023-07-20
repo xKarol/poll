@@ -41,3 +41,28 @@ export const deletePoll: Poll.Services["deletePoll"] = async (pollId) => {
     throw createError(400, "Could not delete poll.");
   }
 };
+
+export const votePoll: Poll.Services["votePoll"] = async (
+  pollId: string,
+  answerId: string
+) => {
+  try {
+    const response = await prisma.poll.update({
+      where: { id: pollId },
+      data: {
+        answers: {
+          update: {
+            where: {
+              id: answerId,
+            },
+            data: { votes: { increment: 1 } },
+          },
+        },
+      },
+      include: { answers: true },
+    });
+    return response;
+  } catch {
+    throw createError(400, "Could not vote in the poll.");
+  }
+};

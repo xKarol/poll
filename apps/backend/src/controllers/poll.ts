@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { createPoll, deletePoll, getPoll } from "../services/poll";
+import { createPoll, deletePoll, getPoll, votePoll } from "../services/poll";
 import type { Poll } from "types";
 
 export const GetOne = async (
@@ -42,6 +42,21 @@ export const Delete = async (
     await deletePoll(pollId);
 
     return res.status(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const Vote = async (
+  req: Request<Poll.VotePollData>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { pollId, answerId } = req.params;
+    const data = await votePoll(pollId, answerId);
+
+    return res.send(data);
   } catch (error) {
     next(error);
   }

@@ -24,4 +24,10 @@ router.delete(
   PollController.Delete
 );
 
+router.post(
+  "/poll/:pollId/vote/:answerId",
+  validateSchema(PollSchema.votePoll),
+  PollController.Vote
+);
+
 export default router;

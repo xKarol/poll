@@ -30,3 +30,11 @@ export const deletePoll: z.Schema<{ params: Poll.DeletePollData }> = z.object({
   }),
 });
 export type DeletePoll = z.infer<typeof deletePoll>;
+
+export const votePoll: z.Schema<{ params: Poll.VotePollData }> = z.object({
+  params: z.object({
+    pollId: z.string().nonempty(),
+    answerId: z.string().nonempty(),
+  }),
+});
+export type VotePoll = z.infer<typeof votePoll>;
