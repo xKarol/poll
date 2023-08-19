@@ -26,7 +26,7 @@ export default function Page() {
               href={routes.poll(poll.id)}
               className="border border-black px-4 py-2"
             >
-              Poll {poll.id}
+              {poll.question}
             </Link>
           ))}
         </div>
