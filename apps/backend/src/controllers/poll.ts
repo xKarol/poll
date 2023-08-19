@@ -1,6 +1,27 @@
 import type { NextFunction, Request, Response } from "express";
-import { createPoll, deletePoll, getPoll, votePoll } from "../services/poll";
+import {
+  createPoll,
+  deletePoll,
+  getPoll,
+  getPolls,
+  votePoll,
+} from "../services/poll";
 import type { Poll } from "types";
+
+export const Get = async (
+  req: Request<unknown, unknown, unknown, Poll.GetPollsData>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { limit = 10, page = 1 } = req.query;
+    const data = await getPolls(+page, +limit);
+
+    return res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const GetOne = async (
   req: Request<Poll.GetPollData>,

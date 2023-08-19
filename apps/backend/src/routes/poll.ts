@@ -12,6 +12,8 @@ router.get(
   PollController.GetOne
 );
 
+router.get("/poll", validateSchema(PollSchema.getPolls), PollController.Get);
+
 router.post(
   "/poll",
   validateSchema(PollSchema.createPoll),

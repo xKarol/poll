@@ -2,6 +2,22 @@ import createError from "http-errors";
 import prisma from "prisma";
 import type { Poll } from "types";
 
+export const getPolls: Poll.Services["getPolls"] = async (
+  page = 1,
+  limit = 10
+) => {
+  page = page <= 1 ? 0 : page - 1;
+  try {
+    const response = await prisma.poll.findMany({
+      skip: page * limit,
+      take: limit,
+    });
+    return response;
+  } catch {
+    throw createError(400, "Could not find polls.");
+  }
+};
+
 export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
   try {
     const response = await prisma.poll.findUniqueOrThrow({

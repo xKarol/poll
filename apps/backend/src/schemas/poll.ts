@@ -8,6 +8,14 @@ export const getPoll: z.Schema<{ params: Poll.GetPollData }> = z.object({
 });
 export type GetPoll = z.infer<typeof getPoll>;
 
+export const getPolls: z.Schema<{ query: Poll.GetPollsData }> = z.object({
+  query: z.object({
+    page: z.string().optional(),
+    limit: z.string().optional(),
+  }),
+});
+export type GetPolls = z.infer<typeof getPolls>;
+
 export const createPoll: z.Schema<{ body: Poll.CreatePollData }> = z.object({
   body: z.object({
     question: z.string().min(3),
