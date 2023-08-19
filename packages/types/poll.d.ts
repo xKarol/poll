@@ -2,7 +2,7 @@ import type { Poll, Answer } from "prisma";
 
 export type CreatePollData = {
   question: string;
-  answers: { text: string }[];
+  answers: Pick<Answer, "text">[];
 };
 
 export type DeletePollData = {

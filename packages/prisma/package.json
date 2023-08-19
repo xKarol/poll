@@ -20,6 +20,7 @@
     "seed": "ts-node --transpile-only ./seed.ts"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "prisma": "^5.0.0",
     "ts-node": "^10.9.1",
     "tsup": "^7.1.0"
