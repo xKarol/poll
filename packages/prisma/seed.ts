@@ -39,8 +39,7 @@ async function getPollsData() {
     );
     const data = await res.json();
     const results = data.results;
-
-    return Array.from({ length: 25 }, generateFakePollData).map(
+    return Array.from({ length: results.length }, generateFakePollData).map(
       (poll, index) => {
         const result = results[index];
         const answers = shuffle([
@@ -51,7 +50,7 @@ async function getPollsData() {
         return {
           ...poll,
           question: result.question,
-          answers: poll.answers.map((answer) => ({
+          answers: poll.answers.map((answer, index) => ({
             ...answer,
             text: answers[index],
           })),
