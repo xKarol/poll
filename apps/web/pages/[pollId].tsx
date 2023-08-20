@@ -5,12 +5,13 @@ import { CircularProgress, LinearProgress } from "@mui/material";
 
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useState } from "react";
+import { votePoll } from "../services/api";
 
 const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
-  const [selected, setSelected] = useState<string>();
+  const [selectedId, setSelectedId] = useState<string>();
 
   const calcPercent = (votes: number) => {
     const percent = (votes / maxVotes) * 100;
@@ -22,15 +23,15 @@ const PollPage = () => {
       .map((answer) => answer.votes)
       .reduce((prev, next) => prev + next) || 0;
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    console.log(selected);
+    await votePoll(pollId, selectedId);
   };
 
   const onChange = (value: string) => {
     if (!data.answers) return;
     const [answer] = data.answers.filter((answer) => answer.text === value);
-    setSelected(answer.id);
+    setSelectedId(answer.id);
   };
 
   if (isLoading) return <CircularProgress />;
