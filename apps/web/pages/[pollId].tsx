@@ -2,18 +2,15 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { CircularProgress, LinearProgress } from "@mui/material";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
-
-type FormValues = {};
+import { useState } from "react";
 
 const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
-  console.log(data);
+  const [selected, setSelected] = useState<string>();
 
   const calcPercent = (votes: number) => {
     const percent = (votes / maxVotes) * 100;
@@ -25,11 +22,16 @@ const PollPage = () => {
       .map((answer) => answer.votes)
       .reduce((prev, next) => prev + next) || 0;
 
-  const form = useForm<FormValues>();
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    console.log(selected);
+  };
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
-  }
+  const onChange = (value: string) => {
+    if (!data.answers) return;
+    const [answer] = data.answers.filter((answer) => answer.text === value);
+    setSelected(answer.id);
+  };
 
   if (isLoading) return <CircularProgress />;
   return (
@@ -37,25 +39,31 @@ const PollPage = () => {
       <p>Poll: {pollId}</p>
       <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (
-        <RadioGroup className="flex flex-col space-y-1">
-          {data.answers.map((answer) => (
-            <div className="border border-black py-2 px-4" key={answer.id}>
-              <div className="flex items-center space-x-3 space-y-0">
-                <div>
-                  <RadioGroupItem value={answer.text} />
+        <form onSubmit={handleSubmit}>
+          <RadioGroup
+            className="flex flex-col space-y-1"
+            onValueChange={onChange}
+          >
+            {data.answers.map((answer, index) => (
+              <div className="border border-black py-2 px-4" key={answer.id}>
+                <div className="flex items-center space-x-3 space-y-0">
+                  <div>
+                    <RadioGroupItem value={answer.text} />
+                  </div>
+                  <label className="font-normal">{answer.text}</label>
                 </div>
-                <label className="font-normal">{answer.text}</label>
+                {answer.text} {answer.votes}/{maxVotes} (
+                {calcPercent(answer.votes)}
+                %)
+                <LinearProgress
+                  variant="determinate"
+                  value={calcPercent(answer.votes)}
+                />
               </div>
-              {answer.text} {answer.votes}/{maxVotes} (
-              {calcPercent(answer.votes)}
-              %)
-              <LinearProgress
-                variant="determinate"
-                value={calcPercent(answer.votes)}
-              />
-            </div>
-          ))}
-        </RadioGroup>
+            ))}
+          </RadioGroup>
+          <button type="submit">Submit</button>
+        </form>
       )}
     </>
   );
