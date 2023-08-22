@@ -32,6 +32,18 @@ export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
   }
 };
 
+export const getPollVotes = async (pollId: string) => {
+  try {
+    const response = await prisma.answer.findMany({
+      where: {
+        pollId: pollId,
+      },
+    });
+    return response;
+  } catch {
+    throw createError(400, "Could not find poll votes.");
+  }
+};
 export const createPoll: Poll.Services["createPoll"] = async (data) => {
   try {
     const response = await prisma.poll.create({
