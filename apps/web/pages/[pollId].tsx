@@ -43,6 +43,7 @@ const PollPage = () => {
       <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (
         <form onSubmit={handleSubmit}>
+          <h1 className="text-3xl">{data.question}</h1>
           <RadioGroup
             className="flex flex-col space-y-1"
             onValueChange={onChange}
