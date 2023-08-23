@@ -1,24 +1,34 @@
-import { Answer } from "prisma";
-import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { pollKeys } from "../queries/poll";
+import type { Poll, Answer } from "prisma";
 
 export const useLiveAnswers = (pollId: string) => {
-  const [data, setData] = useState<Answer[]>();
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
+
     websocket.onopen = () => {
-      console.log("connected");
       websocket.send(JSON.stringify({ e: "test", data: pollId }));
     };
-    websocket.onerror = console.log;
+
     websocket.onmessage = (message) => {
       const { data: msgData } = message;
       const parsedData: Answer[] = JSON.parse(msgData);
-      setData(parsedData);
+      queryClient.setQueryData(
+        pollKeys.single(pollId),
+        (old: Poll & { answers: Answer[] }) => {
+          return {
+            ...old,
+            answers: parsedData,
+          };
+        }
+      );
     };
 
     return () => {
       websocket.close();
     };
-  }, [pollId]);
-  return { data };
+  }, [pollId, queryClient]);
 };

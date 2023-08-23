@@ -13,7 +13,7 @@ const PollPage = () => {
   const pollId = router.query.pollId as string;
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
   const [selectedId, setSelectedId] = useState<string>();
-  const { data: answers } = useLiveAnswers(pollId);
+  useLiveAnswers(pollId);
 
   const calcPercent = (votes: number) => {
     const percent = (votes / maxVotes) * 100;
@@ -21,7 +21,7 @@ const PollPage = () => {
   };
 
   const maxVotes =
-    answers
+    data?.answers
       ?.map((answer) => answer.votes)
       .reduce((prev, next) => prev + next) || 0;
 
@@ -48,7 +48,7 @@ const PollPage = () => {
             className="flex flex-col space-y-1"
             onValueChange={onChange}
           >
-            {answers?.map((answer) => (
+            {data.answers.map((answer) => (
               <div className="border border-black py-2 px-4" key={answer.id}>
                 <div className="flex items-center space-x-3 space-y-0">
                   <div>
