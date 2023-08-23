@@ -7,6 +7,9 @@ import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useState } from "react";
 import { votePoll } from "../services/api";
 import { useLiveAnswers } from "../hooks/use-live-answers";
+import { useQueryClient } from "@tanstack/react-query";
+import { pollKeys } from "../queries/poll";
+import type { Answer, Poll } from "prisma";
 
 const PollPage = () => {
   const router = useRouter();
@@ -14,6 +17,7 @@ const PollPage = () => {
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
   const [selectedId, setSelectedId] = useState<string>();
   useLiveAnswers(pollId);
+  const queryClient = useQueryClient();
 
   const calcPercent = (votes: number) => {
     const percent = (votes / maxVotes) * 100;
@@ -27,6 +31,20 @@ const PollPage = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    queryClient.setQueryData(
+      pollKeys.single(pollId),
+      (old: Poll & { answers: Answer[] }) => {
+        return {
+          ...old,
+          answers: old.answers.map((answer) => {
+            if (answer.id === selectedId) {
+              return { ...answer, votes: answer.votes + 1 };
+            }
+            return answer;
+          }),
+        };
+      }
+    );
     await votePoll(pollId, selectedId);
   };
 
