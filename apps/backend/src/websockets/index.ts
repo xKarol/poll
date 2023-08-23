@@ -23,7 +23,7 @@ async function websocketInit(
         setInterval(async () => {
           const pollAnswers = await getPollVotes(data);
           ws.send(JSON.stringify(pollAnswers));
-        }, 2000);
+        }, 5000);
       }
     });
   });
