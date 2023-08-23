@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { routes } from "../constants/routes";
+import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import { getErrorMessage } from "../utils/error";
 import Link from "next/link";

@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import "../globals.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClientConfig } from "../config/query-client";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,7 @@ const ReactQueryDevtoolsProduction = React.lazy(() =>
 );
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient(queryClientConfig));
   const [showDevtools, setShowDevtools] = useState(false);
 
   useEffect(() => {
