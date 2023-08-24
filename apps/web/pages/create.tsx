@@ -5,10 +5,13 @@ import { getErrorMessage } from "../utils/error";
 import type { Poll } from "types";
 import { Switch } from "../components/switch";
 import { LoadingButton } from "@mui/lab";
+import { useRouter } from "next/router";
+import { routes } from "../config/routes";
 
 type FormValues = Poll.CreatePollData;
 
 export default function Page() {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -25,10 +28,9 @@ export default function Page() {
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
-      console.log(data);
       const response = await mutateAsync(data);
-      console.log(response);
       reset();
+      await router.push(routes.poll(response.id));
     } catch (error) {
       setError("root", { message: getErrorMessage(error) });
     }
