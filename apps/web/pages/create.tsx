@@ -3,6 +3,7 @@ import { useCreatePoll } from "../hooks/use-create-poll";
 import { Alert } from "@mui/material";
 import { getErrorMessage } from "../utils/error";
 import type { Poll } from "types";
+import { Switch } from "../components/switch";
 
 type FormValues = Poll.CreatePollData;
 
@@ -56,6 +57,7 @@ export default function Page() {
         <button type="button" onClick={() => append({ text: "" })}>
           Add new option
         </button>
+        <Switch />
         <button type="submit">Submit</button>
       </form>
     </>
