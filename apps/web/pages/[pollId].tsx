@@ -5,19 +5,17 @@ import { CircularProgress, LinearProgress } from "@mui/material";
 
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useState } from "react";
-import { votePoll } from "../services/api";
 import { useLiveAnswers } from "../hooks/use-live-answers";
-import { useQueryClient } from "@tanstack/react-query";
-import { pollKeys } from "../queries/poll";
-import type { Answer, Poll } from "prisma";
+import { LoadingButton } from "@mui/lab";
+import { useVotePoll } from "../hooks/use-vote-poll";
 
 const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
-  const [selectedId, setSelectedId] = useState<string>();
+  const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
+  const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
   useLiveAnswers(pollId);
-  const queryClient = useQueryClient();
 
   const calcPercent = (votes: number) => {
     const percent = (votes / maxVotes) * 100;
@@ -31,27 +29,13 @@ const PollPage = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    queryClient.setQueryData(
-      pollKeys.single(pollId),
-      (old: Poll & { answers: Answer[] }) => {
-        return {
-          ...old,
-          answers: old.answers.map((answer) => {
-            if (answer.id === selectedId) {
-              return { ...answer, votes: answer.votes + 1 };
-            }
-            return answer;
-          }),
-        };
-      }
-    );
-    await votePoll(pollId, selectedId);
+    await mutateAsync({ pollId, answerId: selectedAnswerId });
   };
 
   const onChange = (value: string) => {
     if (!data.answers) return;
     const [answer] = data.answers.filter((answer) => answer.text === value);
-    setSelectedId(answer.id);
+    setSelectedAnswerId(answer.id);
   };
 
   if (isLoading) return <CircularProgress />;
@@ -84,7 +68,9 @@ const PollPage = () => {
               </div>
             ))}
           </RadioGroup>
-          <button type="submit">Submit</button>
+          <LoadingButton type="submit" loading={isVoteLoading}>
+            Submit
+          </LoadingButton>
         </form>
       )}
     </>
