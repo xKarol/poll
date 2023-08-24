@@ -4,6 +4,7 @@ import { Alert } from "@mui/material";
 import { getErrorMessage } from "../utils/error";
 import type { Poll } from "types";
 import { Switch } from "../components/switch";
+import { LoadingButton } from "@mui/lab";
 
 type FormValues = Poll.CreatePollData;
 
@@ -20,7 +21,7 @@ export default function Page() {
     control,
     name: "answers",
   });
-  const { mutateAsync } = useCreatePoll();
+  const { mutateAsync, isLoading } = useCreatePoll();
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
@@ -58,7 +59,9 @@ export default function Page() {
           Add new option
         </button>
         <Switch />
-        <button type="submit">Submit</button>
+        <LoadingButton type="submit" loading={isLoading}>
+          Submit
+        </LoadingButton>
       </form>
     </>
   );
