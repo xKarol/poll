@@ -29,6 +29,7 @@ const PollPage = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    if (!selectedAnswerId) return;
     await mutateAsync({ pollId, answerId: selectedAnswerId });
   };
 
