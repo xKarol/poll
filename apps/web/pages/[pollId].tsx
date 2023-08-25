@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { LoadingButton } from "@mui/lab";
 import { useVotePoll } from "../hooks/use-vote-poll";
+import { Progress } from "../components/progress";
 
 const PollPage = () => {
   const router = useRouter();
@@ -18,11 +19,11 @@ const PollPage = () => {
   useLiveAnswers(pollId);
 
   const calcPercent = (votes: number) => {
-    const percent = (votes / maxVotes) * 100;
+    const percent = (votes / totalVotes) * 100;
     return Number.isNaN(percent) ? 0 : percent;
   };
 
-  const maxVotes =
+  const totalVotes =
     data?.answers
       ?.map((answer) => answer.votes)
       .reduce((prev, next) => prev + next) || 0;
@@ -45,33 +46,29 @@ const PollPage = () => {
       <p>Poll: {pollId}</p>
       <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (
-        <form onSubmit={handleSubmit}>
-          <h1 className="text-3xl">{data.question}</h1>
-          <RadioGroup
-            className="flex flex-col space-y-1"
-            onValueChange={onChange}
-          >
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col max-w-2xl m-auto"
+        >
+          <h1 className="text-[32px] mb-10 font-normal">{data.question}</h1>
+          <RadioGroup className="flex flex-col" onValueChange={onChange}>
             {data.answers.map((answer) => (
-              <div className="border border-black py-2 px-4" key={answer.id}>
-                <div className="flex items-center space-x-3 space-y-0">
-                  <div>
-                    <RadioGroupItem value={answer.text} />
-                  </div>
-                  <label className="font-normal">{answer.text}</label>
+              <div className="py-2 px-4 space-y-4" key={answer.id}>
+                <div className="flex items-center space-x-3">
+                  <RadioGroupItem value={answer.text} />
+                  <label className="font-bold">{answer.text}</label>
                 </div>
-                {answer.text} {answer.votes}/{maxVotes} (
-                {calcPercent(answer.votes)}
-                %)
-                <LinearProgress
-                  variant="determinate"
-                  value={calcPercent(answer.votes)}
-                />
+
+                <Progress value={calcPercent(answer.votes)} />
               </div>
             ))}
           </RadioGroup>
-          <LoadingButton type="submit" loading={isVoteLoading}>
-            Submit
-          </LoadingButton>
+          <div className="flex items-center justify-between">
+            <p className="font-normal text-sm">Total Votes: {totalVotes}</p>
+            <LoadingButton type="submit" loading={isVoteLoading}>
+              Submit
+            </LoadingButton>
+          </div>
         </form>
       )}
     </>
