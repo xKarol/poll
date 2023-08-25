@@ -1,6 +1,7 @@
 import http from "http";
 import WebSocket from "ws";
 import { getPollVotes } from "../services/poll";
+import type { WebSocket as WebSocketType } from "types";
 
 async function websocketInit(
   server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
@@ -17,13 +18,18 @@ async function websocketInit(
 
   wss.on("connection", (ws) => {
     ws.on("message", async (message) => {
-      const parsedMessage = JSON.parse(message.toString());
+      const parsedMessage = JSON.parse(message.toString()) as {
+        e: WebSocketType.Events;
+        data: unknown;
+      };
+
       const { e, data } = parsedMessage;
-      if (e === "test") {
-        setInterval(async () => {
-          const pollAnswers = await getPollVotes(data);
-          ws.send(JSON.stringify(pollAnswers));
-        }, 5000);
+      if (e === "POLL_VOTES") {
+        if (typeof data !== "string") return;
+        const pollAnswers = await getPollVotes(data);
+        wss.clients.forEach((client) => {
+          client.send(JSON.stringify(pollAnswers));
+        });
       }
     });
   });

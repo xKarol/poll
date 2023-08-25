@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { votePoll } from "../services/api";
 import { pollKeys } from "../queries/poll";
 import type { Answer, Poll } from "prisma";
+import type { WebSocket as WebSocketType } from "types";
 
 export const useVotePoll = () => {
   const queryClient = useQueryClient();
@@ -32,6 +33,16 @@ export const useVotePoll = () => {
           };
         }
       );
+
+      const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
+
+      websocket.onopen = () => {
+        const data: { e: WebSocketType.Events; data: string } = {
+          e: "POLL_VOTES",
+          data: pollId,
+        };
+        websocket.send(JSON.stringify(data));
+      };
     },
   });
 };

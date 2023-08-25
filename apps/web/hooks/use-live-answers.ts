@@ -9,13 +9,9 @@ export const useLiveAnswers = (pollId: string) => {
   useEffect(() => {
     const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
 
-    websocket.onopen = () => {
-      websocket.send(JSON.stringify({ e: "test", data: pollId }));
-    };
-
     websocket.onmessage = (message) => {
       const { data: msgData } = message;
-      const parsedData: Answer[] = JSON.parse(msgData);
+      const parsedData: Answer[] = JSON.parse(msgData.toString());
       queryClient.setQueryData(
         pollKeys.single(pollId),
         (old: Poll & { answers: Answer[] }) => {
