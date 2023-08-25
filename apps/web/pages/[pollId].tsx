@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useGetPoll } from "../hooks/use-get-poll";
-import { CircularProgress, LinearProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useState } from "react";
@@ -50,10 +50,13 @@ const PollPage = () => {
           onSubmit={handleSubmit}
           className="flex flex-col max-w-2xl m-auto"
         >
-          <h1 className="text-[32px] mb-10 font-normal">{data.question}</h1>
-          <RadioGroup className="flex flex-col" onValueChange={onChange}>
+          <h1 className="text-[32px] font-normal">{data.question}</h1>
+          <RadioGroup
+            className="flex flex-col space-y-4 my-10"
+            onValueChange={onChange}
+          >
             {data.answers.map((answer) => (
-              <div className="py-2 px-4 space-y-4" key={answer.id}>
+              <div className="space-y-4" key={answer.id}>
                 <div className="flex items-center space-x-3">
                   <RadioGroupItem value={answer.text} />
                   <label className="font-bold">{answer.text}</label>
@@ -64,7 +67,9 @@ const PollPage = () => {
             ))}
           </RadioGroup>
           <div className="flex items-center justify-between">
-            <p className="font-normal text-sm">Total Votes: {totalVotes}</p>
+            <p className="text-neutral-500 font-normal text-sm">
+              Total Votes: {totalVotes}
+            </p>
             <LoadingButton type="submit" loading={isVoteLoading}>
               Submit
             </LoadingButton>
