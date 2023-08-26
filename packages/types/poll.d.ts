@@ -3,6 +3,7 @@ import type { Poll, Answer } from "prisma";
 export type CreatePollData = {
   question: string;
   answers: Pick<Answer, "text">[];
+  isPublic?: boolean;
 };
 
 export type DeletePollData = {

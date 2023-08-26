@@ -11,6 +11,7 @@ model Poll {
   id        String   @id @unique @default(cuid())
   question  String
   answers   Answer[]
+  isPublic  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -18,7 +19,7 @@ model Poll {
 model Answer {
   id        String   @id @unique @default(cuid())
   text      String
-  votes     Int   @default(0)
+  votes     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)

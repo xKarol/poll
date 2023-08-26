@@ -19,7 +19,9 @@ export default function Page() {
     setError,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({ defaultValues: { answers: [{ text: "" }] } });
+  } = useForm<FormValues>({
+    defaultValues: { answers: [{ text: "" }] },
+  });
   const { fields, append } = useFieldArray({
     control,
     name: "answers",
@@ -28,6 +30,9 @@ export default function Page() {
 
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
+      // @ts-expect-error
+      data.isPublic = data.isPublic === "on" ? true : false;
+      console.log(data);
       const response = await mutateAsync(data);
       reset();
       await router.push(routes.poll(response.id));
@@ -60,7 +65,10 @@ export default function Page() {
         <button type="button" onClick={() => append({ text: "" })}>
           Add new option
         </button>
-        <Switch />
+        <div className="flex space-x-3">
+          <Switch {...register("isPublic")} />
+          <label>Public</label>
+        </div>
         <LoadingButton type="submit" loading={isLoading}>
           Submit
         </LoadingButton>

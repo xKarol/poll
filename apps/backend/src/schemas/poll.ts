@@ -28,6 +28,7 @@ export const createPoll: z.Schema<{ body: Poll.CreatePollData }> = z.object({
         })
       )
       .min(2),
+    isPublic: z.boolean().optional(),
   }),
 });
 export type CreatePoll = z.infer<typeof createPoll>;
