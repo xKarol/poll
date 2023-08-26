@@ -9,6 +9,7 @@ import { useLiveAnswers } from "../hooks/use-live-answers";
 import { LoadingButton } from "@mui/lab";
 import { useVotePoll } from "../hooks/use-vote-poll";
 import { Progress } from "../components/progress";
+import { AnswerItem } from "../components/answer-item";
 
 const PollPage = () => {
   const router = useRouter();
@@ -56,14 +57,13 @@ const PollPage = () => {
             onValueChange={onChange}
           >
             {data.answers.map((answer) => (
-              <div className="space-y-4" key={answer.id}>
-                <div className="flex items-center space-x-3">
-                  <RadioGroupItem value={answer.text} />
-                  <label className="font-bold">{answer.text}</label>
-                </div>
-
-                <Progress value={calcPercent(answer.votes)} />
-              </div>
+              <AnswerItem
+                // variant="checked"
+                key={answer.id}
+                text={answer.text}
+                value={calcPercent(answer.votes)}
+                RadioComponent={<RadioGroupItem value={answer.text} />}
+              />
             ))}
           </RadioGroup>
           <div className="flex items-center justify-between">
