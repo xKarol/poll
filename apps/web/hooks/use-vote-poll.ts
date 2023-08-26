@@ -3,9 +3,11 @@ import { votePoll } from "../services/api";
 import { pollKeys } from "../queries/poll";
 import type { Answer, Poll } from "prisma";
 import type { WebSocket as WebSocketType } from "types";
+import { useLocalStorage } from "react-use";
 
 export const useVotePoll = () => {
   const queryClient = useQueryClient();
+  const [oldValue, setLocalStorageValue] = useLocalStorage("poll-voted", []);
 
   return useMutation({
     mutationFn: ({
@@ -33,6 +35,7 @@ export const useVotePoll = () => {
           };
         }
       );
+      setLocalStorageValue([...oldValue, [pollId, answerId]]);
 
       const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
 

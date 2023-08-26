@@ -8,8 +8,8 @@ import { useState } from "react";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { LoadingButton } from "@mui/lab";
 import { useVotePoll } from "../hooks/use-vote-poll";
-import { Progress } from "../components/progress";
 import { AnswerItem } from "../components/answer-item";
+import { useIsVoted } from "../hooks/use-is-voted";
 
 const PollPage = () => {
   const router = useRouter();
@@ -17,6 +17,7 @@ const PollPage = () => {
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
+  const isVoted = useIsVoted(pollId);
   useLiveAnswers(pollId);
 
   const calcPercent = (votes: number) => {
@@ -58,7 +59,7 @@ const PollPage = () => {
           >
             {data.answers.map((answer) => (
               <AnswerItem
-                // variant="checked"
+                variant={isVoted ? "checked" : "default"}
                 key={answer.id}
                 text={answer.text}
                 value={calcPercent(answer.votes)}
