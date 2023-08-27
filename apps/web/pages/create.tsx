@@ -82,7 +82,9 @@ export default function Page() {
                 placeholder={`Answer ${index}`}
               />
             ))}
-            <button onClick={() => append({ text: "" })}></button>
+            <button type="button" onClick={() => append({ text: "" })}>
+              Add option
+            </button>
           </div>
 
           <FormField
