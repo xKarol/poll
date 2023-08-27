@@ -34,7 +34,7 @@ export type Services = {
   getPolls: (
     page?: number,
     limit?: number
-  ) => Promise<PaginationResult<Poll[]>>;
+  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (
