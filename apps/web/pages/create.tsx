@@ -16,6 +16,23 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// TODO reuse schema from global `schemas` package
+export const createPollSchema = z.object({
+  question: z.string().min(3),
+  answers: z
+    .array(
+      z.object({
+        text: z
+          .string({ required_error: "Answer should not be empty" })
+          .nonempty(),
+      })
+    )
+    .min(2),
+  isPublic: z.boolean().optional(),
+});
 
 type FormValues = Poll.CreatePollData;
 
@@ -23,9 +40,10 @@ export default function Page() {
   const router = useRouter();
 
   const form = useForm<FormValues>({
+    resolver: zodResolver(createPollSchema),
     defaultValues: {
       question: "",
-      answers: [{ text: "" }, { text: "" }],
+      answers: Array.from({ length: 2 }, () => ({ text: "" })),
       isPublic: true,
     },
   });
@@ -46,7 +64,7 @@ export default function Page() {
       form.setError("root", { message: getErrorMessage(error) });
     }
   });
-
+  console.log(form.formState.errors);
   return (
     <>
       <Form {...form}>
@@ -75,12 +93,25 @@ export default function Page() {
 
           <div className="flex flex-col space-y-2">
             {fields.map((field, index) => (
-              <input
-                key={field.id}
-                className="border border-black px-4 py-2 w-full"
-                {...form.register(`answers.${index}.text` as const)}
-                placeholder={`Answer ${index}`}
-              />
+              <div key={field.id}>
+                <FormField
+                  control={form.control}
+                  name={`answers.${index}.text`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Question</FormLabel>
+                      <FormControl>
+                        <input
+                          className="border border-black px-4 py-2 w-full"
+                          placeholder={`Answer ${index}`}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             ))}
             <button type="button" onClick={() => append({ text: "" })}>
               Add option
