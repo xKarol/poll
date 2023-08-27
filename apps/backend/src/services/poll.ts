@@ -11,6 +11,9 @@ export const getPolls: Poll.Services["getPolls"] = async (
     const response = await prisma.poll.findMany({
       skip: page * limit,
       take: limit,
+      where: {
+        isPublic: true,
+      },
     });
     return response;
   } catch {

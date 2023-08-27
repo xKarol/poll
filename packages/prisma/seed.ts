@@ -21,6 +21,7 @@ const main = async () => {
               data: pollData.answers,
             },
           },
+          isPublic: true,
         },
       })
     );
