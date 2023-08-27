@@ -3,10 +3,19 @@ import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import { getErrorMessage } from "../utils/error";
 import Link from "next/link";
+import { Loader } from "lucide-react";
 
 export default function Page() {
   const router = useRouter();
-  const { data, isLoading, isFetched, error } = usePolls();
+  const {
+    data: pages,
+    isLoading,
+    isFetchingNextPage,
+    error,
+    hasNextPage,
+    fetchNextPage,
+  } = usePolls();
+  const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <>
       <button
@@ -29,6 +38,12 @@ export default function Page() {
               {poll.question}
             </Link>
           ))}
+          <div className="mx-auto">
+            {isFetchingNextPage && <Loader />}
+            {hasNextPage && (
+              <button onClick={() => fetchNextPage()}>Fetch More</button>
+            )}
+          </div>
         </div>
       )}
     </>

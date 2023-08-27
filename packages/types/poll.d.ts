@@ -24,9 +24,17 @@ export type VotePollData = {
   answerId: string;
 };
 
+export type PaginationResult<T> = {
+  data: T;
+  nextPage: number | undefined;
+};
+
 export type Services = {
   getPoll: (pollId: string) => Promise<Poll & { answers: Answer[] }>;
-  getPolls: (page?: number, limit?: number) => Promise<Poll[]>;
+  getPolls: (
+    page?: number,
+    limit?: number
+  ) => Promise<PaginationResult<Poll[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (
