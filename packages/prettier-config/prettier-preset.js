@@ -9,4 +9,8 @@ module.exports = {
   endOfLine: "auto",
   trailingComma: "es5",
   arrowParens: "always",
+
+  plugins: ["@trivago/prettier-plugin-sort-imports"],
+  importOrder: ["config/env", "<THIRD_PARTY_MODULES>", "^[./]"],
+  importOrderSeparation: true,
 };
