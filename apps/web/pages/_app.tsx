@@ -25,7 +25,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [showDevtools, setShowDevtools] = useState(false);
 
   useEffect(() => {
-    // @ts-ignore
+    // @ts-expect-error
     window.toggleDevtools = () => setShowDevtools((old) => !old);
   }, []);
 

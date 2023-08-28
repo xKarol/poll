@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { CircularProgress } from "@mui/material";
 
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
-import { useState } from "react";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { LoadingButton } from "@mui/lab";
 import { useVotePoll } from "../hooks/use-vote-poll";
@@ -50,13 +49,11 @@ const PollPage = () => {
       {isSuccess && (
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col max-w-2xl m-auto"
-        >
+          className="flex flex-col max-w-2xl m-auto">
           <h1 className="text-[32px] font-normal">{data.question}</h1>
           <RadioGroup
             className="flex flex-col space-y-4 my-10"
-            onValueChange={onChange}
-          >
+            onValueChange={onChange}>
             {data.answers.map((answer) => (
               <AnswerItem
                 variant={isVoted ? "checked" : "default"}
