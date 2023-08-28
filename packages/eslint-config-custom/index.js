@@ -8,9 +8,19 @@ module.exports = {
     "plugin:prettier/recommended",
     "turbo",
   ],
-  parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ["./apps/*/tsconfig.json", "./packages/*/tsconfig.json"],
+  },
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/consistent-type-imports": "warn",
+  },
+  settings: {
+    next: {
+      rootDir: ["apps/*/"],
+    },
   },
 };
