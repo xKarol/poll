@@ -1,12 +1,11 @@
-import { useForm, useFieldArray } from "react-hook-form";
-import { useCreatePoll } from "../hooks/use-create-poll";
-import { Alert } from "@mui/material";
-import { getErrorMessage } from "../utils/error";
-import type { Poll } from "types";
-import { Switch } from "../components/switch";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
+import { Alert } from "@mui/material";
 import { useRouter } from "next/router";
-import { routes } from "../config/routes";
+import { useForm, useFieldArray } from "react-hook-form";
+import type { Poll } from "types";
+import { z } from "zod";
+
 import {
   Form,
   FormControl,
@@ -16,8 +15,10 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Switch } from "../components/switch";
+import { routes } from "../config/routes";
+import { useCreatePoll } from "../hooks/use-create-poll";
+import { getErrorMessage } from "../utils/error";
 
 // TODO reuse schema from global `schemas` package
 export const createPollSchema = z.object({

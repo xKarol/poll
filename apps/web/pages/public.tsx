@@ -1,8 +1,9 @@
+import { Loader } from "lucide-react";
+import Link from "next/link";
+
 import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import { getErrorMessage } from "../utils/error";
-import Link from "next/link";
-import { Loader } from "lucide-react";
 
 export default function Page() {
   const {

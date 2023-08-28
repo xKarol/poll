@@ -1,14 +1,14 @@
+import { LoadingButton } from "@mui/lab";
+import { CircularProgress } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useGetPoll } from "../hooks/use-get-poll";
-import { CircularProgress } from "@mui/material";
 
-import { RadioGroup, RadioGroupItem } from "../components/radio-group";
-import { useLiveAnswers } from "../hooks/use-live-answers";
-import { LoadingButton } from "@mui/lab";
-import { useVotePoll } from "../hooks/use-vote-poll";
 import { AnswerItem } from "../components/answer-item";
+import { RadioGroup, RadioGroupItem } from "../components/radio-group";
+import { useGetPoll } from "../hooks/use-get-poll";
 import { useIsVoted } from "../hooks/use-is-voted";
+import { useLiveAnswers } from "../hooks/use-live-answers";
+import { useVotePoll } from "../hooks/use-vote-poll";
 
 const PollPage = () => {
   const router = useRouter();

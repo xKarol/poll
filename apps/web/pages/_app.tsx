@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import type { AppProps } from "next/app";
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import "../globals.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { queryClientConfig } from "../config/query-client";
+import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
+import React, { useState, useEffect } from "react";
+
+import { queryClientConfig } from "../config/query-client";
+import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

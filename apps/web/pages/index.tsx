@@ -1,5 +1,6 @@
-import { routes } from "../config/routes";
 import Link from "next/link";
+
+import { routes } from "../config/routes";
 
 export default function Page() {
   return (
