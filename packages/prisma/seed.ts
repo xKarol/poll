@@ -1,6 +1,6 @@
 import type { PrismaPromise } from "@prisma/client";
-
 import { PrismaClient } from "@prisma/client";
+
 import { generateFakePollData, shuffle } from "./seed.utils";
 
 const prisma = new PrismaClient();
@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 const main = async () => {
   const count = await clearDB();
   console.log(`Database has been cleared. (removed ${count} records)`);
-  const data = await getPollsData();
+  const data = await getPollsData(50);
 
-  const transactions: PrismaPromise<any>[] = [];
+  const transactions: PrismaPromise<unknown>[] = [];
   for (const pollData of data) {
     transactions.push(
       prisma.poll.create({
@@ -33,10 +33,10 @@ const main = async () => {
 
 main();
 
-async function getPollsData() {
+async function getPollsData(limit: number = 25) {
   try {
     const res = await fetch(
-      "https://opentdb.com/api.php?amount=10&category=9&difficulty=medium&type=multiple"
+      `https://opentdb.com/api.php?amount=${limit}&category=9&difficulty=medium&type=multiple`
     );
     const data = await res.json();
     const results = data.results;
@@ -59,8 +59,8 @@ async function getPollsData() {
       }
     );
   } catch {
-    console.log("WARN: API doesn't response... Using fake data");
-    return Array.from({ length: 25 }, generateFakePollData);
+    console.log("WARN: API doesn't response. Using fake data...");
+    return Array.from({ length: limit }, generateFakePollData);
   }
 }
 
