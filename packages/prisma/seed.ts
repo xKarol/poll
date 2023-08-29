@@ -53,7 +53,7 @@ async function getPollsData(limit: number = 25) {
           question: result.question,
           answers: poll.answers.map((answer, index) => ({
             ...answer,
-            text: answers[index],
+            text: answers[index] as string,
           })),
         };
       }
