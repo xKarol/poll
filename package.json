@@ -1,5 +1,12 @@
 {
+  "name": "poll",
   "private": true,
+  "engines": {
+    "node": ">=18.x",
+    "npm": ">=7.0.0",
+    "yarn": ">=1.19.0"
+  },
+  "packageManager": "yarn@3.4.1",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -14,8 +21,6 @@
     "prettier": "3.0.2",
     "turbo": "latest"
   },
-  "name": "poll",
-  "packageManager": "yarn@1.22.19",
   "workspaces": [
     "apps/*",
     "packages/*"
