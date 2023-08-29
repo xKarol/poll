@@ -41,6 +41,7 @@ export default function Page() {
   const router = useRouter();
 
   const form = useForm<FormValues>({
+    // @ts-expect-error TODO FIX
     resolver: zodResolver(createPollSchema),
     defaultValues: {
       question: "",
