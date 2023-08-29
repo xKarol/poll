@@ -1,7 +1,8 @@
-import http from "http";
-import WebSocket from "ws";
-import { getPollVotes } from "../services/poll";
+import type http from "http";
 import type { WebSocket as WebSocketType } from "types";
+import WebSocket from "ws";
+
+import { getPollVotes } from "../services/poll";
 
 async function websocketInit(
   server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>

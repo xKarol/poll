@@ -6,7 +6,12 @@
   "scripts": {
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/index.js --tsconfig=tsconfig.json",
     "dev": "cross-env NODE_ENV=development concurrently \"esbuild src/index.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/index.js --watch\" \"nodemon -q dist/index.js'\"",
-    "start": "cross-env NODE_ENV=production node ./dist/index.js"
+    "start": "cross-env NODE_ENV=production node ./dist/index.js",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --report-unused-disable-directives .",
+    "lint:fix": "eslint --fix ."
   },
   "keywords": [],
   "author": "",

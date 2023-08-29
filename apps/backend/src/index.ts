@@ -1,13 +1,13 @@
 import "./config/env";
-import { corsConfig } from "./config/cors";
-import express from "express";
-import routes from "./routes";
+
 import cors from "cors";
+import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+
+import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
-import http from "http";
-import WebSocket from "ws";
+import routes from "./routes";
 import websocketInit from "./websockets";
 
 const app = express();

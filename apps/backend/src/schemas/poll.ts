@@ -1,5 +1,5 @@
-import { z } from "zod";
 import type { Poll } from "types";
+import { z } from "zod";
 
 export const getPoll: z.Schema<{ params: Poll.GetPollData }> = z.object({
   params: z.object({

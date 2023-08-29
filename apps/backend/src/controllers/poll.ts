@@ -1,4 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
+import type { Poll } from "types";
+
 import {
   createPoll,
   deletePoll,
@@ -6,7 +8,6 @@ import {
   getPolls,
   votePoll,
 } from "../services/poll";
-import type { Poll } from "types";
 
 export const Get = async (
   req: Request<unknown, unknown, unknown, Poll.GetPollsData>,

@@ -1,5 +1,5 @@
-import createError from "http-errors";
 import type { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 
 import { getErrorMessage } from "../utils/error";
 
@@ -7,6 +7,7 @@ export const errorHandler = (
   error: unknown,
   _req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
   const message = getErrorMessage(error);
