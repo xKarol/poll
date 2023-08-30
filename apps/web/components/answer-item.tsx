@@ -28,7 +28,7 @@ export const AnswerItem = ({
       </div>
       <div className="flex flex-col space-y-4 w-full">
         <label className="font-bold">{text}</label>
-        <Progress value={value} />
+        {variant === "checked" && <Progress value={value} />}
       </div>
     </div>
   );
