@@ -1,4 +1,4 @@
-import type { Poll } from "types";
+import type { Poll } from "@poll/types";
 
 import axios from "../lib/axios";
 

@@ -1,7 +1,7 @@
+import type { Answer, Poll } from "@poll/prisma";
+import type { WebSocket as WebSocketType } from "@poll/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Answer, Poll } from "prisma";
 import { useLocalStorage } from "react-use";
-import type { WebSocket as WebSocketType } from "types";
 
 import { pollKeys } from "../queries/poll";
 import { votePoll } from "../services/api";

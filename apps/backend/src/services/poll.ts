@@ -1,6 +1,6 @@
+import prisma from "@poll/prisma";
+import type { Poll } from "@poll/types";
 import createError from "http-errors";
-import prisma from "prisma";
-import type { Poll } from "types";
 
 export const getPolls: Poll.Services["getPolls"] = async (
   page = 1,

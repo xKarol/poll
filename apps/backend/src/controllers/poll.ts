@@ -1,5 +1,5 @@
+import type { Poll } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
-import type { Poll } from "types";
 
 import {
   createPoll,

@@ -1,5 +1,5 @@
+import type { WebSocket as WebSocketType } from "@poll/types";
 import type http from "http";
-import type { WebSocket as WebSocketType } from "types";
 import WebSocket from "ws";
 
 import { getPollVotes } from "../services/poll";
