@@ -1,5 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { CircularProgress } from "@mui/material";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -9,6 +11,24 @@ import { useGetPoll } from "../hooks/use-get-poll";
 import { useIsVoted } from "../hooks/use-is-voted";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { useVotePoll } from "../hooks/use-vote-poll";
+import { pollOptions } from "../queries/poll";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const queryClient = new QueryClient();
+    const pollId = context.params.pollId as string;
+    await queryClient.fetchQuery(pollOptions.single(pollId));
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
+};
 
 const PollPage = () => {
   const router = useRouter();
