@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useCallback } from "react";
-import { pollKeys } from "../queries/poll";
 import { useAtom, atom } from "jotai";
+import { useEffect, useCallback } from "react";
+
+import { pollKeys } from "../queries/poll";
 
 const isVotedAtom = atom(false);
 

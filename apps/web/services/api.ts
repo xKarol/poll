@@ -1,5 +1,6 @@
-import axios from "../lib/axios";
 import type { Poll } from "types";
+
+import axios from "../lib/axios";
 
 export const createPoll: Poll.Services["createPoll"] = async (pollData) => {
   const { data } = await axios.post("/poll", pollData);

@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getPolls } from "../services/api";
+
 import { pollKeys } from "../queries/poll";
+import { getPolls } from "../services/api";
 
 export const usePolls = () => {
   return useInfiniteQuery({

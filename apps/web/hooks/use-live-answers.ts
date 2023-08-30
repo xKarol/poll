@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { pollKeys } from "../queries/poll";
 import type { Poll, Answer } from "prisma";
+import { useEffect } from "react";
+
+import { pollKeys } from "../queries/poll";
 
 export const useLiveAnswers = (pollId: string) => {
   const queryClient = useQueryClient();

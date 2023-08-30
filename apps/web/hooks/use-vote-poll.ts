@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { votePoll } from "../services/api";
-import { pollKeys } from "../queries/poll";
 import type { Answer, Poll } from "prisma";
-import type { WebSocket as WebSocketType } from "types";
 import { useLocalStorage } from "react-use";
+import type { WebSocket as WebSocketType } from "types";
+
+import { pollKeys } from "../queries/poll";
+import { votePoll } from "../services/api";
 
 export const useVotePoll = () => {
   const queryClient = useQueryClient();
