@@ -5,6 +5,7 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
 import type { Poll } from "types";
+import { Switch } from "ui";
 import { z } from "zod";
 
 import {
@@ -16,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
-import { Switch } from "../components/switch";
 import { routes } from "../config/routes";
 import { useCreatePoll } from "../hooks/use-create-poll";
 import { getErrorMessage } from "../utils/error";

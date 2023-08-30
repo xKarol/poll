@@ -5,8 +5,11 @@
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
-    "generate:component": "turbo gen react-component"
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "dependencies": {
+    "@radix-ui/react-switch": "^1.0.3",
+    "lib": "*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
