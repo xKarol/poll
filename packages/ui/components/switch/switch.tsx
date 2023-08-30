@@ -1,5 +1,5 @@
+import { cn } from "@poll/lib";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
-import { cn } from "lib";
 import React from "react";
 
 export const Switch = React.forwardRef<

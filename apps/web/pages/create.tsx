@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Alert } from "@mui/material";
+import type { Poll } from "@poll/types";
+import { Switch } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
-import type { Poll } from "types";
-import { Switch } from "ui";
 import { z } from "zod";
 
 import {
