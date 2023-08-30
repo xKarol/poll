@@ -40,7 +40,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@poll/config":"*",
+    "@poll/config": "*",
     "@poll/tsconfig": "*",
     "@poll/types": "*",
     "@types/node": "^17.0.12",
