@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "@poll/ui",
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
@@ -8,16 +8,16 @@
     "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {
-    "@radix-ui/react-switch": "^1.0.3",
-    "lib": "*"
+    "@poll/lib": "*",
+    "@radix-ui/react-switch": "^1.0.3"
   },
   "devDependencies": {
+    "@poll/tsconfig": "*",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "react": "^17.0.2",
-    "tsconfig": "*",
     "typescript": "^4.5.2"
   }
 }

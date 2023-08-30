@@ -1,5 +1,5 @@
 {
-  "name": "prisma",
+  "name": "@poll/prisma",
   "version": "0.0.0",
   "license": "MIT",
   "main": "./dist/index.js",
