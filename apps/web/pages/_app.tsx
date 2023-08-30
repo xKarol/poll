@@ -4,10 +4,12 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import React, { useState, useEffect } from "react";
 
+import SEO from "../config/next-seo";
 import { queryClientConfig } from "../config/query-client";
 import "../globals.css";
 
@@ -32,6 +34,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <DefaultSeo {...SEO} />
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <main className={`${inter.variable} font-sans`}>

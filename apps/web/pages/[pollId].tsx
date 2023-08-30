@@ -2,6 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { CircularProgress } from "@mui/material";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -67,32 +68,35 @@ const PollPage = () => {
       <p>Poll: {pollId}</p>
       <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col max-w-2xl m-auto">
-          <h1 className="text-[32px] font-normal">{data.question}</h1>
-          <RadioGroup
-            className="flex flex-col space-y-4 my-10"
-            onValueChange={onChange}>
-            {data.answers.map((answer) => (
-              <AnswerItem
-                variant={isVoted ? "checked" : "default"}
-                key={answer.id}
-                text={answer.text}
-                value={calcPercent(answer.votes)}
-                RadioComponent={<RadioGroupItem value={answer.text} />}
-              />
-            ))}
-          </RadioGroup>
-          <div className="flex items-center justify-between">
-            <p className="text-neutral-500 font-normal text-sm">
-              Total Votes: {totalVotes}
-            </p>
-            <LoadingButton type="submit" loading={isVoteLoading}>
-              Submit
-            </LoadingButton>
-          </div>
-        </form>
+        <>
+          <NextSeo title={data.question} />
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col max-w-2xl m-auto">
+            <h1 className="text-[32px] font-normal">{data.question}</h1>
+            <RadioGroup
+              className="flex flex-col space-y-4 my-10"
+              onValueChange={onChange}>
+              {data.answers.map((answer) => (
+                <AnswerItem
+                  variant={isVoted ? "checked" : "default"}
+                  key={answer.id}
+                  text={answer.text}
+                  value={calcPercent(answer.votes)}
+                  RadioComponent={<RadioGroupItem value={answer.text} />}
+                />
+              ))}
+            </RadioGroup>
+            <div className="flex items-center justify-between">
+              <p className="text-neutral-500 font-normal text-sm">
+                Total Votes: {totalVotes}
+              </p>
+              <LoadingButton type="submit" loading={isVoteLoading}>
+                Submit
+              </LoadingButton>
+            </div>
+          </form>
+        </>
       )}
     </>
   );

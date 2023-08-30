@@ -1,4 +1,5 @@
 import { Loader } from "lucide-react";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 
 import { routes } from "../config/routes";
@@ -17,6 +18,7 @@ export default function Page() {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <>
+      <NextSeo title="Public Polls" />
       <h1 className="mb-5">Public Polls</h1>
       {error && <div>{getErrorMessage(error)}</div>}
       {isLoading ? (

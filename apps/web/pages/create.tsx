@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Alert } from "@mui/material";
+import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
 import type { Poll } from "types";
@@ -69,6 +70,7 @@ export default function Page() {
   console.log(form.formState.errors);
   return (
     <>
+      <NextSeo title="Create your poll" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {form.formState.errors.root?.message ? (
