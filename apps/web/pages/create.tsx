@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Alert } from "@mui/material";
 import type { Poll } from "@poll/types";
-import { Switch } from "@poll/ui";
+import { Input, Switch } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -83,12 +83,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Question</FormLabel>
                 <FormControl>
-                  <input
-                    type="text"
-                    placeholder="Your question..."
-                    className="border border-black px-4 py-2 w-full"
-                    {...field}
-                  />
+                  <Input placeholder="Your question..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,11 +100,7 @@ export default function Page() {
                     <FormItem>
                       <FormLabel>Question</FormLabel>
                       <FormControl>
-                        <input
-                          className="border border-black px-4 py-2 w-full"
-                          placeholder={`Answer ${index}`}
-                          {...field}
-                        />
+                        <Input placeholder={`Answer ${index}`} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
