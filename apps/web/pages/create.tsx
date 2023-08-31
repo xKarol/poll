@@ -98,9 +98,9 @@ export default function Page() {
                   name={`answers.${index}.text`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Question</FormLabel>
+                      {index === 0 && <FormLabel>Answer Options</FormLabel>}
                       <FormControl>
-                        <Input placeholder={`Answer ${index}`} {...field} />
+                        <Input placeholder={`Option ${index + 1}`} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
