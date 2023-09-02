@@ -3,7 +3,13 @@
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "@poll/web": {
-      "env": ["NEXT_PUBLIC_WEBSOCKET_URL", "NEXT_PUBLIC_BACKEND_URL"]
+      "env": [
+        "NEXT_PUBLIC_WEBSOCKET_URL",
+        "NEXT_PUBLIC_BACKEND_URL",
+        "GOOGLE_OAUTH_ID",
+        "GOOGLE_OAUTH_SECRET",
+        "NEXTAUTH_SECRET"
+      ]
     },
     "@poll/backend": {
       "env": ["NODE_ENV", "PORT", "HOST", "HOST_FRONTEND"]
