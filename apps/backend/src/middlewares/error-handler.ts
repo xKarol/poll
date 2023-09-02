@@ -17,6 +17,6 @@ export const errorHandler = (
   res.status(status).send({
     status: status,
     message: message,
-    ...(process.env["NODE_ENV"] !== "production" && { stack: stack }),
+    ...(process.env.NODE_ENV !== "production" && { stack: stack }),
   });
 };

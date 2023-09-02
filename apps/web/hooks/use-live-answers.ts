@@ -8,7 +8,7 @@ export const useLiveAnswers = (pollId: string) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
+    const websocket = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
 
     websocket.onmessage = (message) => {
       const { data: msgData } = message;

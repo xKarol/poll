@@ -38,7 +38,7 @@ export const useVotePoll = () => {
       );
       setLocalStorageValue([...oldValue, [pollId, answerId]]);
 
-      const websocket = new WebSocket(process.env["NEXT_PUBLIC_WEBSOCKET_URL"]);
+      const websocket = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
 
       websocket.onopen = () => {
         const data: { e: WebSocketType.Events; data: string } = {

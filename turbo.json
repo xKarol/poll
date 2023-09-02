@@ -2,6 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
+    "@poll/web": {
+      "env": ["NEXT_PUBLIC_WEBSOCKET_URL", "NEXT_PUBLIC_BACKEND_URL"]
+    },
+    "@poll/backend": {
+      "env": ["NODE_ENV", "PORT", "HOST", "HOST_FRONTEND"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
