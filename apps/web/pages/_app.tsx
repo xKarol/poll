@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
@@ -23,7 +24,10 @@ const ReactQueryDevtoolsProduction = React.lazy(() =>
   )
 );
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   const [queryClient] = useState(() => new QueryClient(queryClientConfig));
   const [showDevtools, setShowDevtools] = useState(false);
 
@@ -37,15 +41,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <DefaultSeo {...SEO} />
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <main className={`${inter.variable} font-sans`}>
-            <Component {...pageProps} />
-          </main>
-          <ReactQueryDevtools initialIsOpen={false} />
-          {showDevtools && (
-            <React.Suspense fallback={null}>
-              <ReactQueryDevtoolsProduction />
-            </React.Suspense>
-          )}
+          <SessionProvider session={session}>
+            <main className={`${inter.variable} font-sans`}>
+              <Component {...pageProps} />
+            </main>
+            <ReactQueryDevtools initialIsOpen={false} />
+            {showDevtools && (
+              <React.Suspense fallback={null}>
+                <ReactQueryDevtoolsProduction />
+              </React.Suspense>
+            )}
+          </SessionProvider>
         </Hydrate>
       </QueryClientProvider>
     </>

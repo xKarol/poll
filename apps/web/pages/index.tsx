@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { getSession, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { routes } from "../config/routes";
 
 export default function Page() {
-  const { data: session } = useQuery({ queryFn: () => getSession() });
+  const { data: session } = useSession();
   return (
     <>
       <Link className="border border-black p-2 px-4" href={routes.CREATE_POLL}>
