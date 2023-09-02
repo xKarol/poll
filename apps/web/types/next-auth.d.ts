@@ -8,5 +8,16 @@ declare module "next-auth" {
     user?: {
       id?: string;
     } & DefaultSession["user"];
+    token: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+  interface JWT {
+    id?: string | number;
+    name?: string | null;
+    username?: string | null;
+    email?: string | null;
   }
 }
