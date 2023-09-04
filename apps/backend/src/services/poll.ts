@@ -60,6 +60,7 @@ export const getUserPolls: Poll.Services["getUserPolls"] = async (
       },
       include: { answers: true },
     });
+
     return {
       data: response.slice(0, limit),
       nextPage: response.length > limit ? page + 1 : undefined,
