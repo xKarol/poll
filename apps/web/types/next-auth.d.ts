@@ -1,3 +1,4 @@
+import type { Auth } from "@poll/types";
 import { type DefaultSession } from "next-auth";
 
 declare module "next-auth" {
@@ -13,10 +14,5 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
-  interface JWT {
-    id?: string | number;
-    name?: string | null;
-    email?: string | null;
-    picture?: string | null;
-  }
+  interface JWT extends Auth.JWTPayload {}
 }
