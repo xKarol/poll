@@ -7,6 +7,7 @@ import morgan from "morgan";
 
 import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
+import { withAuth } from "./middlewares/with-auth";
 import routes from "./routes";
 import websocketInit from "./websockets";
 
@@ -16,6 +17,7 @@ app.use(cors(corsConfig));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(withAuth);
 app.use(routes);
 app.use(errorHandler);
 

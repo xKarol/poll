@@ -7,8 +7,7 @@
         "NEXT_PUBLIC_WEBSOCKET_URL",
         "NEXT_PUBLIC_BACKEND_URL",
         "GOOGLE_OAUTH_ID",
-        "GOOGLE_OAUTH_SECRET",
-        "NEXTAUTH_SECRET"
+        "GOOGLE_OAUTH_SECRET"
       ]
     },
     "@poll/backend": {

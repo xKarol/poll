@@ -3,8 +3,11 @@ import prisma from "@poll/prisma";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+import { defaultCookies } from "../../../lib/default-cookies";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  cookies: defaultCookies(process.env.NODE_ENV === "production"),
   session: {
     strategy: "jwt",
   },
@@ -15,7 +18,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token }) {
       const user = await prisma.user.findFirst({
         where: { email: token.email },
         select: {
@@ -31,12 +34,11 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
         email: user.email,
         name: user.name,
-        ...(account && { token: account.id_token }),
       };
     },
 
-    async session({ session, token }) {
-      return { ...session, token: token.token };
+    async session({ session }) {
+      return session;
     },
   },
   pages: {
