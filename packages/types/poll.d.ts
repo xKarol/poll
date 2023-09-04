@@ -56,6 +56,10 @@ export type Api = {
     page?: number,
     limit?: number
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  getUserPolls: (
+    page?: number,
+    limit?: number
+  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (

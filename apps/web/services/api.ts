@@ -26,3 +26,16 @@ export const votePoll: Poll.Api["votePoll"] = async (pollId, answerId) => {
   const { data } = await axios.post(`/poll/${pollId}/vote/${answerId}`);
   return data;
 };
+
+export const getUserPolls: Poll.Api["getUserPolls"] = async (
+  page = 1,
+  limit = 10
+) => {
+  const { data } = await axios.get(`/@me/poll`, {
+    params: {
+      page,
+      limit,
+    },
+  });
+  return data;
+};
