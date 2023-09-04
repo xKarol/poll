@@ -7,11 +7,18 @@
         "NEXT_PUBLIC_WEBSOCKET_URL",
         "NEXT_PUBLIC_BACKEND_URL",
         "GOOGLE_OAUTH_ID",
-        "GOOGLE_OAUTH_SECRET"
+        "GOOGLE_OAUTH_SECRET",
+        "NEXTAUTH_SECRET"
       ]
     },
     "@poll/backend": {
-      "env": ["NODE_ENV", "PORT", "HOST", "HOST_FRONTEND"]
+      "env": [
+        "NODE_ENV",
+        "PORT",
+        "ORIGIN_URL",
+        "FRONTEND_URL",
+        "NEXTAUTH_SECRET"
+      ]
     },
     "build": {
       "dependsOn": ["^build"],

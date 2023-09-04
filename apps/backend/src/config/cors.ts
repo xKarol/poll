@@ -1,8 +1,8 @@
 import type { CorsOptions } from "cors";
 
 const whiteList = new Set([
-  new URL(process.env.HOST as string).origin,
-  new URL(process.env.HOST_FRONTEND as string).origin,
+  new URL(process.env.ORIGIN_URL as string).origin,
+  new URL(process.env.FRONTEND_URL as string).origin,
 ]);
 
 export const corsConfig: CorsOptions = {
