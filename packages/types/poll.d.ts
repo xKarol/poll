@@ -15,8 +15,9 @@ export type GetPollData = {
 };
 
 export type GetPollsData = {
-  page?: string;
-  limit?: string;
+  page?: number;
+  skip: number;
+  limit?: number;
 };
 
 export type VotePollData = {

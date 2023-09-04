@@ -2,14 +2,14 @@ import prisma from "@poll/prisma";
 import type { Poll } from "@poll/types";
 import createError from "http-errors";
 
-export const getPolls: Poll.Services["getPolls"] = async (
+export const getPolls: Poll.Services["getPolls"] = async ({
   page = 1,
-  limit = 10
-) => {
-  page = page <= 1 ? 0 : page - 1;
+  skip,
+  limit = 10,
+}) => {
   try {
     const response = await prisma.poll.findMany({
-      skip: page * limit,
+      skip: skip,
       take: limit + 1,
       where: {
         isPublic: true,
@@ -26,7 +26,7 @@ export const getPolls: Poll.Services["getPolls"] = async (
           return { ...data, totalVotes };
         })
         .slice(0, limit),
-      nextPage: response.length > limit ? page + 2 : undefined,
+      nextPage: response.length > limit ? page + 1 : undefined,
     };
   } catch {
     throw createError(400, "Could not find polls.");

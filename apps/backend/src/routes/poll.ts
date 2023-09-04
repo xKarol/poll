@@ -2,6 +2,7 @@ import express from "express";
 
 import * as PollController from "../controllers/poll";
 import { validateSchema } from "../middlewares/validate-schema";
+import { withPagination } from "../middlewares/with-pagination";
 import * as PollSchema from "../schemas/poll";
 
 const router = express.Router();
@@ -12,7 +13,7 @@ router.get(
   PollController.GetOne
 );
 
-router.get("/poll", validateSchema(PollSchema.getPolls), PollController.Get);
+router.get("/poll", withPagination, PollController.Get);
 
 router.post(
   "/poll",

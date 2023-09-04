@@ -9,14 +9,10 @@ import {
   votePoll,
 } from "../services/poll";
 
-export const Get = async (
-  req: Request<unknown, unknown, unknown, Poll.GetPollsData>,
-  res: Response,
-  next: NextFunction
-) => {
+export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { limit = 10, page = 1 } = req.query;
-    const data = await getPolls(+page, +limit);
+    const { page, limit, skip } = req.pagination;
+    const data = await getPolls({ page, limit, skip });
 
     return res.send(data);
   } catch (error) {
