@@ -8,6 +8,7 @@ export const requireAuth = async (
 ) => {
   try {
     if (!req.user) throw httpError.Unauthorized("Please Log In.");
+    next();
   } catch (error) {
     next(error);
   }
