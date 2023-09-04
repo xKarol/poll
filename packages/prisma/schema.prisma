@@ -43,6 +43,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Poll          Poll[]
 }
 
 model VerificationToken {
@@ -57,9 +58,11 @@ model Poll {
   id        String   @id @unique @default(cuid())
   question  String
   answers   Answer[]
+  user      User?    @relation(fields: [userId], references: [id])
   isPublic  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    String?
 }
 
 model Answer {

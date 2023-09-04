@@ -47,6 +47,28 @@ export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
   }
 };
 
+export const getUserPolls: Poll.Services["getUserPolls"] = async (
+  userId,
+  { page = 1, skip, limit = 10 }
+) => {
+  try {
+    const response = await prisma.poll.findMany({
+      skip: skip,
+      take: limit + 1,
+      where: {
+        userId: userId,
+      },
+      include: { answers: true },
+    });
+    return {
+      data: response.slice(0, limit),
+      nextPage: response.length > limit ? page + 1 : undefined,
+    };
+  } catch {
+    throw createError(400, "Could not find user poll.");
+  }
+};
+
 export const getPollVotes = async (pollId: string) => {
   try {
     const response = await prisma.answer.findMany({
@@ -63,6 +85,7 @@ export const createPoll: Poll.Services["createPoll"] = async (data) => {
   try {
     const response = await prisma.poll.create({
       data: {
+        userId: data.userId,
         question: data.question,
         answers: {
           createMany: { data: data.answers },

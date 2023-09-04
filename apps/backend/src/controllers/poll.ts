@@ -42,7 +42,11 @@ export const Create = async (
 ) => {
   try {
     const data = req.body;
-    const poll = await createPoll(data);
+
+    const poll = await createPoll({
+      ...data,
+      userId: req.user?.id,
+    });
 
     return res.send(poll);
   } catch (error) {

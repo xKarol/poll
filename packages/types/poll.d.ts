@@ -1,6 +1,7 @@
 import type { Poll, Answer } from "prisma";
 
 export type CreatePollData = {
+  userId?: string;
   question: string;
   answers: Pick<Answer, "text">[];
   isPublic?: boolean;
@@ -32,6 +33,14 @@ export type Services = {
     skip: number;
     limit?: number;
   }) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  getUserPolls: (
+    userId: string,
+    params: {
+      page?: number;
+      skip: number;
+      limit?: number;
+    }
+  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (
