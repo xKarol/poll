@@ -12,6 +12,7 @@ import { useGetPoll } from "../hooks/use-get-poll";
 import { useIsVoted } from "../hooks/use-is-voted";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { useVotePoll } from "../hooks/use-vote-poll";
+import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -73,7 +74,12 @@ const PollPage = () => {
           <form
             onSubmit={handleSubmit}
             className="flex flex-col max-w-2xl m-auto">
-            <h1 className="text-[32px] font-normal">{data.question}</h1>
+            <div className="space-y-4">
+              <h1 className="text-[32px] font-normal">{data.question}</h1>
+              <span className="text-sm text-neutral-500">
+                by a guest · {dayjs(data.createdAt).fromNow()}
+              </span>
+            </div>
             <RadioGroup
               className="flex flex-col space-y-4 my-10"
               onValueChange={onChange}>
