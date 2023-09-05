@@ -90,7 +90,9 @@ const PollPage = () => {
         fill="white"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central">
-        {percent > 0 && (payload.name as string).slice(0, 5) + "..."}
+        {percent > 0 && (payload.name as string).length > 5
+          ? payload.name.slice(0, 5) + "..."
+          : payload.name}
       </text>
     );
   };
