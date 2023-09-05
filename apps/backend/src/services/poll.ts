@@ -39,7 +39,7 @@ export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
       where: {
         id: pollId,
       },
-      include: { answers: true },
+      include: { answers: true, user: true },
     });
     return response;
   } catch {

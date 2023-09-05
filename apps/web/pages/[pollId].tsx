@@ -77,7 +77,8 @@ const PollPage = () => {
             <div className="space-y-4">
               <h1 className="text-[32px] font-normal">{data.question}</h1>
               <span className="text-sm text-neutral-500">
-                by a guest · {dayjs(data.createdAt).fromNow()}
+                by a {data.user?.name || "guest"} ·{" "}
+                {dayjs(data.createdAt).fromNow()}
               </span>
             </div>
             <RadioGroup

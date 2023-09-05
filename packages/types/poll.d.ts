@@ -1,4 +1,4 @@
-import type { Poll, Answer } from "@poll/prisma";
+import type { Poll, Answer, User } from "@poll/prisma";
 
 export type CreatePollData = {
   userId?: string;
@@ -27,7 +27,9 @@ export type PaginationResult<T = unknown> = {
 
 // Backend
 export type Services = {
-  getPoll: (pollId: string) => Promise<Poll & { answers: Answer[] }>;
+  getPoll: (
+    pollId: string
+  ) => Promise<Poll & { answers: Answer[]; user?: User }>;
   getPolls: (params: {
     page?: number;
     skip: number;
@@ -51,7 +53,9 @@ export type Services = {
 
 // Frontend
 export type Api = {
-  getPoll: (pollId: string) => Promise<Poll & { answers: Answer[] }>;
+  getPoll: (
+    pollId: string
+  ) => Promise<Poll & { answers: Answer[]; user?: User }>;
   getPolls: (
     page?: number,
     limit?: number
