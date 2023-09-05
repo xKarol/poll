@@ -5,9 +5,12 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { defaultCookies } from "../../../lib/default-cookies";
 
+const isSecure = process.env.NODE_ENV === "production";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  cookies: defaultCookies(process.env.NODE_ENV === "production"),
+  cookies: defaultCookies(isSecure),
+  useSecureCookies: isSecure,
   session: {
     strategy: "jwt",
   },
