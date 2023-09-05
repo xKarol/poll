@@ -1,5 +1,5 @@
+import type { Poll, Answer } from "@poll/prisma";
 import { useQueryClient } from "@tanstack/react-query";
-import type { Poll, Answer } from "prisma";
 import { useEffect } from "react";
 
 import { pollKeys } from "../queries/poll";

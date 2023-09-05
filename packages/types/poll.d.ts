@@ -1,4 +1,4 @@
-import type { Poll, Answer } from "prisma";
+import type { Poll, Answer } from "@poll/prisma";
 
 export type CreatePollData = {
   userId?: string;
@@ -20,7 +20,7 @@ export type VotePollData = {
   answerId: string;
 };
 
-export type PaginationResult<T> = {
+export type PaginationResult<T = unknown> = {
   data: T;
   nextPage: number | undefined;
 };
