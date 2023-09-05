@@ -76,6 +76,7 @@ const PollPage = () => {
     midAngle,
     innerRadius,
     outerRadius,
+    percent,
     payload,
   }) => {
     const RADIAN = Math.PI / 180;
@@ -89,7 +90,7 @@ const PollPage = () => {
         fill="white"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central">
-        {(payload.name as string).slice(0, 5) + "..."}
+        {percent > 0 && (payload.name as string).slice(0, 5) + "..."}
       </text>
     );
   };
