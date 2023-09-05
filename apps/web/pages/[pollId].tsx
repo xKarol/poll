@@ -5,6 +5,7 @@ import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
@@ -31,6 +32,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
+
+const colors = ["#9ECE9A", "#74A57F", "#077187", "#8CABBE"];
 
 const PollPage = () => {
   const router = useRouter();
@@ -61,6 +64,34 @@ const PollPage = () => {
     if (!data.answers) return;
     const [answer] = data.answers.filter((answer) => answer.text === value);
     setSelectedAnswerId(answer.id);
+  };
+  const dataChart = data.answers.map((answer) => ({
+    name: answer.text,
+    value: (answer.votes / totalVotes) * 100,
+  }));
+
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    payload,
+  }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central">
+        {(payload.name as string).slice(0, 5) + "..."}
+      </text>
+    );
   };
 
   if (isLoading) return <CircularProgress />;
@@ -103,6 +134,30 @@ const PollPage = () => {
               </LoadingButton>
             </div>
           </form>
+          {isVoted && (
+            <ResponsiveContainer width={"100%"} height={400}>
+              <PieChart width={400} height={400}>
+                <Pie
+                  dataKey="value"
+                  data={dataChart}
+                  cx={"50%"}
+                  cy={"50%"}
+                  strokeWidth={2}
+                  outerRadius={120}
+                  fill="#8884d8"
+                  labelLine={false}
+                  label={renderCustomizedLabel}>
+                  {dataChart.map((entry, index) => (
+                    <Cell
+                      key={`cell-${entry.name}`}
+                      fill={colors[index % colors.length]}
+                    />
+                  ))}
+                </Pie>
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
         </>
       )}
     </>
