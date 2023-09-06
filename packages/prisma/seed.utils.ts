@@ -4,14 +4,11 @@ import { randomUUID } from "node:crypto";
 
 export function generateFakePollData(isPublic: boolean = true) {
   const pollId = randomUUID();
-  const noVotes = faker.number.int({ min: 0, max: 100 }) < 25;
 
   const data: Poll & { answers: Omit<Answer, "id" | "pollId">[] } = {
     id: pollId,
     question: faker.lorem.sentence(),
-    answers: Array.from({ length: 4 }, () => {
-      return generateFakePollAnswerData(noVotes);
-    }),
+    answers: Array.from({ length: 4 }, generateFakePollAnswerData),
     isPublic: isPublic,
     createdAt: faker.date.anytime(),
     updatedAt: faker.date.anytime(),
@@ -19,12 +16,12 @@ export function generateFakePollData(isPublic: boolean = true) {
   return data;
 }
 
-export function generateFakePollAnswerData(noVotes: boolean = false) {
+export function generateFakePollAnswerData() {
   const data: Omit<Answer, "id" | "pollId"> = {
     text: faker.datatype.boolean()
       ? faker.lorem.word()
       : faker.lorem.sentence(),
-    votes: noVotes ? 0 : faker.number.int({ min: 0, max: 5_000 }),
+    votes: 0,
     createdAt: faker.date.anytime(),
     updatedAt: faker.date.anytime(),
   };

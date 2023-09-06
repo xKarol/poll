@@ -60,28 +60,38 @@ function seedUsers(limit: number = 100) {
 async function seedVotes() {
   const users = await prisma.user.findMany({});
   const polls = await prisma.poll.findMany({ include: { answers: true } });
-  const votes: PrismaPromise<unknown>[] = [];
+  const transactions: PrismaPromise<unknown>[] = [];
   for await (const poll of polls) {
-    votes.push(
-      ...Array.from(
-        {
-          length: faker.number.int({ min: 4, max: 10 }),
-        },
-        () => {
-          return prisma.vote.create({
+    Array.from(
+      {
+        length: faker.number.int({ min: 0, max: 10 }),
+      },
+      () => {
+        const answerId =
+          poll.answers[Math.floor(Math.random() * poll.answers.length)].id;
+        transactions.push(
+          prisma.vote.create({
             data: {
               pollId: poll.id,
-              answerId:
-                poll.answers[Math.floor(Math.random() * poll.answers.length)]
-                  .id,
+              answerId: answerId,
               userId: users[Math.floor(Math.random() * users.length)].id,
             },
-          });
-        }
-      )
+          })
+        );
+        transactions.push(
+          prisma.answer.update({
+            where: {
+              id: answerId,
+            },
+            data: {
+              votes: { increment: 1 },
+            },
+          })
+        );
+      }
     );
   }
-  const data = await prisma.$transaction(votes);
+  const data = await prisma.$transaction(transactions);
   return data;
 }
 
