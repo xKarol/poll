@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { CircularProgress } from "@mui/material";
+import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
@@ -10,6 +10,7 @@ import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 import { AnswerItem } from "../components/answer-item";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useGetPoll } from "../hooks/use-get-poll";
+import { useGetPollVoters } from "../hooks/use-get-poll-voters";
 import { useIsVoted } from "../hooks/use-is-voted";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { useVotePoll } from "../hooks/use-vote-poll";
@@ -21,6 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const queryClient = new QueryClient();
     const pollId = context.params.pollId as string;
     await queryClient.fetchQuery(pollOptions.single(pollId));
+    await queryClient.fetchQuery(pollOptions.getPollVoters(pollId));
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
@@ -39,10 +41,13 @@ const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
   const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
+  const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
   const isVoted = useIsVoted(pollId);
   useLiveAnswers(pollId);
+
+  console.log(voters);
 
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
@@ -130,9 +135,24 @@ const PollPage = () => {
               ))}
             </RadioGroup>
             <div className="flex items-center justify-between">
-              <p className="text-neutral-500 font-normal text-sm">
-                Total Votes: {totalVotes}
-              </p>
+              <div className="flex items-center space-x-2">
+                {voters?.length >= 2 ? (
+                  <AvatarGroup max={4}>
+                    {voters.map((voter) => (
+                      <Avatar
+                        key={voter.id}
+                        alt={`${voter.name} voter`}
+                        src={voter.image}
+                        sx={{ width: 24, height: 24 }}>
+                        {voter.name[0]}
+                      </Avatar>
+                    ))}
+                  </AvatarGroup>
+                ) : null}
+                <p className="text-neutral-500 font-normal text-sm">
+                  Total Votes: {totalVotes}
+                </p>
+              </div>
               <LoadingButton type="submit" loading={isVoteLoading}>
                 Submit
               </LoadingButton>
