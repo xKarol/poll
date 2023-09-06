@@ -1,4 +1,4 @@
-import prisma, { User } from "@poll/prisma";
+import prisma from "@poll/prisma";
 import type { Poll } from "@poll/types";
 import createError from "http-errors";
 
@@ -14,7 +14,6 @@ export const getPolls: Poll.Services["getPolls"] = async ({
       where: {
         isPublic: true,
       },
-      include: { answers: true },
     });
 
     return {
@@ -141,9 +140,7 @@ export const votePoll: Poll.Services["votePoll"] = async ({
   }
 };
 
-export const getVoteUsersList: Poll.Services["getVoteUsersList"] = async (
-  pollId
-) => {
+export const getPollVoters: Poll.Services["getPollVoters"] = async (pollId) => {
   try {
     const users = await prisma.vote.findMany({
       take: 10,
