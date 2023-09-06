@@ -1,13 +1,22 @@
+import { faker } from "@faker-js/faker";
 import type { PrismaPromise } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
-import { generateFakePollData, shuffle } from "./seed.utils";
+import {
+  generateFakePollData,
+  generateFakeUserData,
+  shuffle,
+} from "./seed.utils";
 
 const prisma = new PrismaClient();
 
 const main = async () => {
   const count = await clearDB();
   console.log(`Database has been cleared. (removed ${count} records)`);
+
+  const users = await prisma.$transaction(seedUsers(50));
+  console.log(`Created ${users.length} users`);
+
   const data = await getPollsData(50);
 
   const transactions: PrismaPromise<unknown>[] = [];
@@ -29,9 +38,49 @@ const main = async () => {
 
   const response = await prisma.$transaction(transactions);
   console.log(`Created ${response.length} polls`);
+
+  const votes = await seedVotes();
+  console.log(`Created ${votes.length} poll votes`);
 };
 
 main();
+
+function seedUsers(limit: number = 100) {
+  const usersData = Array.from({ length: limit }, generateFakeUserData);
+  const promises: PrismaPromise<unknown>[] = [];
+  for (const userData of usersData) {
+    promises.push(prisma.user.create({ data: userData }));
+  }
+  return promises;
+}
+
+async function seedVotes() {
+  const users = await prisma.user.findMany({});
+  const polls = await prisma.poll.findMany({ include: { answers: true } });
+  const votes: PrismaPromise<unknown>[] = [];
+  for await (const poll of polls) {
+    votes.push(
+      ...Array.from(
+        {
+          length: faker.number.int({ min: 4, max: 10 }),
+        },
+        () => {
+          return prisma.vote.create({
+            data: {
+              pollId: poll.id,
+              answerId:
+                poll.answers[Math.floor(Math.random() * poll.answers.length)]
+                  .id,
+              userId: users[Math.floor(Math.random() * poll.answers.length)].id,
+            },
+          });
+        }
+      )
+    );
+  }
+  const data = await prisma.$transaction(votes);
+  return data;
+}
 
 async function getPollsData(limit: number = 25) {
   try {
@@ -65,6 +114,7 @@ async function getPollsData(limit: number = 25) {
 }
 
 async function clearDB() {
-  const { count } = await prisma.poll.deleteMany({});
-  return count;
+  const { count: countPolls } = await prisma.poll.deleteMany({});
+  const { count: countUsers } = await prisma.user.deleteMany({});
+  return countPolls + countUsers;
 }

@@ -14,6 +14,7 @@ export const getPolls: Poll.Services["getPolls"] = async ({
       where: {
         isPublic: true,
       },
+      include: { answers: true },
     });
 
     return {
