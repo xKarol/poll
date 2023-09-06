@@ -153,9 +153,11 @@ const PollPage = () => {
                   Total Votes: {totalVotes}
                 </p>
               </div>
-              <LoadingButton type="submit" loading={isVoteLoading}>
-                Submit
-              </LoadingButton>
+              {!isVoted ? (
+                <LoadingButton type="submit" loading={isVoteLoading}>
+                  Vote
+                </LoadingButton>
+              ) : null}
             </div>
           </form>
           {isVoted && (
