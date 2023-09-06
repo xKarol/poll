@@ -13,7 +13,7 @@ type Stats = {
 export async function getServerSideProps() {
   const stats = {
     totalPolls: await prisma.poll.count(),
-    totalVotes: 0, // todo await prisma.vote.count(),
+    totalVotes: await prisma.vote.count(),
     totalUsers: await prisma.user.count(),
   };
   return { props: { stats } };
