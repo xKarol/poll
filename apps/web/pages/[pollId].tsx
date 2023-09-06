@@ -137,7 +137,7 @@ const PollPage = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 {voters?.length >= 2 ? (
-                  <AvatarGroup max={4}>
+                  <AvatarGroup max={4} total={4}>
                     {voters.map((voter) => (
                       <Avatar
                         key={voter.id}
