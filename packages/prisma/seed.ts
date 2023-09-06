@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import type { PrismaPromise } from "@prisma/client";
+import type { PrismaPromise, User } from "@prisma/client";
 import { PrismaClient } from "@prisma/client";
 
 import {
@@ -24,6 +24,9 @@ const main = async () => {
     transactions.push(
       prisma.poll.create({
         data: {
+          userId: faker.datatype.boolean()
+            ? users[Math.floor(Math.random() * users.length)].id
+            : undefined,
           question: pollData.question,
           answers: {
             createMany: {
@@ -47,7 +50,7 @@ main();
 
 function seedUsers(limit: number = 100) {
   const usersData = Array.from({ length: limit }, generateFakeUserData);
-  const promises: PrismaPromise<unknown>[] = [];
+  const promises: PrismaPromise<User>[] = [];
   for (const userData of usersData) {
     promises.push(prisma.user.create({ data: userData }));
   }
@@ -71,7 +74,7 @@ async function seedVotes() {
               answerId:
                 poll.answers[Math.floor(Math.random() * poll.answers.length)]
                   .id,
-              userId: users[Math.floor(Math.random() * poll.answers.length)].id,
+              userId: users[Math.floor(Math.random() * users.length)].id,
             },
           });
         }
