@@ -1,4 +1,4 @@
-import type { Poll, Answer, User } from "@poll/prisma";
+import type { Poll, Answer, User, Vote } from "@poll/prisma";
 
 export type CreatePollData = {
   userId?: string;
@@ -18,6 +18,10 @@ export type GetPollData = {
 export type VotePollData = {
   pollId: string;
   answerId: string;
+};
+
+export type GetVoteUsersData = {
+  pollId: string;
 };
 
 export type PaginationResult<T = unknown> = {
@@ -45,10 +49,12 @@ export type Services = {
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
-  votePoll: (
-    pollId: string,
-    answerId: string
-  ) => Promise<Poll & { answers: Answer[] }>;
+  votePoll: (params: {
+    userId?: string;
+    pollId: string;
+    answerId: string;
+  }) => Promise<Vote>;
+  getPollVoters: (pollId: string) => Promise<User[]>;
 };
 
 // Frontend
@@ -66,8 +72,6 @@ export type Api = {
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
-  votePoll: (
-    pollId: string,
-    answerId: string
-  ) => Promise<Poll & { answers: Answer[] }>;
+  votePoll: (pollId: string, answerId: string) => Promise<Vote>;
+  getPollVoters: (pollId: string) => Promise<User[]>;
 };

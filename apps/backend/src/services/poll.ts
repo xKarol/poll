@@ -1,4 +1,4 @@
-import prisma from "@poll/prisma";
+import prisma, { User } from "@poll/prisma";
 import type { Poll } from "@poll/types";
 import createError from "http-errors";
 
@@ -109,12 +109,13 @@ export const deletePoll: Poll.Services["deletePoll"] = async (pollId) => {
   }
 };
 
-export const votePoll: Poll.Services["votePoll"] = async (
-  pollId: string,
-  answerId: string
-) => {
+export const votePoll: Poll.Services["votePoll"] = async ({
+  userId,
+  pollId,
+  answerId,
+}) => {
   try {
-    const response = await prisma.poll.update({
+    await prisma.poll.update({
       where: { id: pollId },
       data: {
         answers: {
@@ -126,10 +127,37 @@ export const votePoll: Poll.Services["votePoll"] = async (
           },
         },
       },
-      include: { answers: true },
+    });
+    const response = await prisma.vote.create({
+      data: {
+        userId: userId,
+        pollId,
+        answerId,
+      },
     });
     return response;
   } catch {
     throw createError(400, "Could not vote in the poll.");
+  }
+};
+
+export const getVoteUsersList: Poll.Services["getVoteUsersList"] = async (
+  pollId
+) => {
+  try {
+    const users = await prisma.vote.findMany({
+      take: 10,
+      where: {
+        pollId,
+      },
+      distinct: ["userId"],
+      select: {
+        user: true,
+      },
+    });
+
+    return users.map(({ user }) => user);
+  } catch {
+    throw createError(400, "Could not find vote users.");
   }
 };

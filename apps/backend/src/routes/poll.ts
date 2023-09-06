@@ -33,4 +33,6 @@ router.post(
   PollController.Vote
 );
 
+router.get("/poll/:pollId/vote/users", PollController.VoteUsers);
+
 export default router;

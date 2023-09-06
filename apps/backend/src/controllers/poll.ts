@@ -6,6 +6,7 @@ import {
   deletePoll,
   getPoll,
   getPolls,
+  getVoteUsersList,
   votePoll,
 } from "../services/poll";
 
@@ -76,7 +77,23 @@ export const Vote = async (
 ) => {
   try {
     const { pollId, answerId } = req.params;
-    const data = await votePoll(pollId, answerId);
+    const { id: userId } = req.user || {};
+    const data = await votePoll({ userId, pollId, answerId });
+
+    return res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const VoteUsers = async (
+  req: Request<Poll.GetVoteUsersData>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { pollId } = req.params;
+    const data = await getVoteUsersList(pollId);
 
     return res.send(data);
   } catch (error) {
