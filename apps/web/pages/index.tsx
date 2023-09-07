@@ -1,9 +1,9 @@
-import prisma from "@poll/prisma";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 import Header from "../components/header";
 import { routes } from "../config/routes";
+import prisma from "../lib/prisma";
 
 type Stats = {
   totalPolls: number;
