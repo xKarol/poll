@@ -2,6 +2,7 @@ import prisma from "@poll/prisma";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
+import Header from "../components/header";
 import { routes } from "../config/routes";
 
 type Stats = {
@@ -23,6 +24,7 @@ export default function Page({ stats }: { stats: Stats }) {
   const { data: session } = useSession();
   return (
     <>
+      <Header />
       <Link className="border border-black p-2 px-4" href={routes.CREATE_POLL}>
         Create Poll
       </Link>

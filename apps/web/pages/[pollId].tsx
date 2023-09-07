@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
+import Header from "../components/header";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";
@@ -106,6 +107,8 @@ const PollPage = () => {
   if (isLoading) return <CircularProgress />;
   return (
     <>
+      <Header />
+
       <p>Poll: {pollId}</p>
       <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (

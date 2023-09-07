@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
+import Header from "../components/header";
 import { routes } from "../config/routes";
 import { useCreatePoll } from "../hooks/use-create-poll";
 import { getErrorMessage } from "../utils/error";
@@ -70,6 +71,7 @@ export default function Page() {
   console.log(form.formState.errors);
   return (
     <>
+      <Header />
       <NextSeo title="Create your poll" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
