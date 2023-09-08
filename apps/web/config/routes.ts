@@ -6,5 +6,5 @@ export const routes = {
   PUBLIC_POLLS: "/public",
   LOGIN: "/login",
   USER_POLLS: "/account/polls",
-  poll: (pollId: string) => `/${pollId}`,
-} satisfies Record<string, ROUTE>;
+  poll: (pollId: string) => `/${pollId}` as const,
+} as const satisfies Record<string, ROUTE>;
