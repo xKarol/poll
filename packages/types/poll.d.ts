@@ -29,36 +29,8 @@ export type PaginationResult<T = unknown> = {
   nextPage: number | undefined;
 };
 
-// Backend
-export type Services = {
-  getPoll: (
-    pollId: string
-  ) => Promise<Poll & { answers: Answer[]; user?: User }>;
-  getPolls: (params: {
-    page?: number;
-    skip: number;
-    limit?: number;
-  }) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
-  getUserPolls: (
-    userId: string,
-    params: {
-      page?: number;
-      skip: number;
-      limit?: number;
-    }
-  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
-  createPoll: (pollData: CreatePollData) => Promise<Poll>;
-  deletePoll: (pollId: string) => Promise<void>;
-  votePoll: (params: {
-    userId?: string;
-    pollId: string;
-    answerId: string;
-  }) => Promise<Vote>;
-  getPollVoters: (pollId: string) => Promise<User[]>;
-};
-
 // Frontend
-export type Api = {
+export interface Api {
   getPoll: (
     pollId: string
   ) => Promise<Poll & { answers: Answer[]; user?: User }>;
@@ -74,4 +46,26 @@ export type Api = {
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (pollId: string, answerId: string) => Promise<Vote>;
   getPollVoters: (pollId: string) => Promise<User[]>;
-};
+}
+
+// Backend
+export interface Services extends Api {
+  getPolls: (params: {
+    page?: number;
+    skip: number;
+    limit?: number;
+  }) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  getUserPolls: (
+    userId: string,
+    params: {
+      page?: number;
+      skip: number;
+      limit?: number;
+    }
+  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  votePoll: (params: {
+    userId?: string;
+    pollId: string;
+    answerId: string;
+  }) => Promise<Vote>;
+}
