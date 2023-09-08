@@ -60,9 +60,15 @@ export const getUserPolls: Poll.Services["getUserPolls"] = async (
       },
       include: { answers: true },
     });
-
     return {
-      data: response.slice(0, limit),
+      data: response
+        .map(({ answers: _answers, ...data }) => {
+          const totalVotes = _answers
+            .map(({ votes }) => votes)
+            .reduce((total, votes) => total + Number(votes), 0);
+          return { ...data, totalVotes };
+        })
+        .slice(0, limit),
       nextPage: response.length > limit ? page + 1 : undefined,
     };
   } catch {

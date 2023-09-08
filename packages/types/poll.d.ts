@@ -33,7 +33,7 @@ export type PaginationResult<T = unknown> = {
 export interface Api {
   getPoll: (
     pollId: string
-  ) => Promise<Poll & { answers: Answer[]; user?: User }>;
+  ) => Promise<Poll & { answers: Answer[]; user: User | null }>;
   getPolls: (
     page?: number,
     limit?: number
