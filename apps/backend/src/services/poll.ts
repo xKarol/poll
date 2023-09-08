@@ -154,7 +154,9 @@ export const getPollVoters: Poll.Services["getPollVoters"] = async (pollId) => {
       },
     });
 
-    return users.map(({ user }) => user).filter((value) => value);
+    return users
+      .filter((data) => data.user !== null)
+      .map(({ user }) => user as NonNullable<typeof user>);
   } catch {
     throw createError(400, "Could not find vote users.");
   }
