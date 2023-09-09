@@ -71,70 +71,101 @@ export default function Page() {
   console.log(form.formState.errors);
   return (
     <>
-      <Header />
       <NextSeo title="Create your poll" />
+      <Header />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="container flex flex-col max-w-[700px]">
           {form.formState.errors.root?.message ? (
             <Alert severity="error">{form.formState.errors.root.message}</Alert>
           ) : null}
-          <FormField
-            control={form.control}
-            name="question"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Question</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your question..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col space-y-1 mb-8">
+            <h1 className="text-xl font-bold text-neutral-900">Create Poll</h1>
+            <p className="text-lg font-medium text-neutral-400">
+              Craft Your questions, gather opinions and make decisions.
+            </p>
+          </div>
 
-          <div className="flex flex-col space-y-2">
-            {fields.map((field, index) => (
-              <div key={field.id}>
-                <FormField
-                  control={form.control}
-                  name={`answers.${index}.text`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>Answer Options</FormLabel>}
-                      <FormControl>
-                        <Input placeholder={`Option ${index + 1}`} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            ))}
-            <button type="button" onClick={() => append({ text: "" })}>
+          <div className="space-y-3 mb-8">
+            <FormField
+              control={form.control}
+              name="question"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Question</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your question..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex flex-col space-y-3">
+              {fields.map((field, index) => (
+                <div key={field.id}>
+                  <FormField
+                    control={form.control}
+                    name={`answers.${index}.text`}
+                    render={({ field }) => (
+                      <FormItem>
+                        {index === 0 && <FormLabel>Answer options</FormLabel>}
+                        <FormControl>
+                          <Input
+                            placeholder={`Option ${index + 1}`}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="bg-neutral-300 text-white p-3 w-full rounded-md"
+              onClick={() => append({ text: "" })}>
               Add option
             </button>
           </div>
 
-          <FormField
-            control={form.control}
-            name="isPublic"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                <div className="space-y-0.5">
-                  <FormLabel>Public</FormLabel>
-                  <FormDescription>Make this poll public</FormDescription>
-                </div>
-                <FormControl>
-                  <Switch
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <LoadingButton type="submit" loading={isLoading}>
-            Submit
+          <div className="space-y-2 mb-8">
+            <h2 className="text-normal font-medium text-neutral-900">
+              Settings
+            </h2>
+            <div className="space-y-2">
+              <FormField
+                control={form.control}
+                name="isPublic"
+                render={({ field }) => (
+                  <FormItem className="flex bg-white flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-3 py-4">
+                    <div className="space-y-2">
+                      <FormLabel>Public</FormLabel>
+                      <FormDescription className="text-neutral-400">
+                        Make this poll public
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <LoadingButton
+            className="ml-auto bg-neutral-900 text-white py-3 px-4 capitalize min-w-[100px]"
+            type="submit"
+            loading={isLoading}>
+            Vote
           </LoadingButton>
         </form>
       </Form>

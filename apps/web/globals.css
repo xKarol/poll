@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@base {
+  body {
+    background-color: @apply bg-neutral-50;
+  }
+}
