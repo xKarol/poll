@@ -59,7 +59,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
         {...rest}>
         <Logo className="z-50" />
         {isOpen ? (
-          <nav className="bg-neutral-50 dark:bg-neutral-900 fixed top-0 left-0 right-0 bottom-0">
+          <nav className="bg-neutral-50 dark:bg-neutral-900 fixed top-0 left-0 right-0 bottom-0 z-10">
             <div className="container flex flex-col items-center pt-[7.5rem] space-y-8">
               <ul className="w-full items-center flex flex-col space-y-8 text-xl font-semibold">
                 {navLinks.map((link) => (
