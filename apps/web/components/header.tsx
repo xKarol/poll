@@ -1,10 +1,8 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
+import { Logo } from "@poll/ui";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import React from "react";
-
-import { routes } from "../config/routes";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"header">;
 
@@ -18,7 +16,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
         className
       )}
       {...rest}>
-      <Link href={routes.HOME}>Poll</Link>
+      <Logo />
       <HamburgerMenu />
       {session ? (
         <div className="flex justify-center space-x-2 items-center">
@@ -43,9 +41,9 @@ function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
     <div
       className={cn("flex flex-col items-end w-[30px] gap-1.5", className)}
       {...rest}>
-      <div className="w-6 h-0.5 bg-neutral-950 rounded-[0.25rem]"></div>
-      <div className="w-full h-0.5 bg-neutral-950 rounded-[0.25rem]"></div>
-      <div className="w-5 h-0.5 bg-neutral-950 rounded-[0.25rem]"></div>
+      <div className="w-6 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
+      <div className="w-full h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
+      <div className="w-5 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
     </div>
   );
 }
