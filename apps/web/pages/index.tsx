@@ -1,10 +1,8 @@
 import { MoonIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import Link from "next/link";
 
 import Header from "../components/header";
-import { routes } from "../config/routes";
 import prisma from "../lib/prisma";
 
 type Stats = {

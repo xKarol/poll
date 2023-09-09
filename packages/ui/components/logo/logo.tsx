@@ -1,9 +1,7 @@
 import { cn } from "@poll/lib";
 import React from "react";
 
-// @ts-expect-error
 import logoLight from "../../../../apps/web/public/logo-with-label-dark.svg";
-// @ts-expect-error
 import logoDark from "../../../../apps/web/public/logo-with-label-light.svg";
 
 export type LogoProps = {
