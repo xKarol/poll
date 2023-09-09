@@ -78,7 +78,9 @@ export default function Page() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="container flex flex-col max-w-[700px] text-neutral-900 dark:text-neutral-50">
           {form.formState.errors.root?.message ? (
-            <Alert severity="error">{form.formState.errors.root.message}</Alert>
+            <Alert severity="error" className="mb-8">
+              {form.formState.errors.root.message}
+            </Alert>
           ) : null}
           <div className="flex flex-col space-y-1 mb-8">
             <h1 className="text-xl font-bold">Create Poll</h1>
