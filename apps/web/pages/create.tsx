@@ -76,12 +76,12 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container flex flex-col max-w-[700px]">
+          className="container flex flex-col max-w-[700px] text-neutral-900 dark:text-neutral-50">
           {form.formState.errors.root?.message ? (
             <Alert severity="error">{form.formState.errors.root.message}</Alert>
           ) : null}
           <div className="flex flex-col space-y-1 mb-8">
-            <h1 className="text-xl font-bold text-neutral-900">Create Poll</h1>
+            <h1 className="text-xl font-bold">Create Poll</h1>
             <p className="text-lg font-medium text-neutral-400">
               Craft Your questions, gather opinions and make decisions.
             </p>
@@ -127,25 +127,23 @@ export default function Page() {
 
             <button
               type="button"
-              className="bg-neutral-300 text-white p-3 w-full rounded-md"
+              className="bg-neutral-300 dark:bg-neutral-700 text-white p-3 w-full rounded-md"
               onClick={() => append({ text: "" })}>
               Add option
             </button>
           </div>
 
           <div className="space-y-2 mb-8">
-            <h2 className="text-normal font-medium text-neutral-900">
-              Settings
-            </h2>
+            <h2 className="text-normal font-medium">Settings</h2>
             <div className="space-y-2">
               <FormField
                 control={form.control}
                 name="isPublic"
                 render={({ field }) => (
-                  <FormItem className="flex bg-white flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-3 py-4">
+                  <FormItem className="flex bg-white dark:bg-neutral-800 dark:border-none flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-3 py-4">
                     <div className="space-y-2">
                       <FormLabel>Public</FormLabel>
-                      <FormDescription className="text-neutral-400">
+                      <FormDescription className="text-neutral-400 text-sm">
                         Make this poll public
                       </FormDescription>
                     </div>
@@ -162,7 +160,7 @@ export default function Page() {
           </div>
 
           <LoadingButton
-            className="ml-auto bg-neutral-900 text-white py-3 px-4 capitalize min-w-[100px]"
+            className="ml-auto font-medium bg-neutral-900 dark:bg-neutral-50 dark:text-neutral-900 text-white py-3 px-4 capitalize min-w-[100px]"
             type="submit"
             loading={isLoading}>
             Vote
