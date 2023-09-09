@@ -1,4 +1,6 @@
+import { MoonIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 
 import Header from "../components/header";
@@ -22,6 +24,7 @@ export async function getServerSideProps() {
 
 export default function Page({ stats }: { stats: Stats }) {
   const { data: session } = useSession();
+  const { setTheme, theme } = useTheme();
   return (
     <>
       <Header />
@@ -65,6 +68,9 @@ export default function Page({ stats }: { stats: Stats }) {
           <span>{stats.totalUsers}</span>
         </div>
       </section>
+      <MoonIcon
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      />
     </>
   );
 }

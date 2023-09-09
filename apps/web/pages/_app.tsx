@@ -6,6 +6,7 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
+import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import React, { useState, useEffect } from "react";
@@ -42,15 +43,17 @@ export default function MyApp({
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <SessionProvider session={session}>
-            <main className={`${inter.variable} font-sans`}>
-              <Component {...pageProps} />
-            </main>
-            <ReactQueryDevtools initialIsOpen={false} />
-            {showDevtools && (
-              <React.Suspense fallback={null}>
-                <ReactQueryDevtoolsProduction />
-              </React.Suspense>
-            )}
+            <ThemeProvider attribute="class">
+              <main className={`${inter.variable} font-sans`}>
+                <Component {...pageProps} />
+              </main>
+              <ReactQueryDevtools initialIsOpen={false} />
+              {showDevtools && (
+                <React.Suspense fallback={null}>
+                  <ReactQueryDevtoolsProduction />
+                </React.Suspense>
+              )}
+            </ThemeProvider>
           </SessionProvider>
         </Hydrate>
       </QueryClientProvider>
