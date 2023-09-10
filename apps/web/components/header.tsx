@@ -114,7 +114,7 @@ type HamburgerMenuProps = React.ComponentPropsWithoutRef<"div">;
 
 function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
   const { setIsOpen } = useHeaderContext();
-  const isDesktop = useMedia("(min-width: 1280px)");
+  const isDesktop = useMedia("(min-width: 1280px)", true);
 
   useEffect(() => {
     setIsOpen(false);
