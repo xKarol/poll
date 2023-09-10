@@ -76,7 +76,7 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container flex flex-col max-w-[700px] text-neutral-900 dark:text-neutral-50">
+          className="container mt-4 flex flex-col max-w-[700px] text-neutral-900 dark:text-neutral-50">
           {form.formState.errors.root?.message ? (
             <Alert severity="error" className="mb-8">
               {form.formState.errors.root.message}
@@ -129,7 +129,7 @@ export default function Page() {
 
             <button
               type="button"
-              className="bg-neutral-300 dark:bg-neutral-700 text-white p-3 w-full rounded-md"
+              className="bg-neutral-300 dark:bg-neutral-700 text-white p-3 leading-[1.1] text-base w-full rounded-md"
               onClick={() => append({ text: "" })}>
               Add option
             </button>
@@ -145,7 +145,7 @@ export default function Page() {
                   <FormItem className="flex bg-white dark:bg-neutral-800 dark:border-none flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-3 py-4">
                     <div className="space-y-2">
                       <FormLabel>Public</FormLabel>
-                      <FormDescription className="text-neutral-400 text-sm">
+                      <FormDescription className="text-sm font-medium">
                         Make this poll public
                       </FormDescription>
                     </div>
