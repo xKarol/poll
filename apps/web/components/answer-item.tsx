@@ -21,8 +21,8 @@ export const AnswerItem = ({
   className,
   ...rest
 }: AnswerItemProps) => {
-  const showRadioElement = variant === "default" || variant === "selected";
   const showProgressElement = variant === "result" || variant === "selected";
+  const showPercentage = variant === "result" || variant === "selected";
   return (
     <div
       className={cn(
@@ -33,12 +33,12 @@ export const AnswerItem = ({
       )}
       {...rest}>
       <div className="flex justify-end">
-        {variant === "result" && (
+        {showPercentage && (
           <span className="text-end text-lg font-normal my-auto md:text-xl">
             {value.toFixed(0)}%
           </span>
         )}
-        {showRadioElement && RadioComponent}
+        {variant === "default" && RadioComponent}
       </div>
       <div className="flex flex-col space-y-4 w-full">
         <div className="flex justify-between items-center">

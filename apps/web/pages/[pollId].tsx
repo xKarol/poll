@@ -144,7 +144,6 @@ const PollPage = () => {
                   RadioComponent={
                     <RadioGroupItem
                       value={answer.text}
-                      disabled={userChoiceAnswerId === answer.id}
                       className="w-[30px] h-[30px] border-[3px] border-neutral-300"
                     />
                   }
