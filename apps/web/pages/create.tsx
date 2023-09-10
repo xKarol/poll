@@ -1,8 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadingButton } from "@mui/lab";
 import { Alert } from "@mui/material";
 import type { Poll } from "@poll/types";
-import { Button, Input, Switch } from "@poll/ui";
+import { Button, LoadingButton, Input, Switch } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -161,9 +160,10 @@ export default function Page() {
           </div>
 
           <LoadingButton
-            className="ml-auto font-medium bg-neutral-900 dark:bg-neutral-50 dark:text-neutral-900 text-white py-3 px-4 capitalize min-w-[100px]"
+            className="ml-auto min-w-[100px]"
+            variant="secondary"
             type="submit"
-            loading={isLoading}>
+            isLoading={isLoading}>
             Vote
           </LoadingButton>
         </form>

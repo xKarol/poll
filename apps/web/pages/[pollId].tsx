@@ -1,5 +1,5 @@
-import { LoadingButton } from "@mui/lab";
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
+import { LoadingButton } from "@poll/ui";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
@@ -170,7 +170,11 @@ const PollPage = () => {
                 </p>
               </div>
               {!isVoted ? (
-                <LoadingButton type="submit" loading={isVoteLoading}>
+                <LoadingButton
+                  className="min-w-[100px]"
+                  variant="secondary"
+                  type="submit"
+                  isLoading={isVoteLoading}>
                   Vote
                 </LoadingButton>
               ) : null}

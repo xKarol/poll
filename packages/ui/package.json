@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@poll/lib": "*",
-    "@radix-ui/react-switch": "^1.0.3"
+    "@radix-ui/react-switch": "^1.0.3",
+    "lucide-react": "^0.276.0"
   },
   "devDependencies": {
     "@poll/tsconfig": "*",
