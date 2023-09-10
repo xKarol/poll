@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoadingButton } from "@mui/lab";
 import { Alert } from "@mui/material";
 import type { Poll } from "@poll/types";
-import { Input, Switch } from "@poll/ui";
+import { Button, Input, Switch } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -76,7 +76,7 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container mt-4 md:mt-8 xl:mt-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:bg-neutral-950 rounded-[4px] py-16 px-8">
+          className="container mt-4 md:mt-8 xl:mt-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:bg-neutral-950 rounded-[4px] xl:py-16 xl:px-8">
           {form.formState.errors.root?.message ? (
             <Alert severity="error" className="mb-8">
               {form.formState.errors.root.message}
@@ -127,12 +127,11 @@ export default function Page() {
               ))}
             </div>
 
-            <button
-              type="button"
-              className="bg-neutral-300 dark:bg-neutral-700 text-white p-3 leading-[1.1] text-base w-full rounded-md"
+            <Button
+              className="w-full bg-neutral-300 dark:bg-neutral-700"
               onClick={() => append({ text: "" })}>
               Add option
-            </button>
+            </Button>
           </div>
 
           <div className="space-y-2 mb-8">
@@ -142,7 +141,7 @@ export default function Page() {
                 control={form.control}
                 name="isPublic"
                 render={({ field }) => (
-                  <FormItem className="flex bg-white dark:bg-neutral-800 dark:border-none flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-3 py-4">
+                  <FormItem className="flex bg-white dark:bg-neutral-800 dark:border-none flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-4 py-3">
                     <div className="space-y-2">
                       <FormLabel>Public</FormLabel>
                       <FormDescription className="text-sm font-medium">
