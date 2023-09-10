@@ -116,7 +116,7 @@ const PollPage = () => {
           <NextSeo title={data.question} />
           <form
             onSubmit={handleSubmit}
-            className="container flex flex-col m-auto mt-3 md:mt-8 xl:mt-16">
+            className="container flex flex-col m-auto mt-3 md:mt-8 xl:mt-16 max-w-6xl">
             <div className="space-y-4 leading-[2]">
               <h1 className="text-[22px] md:text-2xl xl:text-[32px] font-normal leading-[1.2]">
                 {data.question}
