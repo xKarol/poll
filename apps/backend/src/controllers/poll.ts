@@ -87,7 +87,7 @@ export const Vote = async (
   }
 };
 
-export const VoteUsers = async (
+export const GetPollVoters = async (
   req: Request<Poll.GetVoteUsersData>,
   res: Response,
   next: NextFunction
@@ -102,7 +102,7 @@ export const VoteUsers = async (
   }
 };
 
-export const PollAnswerUserChoice = async (
+export const GetPollUserAnswerChoice = async (
   req: Request<Poll.GetPollData>,
   res: Response,
   next: NextFunction
