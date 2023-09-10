@@ -12,18 +12,22 @@ import Header from "../components/header";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";
-import { useIsVoted } from "../hooks/use-is-voted";
 import { useLiveAnswers } from "../hooks/use-live-answers";
+import { usePollAnswerUserChoice } from "../hooks/use-poll-answer-user-choice";
 import { useVotePoll } from "../hooks/use-vote-poll";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
+import { getServerSession } from "../utils/get-server-session";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
+    const { req, res } = context;
+    await getServerSession({ req, res });
     const queryClient = new QueryClient();
     const pollId = context.params.pollId as string;
     await queryClient.fetchQuery(pollOptions.single(pollId));
     await queryClient.fetchQuery(pollOptions.getPollVoters(pollId));
+    await queryClient.fetchQuery(pollOptions.pollAnswerUserChoice(pollId));
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
@@ -45,10 +49,9 @@ const PollPage = () => {
   const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
-  const isVoted = useIsVoted(pollId);
+  const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
   useLiveAnswers(pollId);
-
-  console.log(voters);
+  const isVoted = !!userChoiceAnswerId;
 
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
@@ -126,11 +129,14 @@ const PollPage = () => {
             <RadioGroup
               className="flex flex-col my-10"
               onValueChange={onChange}>
-              {data.answers.map((answer, index) => (
+              {data.answers.map((answer) => (
                 <AnswerItem
                   variant={
-                    // TODO checking which item is selected
-                    index === 0 ? "selected" : isVoted ? "result" : "default"
+                    userChoiceAnswerId === answer.id
+                      ? "selected"
+                      : isVoted
+                      ? "result"
+                      : "default"
                   }
                   key={answer.id}
                   text={answer.text}
@@ -138,7 +144,7 @@ const PollPage = () => {
                   RadioComponent={
                     <RadioGroupItem
                       value={answer.text}
-                      disabled={index === 0} //TODO
+                      disabled={userChoiceAnswerId === answer.id}
                       className="w-[30px] h-[30px] border-[3px] border-neutral-300"
                     />
                   }

@@ -20,7 +20,7 @@ export const useVotePoll = () => {
     }) => {
       return votePoll(pollId, answerId);
     },
-    onSuccess(_data, variables, _context) {
+    onSuccess(_data, variables) {
       const { pollId, answerId } = variables;
       queryClient.setQueryData(
         pollKeys.single(pollId),

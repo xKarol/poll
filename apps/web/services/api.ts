@@ -44,3 +44,9 @@ export const getPollVoters: Poll.Api["getPollVoters"] = async (pollId) => {
   const { data } = await axios.get(`/poll/${pollId}/vote/users`);
   return data;
 };
+
+export const getPollUserAnswerChoice: Poll.Api["getPollUserAnswerChoice"] =
+  async (pollId) => {
+    const { data } = await axios.get(`/poll/${pollId}/answers/user-choice`);
+    return data;
+  };

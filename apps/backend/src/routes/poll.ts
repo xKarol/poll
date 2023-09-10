@@ -1,6 +1,7 @@
 import express from "express";
 
 import * as PollController from "../controllers/poll";
+import { PollAnswerUserChoice } from "../controllers/poll";
 import { validateSchema } from "../middlewares/validate-schema";
 import { withPagination } from "../middlewares/with-pagination";
 import * as PollSchema from "../schemas/poll";
@@ -34,5 +35,7 @@ router.post(
 );
 
 router.get("/poll/:pollId/vote/users", PollController.VoteUsers);
+
+router.get("/poll/:pollId/answers/user-choice", PollAnswerUserChoice);
 
 export default router;

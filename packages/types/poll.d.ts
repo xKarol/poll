@@ -46,6 +46,7 @@ export interface Api {
   deletePoll: (pollId: string) => Promise<void>;
   votePoll: (pollId: string, answerId: string) => Promise<Vote>;
   getPollVoters: (pollId: string) => Promise<User[]>;
+  getPollUserAnswerChoice: (pollId: string) => Promise<Vote | null>;
 }
 
 // Backend
@@ -68,4 +69,8 @@ export interface Services extends Api {
     pollId: string;
     answerId: string;
   }) => Promise<Vote>;
+  getPollUserAnswerChoice: (
+    userId: string,
+    pollId: string
+  ) => Promise<Vote | null>;
 }

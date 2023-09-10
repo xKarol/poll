@@ -8,6 +8,7 @@ import {
   getPolls,
   getPollVoters,
   votePoll,
+  getPollUserAnswerChoice,
 } from "../services/poll";
 
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
@@ -94,6 +95,25 @@ export const VoteUsers = async (
   try {
     const { pollId } = req.params;
     const data = await getPollVoters(pollId);
+
+    return res.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const PollAnswerUserChoice = async (
+  req: Request<Poll.GetPollData>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { pollId } = req.params;
+    const { id: userId } = req.user || {};
+
+    if (!userId) return res.status(200).send({});
+
+    const data = await getPollUserAnswerChoice(userId, pollId);
 
     return res.send(data);
   } catch (error) {

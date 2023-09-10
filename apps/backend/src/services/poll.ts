@@ -167,3 +167,19 @@ export const getPollVoters: Poll.Services["getPollVoters"] = async (pollId) => {
     throw createError(400, "Could not find vote users.");
   }
 };
+
+export const getPollUserAnswerChoice: Poll.Services["getPollUserAnswerChoice"] =
+  async (userId, pollId) => {
+    try {
+      const vote = await prisma.vote.findFirst({
+        where: {
+          pollId,
+          userId,
+        },
+      });
+
+      return vote;
+    } catch {
+      throw createError(400, "Could not find user selected answer.");
+    }
+  };

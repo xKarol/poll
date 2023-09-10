@@ -1,11 +1,17 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 
-import { getPoll, getPollVoters } from "../services/api";
+import {
+  getPoll,
+  getPollUserAnswerChoice,
+  getPollVoters,
+} from "../services/api";
 
 export const pollKeys = {
   all: ["poll"] as const,
   single: (pollId: string) => [...pollKeys.all, pollId] as const,
   getPollVoters: (pollId: string) => ["poll-voters", pollId] as const,
+  pollAnswerUserChoice: (pollId: string) =>
+    ["poll-answer-user-choice", pollId] as const,
 };
 
 export const pollOptions = {
@@ -22,6 +28,13 @@ export const pollOptions = {
   ): UseQueryOptions<Awaited<ReturnType<typeof getPollVoters>>> => ({
     queryKey: pollKeys.getPollVoters(pollId),
     queryFn: () => getPollVoters(pollId),
+    enabled: !!pollId,
+  }),
+  pollAnswerUserChoice: (
+    pollId: string
+  ): UseQueryOptions<Awaited<ReturnType<typeof getPollUserAnswerChoice>>> => ({
+    queryKey: pollKeys.pollAnswerUserChoice(pollId),
+    queryFn: () => getPollUserAnswerChoice(pollId),
     enabled: !!pollId,
   }),
 } satisfies Record<keyof typeof pollKeys, unknown>;
