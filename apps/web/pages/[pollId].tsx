@@ -41,7 +41,7 @@ const colors = ["#9ECE9A", "#74A57F", "#077187", "#8CABBE"];
 const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
-  const { error, isLoading, isSuccess, data } = useGetPoll(pollId);
+  const { isLoading, isSuccess, data } = useGetPoll(pollId);
   const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
@@ -108,51 +108,59 @@ const PollPage = () => {
   return (
     <>
       <Header />
-
-      <p>Poll: {pollId}</p>
-      <p>Error: {JSON.stringify(error)}</p>
       {isSuccess && (
         <>
           <NextSeo title={data.question} />
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col max-w-2xl m-auto">
-            <div className="space-y-4">
-              <h1 className="text-[32px] font-normal">{data.question}</h1>
-              <span className="text-sm text-neutral-500">
+            className="container flex flex-col m-auto mt-3 md:mt-8 xl:mt-16">
+            <div className="space-y-4 leading-[2]">
+              <h1 className="text-[22px] md:text-2xl xl:text-[32px] font-normal leading-[1.2]">
+                {data.question}
+              </h1>
+              <span className="text-base font-normal text-neutral-400">
                 by a {data.user?.name || "guest"} ·{" "}
                 {dayjs(data.createdAt).fromNow()}
               </span>
             </div>
             <RadioGroup
-              className="flex flex-col space-y-4 my-10"
+              className="flex flex-col my-10"
               onValueChange={onChange}>
-              {data.answers.map((answer) => (
+              {data.answers.map((answer, index) => (
                 <AnswerItem
-                  variant={isVoted ? "checked" : "default"}
+                  variant={
+                    // TODO checking which item is selected
+                    index === 0 ? "selected" : isVoted ? "result" : "default"
+                  }
                   key={answer.id}
                   text={answer.text}
                   value={calcPercent(answer.votes)}
-                  RadioComponent={<RadioGroupItem value={answer.text} />}
+                  RadioComponent={
+                    <RadioGroupItem
+                      value={answer.text}
+                      disabled={index === 0} //TODO
+                      className="w-[30px] h-[30px] border-[3px] border-neutral-300"
+                    />
+                  }
                 />
               ))}
             </RadioGroup>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 {voters?.length >= 2 ? (
-                  <AvatarGroup max={4} total={4}>
+                  <AvatarGroup max={4} total={4} spacing="small">
                     {voters.map((voter) => (
                       <Avatar
                         key={voter.id}
                         alt={`${voter.name} voter`}
                         src={voter.image}
-                        sx={{ width: 24, height: 24 }}>
+                        sx={{ width: 30, height: 30 }}>
                         {voter.name[0]}
                       </Avatar>
                     ))}
                   </AvatarGroup>
                 ) : null}
-                <p className="text-neutral-500 font-normal text-sm">
+                <p className="text-base font-normal">
                   Total Votes: {totalVotes}
                 </p>
               </div>
