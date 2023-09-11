@@ -164,7 +164,7 @@ export default function Page() {
             variant="secondary"
             type="submit"
             isLoading={isLoading}>
-            Vote
+            Create
           </LoadingButton>
         </form>
       </Form>
