@@ -127,6 +127,7 @@ export default function Page() {
             </div>
 
             <Button
+              type="button"
               className="w-full bg-neutral-300 dark:bg-neutral-700"
               onClick={() => append({ text: "" })}>
               Add option
