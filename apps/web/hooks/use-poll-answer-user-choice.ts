@@ -8,8 +8,8 @@ export const usePollAnswerUserChoice = (pollId: string | undefined) => {
   const { status } = useSession();
   const isLoggedIn = status === "authenticated";
   const { data } = useQuery({
-    ...pollOptions.pollAnswerUserChoice(pollId),
-    enabled: pollId && isLoggedIn,
+    ...pollOptions.getPollAnswerUserChoice(pollId),
+    enabled: !!pollId && isLoggedIn,
   });
   const { data: pollData } = useQuery(pollOptions.single(pollId));
   const answerId = useGetVotedAnswer(pollId, pollData.answers);
@@ -17,6 +17,7 @@ export const usePollAnswerUserChoice = (pollId: string | undefined) => {
   if (status === "loading") return undefined;
   if (status === "unauthenticated") return answerId;
   return (
-    (Object.keys(data).length === 0 ? undefined : data.answerId) || undefined
+    (Object.keys(data || {}).length === 0 ? undefined : data.answerId) ||
+    undefined
   );
 };

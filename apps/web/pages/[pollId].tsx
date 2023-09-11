@@ -27,7 +27,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const pollId = context.params.pollId as string;
     await queryClient.fetchQuery(pollOptions.single(pollId));
     await queryClient.fetchQuery(pollOptions.getPollVoters(pollId));
-    await queryClient.fetchQuery(pollOptions.pollAnswerUserChoice(pollId));
+    // TODO for some reason cookies are not being passed in this request, SSR is disabled for now
+    // await queryClient.fetchQuery(pollOptions.getPollAnswerUserChoice(pollId));
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
