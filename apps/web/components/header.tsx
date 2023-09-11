@@ -1,6 +1,6 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Logo } from "@poll/ui";
+import { Button, Logo } from "@poll/ui";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -68,11 +68,20 @@ const Header = ({ className, ...rest }: HeaderProps) => {
                   </li>
                 ))}
               </ul>
-              <Link
-                href={routes.LOGIN}
-                className="p-2 px-4 bg-green-500 rounded-md text-neutral-900 font-medium">
-                Login
-              </Link>
+              {session ? (
+                <div className="flex justify-center space-x-2 items-center">
+                  <Avatar
+                    src={session.user.image}
+                    sx={{ width: "32px", height: "32px" }}>
+                    {session.user.name[0]}
+                  </Avatar>
+                  <span>{session.user.name}</span>
+                </div>
+              ) : (
+                <Button asChild variant="secondary" className="!bg-green-500">
+                  <Link href={routes.LOGIN}>Login</Link>
+                </Button>
+              )}
             </div>
           </nav>
         ) : null}
@@ -95,11 +104,9 @@ const Header = ({ className, ...rest }: HeaderProps) => {
               <span>{session.user.name}</span>
             </div>
           ) : (
-            <Link
-              href={routes.LOGIN}
-              className="p-2 px-4 bg-green-500 rounded-md text-neutral-900 font-medium">
-              Login
-            </Link>
+            <Button asChild variant="secondary" className="!bg-green-500">
+              <Link href={routes.LOGIN}>Login</Link>
+            </Button>
           )}
         </nav>
         <HamburgerMenu className="xl:hidden z-50" />
