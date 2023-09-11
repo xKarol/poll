@@ -1,7 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert } from "@mui/material";
 import type { Poll } from "@poll/types";
-import { Button, LoadingButton, Input, Switch } from "@poll/ui";
+import {
+  Button,
+  LoadingButton,
+  Input,
+  Switch,
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -76,9 +83,10 @@ export default function Page() {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="container mt-4 md:mt-8 xl:mt-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:dark:bg-neutral-950 xl:bg-neutral-200/50 rounded-[4px] xl:py-16 xl:px-8">
-          {form.formState.errors.root?.message ? (
-            <Alert severity="error" className="mb-8">
-              {form.formState.errors.root.message}
+          {!form.formState.errors.root?.message ? (
+            <Alert variant="error" className="mb-8">
+              {/* <AlertTitle>{form.formState.errors.root.message}</AlertTitle> */}
+              <AlertTitle>Something went wrong...</AlertTitle>
             </Alert>
           ) : null}
           <div className="flex flex-col space-y-1 mb-8">

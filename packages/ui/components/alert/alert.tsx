@@ -1,0 +1,67 @@
+import { cn } from "@poll/lib";
+import { cva, type VariantProps } from "class-variance-authority";
+import {
+  AlertCircleIcon,
+  CheckCircle2Icon,
+  InfoIcon,
+  XCircleIcon,
+} from "lucide-react";
+import * as React from "react";
+
+const alertVariants = cva(
+  "relative w-full rounded-[4px] p-4 [&>svg~*]:pl-8 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3 [&>svg]:text-foreground text-neutral-900",
+  {
+    variants: {
+      variant: {
+        error: "bg-red-300 dark:bg-red-500",
+        warning: "bg-orange-300 dark:bg-orange-500",
+        info: "bg-blue-300 dark:bg-blue-500",
+        success: "bg-green-300 dark:bg-green-500",
+      },
+    },
+  }
+);
+
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, children, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}>
+    {variant === "error" && <XCircleIcon />}
+    {variant === "warning" && <AlertCircleIcon />}
+    {variant === "info" && <InfoIcon />}
+    {variant === "success" && <CheckCircle2Icon />}
+    {children}
+  </div>
+));
+Alert.displayName = "Alert";
+
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+));
+AlertTitle.displayName = "AlertTitle";
+
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+));
+AlertDescription.displayName = "AlertDescription";
+
+export { Alert, AlertTitle, AlertDescription };
