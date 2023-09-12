@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divider } from "@mui/material";
-import { Alert, AlertTitle, Input, LoadingButton } from "@poll/ui";
+import { Alert, AlertTitle, Input, LoadingButton, Icon } from "@poll/ui";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
@@ -65,7 +65,8 @@ export default function Page() {
             onClick={() => mutate("google")}
             variant="secondary"
             className="border dark:border-none border-neutral-200 dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-700/50">
-            Continue with Google
+            <Icon.Google className="mr-2" />
+            <span>Continue with Google</span>
           </LoadingButton>
           <Divider className="border-neutral-200 dark:border-neutral-600 !mt-12 !mb-8" />
           <div className="space-y-16 flex flex-col">
