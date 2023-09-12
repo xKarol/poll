@@ -63,7 +63,8 @@ export default function Page() {
             type="button"
             isLoading={isLoading.google}
             onClick={() => mutate("google")}
-            className="bg-white border border-neutral-200 text-neutral-900">
+            variant="secondary"
+            className="border dark:border-none border-neutral-200 dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-700/50">
             Continue with Google
           </LoadingButton>
           <Divider className="border-neutral-200 dark:border-neutral-600 !mt-12 !mb-8" />
