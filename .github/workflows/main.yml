@@ -20,6 +20,3 @@ jobs:
 
       - name: Eslint
         run: yarn lint
-
-      - name: Prettier
-        run: yarn format
