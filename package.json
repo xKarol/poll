@@ -12,14 +12,16 @@
     "dev": "turbo run dev --concurrency 11",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
     "eslint": "^7.32.0",
     "eslint-config-custom": "*",
     "prettier": "3.0.2",
-    "turbo": "latest"
+    "turbo": "latest",
+    "vitest": "^0.34.4"
   },
   "workspaces": [
     "apps/*",
