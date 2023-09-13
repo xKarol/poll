@@ -33,3 +33,5 @@ const server = app.listen(PORT, () => {
 });
 
 websocketInit(server);
+
+export default server;
