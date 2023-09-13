@@ -14,6 +14,9 @@ export const getPolls: Poll.Services["getPolls"] = async ({
       where: {
         isPublic: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
       include: { answers: true },
     });
 
@@ -57,6 +60,9 @@ export const getUserPolls: Poll.Services["getUserPolls"] = async (
       take: limit + 1,
       where: {
         userId: userId,
+      },
+      orderBy: {
+        updatedAt: "desc",
       },
       include: { answers: true },
     });
