@@ -100,6 +100,7 @@ export const createPoll: Poll.Services["createPoll"] = async (data) => {
       data: {
         userId: data.userId,
         question: data.question,
+        isPublic: data.isPublic,
         answers: {
           createMany: { data: data.answers },
         },
