@@ -9,6 +9,7 @@ import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
 import { withAuth } from "./middlewares/with-auth";
 import routes from "./routes";
+import { getOriginURL } from "./utils/get-origin-url";
 import websocketInit from "./websockets";
 
 const app = express();
@@ -24,12 +25,7 @@ app.use(errorHandler);
 const PORT = (process.env.PORT || 4000) as number;
 
 const server = app.listen(PORT, () => {
-  // @ts-expect-error
-  const { address = "unknown", port = PORT } = server.address();
-  const isDev = process.env.NODE_ENV === "development";
-  console.log(
-    `Server is running at http://${isDev ? "localhost" : address}:${port}`
-  );
+  console.log(`Server is running at ${getOriginURL()}`);
 });
 
 websocketInit(server);
