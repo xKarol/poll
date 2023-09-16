@@ -21,11 +21,11 @@ const navLinks = [
   },
   {
     text: "Features",
-    href: routes.HOME, //TODO change
+    href: routes.FEATURES,
   },
   {
     text: "Pricing",
-    href: routes.HOME, //TODO change
+    href: routes.PRICING,
   },
 ];
 
