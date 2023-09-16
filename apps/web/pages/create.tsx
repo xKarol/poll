@@ -81,7 +81,7 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container my-4 mb-8 md:my-8 xl:my-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:dark:bg-neutral-950 xl:bg-neutral-200/50 rounded-[4px] xl:py-16 xl:px-8">
+          className="container my-4 mb-8 md:my-8 xl:my-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:dark:bg-neutral-950/20 xl:bg-neutral-200/20 xl:border xl:border-neutral-200/50 xl:dark:border-neutral-950 rounded-[4px] xl:py-16 xl:px-8">
           {form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
@@ -134,7 +134,7 @@ export default function Page() {
 
             <Button
               type="button"
-              className="w-full bg-neutral-300 dark:bg-neutral-700"
+              className="w-full bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700"
               onClick={() => append({ text: "" })}>
               Add option
             </Button>
