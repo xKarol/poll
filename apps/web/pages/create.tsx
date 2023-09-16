@@ -134,7 +134,7 @@ export default function Page() {
 
             <Button
               type="button"
-              className="w-full bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-700"
+              className="w-full bg-neutral-200 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:hover:bg-neutral-700/90 dark:text-white"
               onClick={() => append({ text: "" })}>
               Add option
             </Button>
@@ -168,7 +168,6 @@ export default function Page() {
 
           <LoadingButton
             className="ml-auto min-w-[100px]"
-            variant="secondary"
             type="submit"
             isLoading={isLoading}>
             Create
