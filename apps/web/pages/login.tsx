@@ -52,7 +52,7 @@ export default function Page() {
 
       <NextSeo title="Login" />
       <main className="container">
-        <div className="max-w-[360px] mt-16 mx-auto flex flex-col">
+        <div className="max-w-[360px] my-16 mx-auto flex flex-col">
           {form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
