@@ -1,4 +1,4 @@
-import { Button, Icon } from "@poll/ui";
+import { Button, Icon, Skeleton } from "@poll/ui";
 import { Loader } from "lucide-react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
@@ -33,8 +33,14 @@ export default function Page() {
             Recent <Icon.ChevronDown />
           </Button>
         </div>
-        {/* TODO ADD loading & error UI */}
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="flex flex-col space-y-8">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Skeleton key={index} className="h-40" />
+            ))}
+          </div>
+        )}
+        {/* TODO ADD error UI */}
         {isError && <div>{getErrorMessage(error)}</div>}
         {isSuccess && (
           <div className="flex flex-col space-y-8">
