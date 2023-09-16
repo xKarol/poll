@@ -173,7 +173,6 @@ const PollPage = () => {
               {!isVoted ? (
                 <LoadingButton
                   className="min-w-[100px]"
-                  variant="secondary"
                   type="submit"
                   isLoading={isVoteLoading}>
                   Vote
