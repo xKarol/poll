@@ -12,6 +12,7 @@ export default function Page() {
     queryFn: () => axios.get("/payments"),
   });
   const { mutateAsync } = useMutation({
+    // @ts-ignore TODO
     mutationFn: ({ priceId }) => axios.post("/payments", { priceId }),
   });
   const router = useRouter();
@@ -32,6 +33,7 @@ export default function Page() {
                   isLoading={false}
                   type="button"
                   onClick={async () => {
+                    // @ts-ignore
                     const { data: url } = await mutateAsync({
                       priceId: price.id,
                     });
