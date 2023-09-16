@@ -1,9 +1,9 @@
 import { cn } from "@poll/lib";
+import { Progress } from "@poll/ui";
 import { CheckCircle2 } from "lucide-react";
 import React, { useId } from "react";
 
 import { Label } from "./label";
-import { Progress } from "./progress";
 
 type AnswerItemVariants = "default" | "result" | "selected";
 
@@ -51,7 +51,15 @@ export const AnswerItem = ({
             <CheckCircle2 className="text-neutral-900 dark:text-green-500" />
           )}
         </div>
-        {showProgressElement && <Progress value={value} />}
+        {showProgressElement && (
+          <Progress
+            value={value}
+            className={cn(
+              variant === "selected" &&
+                "bg-neutral-900/5 dark:bg-green-500/5 [&>*]:dark:bg-green-500 [&>*]:bg-neutral-900"
+            )}
+          />
+        )}
       </div>
     </div>
   );
