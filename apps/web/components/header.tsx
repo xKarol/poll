@@ -120,7 +120,7 @@ export default Header;
 type HamburgerMenuProps = React.ComponentPropsWithoutRef<"div">;
 
 function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
-  const { setIsOpen } = useHeaderContext();
+  const { setIsOpen, isOpen } = useHeaderContext();
   const isDesktop = useMedia("(min-width: 1280px)", true);
 
   useEffect(() => {
@@ -131,13 +131,25 @@ function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
     <div
       onClick={() => setIsOpen((current) => !current)}
       className={cn(
-        "cursor-pointer flex flex-col items-end w-[30px] gap-1.5",
+        "cursor-pointer flex flex-col items-end w-[30px] h-[20px] gap-1.5 relative",
         className
       )}
       {...rest}>
-      <div className="w-6 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
-      <div className="w-full h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
-      <div className="w-5 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem]"></div>
+      <div
+        className={cn(
+          "absolute top-0 w-6 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
+          isOpen && "-rotate-45 top-1/2 -translate-y-1/2 w-full"
+        )}></div>
+      <div
+        className={cn(
+          "absolute top-1/2 -translate-y-1/2 w-full h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
+          isOpen && "rotate-45 top-1/2 -translate-y-1/2 w-full"
+        )}></div>
+      <div
+        className={cn(
+          "absolute bottom-0 w-5 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
+          isOpen && "-rotate-45 top-1/2 -translate-y-1/2 w-full opacity-0"
+        )}></div>
     </div>
   );
 }
