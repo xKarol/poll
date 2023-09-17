@@ -1,9 +1,11 @@
 import { LoadingButton } from "@poll/ui";
+import { useSession } from "next-auth/react";
 // import { useMutation, useQuery } from "@tanstack/react-query";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 
 import Header from "../components/header";
+import { routes } from "../config/routes";
 
 // import axios from "../lib/axios";
 
@@ -27,6 +29,7 @@ export default function Page() {
   //   // @ts-ignore TODO
   //   mutationFn: ({ priceId }) => axios.post("/payments", { priceId }),
   // });
+  const { status } = useSession();
   const router = useRouter();
 
   return (
@@ -44,7 +47,14 @@ export default function Page() {
                 isLoading={false}
                 type="button"
                 onClick={() => {
-                  router.push(`https://buy.stripe.com/${price.priceId}`);
+                  if (status == "unauthenticated") {
+                    // TODO redirect after login to pricing page
+                    router.push(routes.LOGIN);
+                    return;
+                  }
+                  if (status === "authenticated") {
+                    router.push(`https://buy.stripe.com/${price.priceId}`);
+                  }
                 }}>
                 Buy
               </LoadingButton>
