@@ -30,6 +30,7 @@ export const CreatePayment = async (
       success_url: "http://localhost:3000",
       cancel_url: "http://localhost:3000/pricing",
     });
+
     return res.send(payment.url);
   } catch (error) {
     next(error);
