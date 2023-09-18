@@ -28,7 +28,7 @@ export const CreatePayment = async (
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "payment",
       success_url: "http://localhost:3000",
-      cancel_url: "http://localhost:3000",
+      cancel_url: "http://localhost:3000/pricing",
     });
     return res.send(payment.url);
   } catch (error) {
