@@ -24,9 +24,16 @@ export const CreatePayment = async (
 ) => {
   try {
     const { priceId } = req.body;
+    const { id: userId } = req.user!;
+
     const payment = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "payment",
+      payment_intent_data: {
+        metadata: {
+          userId,
+        },
+      },
       success_url: "http://localhost:3000",
       cancel_url: "http://localhost:3000/pricing",
     });

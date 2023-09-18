@@ -5,11 +5,11 @@ const router = express.Router();
 router.post("/webhook/stripe", (request, response) => {
   const event = request.body;
 
-  console.log(event);
+  //   console.log(event);
   // Handle the event
   switch (event.type) {
     case "payment_intent.succeeded":
-      console.log("payment succeed");
+      console.log("payment succeed", event.data.object.metadata);
       // const paymentIntent = event.data.object;
       // Then define and call a method to handle the successful payment intent.
       // handlePaymentIntentSucceeded(paymentIntent);
@@ -20,8 +20,8 @@ router.post("/webhook/stripe", (request, response) => {
       // handlePaymentMethodAttached(paymentMethod);
       break;
     // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
+    // default:
+    //   console.log(`Unhandled event type ${event.type}`);
   }
 
   // Return a response to acknowledge receipt of the event
