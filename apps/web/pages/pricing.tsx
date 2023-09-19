@@ -57,6 +57,7 @@ export default function Page() {
             {pricingPlans.map(({ productId, name, description }) => (
               <PricingCard
                 key={productId}
+                className="w-full h-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                 planName={name}
                 description={description}
                 price={0}
@@ -115,7 +116,7 @@ function PricingCard({
   return (
     <div
       className={cn(
-        "dark:bg-neutral-800/50 border-2 px-4 py-8 bg-white border-neutral-100 dark:border-neutral-800 rounded-[8px] flex flex-col justify-between min-w-[240px] xl:max-w-[280px] h-full",
+        "dark:bg-neutral-800/50 border-2 px-4 py-8 bg-white border-neutral-100 dark:border-neutral-800 rounded-[8px] flex flex-col justify-between min-w-[240px]",
         className
       )}
       {...props}>
