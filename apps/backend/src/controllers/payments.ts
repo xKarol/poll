@@ -1,3 +1,4 @@
+import type { Plan } from "@poll/prisma";
 import type { NextFunction, Request, Response } from "express";
 
 import { stripe } from "../lib/stripe";
@@ -17,14 +18,31 @@ export const GetPrices = async (
   }
 };
 
+const planNames: Plan[] = ["FREE", "STANDARD", "PREMIUM"];
+
 export const CreatePayment = async (
-  req: Request<unknown, unknown, { priceId: string }>,
+  req: Request<unknown, unknown, { productId: string }>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { priceId } = req.body;
+    const { productId } = req.body;
     const { id: userId } = req.user!;
+
+    const productData = await stripe.products.retrieve(productId);
+    const priceId =
+      typeof productData.default_price === "string"
+        ? productData.default_price
+        : productData.default_price?.id;
+    if (!priceId) {
+      throw new Error("The product does not have a set default price.");
+    }
+
+    const matchingPlan = planNames.find((planName) =>
+      productData.name.toUpperCase().includes(planName)
+    );
+
+    if (!matchingPlan) throw new Error(`Invalid plan '${productData.name}'`);
 
     const payment = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
@@ -32,6 +50,9 @@ export const CreatePayment = async (
       payment_intent_data: {
         metadata: {
           userId,
+          productId,
+          priceId,
+          planName: matchingPlan,
         },
       },
       success_url: "http://localhost:3000",
@@ -40,6 +61,7 @@ export const CreatePayment = async (
 
     return res.send(payment.url);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

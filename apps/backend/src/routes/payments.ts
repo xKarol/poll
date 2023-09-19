@@ -12,7 +12,7 @@ router.post(
   "/payments",
   requireAuth,
   validateSchema(
-    z.object({ body: z.object({ priceId: z.string().nonempty() }) })
+    z.object({ body: z.object({ productId: z.string().nonempty() }) })
   ),
   PaymentsController.CreatePayment
 );

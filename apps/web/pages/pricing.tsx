@@ -11,12 +11,12 @@ import axios from "../lib/axios";
 
 const pricingPlans = [
   {
-    priceId: "price_1NqCiiBOPlaLJnMUvq8tXGd0",
+    productId: "prod_OdTgXMYSYsi03h",
     name: "Premium Plan",
   },
   {
-    priceId: "price_1NqChJBOPlaLJnMU2rBkktKe",
-    name: "Pro Plan",
+    productId: "prod_OdTeDMfvLOovf7",
+    name: "Standard Plan",
   },
 ];
 
@@ -27,7 +27,7 @@ export default function Page() {
   // });
   const { mutateAsync } = useMutation({
     // @ts-ignore TODO
-    mutationFn: ({ priceId }) => axios.post("/payments", { priceId }),
+    mutationFn: ({ productId }) => axios.post("/payments", { productId }),
   });
   const { status } = useSession();
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function Page() {
       <main className="container">
         <div className="flex flex-col">
           {pricingPlans.map((price) => (
-            <div key={price.priceId}>
+            <div key={price.productId}>
               {price.name}
               {/* {price.unit_amount}
               {price.currency} */}
@@ -53,11 +53,15 @@ export default function Page() {
                     return;
                   }
                   if (status === "authenticated") {
-                    // @ts-ignore
-                    const { data } = await mutateAsync({
-                      priceId: price.priceId,
-                    });
-                    router.push(data);
+                    try {
+                      // @ts-ignore
+                      const { data } = await mutateAsync({
+                        productId: price.productId,
+                      });
+                      router.push(data);
+                    } catch (e) {
+                      console.log(e);
+                    }
                   }
                 }}>
                 Buy
