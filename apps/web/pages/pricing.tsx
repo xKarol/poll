@@ -13,19 +13,19 @@ import { getBaseUrl } from "../utils/get-base-url";
 
 const pricingPlans = [
   {
-    productId: "prod_OdTgXMYSYsi03h",
+    productId: "_",
     name: "Free",
     description: "Ideal for simple polls and initial experimentation.",
-  },
-  {
-    productId: "prod_OdTgXMYSYsi03h",
-    name: "Premium",
-    description: "For users seeking more options and capabilities.",
   },
   {
     productId: "prod_OdTeDMfvLOovf7",
     name: "Standard",
     description: "Go premium for advanced features and maximum impact",
+  },
+  {
+    productId: "prod_OdTgXMYSYsi03h",
+    name: "Premium",
+    description: "For users seeking more options and capabilities.",
   },
 ];
 
@@ -62,7 +62,11 @@ export default function Page() {
                 planName={name}
                 description={description}
                 price={0}
-                features={["Some feature", "Some feature", "Some feature"]}
+                features={[
+                  "Some feature 1",
+                  "Some feature 2",
+                  "Some feature 3",
+                ]}
                 ActionComponent={
                   <LoadingButton
                     isLoading={false}
