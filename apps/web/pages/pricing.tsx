@@ -46,7 +46,7 @@ export default function Page() {
       <Header />
       <NextSeo title="Pricing" />
       <main className="container">
-        <div className="space-y-8 my-16 mx-auto flex flex-col items-center max-w-4xl">
+        <div className="space-y-8 my-4 md:my-8 xl:my-16 mx-auto flex flex-col items-center max-w-4xl">
           <div className="space-y-3 flex flex-col items-center">
             <h1 className="text-3xl font-medium">Pricing</h1>
             <p className="text-xl font-medium text-neutral-400 text-center">
