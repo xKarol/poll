@@ -10,13 +10,22 @@ const initialLoadingData: Record<Providers, boolean> = {
   google: false,
 };
 
-export const useSignIn = () => {
+export const useSignIn = (
+  {
+    redirectUrl,
+  }: {
+    redirectUrl?: string;
+  } = { redirectUrl: routes.HOME }
+) => {
   const [loading, setLoading] = useState(initialLoadingData);
 
   const data = useMutation({
     mutationFn: (provider: Providers) => {
       setLoading((prevData) => ({ ...prevData, [provider]: true }));
-      return signIn(provider, { callbackUrl: routes.HOME });
+      return signIn(provider, {
+        callbackUrl: redirectUrl,
+        redirect: !!redirectUrl,
+      });
     },
     onError: () => {
       setLoading(() => ({ ...initialLoadingData }));

@@ -4,6 +4,7 @@ import { Alert, AlertTitle, Input, LoadingButton, Icon } from "@poll/ui";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -32,7 +33,10 @@ const credentialsSchema = z.object({
 });
 
 export default function Page() {
-  const { mutate, isLoading } = useSignIn();
+  const router = useRouter();
+  const { mutate, isLoading } = useSignIn({
+    redirectUrl: router.query.redirect as string | undefined,
+  });
   const form = useForm<FormValues>({
     // @ts-expect-error
     resolver: zodResolver(credentialsSchema),

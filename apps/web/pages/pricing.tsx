@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Header from "../components/header";
 import { routes } from "../config/routes";
 import axios from "../lib/axios";
+import { getBaseUrl } from "../utils/get-base-url";
 
 const pricingPlans = [
   {
@@ -69,7 +70,11 @@ export default function Page() {
                     onClick={async () => {
                       if (status == "unauthenticated") {
                         // TODO redirect after login to pricing page
-                        router.push(routes.LOGIN);
+                        router.push(routes.LOGIN, {
+                          query: {
+                            redirect: `${getBaseUrl()}${routes.PRICING}`,
+                          },
+                        });
                         return;
                       }
                       if (status === "authenticated") {
