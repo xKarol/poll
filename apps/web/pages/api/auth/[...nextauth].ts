@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@poll/prisma";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 import { defaultCookies } from "../../../lib/default-cookies";
+import prisma from "../../../lib/prisma";
 
 const isSecure = process.env.NODE_ENV === "production";
 
@@ -28,20 +28,18 @@ export const authOptions: NextAuthOptions = {
           id: true,
           email: true,
           name: true,
+          plan: true,
         },
       });
       if (!user) return token;
-
       return {
         ...token,
-        id: user.id,
-        email: user.email,
-        name: user.name,
+        ...user,
       };
     },
 
-    async session({ session }) {
-      return session;
+    async session({ session, token }) {
+      return { ...session, user: { ...session.user, plan: token.plan } };
     },
   },
   pages: {

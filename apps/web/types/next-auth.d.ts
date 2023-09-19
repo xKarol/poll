@@ -1,3 +1,4 @@
+import type { Plan } from "@poll/prisma";
 import type { Auth } from "@poll/types";
 import { type DefaultSession } from "next-auth";
 
@@ -8,6 +9,7 @@ declare module "next-auth" {
   interface Session {
     user?: {
       id?: string;
+      plan: Plan;
     } & DefaultSession["user"];
   }
 }
