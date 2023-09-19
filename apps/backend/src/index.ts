@@ -17,7 +17,13 @@ const app = express();
 app.use(cors(corsConfig));
 app.use(helmet());
 app.use(morgan("dev"));
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl.includes("/webhook")) {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.use(withAuth);
 app.use(routes);
 app.use(errorHandler);

@@ -18,7 +18,8 @@
         "ORIGIN_URL",
         "FRONTEND_URL",
         "NEXTAUTH_SECRET",
-        "STRIPE_SECRET_API_KEY"
+        "STRIPE_SECRET_API_KEY",
+        "STRIPE_WEBHOOK_SECRET"
       ]
     },
     "build": {
