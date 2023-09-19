@@ -2,7 +2,6 @@ import type { Plan } from "@poll/prisma";
 import type { NextFunction, Request, Response } from "express";
 
 import { stripe } from "../lib/stripe";
-import { getOriginURL } from "../utils/get-origin-url";
 
 export const GetPrices = async (
   req: Request,
@@ -45,7 +44,7 @@ export const CreatePayment = async (
 
     if (!matchingPlan) throw new Error(`Invalid plan '${productData.name}'`);
 
-    const originUrl = getOriginURL();
+    const redirectUrl = process.env.FRONTEND_URL as string;
 
     const payment = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
@@ -58,8 +57,8 @@ export const CreatePayment = async (
           planName: matchingPlan,
         },
       },
-      success_url: originUrl,
-      cancel_url: `${originUrl}/pricing`,
+      success_url: redirectUrl,
+      cancel_url: `${redirectUrl}/pricing`,
     });
 
     return res.send(payment.url);
