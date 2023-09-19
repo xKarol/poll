@@ -47,6 +47,8 @@ export interface Api {
   votePoll: (pollId: string, answerId: string) => Promise<Vote>;
   getPollVoters: (pollId: string) => Promise<User[]>;
   getPollUserAnswerChoice: (pollId: string) => Promise<Vote | null>;
+  // payments
+  createPaymentPageUrl: (productId: string) => Promise<string>;
 }
 
 // Backend

@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 import Header from "../components/header";
 import { routes } from "../config/routes";
-import axios from "../lib/axios";
+import { createPaymentPageUrl } from "../services/api";
 import { getBaseUrl } from "../utils/get-base-url";
 
 const pricingPlans = [
@@ -20,12 +20,12 @@ const pricingPlans = [
   {
     productId: "prod_OdTeDMfvLOovf7",
     name: "Standard",
-    description: "Go premium for advanced features and maximum impact",
+    description: "For users seeking more options and capabilities.",
   },
   {
     productId: "prod_OdTgXMYSYsi03h",
     name: "Premium",
-    description: "For users seeking more options and capabilities.",
+    description: "Go premium for advanced features and maximum impact",
   },
 ];
 
@@ -35,11 +35,31 @@ export default function Page() {
   //   queryFn: () => axios.get("/payments"),
   // });
   const { mutateAsync } = useMutation({
-    // @ts-ignore TODO
-    mutationFn: ({ productId }) => axios.post("/payments", { productId }),
+    mutationFn: ({ productId }: { productId: string }) => {
+      return createPaymentPageUrl(productId);
+    },
   });
   const { status } = useSession();
   const router = useRouter();
+
+  const handlePayment = async (productId: string) => {
+    if (status == "unauthenticated") {
+      router.push(routes.LOGIN, {
+        query: {
+          redirect: `${getBaseUrl()}${routes.PRICING}`,
+        },
+      });
+      return;
+    }
+    if (status === "authenticated") {
+      try {
+        const url = await mutateAsync({ productId });
+        router.push(url);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
     <>
@@ -71,28 +91,7 @@ export default function Page() {
                   <LoadingButton
                     isLoading={false}
                     type="button"
-                    onClick={async () => {
-                      if (status == "unauthenticated") {
-                        // TODO redirect after login to pricing page
-                        router.push(routes.LOGIN, {
-                          query: {
-                            redirect: `${getBaseUrl()}${routes.PRICING}`,
-                          },
-                        });
-                        return;
-                      }
-                      if (status === "authenticated") {
-                        try {
-                          // @ts-ignore
-                          const { data } = await mutateAsync({
-                            productId: productId,
-                          });
-                          router.push(data);
-                        } catch (e) {
-                          console.log(e);
-                        }
-                      }
-                    }}>
+                    onClick={async () => handlePayment(productId)}>
                     Get {name}
                   </LoadingButton>
                 }

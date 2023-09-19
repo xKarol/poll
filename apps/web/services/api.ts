@@ -56,3 +56,10 @@ export const getPlan: Poll.Api["getPollUserAnswerChoice"] = async (pollId) => {
   const { data } = await axios.get(`/poll/${pollId}/answers/user-choice`);
   return data;
 };
+
+export const createPaymentPageUrl: Poll.Api["createPaymentPageUrl"] = async (
+  productId
+) => {
+  const { data } = await axios.post("/payments", { productId });
+  return data;
+};
