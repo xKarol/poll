@@ -1,3 +1,3 @@
 export const getOriginURL = () => {
-  return process.env.ORIGIN_URL;
+  return process.env.ORIGIN_URL as string;
 };
