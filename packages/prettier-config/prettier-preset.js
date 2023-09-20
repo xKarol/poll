@@ -10,7 +10,10 @@ module.exports = {
   trailingComma: "es5",
   arrowParens: "always",
 
-  plugins: ["@trivago/prettier-plugin-sort-imports"],
+  plugins: [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
+  ],
   importOrder: ["config/env", "<THIRD_PARTY_MODULES>", "^[./]"],
   importOrderSeparation: true,
 };
