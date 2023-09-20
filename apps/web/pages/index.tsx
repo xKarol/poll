@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
+import Footer from "../components/footer";
 import Header from "../components/header";
 import { routes } from "../config/routes";
 import prisma from "../lib/prisma";
@@ -102,7 +103,7 @@ export default function Page({
           />
         </div>
       </section>
-      <section className="border-b-2 border-t-2 border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-800/25">
+      <section className="mb-16 border-b-2 border-t-2 border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-8">
             <h1 className="text-4xl font-bold">Join the Poll Now!</h1>
@@ -115,6 +116,7 @@ export default function Page({
           </Button>
         </div>
       </section>
+      <Footer />
       <Icon.MoonIcon
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       />
