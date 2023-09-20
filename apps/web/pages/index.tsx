@@ -1,4 +1,5 @@
-import { MoonIcon } from "lucide-react";
+import { cn } from "@poll/lib";
+import { Icon } from "@poll/ui";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
@@ -35,7 +36,7 @@ export default function Page({
     <>
       <Header />
 
-      <section className="border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
+      <section className="mb-16 border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
@@ -66,7 +67,40 @@ export default function Page({
           </div>
         </div>
       </section>
-      <MoonIcon
+      <section className="container flex flex-col">
+        <div className="mx-auto mb-32 flex max-w-4xl flex-col space-y-8">
+          <h1 className="text-center text-5xl font-bold">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
+            delectus!
+          </h1>
+          <p className="text-center text-xl font-medium text-neutral-500">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci,
+            modi magnam voluptates excepturi amet corrupti praesentium facilis.
+            Ea, sequi eligendi.
+          </p>
+        </div>
+        <div className="flex flex-col gap-16 md:flex-row md:flex-wrap md:gap-8">
+          <FeatureCard
+            heading="User-Friendly Poll Creation"
+            description="Easily create polls using a simple and intuitive interface. No technical skills required"
+            Icon={<Icon.BarChart2 />}
+            className="h-full w-full md:max-w-[calc((100%/3)-32px)]"
+          />
+          <FeatureCard
+            heading="Real-time Results"
+            description="Watch poll results update in real time as participants cast their votes"
+            Icon={<Icon.Radio />}
+            className="h-full w-full md:max-w-[calc((100%/3)-32px)]"
+          />
+          <FeatureCard
+            heading="In-Depth Poll Analytics"
+            description="Get valuable data and insights to make informed decisions with our detailed poll statistics"
+            Icon={<Icon.LineChart />}
+            className="h-full w-full md:max-w-[calc((100%/3)-32px)]"
+          />
+        </div>
+      </section>
+      <Icon.MoonIcon
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       />
       {session ? (
@@ -77,5 +111,35 @@ export default function Page({
         </button>
       ) : null}
     </>
+  );
+}
+
+type FeatureCardProps = {
+  heading: string;
+  description: string;
+  Icon: JSX.Element;
+} & React.ComponentPropsWithoutRef<"div">;
+function FeatureCard({
+  heading,
+  description,
+  Icon,
+  className,
+  ...props
+}: FeatureCardProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex flex-col space-y-8 rounded-[4px] border border-neutral-100 bg-white px-8 py-16 dark:border-neutral-800 dark:bg-neutral-800/25",
+        className
+      )}
+      {...props}>
+      <div className="absolute left-1/2 top-[-40px] flex h-[80px] w-[80px] -translate-x-1/2 items-center justify-center rounded-full bg-green-500 text-neutral-900 [&>svg]:h-[40px] [&>svg]:w-[40px]">
+        {Icon}
+      </div>
+      <h1 className="text-center text-xl font-bold">{heading}</h1>
+      <p className="text-center text-base font-medium text-neutral-500">
+        {description}
+      </p>
+    </div>
   );
 }
