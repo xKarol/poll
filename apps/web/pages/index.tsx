@@ -30,14 +30,6 @@ export default function Page({ stats }: { stats: Stats }) {
     <>
       <Header />
 
-      {session ? (
-        <button
-          className="border border-black p-2 px-4"
-          onClick={() => signOut()}>
-          Logout
-        </button>
-      ) : null}
-      <pre>{JSON.stringify(session, null, 2)}</pre>
       <section className="border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-1 flex-col items-center">
@@ -72,6 +64,13 @@ export default function Page({ stats }: { stats: Stats }) {
       <MoonIcon
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       />
+      {session ? (
+        <button
+          className="border border-black p-2 px-4"
+          onClick={() => signOut()}>
+          Logout
+        </button>
+      ) : null}
     </>
   );
 }

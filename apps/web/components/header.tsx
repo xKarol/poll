@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
 import { Button, Logo } from "@poll/ui";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useMedia, useLockBodyScroll } from "react-use";
@@ -67,6 +67,11 @@ const Header = ({ className, ...rest }: HeaderProps) => {
                     <Link href={link.href}>{link.text}</Link>
                   </li>
                 ))}
+                {session ? (
+                  <li className="cursor-pointer" onClick={() => signOut()}>
+                    Logout
+                  </li>
+                ) : null}
               </ul>
               {session ? (
                 <div className="flex items-center justify-center space-x-2">
