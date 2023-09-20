@@ -1,4 +1,5 @@
 import { MoonIcon } from "lucide-react";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
@@ -11,16 +12,20 @@ type Stats = {
   totalUsers: number;
 };
 
-export async function getServerSideProps() {
+export const getServerSideProps = (async () => {
   const stats = {
     totalPolls: await prisma.poll.count(),
     totalVotes: await prisma.vote.count(),
     totalUsers: await prisma.user.count(),
   };
   return { props: { stats } };
-}
+}) satisfies GetServerSideProps<{
+  stats: Stats;
+}>;
 
-export default function Page({ stats }: { stats: Stats }) {
+export default function Page({
+  stats,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: session } = useSession();
   const { setTheme, theme } = useTheme();
 
