@@ -81,7 +81,7 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container my-4 mb-8 flex max-w-3xl flex-col rounded-[4px] text-neutral-900 dark:text-neutral-50 md:my-8 xl:my-16 xl:border xl:border-neutral-200/50 xl:bg-neutral-200/20 xl:px-8 xl:py-16 xl:dark:border-neutral-950 xl:dark:bg-neutral-950/20">
+          className="container my-4 mb-8 flex max-w-3xl flex-col rounded-[4px] text-neutral-900 dark:text-neutral-50 md:my-8 xl:my-16 xl:border xl:border-neutral-100 xl:bg-white xl:px-8 xl:py-16 xl:dark:border-neutral-800 xl:dark:bg-neutral-800/25">
           {form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
