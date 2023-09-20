@@ -1,10 +1,12 @@
 import { cn } from "@poll/lib";
-import { Icon } from "@poll/ui";
+import { Button, Icon } from "@poll/ui";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 import Header from "../components/header";
+import { routes } from "../config/routes";
 import prisma from "../lib/prisma";
 
 type Stats = {
@@ -67,7 +69,7 @@ export default function Page({
           </div>
         </div>
       </section>
-      <section className="container flex flex-col">
+      <section className="container mb-16 flex flex-col">
         <div className="mx-auto mb-32 flex max-w-4xl flex-col space-y-8">
           <h1 className="text-center text-5xl font-bold">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
@@ -98,6 +100,19 @@ export default function Page({
             Icon={<Icon.LineChart />}
             className="h-full w-full md:max-w-[calc((100%/3)-32px)]"
           />
+        </div>
+      </section>
+      <section className="border-b-2 border-t-2 border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-800/25">
+        <div className="container flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold">Join the Poll Now!</h1>
+            <p className="text-2xl font-semibold text-neutral-500">
+              Lorem, ipsum dolor.
+            </p>
+          </div>
+          <Button asChild className="w-full md:w-auto">
+            <Link href={routes.CREATE_POLL}>Create a poll</Link>
+          </Button>
         </div>
       </section>
       <Icon.MoonIcon
