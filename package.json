@@ -12,7 +12,8 @@
     "dev": "turbo run dev --concurrency 11",
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "vitest run"
   },
   "devDependencies": {
