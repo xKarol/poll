@@ -81,20 +81,20 @@ export default function Page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="container my-4 mb-8 md:my-8 xl:my-16 flex flex-col max-w-3xl text-neutral-900 dark:text-neutral-50 xl:dark:bg-neutral-950/20 xl:bg-neutral-200/20 xl:border xl:border-neutral-200/50 xl:dark:border-neutral-950 rounded-[4px] xl:py-16 xl:px-8">
+          className="container my-4 mb-8 flex max-w-3xl flex-col rounded-[4px] text-neutral-900 dark:text-neutral-50 md:my-8 xl:my-16 xl:border xl:border-neutral-200/50 xl:bg-neutral-200/20 xl:px-8 xl:py-16 xl:dark:border-neutral-950 xl:dark:bg-neutral-950/20">
           {form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
             </Alert>
           ) : null}
-          <div className="flex flex-col space-y-1 mb-8">
+          <div className="mb-8 flex flex-col space-y-1">
             <h1 className="text-xl font-bold">Create Poll</h1>
             <p className="text-lg font-medium text-neutral-400">
               Craft Your questions, gather opinions and make decisions.
             </p>
           </div>
 
-          <div className="space-y-3 mb-8">
+          <div className="mb-8 space-y-3">
             <FormField
               control={form.control}
               name="question"
@@ -134,20 +134,20 @@ export default function Page() {
 
             <Button
               type="button"
-              className="w-full bg-neutral-200 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:hover:bg-neutral-700/90 dark:text-white"
+              className="w-full bg-neutral-200 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
               onClick={() => append({ text: "" })}>
               Add option
             </Button>
           </div>
 
-          <div className="space-y-2 mb-8">
+          <div className="mb-8 space-y-2">
             <h2 className="text-normal font-medium">Settings</h2>
             <div className="space-y-2">
               <FormField
                 control={form.control}
                 name="isPublic"
                 render={({ field }) => (
-                  <FormItem className="flex bg-white dark:bg-neutral-800 dark:border-none flex-row items-center justify-between rounded-sm border-2 border-neutral-100 px-4 py-3">
+                  <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-3 dark:border-none dark:bg-neutral-800">
                     <div className="space-y-2">
                       <FormLabel>Public</FormLabel>
                       <FormDescription className="text-sm font-medium">

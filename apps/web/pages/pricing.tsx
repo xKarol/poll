@@ -66,10 +66,10 @@ export default function Page() {
       <Header />
       <NextSeo title="Pricing" />
       <main className="container">
-        <div className="space-y-8 my-4 md:my-8 xl:my-16 mx-auto flex flex-col items-center max-w-4xl">
-          <div className="space-y-3 flex flex-col items-center">
+        <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
+          <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
-            <p className="text-xl font-medium text-neutral-400 text-center">
+            <p className="text-center text-xl font-medium text-neutral-400">
               Find your ideal plan and unleash the full potential of our poll
               platform.
             </p>
@@ -78,7 +78,7 @@ export default function Page() {
             {pricingPlans.map(({ productId, name, description }) => (
               <PricingCard
                 key={productId}
-                className="w-full h-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
+                className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                 planName={name}
                 description={description}
                 price={0}
@@ -124,24 +124,24 @@ function PricingCard({
   return (
     <div
       className={cn(
-        "dark:bg-neutral-800/50 border-2 px-4 py-8 bg-white border-neutral-100 dark:border-neutral-800 rounded-[8px] flex flex-col justify-between min-w-[240px]",
+        "flex min-w-[240px] flex-col justify-between rounded-[8px] border-2 border-neutral-100 bg-white px-4 py-8 dark:border-neutral-800 dark:bg-neutral-800/50",
         className
       )}
       {...props}>
-      <div className="space-y-4 mb-6">
+      <div className="mb-6 space-y-4">
         <div>
-          <h2 className="font-medium text-xl mb-4">{planName}</h2>
-          <p className="font-medium text-xl mb-2">
+          <h2 className="mb-4 text-xl font-medium">{planName}</h2>
+          <p className="mb-2 text-xl font-medium">
             ${price}{" "}
-            <span className="text-neutral-400 text-base">per month</span>
+            <span className="text-base text-neutral-400">per month</span>
           </p>
-          <p className="font-medium text-base mb-2 text-neutral-500">
+          <p className="mb-2 text-base font-medium text-neutral-500">
             {description}
           </p>
         </div>
         <ul className="space-y-2">
           {features.map((feature) => (
-            <li key={feature} className="text-sm flex space-x-4 items-center">
+            <li key={feature} className="flex items-center space-x-4 text-sm">
               <Icon.CheckIcon className="text-green-500" />
               <span>{feature}</span>
             </li>

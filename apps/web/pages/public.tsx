@@ -26,10 +26,10 @@ export default function Page() {
       <Header />
 
       <NextSeo title="Public Polls" />
-      <div className="space-y-8 container mt-8 lg:mt-16 md:max-w-2xl xl:max-w-4xl">
-        <div className="justify-between items-center flex">
+      <div className="container mt-8 space-y-8 md:max-w-2xl lg:mt-16 xl:max-w-4xl">
+        <div className="flex items-center justify-between">
           <h1 className="text-2xl font-medium">Public Polls</h1>
-          <Button className="text-neutral-900 bg-neutral-100 hover:bg-neutral-100/50 dark:bg-neutral-800 dark:text-white space-x-1">
+          <Button className="space-x-1 bg-neutral-100 text-neutral-900 hover:bg-neutral-100/50 dark:bg-neutral-800 dark:text-white">
             <span>Recent</span>
             <Icon.ChevronDown />
           </Button>
@@ -50,9 +50,9 @@ export default function Page() {
                 <Link
                   key={poll.id}
                   href={routes.poll(poll.id)}
-                  className="bg-neutral-100 dark:bg-neutral-800 px-3 py-4 rounded-[4px] space-y-4">
+                  className="space-y-4 rounded-[4px] bg-neutral-100 px-3 py-4 dark:bg-neutral-800">
                   <h1 className="text-lg">{poll.question}</h1>
-                  <div className="flex justify-between items-center text-sm font-normal text-neutral-400">
+                  <div className="flex items-center justify-between text-sm font-normal text-neutral-400">
                     <span>{dayjs(poll.createdAt).fromNow()}</span>
                     <span>{poll.totalVotes} votes</span>
                   </div>

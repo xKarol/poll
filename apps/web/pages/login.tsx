@@ -56,25 +56,25 @@ export default function Page() {
 
       <NextSeo title="Login" />
       <main className="container">
-        <div className="max-w-[360px] my-16 mx-auto flex flex-col">
+        <div className="mx-auto my-16 flex max-w-[360px] flex-col">
           {form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
               <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
             </Alert>
           ) : null}
-          <h1 className="text-[32px] font-bold mb-16 text-center">Log In</h1>
+          <h1 className="mb-16 text-center text-[32px] font-bold">Log In</h1>
           <LoadingButton
             type="button"
             isLoading={isLoading.google}
             onClick={() => mutate("google")}
             variant="secondary"
-            className="border dark:border-none border-neutral-200 dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-700/50">
+            className="border border-neutral-200 dark:border-none dark:bg-neutral-700 dark:text-white hover:dark:bg-neutral-700/50">
             <Icon.Google className="mr-2" />
             <span>Continue with Google</span>
           </LoadingButton>
-          <Divider className="border-neutral-200 dark:border-neutral-600 !mt-12 !mb-8" />
-          <div className="space-y-16 flex flex-col">
-            <div className="justify-center flex flex-col">
+          <Divider className="!mb-8 !mt-12 border-neutral-200 dark:border-neutral-600" />
+          <div className="flex flex-col space-y-16">
+            <div className="flex flex-col justify-center">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -120,13 +120,13 @@ export default function Page() {
                   </LoadingButton>
                   <Link
                     href="/"
-                    className="underline font-medium text-sm text-center text-neutral-400">
+                    className="text-center text-sm font-medium text-neutral-400 underline">
                     Forgot Password?
                   </Link>
                 </form>
               </Form>
             </div>
-            <span className="text-neutral-400 text-center font-normal text-sm">
+            <span className="text-center text-sm font-normal text-neutral-400">
               By clicking &quot;Continue with Google&quot; ...{" "}
               <u>Terms & Conditions</u> and <u>Privacy Policy</u>.
             </span>

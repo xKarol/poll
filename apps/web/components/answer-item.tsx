@@ -30,21 +30,21 @@ export const AnswerItem = ({
       className={cn(
         "flex space-x-4 px-4 py-3",
         variant === "selected" &&
-          "border border-neutral-900 dark:border-green-500 rounded-[4px]",
+          "rounded-[4px] border border-neutral-900 dark:border-green-500",
         className
       )}
       {...rest}>
       <div className="flex justify-end">
         {showPercentage && (
-          <span className="text-end text-lg font-normal my-auto md:text-xl">
+          <span className="my-auto text-end text-lg font-normal md:text-xl">
             {value.toFixed(0)}%
           </span>
         )}
         {variant === "default" && React.cloneElement(RadioComponent, { id })}
       </div>
-      <div className="flex flex-col space-y-4 w-full">
-        <div className="flex justify-between items-center">
-          <Label className="font-bold text-base md:text-lg" htmlFor={id}>
+      <div className="flex w-full flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <Label className="text-base font-bold md:text-lg" htmlFor={id}>
             {text}
           </Label>
           {variant === "selected" && (
@@ -56,7 +56,7 @@ export const AnswerItem = ({
             value={value}
             className={cn(
               variant === "selected" &&
-                "bg-neutral-900/5 dark:bg-green-500/5 [&>*]:dark:bg-green-500 [&>*]:bg-neutral-900"
+                "bg-neutral-900/5 dark:bg-green-500/5 [&>*]:bg-neutral-900 [&>*]:dark:bg-green-500"
             )}
           />
         )}

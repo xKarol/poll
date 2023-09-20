@@ -13,12 +13,12 @@ export const Logo = ({ href = "/", className, ...rest }: LogoProps) => {
     <div className={cn("", className)} {...rest}>
       {href ? (
         <a href={href}>
-          <img src={logoLight.src} className="dark:block hidden" />
+          <img src={logoLight.src} className="hidden dark:block" />
           <img src={logoDark.src} className="block dark:hidden" />
         </a>
       ) : (
         <>
-          <img src={logoLight.src} className="dark:block hidden" />
+          <img src={logoLight.src} className="hidden dark:block" />
           <img src={logoDark.src} className="block dark:hidden" />
         </>
       )}

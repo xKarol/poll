@@ -29,7 +29,7 @@ export default function Page() {
             <Link
               key={poll.id}
               href={routes.poll(poll.id)}
-              className="border border-black px-4 py-2 flex justify-between">
+              className="flex justify-between border border-black px-4 py-2">
               <span>{poll.question}</span>
               <span>Total Votes:{poll.totalVotes}</span>
             </Link>

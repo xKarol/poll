@@ -53,15 +53,15 @@ const Header = ({ className, ...rest }: HeaderProps) => {
     <HeaderContext.Provider value={{ isOpen, setIsOpen }}>
       <header
         className={cn(
-          "container py-6 flex justify-between items-center",
+          "container flex items-center justify-between py-6",
           className
         )}
         {...rest}>
         <Logo className="z-50" />
         {isOpen ? (
-          <nav className="bg-neutral-50 dark:bg-neutral-900 fixed top-0 left-0 right-0 bottom-0 z-10">
-            <div className="container flex flex-col items-center pt-[7.5rem] space-y-8">
-              <ul className="w-full items-center flex flex-col space-y-8 text-xl font-semibold">
+          <nav className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-neutral-50 dark:bg-neutral-900">
+            <div className="container flex flex-col items-center space-y-8 pt-[7.5rem]">
+              <ul className="flex w-full flex-col items-center space-y-8 text-xl font-semibold">
                 {navLinks.map((link) => (
                   <li key={link.text}>
                     <Link href={link.href}>{link.text}</Link>
@@ -69,7 +69,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
                 ))}
               </ul>
               {session ? (
-                <div className="flex justify-center space-x-2 items-center">
+                <div className="flex items-center justify-center space-x-2">
                   <Avatar
                     src={session.user.image}
                     sx={{ width: "32px", height: "32px" }}>
@@ -85,7 +85,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
             </div>
           </nav>
         ) : null}
-        <nav className="hidden xl:flex space-x-12 items-center">
+        <nav className="hidden items-center space-x-12 xl:flex">
           <ul className="flex space-x-12 font-semibold">
             {navLinks.map((link) => (
               <li key={link.text}>
@@ -95,7 +95,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
           </ul>
 
           {session ? (
-            <div className="flex justify-center space-x-2 items-center">
+            <div className="flex items-center justify-center space-x-2">
               <Avatar
                 src={session.user.image}
                 sx={{ width: "32px", height: "32px" }}>
@@ -109,7 +109,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
             </Button>
           )}
         </nav>
-        <HamburgerMenu className="xl:hidden z-50" />
+        <HamburgerMenu className="z-50 xl:hidden" />
       </header>
     </HeaderContext.Provider>
   );
@@ -131,24 +131,24 @@ function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
     <div
       onClick={() => setIsOpen((current) => !current)}
       className={cn(
-        "cursor-pointer flex flex-col items-end w-[30px] h-[20px] gap-1.5 relative",
+        "relative flex h-[20px] w-[30px] cursor-pointer flex-col items-end gap-1.5",
         className
       )}
       {...rest}>
       <div
         className={cn(
-          "absolute top-0 w-6 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
-          isOpen && "-rotate-45 top-1/2 -translate-y-1/2 w-full"
+          "absolute top-0 h-0.5 w-6 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          isOpen && "top-1/2 w-full -translate-y-1/2 -rotate-45"
         )}></div>
       <div
         className={cn(
-          "absolute top-1/2 -translate-y-1/2 w-full h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
-          isOpen && "rotate-45 top-1/2 -translate-y-1/2 w-full"
+          "absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          isOpen && "top-1/2 w-full -translate-y-1/2 rotate-45"
         )}></div>
       <div
         className={cn(
-          "absolute bottom-0 w-5 h-0.5 bg-neutral-900 dark:bg-neutral-50 rounded-[0.25rem] transition-all",
-          isOpen && "-rotate-45 top-1/2 -translate-y-1/2 w-full opacity-0"
+          "absolute bottom-0 h-0.5 w-5 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          isOpen && "top-1/2 w-full -translate-y-1/2 -rotate-45 opacity-0"
         )}></div>
     </div>
   );
