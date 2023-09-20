@@ -38,7 +38,7 @@ export default function Page({ stats }: { stats: Stats }) {
         </button>
       ) : null}
       <pre>{JSON.stringify(session, null, 2)}</pre>
-      <section className="border-b-2 border-t-2 border-neutral-800 bg-neutral-800/25">
+      <section className="border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
@@ -48,7 +48,7 @@ export default function Page({ stats }: { stats: Stats }) {
               Polls
             </p>
           </div>
-          <div className="hidden h-[50px] w-[1px] bg-neutral-800 md:block"></div>
+          <div className="hidden h-[50px] w-[1px] bg-neutral-100 dark:bg-neutral-800 md:block"></div>
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
               {stats.totalVotes}
@@ -57,7 +57,7 @@ export default function Page({ stats }: { stats: Stats }) {
               Votes
             </p>
           </div>
-          <div className="hidden h-[50px] w-[1px] bg-neutral-800 md:block"></div>
+          <div className="hidden h-[50px] w-[1px] bg-neutral-100 dark:bg-neutral-800 md:block"></div>
 
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
