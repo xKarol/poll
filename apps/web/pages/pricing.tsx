@@ -43,6 +43,7 @@ export default function Page() {
   });
   const { status } = useSession();
   const router = useRouter();
+  const [planType, setPlanType] = useState<"monthly" | "yearly">("monthly");
 
   const handlePayment = async (productId: string) => {
     if (status == "unauthenticated") {
@@ -76,7 +77,14 @@ export default function Page() {
               platform.
             </p>
           </div>
-          <PricingSwitch leftText="Monthly" rightText="Yearly" />
+          <PricingSwitch
+            leftText="Monthly"
+            rightText="Yearly"
+            checked={planType === "monthly" ? false : true}
+            onCheckedChange={(checked) =>
+              setPlanType(checked === false ? "monthly" : "yearly")
+            }
+          />
           <section className="flex flex-wrap gap-4">
             {pricingPlans.map(({ productId, name, description }) => (
               <PricingCard
@@ -85,6 +93,7 @@ export default function Page() {
                 planName={name}
                 description={description}
                 price={0}
+                planType={planType}
                 features={[
                   "Some feature 1",
                   "Some feature 2",
@@ -112,6 +121,7 @@ type PricingCardProps = {
   price: number;
   description: string;
   features: string[];
+  planType: "monthly" | "yearly";
   ActionComponent: JSX.Element;
 } & React.ComponentPropsWithoutRef<"div">;
 
@@ -120,6 +130,7 @@ function PricingCard({
   price,
   description,
   features,
+  planType,
   ActionComponent,
   className,
   ...props
@@ -136,7 +147,9 @@ function PricingCard({
           <h2 className="mb-4 text-xl font-medium">{planName}</h2>
           <p className="mb-2 text-xl font-medium">
             ${price}{" "}
-            <span className="text-base text-neutral-400">per month</span>
+            <span className="text-base text-neutral-400">
+              per {planType === "monthly" ? "month" : "year"}
+            </span>
           </p>
           <p className="mb-2 text-base font-medium text-neutral-500">
             {description}
@@ -161,7 +174,7 @@ export const PricingSwitch = React.forwardRef<
   { leftText: string; rightText: string } & React.ComponentPropsWithoutRef<
     typeof SwitchPrimitives.Root
   >
->(({ leftText, rightText, className, ...props }, ref) => {
+>(({ leftText, rightText, className, onCheckedChange, ...props }, ref) => {
   const [isChecked, setIsChecked] = useState(false);
   return (
     <SwitchPrimitives.Root
@@ -169,9 +182,12 @@ export const PricingSwitch = React.forwardRef<
         "focus-visible:ring-ring focus-visible:ring-offset-background peer relative inline-flex h-[40px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-neutral-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
-      {...props}
-      onCheckedChange={setIsChecked}
-      ref={ref}>
+      onCheckedChange={(checked) => {
+        onCheckedChange(checked);
+        setIsChecked(checked);
+      }}
+      ref={ref}
+      {...props}>
       <span className="z-10 mr-2 px-2 font-medium">{leftText}</span>
       <span className="z-10 px-2 font-medium">{rightText}</span>
       <SwitchPrimitives.Thumb
