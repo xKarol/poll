@@ -1,6 +1,6 @@
 import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
-import { Alert, Button, Icon } from "@poll/ui";
+import { Alert, AlertTitle, Button, Icon } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -83,7 +83,11 @@ export default function Page() {
       <NextSeo title="Pricing" />
       <main className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
-          {error !== undefined ? <Alert variant="error">{error}</Alert> : null}
+          {error !== undefined ? (
+            <Alert variant="error">
+              <AlertTitle>{error}</AlertTitle>
+            </Alert>
+          ) : null}
 
           <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
