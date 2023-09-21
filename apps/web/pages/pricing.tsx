@@ -1,6 +1,6 @@
 import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
-import { Button, Icon } from "@poll/ui";
+import { Alert, Button, Icon } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Header from "../components/header";
 import { routes } from "../config/routes";
 import { createPaymentPageUrl } from "../services/api";
+import { getErrorMessage } from "../utils/error";
 import { getBaseUrl } from "../utils/get-base-url";
 
 const pricingPlans: {
@@ -47,6 +48,7 @@ export default function Page() {
   //   queryKey: ["payments-list"],
   //   queryFn: () => axios.get("/payments"),
   // });
+  const [error, setError] = useState("");
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
       return createPaymentPageUrl(productId);
@@ -57,21 +59,21 @@ export default function Page() {
   const [planType, setPlanType] = useState<"monthly" | "yearly">("monthly");
 
   const handlePayment = async (productId: string) => {
-    if (status == "unauthenticated") {
-      router.push(routes.LOGIN, {
-        query: {
-          redirect: `${getBaseUrl()}${routes.PRICING}`,
-        },
-      });
-      return;
-    }
-    if (status === "authenticated" && productId !== "FREE") {
-      try {
+    try {
+      if (status == "unauthenticated") {
+        router.push(routes.LOGIN, {
+          query: {
+            redirect: `${getBaseUrl()}${routes.PRICING}`,
+          },
+        });
+        return;
+      }
+      if (status === "authenticated" && productId !== "FREE") {
         const url = await mutateAsync({ productId });
         router.push(url);
-      } catch (e) {
-        console.log(e);
       }
+    } catch (e) {
+      setError(getErrorMessage(e));
     }
   };
 
@@ -81,6 +83,8 @@ export default function Page() {
       <NextSeo title="Pricing" />
       <main className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
+          {error ? <Alert variant="error">{error}</Alert> : null}
+
           <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
             <p className="text-center text-xl font-medium text-neutral-400">
