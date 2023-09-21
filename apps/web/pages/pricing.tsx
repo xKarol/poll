@@ -1,5 +1,6 @@
 import { cn } from "@poll/lib";
-import { Icon, LoadingButton } from "@poll/ui";
+import type { Plan } from "@poll/prisma";
+import { Button, Icon } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -13,23 +14,33 @@ import { routes } from "../config/routes";
 import { createPaymentPageUrl } from "../services/api";
 import { getBaseUrl } from "../utils/get-base-url";
 
-const pricingPlans = [
+const pricingPlans: {
+  productId: string;
+  name: Plan;
+  description: string;
+}[] = [
   {
-    productId: "_",
-    name: "Free",
+    productId: "FREE",
+    name: "FREE",
     description: "Ideal for simple polls and initial experimentation.",
   },
   {
     productId: "prod_OdTeDMfvLOovf7",
-    name: "Standard",
+    name: "STANDARD",
     description: "For users seeking more options and capabilities.",
   },
   {
     productId: "prod_OdTgXMYSYsi03h",
-    name: "Premium",
+    name: "PREMIUM",
     description: "Go premium for advanced features and maximum impact",
   },
 ];
+
+const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
+  const plans: Plan[] = ["FREE", "STANDARD", "PREMIUM"];
+  if (plans.indexOf(currentPlan) >= plans.indexOf(planName)) return true;
+  return false;
+};
 
 export default function Page() {
   // const { data, isLoading, isError } = useQuery({
@@ -41,7 +52,7 @@ export default function Page() {
       return createPaymentPageUrl(productId);
     },
   });
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const router = useRouter();
   const [planType, setPlanType] = useState<"monthly" | "yearly">("monthly");
 
@@ -54,7 +65,7 @@ export default function Page() {
       });
       return;
     }
-    if (status === "authenticated") {
+    if (status === "authenticated" && productId !== "FREE") {
       try {
         const url = await mutateAsync({ productId });
         router.push(url);
@@ -100,12 +111,13 @@ export default function Page() {
                   "Some feature 3",
                 ]}
                 ActionComponent={
-                  <LoadingButton
-                    isLoading={false}
+                  <Button
                     type="button"
-                    onClick={async () => handlePayment(productId)}>
-                    Get {name}
-                  </LoadingButton>
+                    disabled={isPlanOwned(name, session?.user.plan || "FREE")}
+                    onClick={async () => handlePayment(productId)}
+                    className="capitalize">
+                    Get {name.toLowerCase()}
+                  </Button>
                 }
               />
             ))}
@@ -144,7 +156,9 @@ function PricingCard({
       {...props}>
       <div className="mb-6 space-y-4">
         <div>
-          <h2 className="mb-4 text-xl font-medium">{planName}</h2>
+          <h2 className="mb-4 text-xl font-medium capitalize">
+            {planName.toLowerCase()}
+          </h2>
           <p className="mb-2 text-xl font-medium">
             ${price}{" "}
             <span className="text-base text-neutral-400">
