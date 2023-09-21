@@ -48,7 +48,7 @@ export default function Page() {
   //   queryKey: ["payments-list"],
   //   queryFn: () => axios.get("/payments"),
   // });
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>(undefined);
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
       return createPaymentPageUrl(productId);
@@ -83,7 +83,7 @@ export default function Page() {
       <NextSeo title="Pricing" />
       <main className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
-          {error ? <Alert variant="error">{error}</Alert> : null}
+          {error !== undefined ? <Alert variant="error">{error}</Alert> : null}
 
           <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
