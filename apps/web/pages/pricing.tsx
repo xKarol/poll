@@ -14,7 +14,7 @@ import Header from "../components/header";
 import { routes } from "../config/routes";
 import { usePricingPlans } from "../hooks/use-pricing-plans";
 import { paymentOptions } from "../queries/payment";
-import { createPaymentPageUrl } from "../services/api";
+import { createPlanCheckoutSession } from "../services/api";
 import { getErrorMessage } from "../utils/error";
 import { getBaseUrl } from "../utils/get-base-url";
 
@@ -69,7 +69,7 @@ export default function Page() {
   const { data: pricingPlans } = usePricingPlans(paymentCycle);
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
-      return createPaymentPageUrl(productId, paymentCycle);
+      return createPlanCheckoutSession(productId, paymentCycle);
     },
   });
 

@@ -57,16 +57,14 @@ export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
   return data;
 };
 
-export const createPaymentPageUrl: Payment.Api["createPaymentPageUrl"] = async (
-  productId,
-  paymentCycle
-) => {
-  const { data } = await axios.post(
-    "/payment/plan/checkout-session",
-    {
-      productId,
-    },
-    { params: { paymentCycle } }
-  );
-  return data;
-};
+export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"] =
+  async (productId, paymentCycle) => {
+    const { data } = await axios.post(
+      "/payment/plan/checkout-session",
+      {
+        productId,
+      },
+      { params: { paymentCycle } }
+    );
+    return data;
+  };

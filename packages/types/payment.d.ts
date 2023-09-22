@@ -7,7 +7,7 @@ export interface Api {
   getPricingPlans: () => Promise<
     (Omit<Stripe.Product, "default_price"> & { default_price: Stripe.Price })[]
   >;
-  createPaymentPageUrl: (
+  createPlanCheckoutSession: (
     productId: string,
     paymentCycle: PaymentCycle
   ) => Promise<string>;
