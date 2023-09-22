@@ -18,22 +18,18 @@ import { getErrorMessage } from "../utils/error";
 import { getBaseUrl } from "../utils/get-base-url";
 
 const plansData: {
-  productId: string;
   name: Plan;
   description: string;
 }[] = [
   {
-    productId: "FREE",
     name: "FREE",
     description: "Ideal for simple polls and initial experimentation.",
   },
   {
-    productId: "prod_OdTeDMfvLOovf7",
     name: "STANDARD",
     description: "For users seeking more options and capabilities.",
   },
   {
-    productId: "prod_OdTgXMYSYsi03h",
     name: "PREMIUM",
     description: "Go premium for advanced features and maximum impact",
   },
@@ -120,38 +116,44 @@ export default function Page() {
             }
           />
           <section className="flex flex-wrap gap-4">
-            {plansData.map(({ productId, name, description }, index) => (
-              <PricingCard
-                key={productId}
-                className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
-                planName={name}
-                description={description}
-                price={
-                  index === 0
-                    ? 0
-                    : pricingPlans[index - 1].default_price.unit_amount / 100
-                }
-                planType={planType}
-                features={[
-                  "Some feature 1",
-                  "Some feature 2",
-                  "Some feature 3",
-                ]}
-                ActionComponent={
-                  <Button
-                    type="button"
-                    disabled={
-                      status === "unauthenticated"
-                        ? false
-                        : isPlanOwned(name, session?.user.plan || "FREE")
-                    }
-                    onClick={async () => handlePayment(productId)}
-                    className="capitalize">
-                    Get {name.toLowerCase()}
-                  </Button>
-                }
-              />
-            ))}
+            {plansData.map(({ name, description }, index) => {
+              return (
+                <PricingCard
+                  key={name}
+                  className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
+                  planName={name}
+                  description={description}
+                  price={
+                    index === 0
+                      ? 0
+                      : pricingPlans[index - 1].default_price.unit_amount / 100
+                  }
+                  planType={planType}
+                  features={[
+                    "Some feature 1",
+                    "Some feature 2",
+                    "Some feature 3",
+                  ]}
+                  ActionComponent={
+                    <Button
+                      type="button"
+                      disabled={
+                        status === "unauthenticated"
+                          ? false
+                          : isPlanOwned(name, session?.user.plan || "FREE")
+                      }
+                      onClick={async () =>
+                        handlePayment(
+                          index === 0 ? "FREE" : pricingPlans[index - 1].id
+                        )
+                      }
+                      className="capitalize">
+                      Get {name.toLowerCase()}
+                    </Button>
+                  }
+                />
+              );
+            })}
           </section>
         </div>
       </main>
