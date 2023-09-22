@@ -17,16 +17,29 @@ router.post(
         process.env.STRIPE_WEBHOOK_SECRET as string
       );
       switch (event.type) {
-        case "payment_intent.succeeded": {
+        case "customer.subscription.created": {
           // @ts-expect-error
           const { userId, planName } = event.data.object.metadata as {
             userId: string;
             planName: Plan;
           };
 
-          prisma.user.update({
+          await prisma.user.update({
             where: { id: userId },
             data: { plan: planName },
+          });
+          break;
+        }
+        case "customer.subscription.deleted": {
+          // @ts-expect-error
+          const { userId } = event.data.object.metadata as {
+            userId: string;
+            planName: Plan;
+          };
+
+          await prisma.user.update({
+            where: { id: userId },
+            data: { plan: "FREE" },
           });
           break;
         }
