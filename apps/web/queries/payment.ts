@@ -1,15 +1,16 @@
+import type { Payment } from "@poll/types";
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 import { getPricingPlans } from "../services/api";
 
 export const paymentKeys = {
-  getPricingPlans: (paymentCycle: "monthly" | "yearly") =>
+  getPricingPlans: (paymentCycle: Payment.PaymentCycle) =>
     ["payment.plans", { paymentCycle }] as const,
 };
 
 export const paymentOptions = {
   getPricingPlans: (
-    paymentCycle: "monthly" | "yearly"
+    paymentCycle: Payment.PaymentCycle
   ): UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>> => ({
     queryKey: paymentKeys.getPricingPlans(paymentCycle),
     queryFn: getPricingPlans,

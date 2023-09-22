@@ -1,5 +1,6 @@
 import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
+import type { Payment } from "@poll/types";
 import { Alert, AlertTitle, Button, Icon } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { QueryClient, dehydrate, useMutation } from "@tanstack/react-query";
@@ -63,9 +64,8 @@ export default function Page() {
 
   const { status, data: session } = useSession();
   const router = useRouter();
-  const [paymentCycle, setPaymentCycle] = useState<"monthly" | "yearly">(
-    "monthly"
-  );
+  const [paymentCycle, setPaymentCycle] =
+    useState<Payment.PaymentCycle>("monthly");
   const { data: pricingPlans } = usePricingPlans(paymentCycle);
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
@@ -170,7 +170,7 @@ type PricingCardProps = {
   price: number;
   description: string;
   features: string[];
-  planType: "monthly" | "yearly";
+  planType: Payment.PaymentCycle;
   ActionComponent: JSX.Element;
 } & React.ComponentPropsWithoutRef<"div">;
 

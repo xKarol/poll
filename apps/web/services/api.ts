@@ -1,4 +1,4 @@
-import type { Poll } from "@poll/types";
+import type { Poll, Payment } from "@poll/types";
 
 import axios from "../lib/axios";
 
@@ -52,12 +52,12 @@ export const getPollUserAnswerChoice: Poll.Api["getPollUserAnswerChoice"] =
   };
 
 // PAYMENTS
-export const getPricingPlans: Poll.Api["getPricingPlans"] = async () => {
+export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
   const { data } = await axios.get("/payment/plan");
   return data;
 };
 
-export const createPaymentPageUrl: Poll.Api["createPaymentPageUrl"] = async (
+export const createPaymentPageUrl: Payment.Api["createPaymentPageUrl"] = async (
   productId,
   paymentCycle
 ) => {
