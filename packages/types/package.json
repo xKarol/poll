@@ -4,6 +4,7 @@
   "private": true,
   "types": "index.d.ts",
   "devDependencies": {
-    "@poll/prisma": "*"
+    "@poll/prisma": "*",
+    "stripe": "^13.7.0"
   }
 }

@@ -2,20 +2,22 @@ import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
 import { Alert, AlertTitle, Button, Icon } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, dehydrate, useMutation } from "@tanstack/react-query";
+import type { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
-// import { useQuery } from "@tanstack/react-query";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 import Header from "../components/header";
 import { routes } from "../config/routes";
+import { usePricingPlans } from "../hooks/use-pricing-plans";
+import { paymentOptions } from "../queries/payment";
 import { createPaymentPageUrl } from "../services/api";
 import { getErrorMessage } from "../utils/error";
 import { getBaseUrl } from "../utils/get-base-url";
 
-const pricingPlans: {
+const plansData: {
   productId: string;
   name: Plan;
   description: string;
@@ -43,11 +45,24 @@ const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
   return false;
 };
 
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.fetchQuery(paymentOptions.getPricingPlans());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch {
+    return {
+      props: {},
+    };
+  }
+};
+
 export default function Page() {
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["payments-list"],
-  //   queryFn: () => axios.get("/payments"),
-  // });
+  const { data: pricingPlans } = usePricingPlans();
   const [error, setError] = useState<string>(undefined);
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
@@ -105,13 +120,17 @@ export default function Page() {
             }
           />
           <section className="flex flex-wrap gap-4">
-            {pricingPlans.map(({ productId, name, description }) => (
+            {plansData.map(({ productId, name, description }, index) => (
               <PricingCard
                 key={productId}
                 className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                 planName={name}
                 description={description}
-                price={0}
+                price={
+                  index === 0
+                    ? 0
+                    : pricingPlans[index - 1].default_price.unit_amount / 100
+                }
                 planType={planType}
                 features={[
                   "Some feature 1",

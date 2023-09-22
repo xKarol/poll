@@ -1,4 +1,5 @@
 import type { Poll, Answer, User, Vote } from "@poll/prisma";
+import type { Stripe } from "stripe";
 
 export type CreatePollData = {
   userId?: string;
@@ -48,6 +49,9 @@ export interface Api {
   getPollVoters: (pollId: string) => Promise<User[]>;
   getPollUserAnswerChoice: (pollId: string) => Promise<Vote | null>;
   // payments
+  getPricingPlans: () => Promise<
+    (Omit<Stripe.Product, "default_price"> & { default_price: Stripe.Price })[]
+  >;
   createPaymentPageUrl: (productId: string) => Promise<string>;
 }
 

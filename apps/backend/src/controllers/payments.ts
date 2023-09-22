@@ -3,16 +3,19 @@ import type { NextFunction, Request, Response } from "express";
 
 import { stripe } from "../lib/stripe";
 
-export const GetPrices = async (
+const productIds = ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"];
+
+export const GetPricingPlans = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const products = await stripe.prices.list({
-      limit: 3,
+    const products = await stripe.products.list({
+      ids: productIds,
+      expand: ["data.default_price"],
     });
-    return res.send(products.data);
+    return res.status(200).send(products.data);
   } catch (error) {
     next(error);
   }

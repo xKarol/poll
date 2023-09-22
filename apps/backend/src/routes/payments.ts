@@ -7,7 +7,7 @@ import { validateSchema } from "../middlewares/validate-schema";
 
 const router = express.Router();
 
-router.get("/payments", PaymentsController.GetPrices);
+router.get("/payment/plan", PaymentsController.GetPricingPlans);
 router.post(
   "/payments",
   requireAuth,
