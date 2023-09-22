@@ -52,7 +52,10 @@ export interface Api {
   getPricingPlans: () => Promise<
     (Omit<Stripe.Product, "default_price"> & { default_price: Stripe.Price })[]
   >;
-  createPaymentPageUrl: (productId: string) => Promise<string>;
+  createPaymentPageUrl: (
+    productId: string,
+    paymentCycle: "monthly" | "yearly"
+  ) => Promise<string>;
 }
 
 // Backend

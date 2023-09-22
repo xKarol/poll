@@ -3,14 +3,15 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { getPricingPlans } from "../services/api";
 
 export const paymentKeys = {
-  getPricingPlans: ["payment.plans"] as const,
+  getPricingPlans: (paymentCycle: "monthly" | "yearly") =>
+    ["payment.plans", { paymentCycle }] as const,
 };
 
 export const paymentOptions = {
-  getPricingPlans: (): UseQueryOptions<
-    Awaited<ReturnType<typeof getPricingPlans>>
-  > => ({
-    queryKey: paymentKeys.getPricingPlans,
+  getPricingPlans: (
+    paymentCycle: "monthly" | "yearly"
+  ): UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>> => ({
+    queryKey: paymentKeys.getPricingPlans(paymentCycle),
     queryFn: getPricingPlans,
     cacheTime: Number.POSITIVE_INFINITY,
     refetchOnWindowFocus: false,

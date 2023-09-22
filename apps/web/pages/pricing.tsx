@@ -44,7 +44,8 @@ const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const queryClient = new QueryClient();
-    await queryClient.fetchQuery(paymentOptions.getPricingPlans());
+    await queryClient.fetchQuery(paymentOptions.getPricingPlans("yearly"));
+    await queryClient.fetchQuery(paymentOptions.getPricingPlans("monthly"));
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
@@ -58,16 +59,19 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default function Page() {
-  const { data: pricingPlans } = usePricingPlans();
   const [error, setError] = useState<string>(undefined);
-  const { mutateAsync } = useMutation({
-    mutationFn: ({ productId }: { productId: string }) => {
-      return createPaymentPageUrl(productId);
-    },
-  });
+
   const { status, data: session } = useSession();
   const router = useRouter();
-  const [planType, setPlanType] = useState<"monthly" | "yearly">("monthly");
+  const [paymentCycle, setPaymentCycle] = useState<"monthly" | "yearly">(
+    "monthly"
+  );
+  const { data: pricingPlans } = usePricingPlans(paymentCycle);
+  const { mutateAsync } = useMutation({
+    mutationFn: ({ productId }: { productId: string }) => {
+      return createPaymentPageUrl(productId, paymentCycle);
+    },
+  });
 
   const handlePayment = async (productId: string) => {
     try {
@@ -110,9 +114,9 @@ export default function Page() {
           <PricingSwitch
             leftText="Monthly"
             rightText="Yearly"
-            checked={planType === "monthly" ? false : true}
+            checked={paymentCycle === "monthly" ? false : true}
             onCheckedChange={(checked) =>
-              setPlanType(checked === false ? "monthly" : "yearly")
+              setPaymentCycle(checked === false ? "monthly" : "yearly")
             }
           />
           <section className="flex flex-wrap gap-4">
@@ -128,7 +132,7 @@ export default function Page() {
                       ? 0
                       : pricingPlans[index - 1].default_price.unit_amount / 100
                   }
-                  planType={planType}
+                  planType={paymentCycle}
                   features={[
                     "Some feature 1",
                     "Some feature 2",

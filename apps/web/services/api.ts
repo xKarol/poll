@@ -58,10 +58,15 @@ export const getPricingPlans: Poll.Api["getPricingPlans"] = async () => {
 };
 
 export const createPaymentPageUrl: Poll.Api["createPaymentPageUrl"] = async (
-  productId
+  productId,
+  paymentCycle
 ) => {
-  const { data } = await axios.post("/payment/plan/checkout-session", {
-    productId,
-  });
+  const { data } = await axios.post(
+    "/payment/plan/checkout-session",
+    {
+      productId,
+    },
+    { params: { paymentCycle } }
+  );
   return data;
 };
