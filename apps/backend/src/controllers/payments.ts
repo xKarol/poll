@@ -23,7 +23,7 @@ export const GetPricingPlans = async (
 
 const planNames: Plan[] = ["FREE", "STANDARD", "PREMIUM"];
 
-export const CreatePayment = async (
+export const CreatePlanCheckoutSession = async (
   req: Request<unknown, unknown, { productId: string }>,
   res: Response,
   next: NextFunction
@@ -51,14 +51,15 @@ export const CreatePayment = async (
 
     const payment = await stripe.checkout.sessions.create({
       line_items: [{ price: priceId, quantity: 1 }],
-      mode: "payment",
-      payment_intent_data: {
+      mode: "subscription",
+      subscription_data: {
         metadata: {
           userId,
           productId,
           priceId,
           planName: matchingPlan,
         },
+        trial_period_days: 14,
       },
       success_url: redirectUrl,
       cancel_url: `${redirectUrl}/pricing`,

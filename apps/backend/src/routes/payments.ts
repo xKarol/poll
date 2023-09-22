@@ -9,12 +9,12 @@ const router = express.Router();
 
 router.get("/payment/plan", PaymentsController.GetPricingPlans);
 router.post(
-  "/payments",
+  "/payment/plan/checkout-session",
   requireAuth,
   validateSchema(
     z.object({ body: z.object({ productId: z.string().nonempty() }) })
   ),
-  PaymentsController.CreatePayment
+  PaymentsController.CreatePlanCheckoutSession
 );
 
 export default router;
