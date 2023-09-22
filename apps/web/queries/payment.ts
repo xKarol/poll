@@ -13,7 +13,7 @@ export const paymentOptions = {
     paymentCycle: Payment.PaymentCycle
   ): UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>> => ({
     queryKey: paymentKeys.getPricingPlans(paymentCycle),
-    queryFn: getPricingPlans,
+    queryFn: () => getPricingPlans(paymentCycle),
     cacheTime: Number.POSITIVE_INFINITY,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

@@ -4,13 +4,12 @@ export type PaymentCycle = "monthly" | "yearly";
 
 // Frontend
 export interface Api {
-  getPricingPlans: () => Promise<
+  getPricingPlans: (
+    paymentCycle: PaymentCycle
+  ) => Promise<
     (Omit<Stripe.Product, "default_price"> & { default_price: Stripe.Price })[]
   >;
-  createPlanCheckoutSession: (
-    productId: string,
-    paymentCycle: PaymentCycle
-  ) => Promise<string>;
+  createPlanCheckoutSession: (productId: string) => Promise<string>;
 }
 
 // Backend

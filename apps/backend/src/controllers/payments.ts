@@ -1,9 +1,15 @@
 import type { Plan } from "@poll/prisma";
+import type { Payment } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 
 import { stripe } from "../lib/stripe";
 
-const productIds = ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"];
+const productIds = [
+  // monthly product ids
+  ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"],
+  // yearly product ids TODO change
+  ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"],
+];
 
 export const GetPricingPlans = async (
   req: Request,
@@ -11,8 +17,12 @@ export const GetPricingPlans = async (
   next: NextFunction
 ) => {
   try {
+    const { paymentCycle } = req.query as {
+      paymentCycle: Payment.PaymentCycle;
+    };
+
     const products = await stripe.products.list({
-      ids: productIds,
+      ids: paymentCycle === "monthly" ? productIds[0] : productIds[1],
       expand: ["data.default_price"],
     });
     return res.status(200).send(products.data);

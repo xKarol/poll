@@ -52,19 +52,19 @@ export const getPollUserAnswerChoice: Poll.Api["getPollUserAnswerChoice"] =
   };
 
 // PAYMENTS
-export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
-  const { data } = await axios.get("/payment/plan");
+export const getPricingPlans: Payment.Api["getPricingPlans"] = async (
+  paymentCycle
+) => {
+  const { data } = await axios.get("/payment/plan", {
+    params: { paymentCycle },
+  });
   return data;
 };
 
 export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"] =
-  async (productId, paymentCycle) => {
-    const { data } = await axios.post(
-      "/payment/plan/checkout-session",
-      {
-        productId,
-      },
-      { params: { paymentCycle } }
-    );
+  async (productId) => {
+    const { data } = await axios.post("/payment/plan/checkout-session", {
+      productId,
+    });
     return data;
   };

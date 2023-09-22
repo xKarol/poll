@@ -69,7 +69,7 @@ export default function Page() {
   const { data: pricingPlans } = usePricingPlans(paymentCycle);
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
-      return createPlanCheckoutSession(productId, paymentCycle);
+      return createPlanCheckoutSession(productId);
     },
   });
 
