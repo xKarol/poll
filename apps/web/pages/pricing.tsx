@@ -121,7 +121,11 @@ export default function Page() {
                 ActionComponent={
                   <Button
                     type="button"
-                    disabled={isPlanOwned(name, session?.user.plan || "FREE")}
+                    disabled={
+                      status === "unauthenticated"
+                        ? false
+                        : isPlanOwned(name, session?.user.plan || "FREE")
+                    }
                     onClick={async () => handlePayment(productId)}
                     className="capitalize">
                     Get {name.toLowerCase()}
