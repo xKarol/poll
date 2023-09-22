@@ -2,6 +2,6 @@ export const userKeys = {
   userPolls: ["user.polls"] as const,
 };
 
-export const pollOptions = {
+export const userOptions = {
   userPolls: {},
 } satisfies Record<keyof typeof userKeys, unknown>;
