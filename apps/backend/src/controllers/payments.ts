@@ -4,7 +4,10 @@ import type { Stripe } from "stripe";
 
 import { stripe } from "../lib/stripe";
 
-const productIds = ["prod_OdTeDMfvLOovf7", "prod_OgWA2HVPnkMJCd"];
+const productIds = [
+  process.env.STRIPE_STANDARD_PLAN_PRODUCT_ID,
+  process.env.STRIPE_PREMIUM_PLAN_PRODUCT_ID,
+];
 
 export const GetPricingPlans = async (
   req: Request,

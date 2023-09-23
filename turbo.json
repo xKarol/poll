@@ -19,7 +19,9 @@
         "FRONTEND_URL",
         "NEXTAUTH_SECRET",
         "STRIPE_SECRET_API_KEY",
-        "STRIPE_WEBHOOK_SECRET"
+        "STRIPE_WEBHOOK_SECRET",
+        "STRIPE_STANDARD_PLAN_PRODUCT_ID",
+        "STRIPE_PREMIUM_PLAN_PRODUCT_ID"
       ]
     },
     "build": {
