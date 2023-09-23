@@ -23,10 +23,6 @@ const plansData: {
   description: string;
 }[] = [
   {
-    name: "FREE",
-    description: "Ideal for simple polls and initial experimentation.",
-  },
-  {
     name: "STANDARD",
     description: "For users seeking more options and capabilities.",
   },
@@ -75,19 +71,24 @@ export default function Page() {
   const handlePayment = async (priceId: string) => {
     try {
       if (status == "unauthenticated") {
-        router.push(routes.LOGIN, {
-          query: {
-            redirect: `${getBaseUrl()}${routes.PRICING}`,
-          },
-        });
-        return;
+        return void redirectUnauthenticatedToLoginPage();
       }
-      if (status === "authenticated" && priceId !== "FREE") {
+      if (status === "authenticated") {
         const url = await mutateAsync({ priceId });
         router.push(url);
       }
     } catch (e) {
       setError(getErrorMessage(e));
+    }
+  };
+
+  const redirectUnauthenticatedToLoginPage = () => {
+    if (status == "unauthenticated") {
+      router.push(routes.LOGIN, {
+        query: {
+          redirect: `${getBaseUrl()}${routes.PRICING}`,
+        },
+      });
     }
   };
 
@@ -119,6 +120,27 @@ export default function Page() {
             }
           />
           <section className="flex flex-wrap gap-4">
+            <PricingCard
+              className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
+              planName="Free"
+              description="Ideal for simple polls and initial experimentation."
+              price={0}
+              planType={paymentCycle}
+              features={["Some feature 1", "Some feature 2", "Some feature 3"]}
+              ActionComponent={
+                <Button
+                  type="button"
+                  disabled={
+                    status === "unauthenticated"
+                      ? false
+                      : isPlanOwned("FREE", session?.user.plan || "FREE")
+                  }
+                  onClick={redirectUnauthenticatedToLoginPage}
+                  className="capitalize">
+                  Get Free
+                </Button>
+              }
+            />
             {plansData.map(({ name, description }, index) => {
               const selectedCyclePrice = pricingPlans[index].prices.find(
                 (price) => price.interval === paymentCycle
@@ -144,11 +166,7 @@ export default function Page() {
                           ? false
                           : isPlanOwned(name, session?.user.plan || "FREE")
                       }
-                      onClick={async () =>
-                        handlePayment(
-                          index === 0 ? "FREE" : selectedCyclePrice.id
-                        )
-                      }
+                      onClick={async () => handlePayment(selectedCyclePrice.id)}
                       className="capitalize">
                       Get {name.toLowerCase()}
                     </Button>
