@@ -52,12 +52,8 @@ export const getPollUserAnswerChoice: Poll.Api["getPollUserAnswerChoice"] =
   };
 
 // PAYMENTS
-export const getPricingPlans: Payment.Api["getPricingPlans"] = async (
-  paymentCycle
-) => {
-  const { data } = await axios.get("/payment/plan", {
-    params: { paymentCycle },
-  });
+export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
+  const { data } = await axios.get("/payment/plan");
   return data;
 };
 

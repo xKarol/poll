@@ -45,8 +45,7 @@ const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const queryClient = new QueryClient();
-    await queryClient.fetchQuery(paymentOptions.getPricingPlans("yearly"));
-    await queryClient.fetchQuery(paymentOptions.getPricingPlans("monthly"));
+    await queryClient.fetchQuery(paymentOptions.getPricingPlans);
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
@@ -65,8 +64,8 @@ export default function Page() {
   const { status, data: session } = useSession();
   const router = useRouter();
   const [paymentCycle, setPaymentCycle] =
-    useState<Payment.PaymentCycle>("monthly");
-  const { data: pricingPlans } = usePricingPlans(paymentCycle);
+    useState<Payment.PaymentCycle>("month");
+  const { data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
     mutationFn: ({ productId }: { productId: string }) => {
       return createPlanCheckoutSession(productId);
@@ -114,24 +113,23 @@ export default function Page() {
           <PricingSwitch
             leftText="Monthly"
             rightText="Yearly"
-            checked={paymentCycle === "monthly" ? false : true}
+            checked={paymentCycle === "month" ? false : true}
             onCheckedChange={(checked) =>
-              setPaymentCycle(checked === false ? "monthly" : "yearly")
+              setPaymentCycle(checked === false ? "month" : "year")
             }
           />
           <section className="flex flex-wrap gap-4">
             {plansData.map(({ name, description }, index) => {
+              const selectedCyclePrice = pricingPlans[index].prices.find(
+                (price) => price.interval === paymentCycle
+              );
               return (
                 <PricingCard
                   key={name}
                   className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                   planName={name}
                   description={description}
-                  price={
-                    index === 0
-                      ? 0
-                      : pricingPlans[index - 1].default_price.unit_amount / 100
-                  }
+                  price={index === 0 ? 0 : selectedCyclePrice.amount / 100}
                   planType={paymentCycle}
                   features={[
                     "Some feature 1",
@@ -148,7 +146,7 @@ export default function Page() {
                       }
                       onClick={async () =>
                         handlePayment(
-                          index === 0 ? "FREE" : pricingPlans[index - 1].id
+                          index === 0 ? "FREE" : selectedCyclePrice.id
                         )
                       }
                       className="capitalize">
@@ -199,7 +197,7 @@ function PricingCard({
           <p className="mb-2 text-xl font-medium">
             ${price}{" "}
             <span className="text-base text-neutral-400">
-              per {planType === "monthly" ? "month" : "year"}
+              per {planType === "month" ? "month" : "year"}
             </span>
           </p>
           <p className="mb-2 text-base font-medium text-neutral-500">

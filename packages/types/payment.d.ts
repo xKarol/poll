@@ -1,14 +1,24 @@
+import type { Plan } from "@poll/prisma";
 import type { Stripe } from "stripe";
 
-export type PaymentCycle = "monthly" | "yearly";
+export type PaymentCycle = Extract<
+  Stripe.Price.Recurring.Interval,
+  "month" | "year"
+>;
+
+export type PlanData = {
+  name: Plan;
+  prices: {
+    id: string;
+    interval: Stripe.Price.Recurring.Interval;
+    amount: number;
+    currency: string;
+  }[];
+};
 
 // Frontend
 export interface Api {
-  getPricingPlans: (
-    paymentCycle: PaymentCycle
-  ) => Promise<
-    (Omit<Stripe.Product, "default_price"> & { default_price: Stripe.Price })[]
-  >;
+  getPricingPlans: () => Promise<PlanData[]>;
   createPlanCheckoutSession: (productId: string) => Promise<string>;
 }
 

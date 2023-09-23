@@ -1,15 +1,11 @@
 import type { Plan } from "@poll/prisma";
 import type { Payment } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
+import type { Stripe } from "stripe";
 
 import { stripe } from "../lib/stripe";
 
-const productIds = [
-  // monthly product ids
-  ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"],
-  // yearly product ids TODO change
-  ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"],
-];
+const productIds = ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"];
 
 export const GetPricingPlans = async (
   req: Request,
@@ -17,15 +13,56 @@ export const GetPricingPlans = async (
   next: NextFunction
 ) => {
   try {
-    const { paymentCycle } = req.query as {
-      paymentCycle: Payment.PaymentCycle;
+    const [standardPlanProductId, premiumPlanProductId] = productIds;
+
+    const [standardPrices, premiumPrices] = await Promise.all([
+      stripe.prices.list({
+        product: standardPlanProductId,
+      }),
+      stripe.prices.list({
+        product: premiumPlanProductId,
+      }),
+    ]);
+
+    const filterPrices = (
+      prices: Stripe.Response<Stripe.ApiList<Stripe.Price>>
+    ) => {
+      const filteredData = prices.data.filter(
+        (price) => price.type === "recurring"
+      );
+      if (filteredData.length !== 2)
+        throw new Error(
+          `Invalid recurring prices length. Expected 2, Received: ${filteredData.length}`
+        );
+      return [...filteredData];
     };
 
-    const products = await stripe.products.list({
-      ids: paymentCycle === "monthly" ? productIds[0] : productIds[1],
-      expand: ["data.default_price"],
-    });
-    return res.status(200).send(products.data);
+    const data: Payment.PlanData[] = [
+      {
+        name: "STANDARD",
+        // @ts-ignore
+        prices: filterPrices(standardPrices).map((price) => {
+          return {
+            id: price.id,
+            interval: price.recurring?.interval,
+            amount: price.unit_amount,
+            currency: price.currency,
+          };
+        }),
+      },
+      {
+        name: "PREMIUM",
+        // @ts-ignore
+        prices: filterPrices(premiumPrices).map((price) => ({
+          id: price.id,
+          interval: price.recurring?.interval,
+          amount: price.unit_amount,
+          currency: price.currency,
+        })),
+      },
+    ];
+
+    return res.status(200).send(data);
   } catch (error) {
     next(error);
   }
