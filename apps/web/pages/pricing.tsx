@@ -67,12 +67,12 @@ export default function Page() {
     useState<Payment.PaymentCycle>("month");
   const { data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
-    mutationFn: ({ productId }: { productId: string }) => {
-      return createPlanCheckoutSession(productId);
+    mutationFn: ({ priceId }: { priceId: string }) => {
+      return createPlanCheckoutSession(priceId);
     },
   });
 
-  const handlePayment = async (productId: string) => {
+  const handlePayment = async (priceId: string) => {
     try {
       if (status == "unauthenticated") {
         router.push(routes.LOGIN, {
@@ -82,8 +82,8 @@ export default function Page() {
         });
         return;
       }
-      if (status === "authenticated" && productId !== "FREE") {
-        const url = await mutateAsync({ productId });
+      if (status === "authenticated" && priceId !== "FREE") {
+        const url = await mutateAsync({ priceId });
         router.push(url);
       }
     } catch (e) {

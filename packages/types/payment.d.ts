@@ -19,7 +19,7 @@ export type PlanData = {
 // Frontend
 export interface Api {
   getPricingPlans: () => Promise<PlanData[]>;
-  createPlanCheckoutSession: (productId: string) => Promise<string>;
+  createPlanCheckoutSession: (priceId: string) => Promise<string>;
 }
 
 // Backend

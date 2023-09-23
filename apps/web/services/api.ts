@@ -58,9 +58,9 @@ export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
 };
 
 export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"] =
-  async (productId) => {
+  async (priceId) => {
     const { data } = await axios.post("/payment/plan/checkout-session", {
-      productId,
+      priceId,
     });
     return data;
   };

@@ -1,11 +1,10 @@
-import type { Plan } from "@poll/prisma";
 import type { Payment } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 import type { Stripe } from "stripe";
 
 import { stripe } from "../lib/stripe";
 
-const productIds = ["prod_OdTeDMfvLOovf7", "prod_OdTgXMYSYsi03h"];
+const productIds = ["prod_OdTeDMfvLOovf7", "prod_OgWA2HVPnkMJCd"];
 
 export const GetPricingPlans = async (
   req: Request,
@@ -68,32 +67,14 @@ export const GetPricingPlans = async (
   }
 };
 
-const planNames: Plan[] = ["FREE", "STANDARD", "PREMIUM"];
-
 export const CreatePlanCheckoutSession = async (
-  req: Request<unknown, unknown, { productId: string }>,
+  req: Request<unknown, unknown, { priceId: string }>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { productId } = req.body;
+    const { priceId } = req.body;
     const { id: userId } = req.user!;
-
-    const productData = await stripe.products.retrieve(productId);
-    const priceId =
-      typeof productData.default_price === "string"
-        ? productData.default_price
-        : productData.default_price?.id;
-    if (!priceId) {
-      throw new Error("The product does not have a set default price.");
-    }
-
-    const matchingPlan = planNames.find((planName) =>
-      productData.name.toUpperCase().includes(planName)
-    );
-
-    if (!matchingPlan) throw new Error(`Invalid plan '${productData.name}'`);
-
     const redirectUrl = process.env.FRONTEND_URL as string;
 
     const payment = await stripe.checkout.sessions.create({
@@ -102,9 +83,7 @@ export const CreatePlanCheckoutSession = async (
       subscription_data: {
         metadata: {
           userId,
-          productId,
           priceId,
-          planName: matchingPlan,
         },
         trial_period_days: 14,
       },
@@ -114,7 +93,6 @@ export const CreatePlanCheckoutSession = async (
 
     return res.send(payment.url);
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
