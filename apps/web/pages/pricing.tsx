@@ -151,7 +151,7 @@ export default function Page() {
                   className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                   planName={name}
                   description={description}
-                  price={index === 0 ? 0 : selectedCyclePrice.amount / 100}
+                  price={selectedCyclePrice.amount / 100}
                   planType={paymentCycle}
                   features={[
                     "Some feature 1",
