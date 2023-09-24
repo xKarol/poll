@@ -1,4 +1,6 @@
-type ROUTE = string | ((...args: string[]) => string);
+type ROUTE =
+  | (string | ((...args: string[]) => string))
+  | Record<string, string | ((...args: string[]) => string)>;
 
 export const routes = {
   HOME: "/",
@@ -7,6 +9,9 @@ export const routes = {
   FEATURES: "/", //TODO change
   PUBLIC_POLLS: "/public",
   LOGIN: "/login",
-  USER_POLLS: "/account/polls",
+  DASHBOARD: {
+    HOME: "/dashboard",
+    POLLS: "/dashboard/polls",
+  },
   poll: (pollId: string) => `/${pollId}` as const,
 } as const satisfies Record<string, ROUTE>;
