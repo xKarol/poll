@@ -5,6 +5,7 @@ export type CreatePollData = {
   question: string;
   answers: Pick<Answer, "text">[];
   isPublic?: boolean;
+  requireRecaptcha?: boolean;
 };
 
 export type DeletePollData = {

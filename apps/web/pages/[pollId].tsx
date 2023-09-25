@@ -118,15 +118,16 @@ const PollPage = () => {
       <Header />
       {isSuccess && (
         <>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            size="invisible"
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            hidden={!data.requireRecaptcha || isVoted}
+          />
           <NextSeo title={data.question} />
           <form
             onSubmit={handleSubmit}
             className="container m-auto mt-3 flex max-w-6xl flex-col md:mt-8 xl:mt-16">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              size="invisible"
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-            />
             <div className="space-y-4 leading-[2]">
               <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                 {data.question}

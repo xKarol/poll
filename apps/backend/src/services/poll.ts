@@ -101,6 +101,7 @@ export const createPoll: Poll.Services["createPoll"] = async (data) => {
         userId: data.userId,
         question: data.question,
         isPublic: data.isPublic,
+        requireRecaptcha: data.requireRecaptcha,
         answers: {
           createMany: { data: data.answers },
         },

@@ -40,6 +40,7 @@ export const createPollSchema = z.object({
     )
     .min(2),
   isPublic: z.boolean().optional(),
+  requireRecaptcha: z.boolean().optional(),
 });
 
 type FormValues = Poll.CreatePollData;
@@ -152,6 +153,26 @@ export default function Page() {
                       <FormLabel>Public</FormLabel>
                       <FormDescription className="text-sm font-medium">
                         Make this poll public
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="requireRecaptcha"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-3 dark:border-none dark:bg-neutral-800">
+                    <div className="space-y-2">
+                      <FormLabel>Require ReCAPTCHA</FormLabel>
+                      <FormDescription className="text-sm font-medium">
+                        Require ReCAPTCHA
                       </FormDescription>
                     </div>
                     <FormControl>
