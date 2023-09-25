@@ -1,5 +1,5 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
-import { LoadingButton } from "@poll/ui";
+import { Alert, AlertTitle, LoadingButton } from "@poll/ui";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
@@ -19,6 +19,7 @@ import { usePollAnswerUserChoice } from "../hooks/use-poll-answer-user-choice";
 import { useVotePoll } from "../hooks/use-vote-poll";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
+import { getErrorMessage } from "../utils/error";
 import { getServerSession } from "../utils/get-server-session";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -51,7 +52,11 @@ const PollPage = () => {
   const { isLoading, isSuccess, data } = useGetPoll(pollId);
   const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
-  const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
+  const {
+    mutateAsync,
+    isLoading: isVoteLoading,
+    error: voteError,
+  } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
   const recaptchaRef = useRef<ReCAPTCHA>();
   useLiveAnswers(pollId);
@@ -69,13 +74,18 @@ const PollPage = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    if (!selectedAnswerId) return;
-    const token = await recaptchaRef.current.executeAsync();
-    await mutateAsync({
-      pollId,
-      answerId: selectedAnswerId,
-      reCaptchaToken: token,
-    });
+    try {
+      if (!selectedAnswerId) return;
+      const token = await recaptchaRef.current.executeAsync();
+      await mutateAsync({
+        pollId,
+        answerId: selectedAnswerId,
+        reCaptchaToken: token,
+      });
+    } catch (error) {
+      // TODO handle error
+      console.log(error);
+    }
   };
 
   const onChange = (value: string) => {
@@ -132,6 +142,11 @@ const PollPage = () => {
           <form
             onSubmit={handleSubmit}
             className="container m-auto mt-3 flex max-w-6xl flex-col md:mt-8 xl:mt-16">
+            {voteError ? (
+              <Alert variant="error" className="mb-4 xl:mb-8">
+                <AlertTitle>{getErrorMessage(voteError)}</AlertTitle>
+              </Alert>
+            ) : null}
             <div className="space-y-4 leading-[2]">
               <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                 {data.question}
