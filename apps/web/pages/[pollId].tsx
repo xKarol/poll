@@ -4,7 +4,8 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
@@ -51,6 +52,7 @@ const PollPage = () => {
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
+  const recaptchaRef = useRef<ReCAPTCHA>();
   useLiveAnswers(pollId);
   const isVoted = !!userChoiceAnswerId;
 
@@ -67,6 +69,8 @@ const PollPage = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     if (!selectedAnswerId) return;
+    const token = await recaptchaRef.current.executeAsync();
+    console.log(token);
     await mutateAsync({ pollId, answerId: selectedAnswerId });
   };
 
@@ -118,6 +122,11 @@ const PollPage = () => {
           <form
             onSubmit={handleSubmit}
             className="container m-auto mt-3 flex max-w-6xl flex-col md:mt-8 xl:mt-16">
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              size="invisible"
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            />
             <div className="space-y-4 leading-[2]">
               <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                 {data.question}
