@@ -1,15 +1,14 @@
 import { faker } from "@faker-js/faker";
 import type { Poll, Answer, User } from "@prisma/client";
-import { randomUUID } from "node:crypto";
 
 export function generateFakePollData(isPublic: boolean = true) {
-  const pollId = randomUUID();
-
-  const data: Poll & { answers: Omit<Answer, "id" | "pollId">[] } = {
-    id: pollId,
+  const data: Omit<Poll, "userId" | "id"> & {
+    answers: Omit<Answer, "id" | "pollId">[];
+  } = {
     question: faker.lorem.sentence(),
     answers: Array.from({ length: 4 }, generateFakePollAnswerData),
     isPublic: isPublic,
+    requireRecaptcha: faker.datatype.boolean(),
     createdAt: faker.date.anytime(),
     updatedAt: faker.date.anytime(),
   };
@@ -34,6 +33,7 @@ export function generateFakeUserData() {
     name: faker.internet.displayName(),
     emailVerified: faker.date.past(),
     image: faker.internet.avatar(),
+    plan: faker.helpers.arrayElement(["FREE", "STANDARD", "PREMIUM"]),
   };
   return data;
 }

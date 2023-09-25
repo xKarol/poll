@@ -27,13 +27,13 @@ const main = async () => {
           userId: faker.datatype.boolean()
             ? users[Math.floor(Math.random() * users.length)].id
             : undefined,
+          ...pollData,
           question: pollData.question,
           answers: {
             createMany: {
               data: pollData.answers,
             },
           },
-          isPublic: true,
         },
       })
     );
