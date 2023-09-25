@@ -5,6 +5,7 @@ import type { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
+// eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
@@ -70,8 +71,11 @@ const PollPage = () => {
     e.preventDefault();
     if (!selectedAnswerId) return;
     const token = await recaptchaRef.current.executeAsync();
-    console.log(token);
-    await mutateAsync({ pollId, answerId: selectedAnswerId });
+    await mutateAsync({
+      pollId,
+      answerId: selectedAnswerId,
+      reCaptchaToken: token,
+    });
   };
 
   const onChange = (value: string) => {

@@ -45,7 +45,11 @@ export interface Api {
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
-  votePoll: (pollId: string, answerId: string) => Promise<Vote>;
+  votePoll: (
+    pollId: string,
+    answerId: string,
+    reCaptchaToken: string
+  ) => Promise<Vote>;
   getPollVoters: (pollId: string) => Promise<User[]>;
   getPollUserAnswerChoice: (pollId: string) => Promise<Vote | null>;
 }

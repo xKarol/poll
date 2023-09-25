@@ -15,11 +15,13 @@ export const useVotePoll = () => {
     mutationFn: ({
       pollId,
       answerId,
+      reCaptchaToken,
     }: {
       pollId: string;
       answerId: string;
+      reCaptchaToken: string;
     }) => {
-      return votePoll(pollId, answerId);
+      return votePoll(pollId, answerId, reCaptchaToken);
     },
     onSuccess(data, variables) {
       const { pollId, answerId } = variables;

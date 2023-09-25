@@ -22,8 +22,14 @@ export const getPoll: Poll.Api["getPoll"] = async (pollId) => {
   return data;
 };
 
-export const votePoll: Poll.Api["votePoll"] = async (pollId, answerId) => {
-  const { data } = await axios.post(`/poll/${pollId}/vote/${answerId}`);
+export const votePoll: Poll.Api["votePoll"] = async (
+  pollId,
+  answerId,
+  reCaptchaToken
+) => {
+  const { data } = await axios.post(`/poll/${pollId}/vote/${answerId}`, {
+    reCaptchaToken,
+  });
   return data;
 };
 

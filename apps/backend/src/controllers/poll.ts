@@ -1,3 +1,4 @@
+import prisma from "@poll/prisma";
 import type { Poll } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 
@@ -10,6 +11,7 @@ import {
   votePoll,
   getPollUserAnswerChoice,
 } from "../services/poll";
+import { verifyReCaptcha } from "../services/recaptcha";
 
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -78,7 +80,18 @@ export const Vote = async (
 ) => {
   try {
     const { pollId, answerId } = req.params;
+    const { reCaptchaToken } = req.body as { reCaptchaToken: string };
     const { id: userId } = req.user || {};
+
+    const { requireRecaptcha: isReCaptchaRequired } =
+      await prisma.poll.findUniqueOrThrow({
+        where: { id: pollId },
+        select: { requireRecaptcha: true },
+      });
+    if (isReCaptchaRequired) {
+      const { succes: isValidCaptcha } = await verifyReCaptcha(reCaptchaToken);
+      if (!isValidCaptcha) throw new Error("Invalid reCAPTCHA verification.");
+    }
     const data = await votePoll({ userId, pollId, answerId });
 
     return res.send(data);

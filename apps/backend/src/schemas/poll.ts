@@ -21,6 +21,7 @@ export const createPoll: z.Schema<{ body: Poll.CreatePollData }> = z.object({
       )
       .min(2),
     isPublic: z.boolean().optional(),
+    requireReCaptcha: z.boolean().optional(),
   }),
 });
 export type CreatePoll = z.infer<typeof createPoll>;
@@ -36,6 +37,9 @@ export const votePoll: z.Schema<{ params: Poll.VotePollData }> = z.object({
   params: z.object({
     pollId: z.string().nonempty(),
     answerId: z.string().nonempty(),
+  }),
+  body: z.object({
+    reCaptchaToken: z.string().nonempty(),
   }),
 });
 export type VotePoll = z.infer<typeof votePoll>;
