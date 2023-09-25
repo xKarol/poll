@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const verifyReCaptcha = async (token: string) => {
   const { data } = await axios.post<{
-    succes: boolean;
+    success: boolean;
     "error-codes": string[];
   }>("https://www.google.com/recaptcha/api/siteverify", null, {
     params: {

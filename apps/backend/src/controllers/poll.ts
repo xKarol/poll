@@ -89,7 +89,7 @@ export const Vote = async (
         select: { requireRecaptcha: true },
       });
     if (isReCaptchaRequired) {
-      const { succes: isValidCaptcha } = await verifyReCaptcha(reCaptchaToken);
+      const { success: isValidCaptcha } = await verifyReCaptcha(reCaptchaToken);
       if (!isValidCaptcha) throw new Error("Invalid reCAPTCHA verification.");
     }
     const data = await votePoll({ userId, pollId, answerId });
