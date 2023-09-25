@@ -1,6 +1,16 @@
 import { faker } from "@faker-js/faker";
 import type { Poll, Answer, User } from "@prisma/client";
 
+function getFakeDate() {
+  const createdAt = faker.date.past();
+  return {
+    createdAt: createdAt,
+    updatedAt: faker.datatype.boolean()
+      ? createdAt
+      : faker.date.between({ from: createdAt, to: Date.now() }),
+  };
+}
+
 export function generateFakePollData(isPublic: boolean = true) {
   const data: Omit<Poll, "userId" | "id"> & {
     answers: Omit<Answer, "id" | "pollId">[];
@@ -9,8 +19,7 @@ export function generateFakePollData(isPublic: boolean = true) {
     answers: Array.from({ length: 4 }, generateFakePollAnswerData),
     isPublic: isPublic,
     requireRecaptcha: faker.datatype.boolean(),
-    createdAt: faker.date.anytime(),
-    updatedAt: faker.date.anytime(),
+    ...getFakeDate(),
   };
   return data;
 }
@@ -21,8 +30,7 @@ export function generateFakePollAnswerData() {
       ? faker.lorem.word()
       : faker.lorem.sentence(),
     votes: 0,
-    createdAt: faker.date.anytime(),
-    updatedAt: faker.date.anytime(),
+    ...getFakeDate(),
   };
   return data;
 }
@@ -34,6 +42,7 @@ export function generateFakeUserData() {
     emailVerified: faker.date.past(),
     image: faker.internet.avatar(),
     plan: faker.helpers.arrayElement(["FREE", "STANDARD", "PREMIUM"]),
+    ...getFakeDate(),
   };
   return data;
 }
