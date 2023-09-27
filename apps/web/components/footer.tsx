@@ -37,27 +37,30 @@ const navLinks = [
 const Footer = ({ className, ...props }: FooterProps) => {
   return (
     <footer className={cn("container py-16", className)} {...props}>
-      <div className="mb-8 flex flex-col space-y-16">
-        <Logo />
-        <p className="text-neutral-600 dark:text-neutral-300">
-          Discover, Share, and Engage with Quick Poll – Your Polling Partner!
-        </p>
+      <div className="flex flex-col md:flex-row md:justify-between">
+        <div className="mb-8 flex flex-col space-y-16">
+          <Logo />
+          <p className="text-neutral-600 dark:text-neutral-300">
+            Discover, Share, and Engage with Quick Poll – Your Polling Partner!
+          </p>
+        </div>
+        <nav className="mb-16 flex justify-between md:space-x-8">
+          {navLinks.map((linksGroup) => (
+            <div className="flex flex-col space-y-8" key={linksGroup.heading}>
+              <p className="font-semibold uppercase">{linksGroup.heading}</p>
+              <ul className="space-y-4">
+                {linksGroup.links.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href}>{link.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
-      <nav className="mb-16 flex justify-between">
-        {navLinks.map((linksGroup) => (
-          <div className="flex flex-col space-y-8" key={linksGroup.heading}>
-            <p className="font-semibold uppercase">{linksGroup.heading}</p>
-            <ul className="space-y-4">
-              {linksGroup.links.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href}>{link.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </nav>
-      <div className="mb-16 flex justify-between">
+
+      <div className="mb-16 flex justify-between md:flex-col md:space-y-8">
         <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
           <li>
             <Link href={"twitter.com"}>
