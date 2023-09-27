@@ -89,11 +89,11 @@ export default function Page({
         </section>
         <section className="container flex flex-col">
           <div className="mx-auto mb-32 flex max-w-4xl flex-col space-y-8">
-            <h1 className="text-center text-5xl font-bold">
+            <h1 className="text-center text-3xl font-bold xl:text-5xl">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
               delectus!
             </h1>
-            <p className="text-center text-xl font-medium text-neutral-500">
+            <p className="text-center text-lg font-medium text-neutral-500 xl:text-xl">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Adipisci, modi magnam voluptates excepturi amet corrupti
               praesentium facilis. Ea, sequi eligendi.
