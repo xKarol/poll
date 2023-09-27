@@ -3,12 +3,14 @@ import { Button, Icon } from "@poll/ui";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 
 import Footer from "../components/footer";
 import Header from "../components/header";
 import { routes } from "../config/routes";
 import prisma from "../lib/prisma";
+import HeroImage from "../public/hero-image.svg";
 
 type Stats = {
   totalPolls: number;
@@ -38,7 +40,22 @@ export default function Page({
   return (
     <>
       <Header />
-      <main className="space-y-32">
+      <main className="mt-8 space-y-16 xl:mt-32 xl:space-y-32">
+        <section className="container flex flex-col md:flex-row">
+          <div className="flex-1">
+            <div className="flex max-w-xl flex-col space-y-2 xl:space-y-8">
+              <h1 className="text-3xl font-extrabold xl:text-6xl">
+                Get Quick Answers with Polls
+              </h1>
+              <p className="text-lg font-semibold text-neutral-500 xl:text-3xl">
+                Create polls for quick decisions. Get answers in seconds.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 flex-1 md:mt-0">
+            <Image src={HeroImage} alt="hero" />
+          </div>
+        </section>
         <section className="border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
           <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
             <div className="flex flex-1 flex-col items-center">
