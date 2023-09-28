@@ -1,7 +1,7 @@
 import type { Handler } from "express";
 
 import { getUserPolls } from "../services/poll";
-import { deleteUser, updateUserData } from "../services/user";
+import { deleteUser, updateUserData, getUserVotes } from "../services/user";
 
 export const GetPolls: Handler = async (req, res, next) => {
   try {
@@ -32,6 +32,17 @@ export const DeleteUser: Handler = async (req, res, next) => {
     await deleteUser(userId);
 
     return res.status(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetUserVotes: Handler = async (req, res, next) => {
+  try {
+    const { id: userId } = req.user!;
+    const votes = await getUserVotes(userId);
+
+    return res.send(votes);
   } catch (error) {
     next(error);
   }

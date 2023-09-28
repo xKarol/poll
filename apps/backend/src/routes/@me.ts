@@ -16,5 +16,6 @@ router.patch(
   MeController.UpdateData
 );
 router.delete("/@me", requireAuth, MeController.DeleteUser);
+router.get("/@me/vote", requireAuth, MeController.GetUserVotes);
 
 export default router;

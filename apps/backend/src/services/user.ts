@@ -12,3 +12,12 @@ export const updateUserData: User.Services["updateUser"] = async (
 export const deleteUser: User.Services["deleteUser"] = async (userId) => {
   await prisma.user.delete({ where: { id: userId } });
 };
+
+export const getUserVotes: User.Services["getUserVotes"] = async (userId) => {
+  const votes = await prisma.vote.findMany({
+    where: { userId: userId },
+    include: { poll: true, answer: true },
+  });
+
+  return votes;
+};
