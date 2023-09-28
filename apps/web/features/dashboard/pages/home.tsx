@@ -2,21 +2,17 @@ import Link from "next/link";
 import React from "react";
 
 import { routes } from "../../../config/routes";
-import Sidebar from "../components/sidebar";
+import { BaseLayout } from "../layouts";
 
-type Props = React.ComponentPropsWithRef<"div">;
-
-const HomePage = ({ ...props }: Props) => {
+const HomePage = () => {
   return (
-    <div className="flex" {...props}>
-      <Sidebar />
-
+    <BaseLayout>
       <h1 className="mb-5">Dashboard</h1>
       <div className="flex flex-col space-y-5">
         <Link href={routes.DASHBOARD.POLLS}>Polls</Link>
         <Link href={routes.HOME}>Settings</Link>
       </div>
-    </div>
+    </BaseLayout>
   );
 };
 

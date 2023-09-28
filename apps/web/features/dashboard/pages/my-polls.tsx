@@ -5,11 +5,9 @@ import React from "react";
 import { routes } from "../../../config/routes";
 import { useUserPolls } from "../../../hooks/use-user-polls";
 import { getErrorMessage } from "../../../utils/error";
-import Sidebar from "../components/sidebar";
+import { BaseLayout } from "../layouts";
 
-type Props = React.ComponentPropsWithRef<"div">;
-
-const HomePage = ({ ...props }: Props) => {
+const HomePage = () => {
   const {
     data: pages,
     isLoading,
@@ -20,9 +18,7 @@ const HomePage = ({ ...props }: Props) => {
   } = useUserPolls();
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
-    <div className="flex" {...props}>
-      <Sidebar />
-
+    <BaseLayout>
       <h1 className="mb-5">User Polls</h1>
       {error && <div>{getErrorMessage(error)}</div>}
       {isLoading ? (
@@ -46,7 +42,7 @@ const HomePage = ({ ...props }: Props) => {
           </div>
         </div>
       )}
-    </div>
+    </BaseLayout>
   );
 };
 
