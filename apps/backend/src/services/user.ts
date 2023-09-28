@@ -8,3 +8,7 @@ export const updateUserData: User.Services["updateUser"] = async (
   const response = await prisma.user.update({ where: { id: userId }, data });
   return response;
 };
+
+export const deleteUser: User.Services["deleteUser"] = async (userId) => {
+  await prisma.user.delete({ where: { id: userId } });
+};

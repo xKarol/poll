@@ -10,4 +10,5 @@ export interface Api {
 // Backend
 export interface Services {
   updateUser: (userId: string, data: UpdateUserData) => Promise<User>;
+  deleteUser: (userId: string) => Promise<undefined>;
 }

@@ -15,5 +15,6 @@ router.patch(
   requireAuth,
   MeController.UpdateData
 );
+router.delete("/@me", requireAuth, MeController.DeleteUser);
 
 export default router;
