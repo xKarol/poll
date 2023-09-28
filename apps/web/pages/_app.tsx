@@ -49,9 +49,7 @@ export default function MyApp({
                   --font-inter: ${inter.style.fontFamily};
                 }
               `}</style>
-              <main className="font-sans">
-                <Component {...pageProps} />
-              </main>
+              <Component {...pageProps} />
               <ReactQueryDevtools initialIsOpen={false} />
               {showDevtools && (
                 <React.Suspense fallback={null}>
