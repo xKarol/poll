@@ -1,12 +1,19 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Button, Logo } from "@poll/ui";
+import { Button, Icon, Logo } from "@poll/ui";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useMedia, useLockBodyScroll } from "react-use";
 
 import { routes } from "../config/routes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"header">;
 
@@ -100,14 +107,43 @@ const Header = ({ className, ...rest }: HeaderProps) => {
           </ul>
 
           {session ? (
-            <div className="flex items-center justify-center space-x-2">
-              <Avatar
-                src={session.user.image}
-                sx={{ width: "32px", height: "32px" }}>
-                {session.user.name[0]}
-              </Avatar>
-              <span>{session.user.name}</span>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center justify-center space-x-2">
+                  <Avatar
+                    src={session.user.image}
+                    sx={{ width: "32px", height: "32px" }}>
+                    {session.user.name[0]}
+                  </Avatar>
+                  <span>{session.user.name}</span>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link href={routes.DASHBOARD.HOME}>
+                    <Icon.Home className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={routes.DASHBOARD.POLLS}>
+                    <Icon.BarChart2 className="mr-2 h-4 w-4" />
+                    <span>Your polls</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={routes.DASHBOARD.HOME}>
+                    <Icon.Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()}>
+                  <Icon.LogOut className="mr-2 h-4 w-4" />
+                  <span>Log Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Button asChild variant="secondary" className="!bg-green-500">
               <Link href={routes.LOGIN}>Login</Link>
