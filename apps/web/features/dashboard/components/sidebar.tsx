@@ -1,6 +1,6 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Icon } from "@poll/ui";
+import { Icon, Skeleton } from "@poll/ui";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -35,8 +35,8 @@ export const sidebarLinks = [
 
 const Sidebar = ({ className, ...props }: Props) => {
   const router = useRouter();
-
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
   return (
     <aside
       className={cn(
@@ -44,11 +44,16 @@ const Sidebar = ({ className, ...props }: Props) => {
         className
       )}
       {...props}>
-      <SidebarUser
-        username={session.user.name}
-        avatarUrl={session.user.image}
-        className="mb-6"
-      />
+      <div className="mb-6">
+        {isLoggedIn ? (
+          <SidebarUser
+            username={session?.user.name}
+            avatarUrl={session?.user.image}
+          />
+        ) : (
+          <Skeleton className="h-9 w-full bg-neutral-200" />
+        )}
+      </div>
       <div className="flex flex-1 flex-col justify-between">
         <nav className="space-y-[0.125rem]">
           {sidebarLinks.map((link) => (
