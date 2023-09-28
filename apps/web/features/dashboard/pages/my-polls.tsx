@@ -1,3 +1,4 @@
+import { Button, Icon } from "@poll/ui";
 import { Loader } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -20,7 +21,16 @@ const MyPollsPage = () => {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <BaseLayout>
-      <Heading className="mb-5">Your polls</Heading>
+      <div className="flex items-center justify-between">
+        <Heading className="mb-5">Your polls</Heading>
+        <Button asChild>
+          {/* TODO open as a modal */}
+          <Link href={routes.CREATE_POLL}>
+            <Icon.Plus />
+            <span>Create a poll</span>
+          </Link>
+        </Button>
+      </div>
       {error && <div>{getErrorMessage(error)}</div>}
       {isLoading ? (
         <div>Loading...</div>

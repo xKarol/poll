@@ -5,7 +5,7 @@ import { MyPollsPage } from "../../features/dashboard";
 export default function Page() {
   return (
     <>
-      <NextSeo title="User Polls" />
+      <NextSeo title="My polls" />
       <MyPollsPage />
     </>
   );
