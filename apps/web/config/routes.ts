@@ -12,6 +12,8 @@ export const routes = {
   DASHBOARD: {
     HOME: "/dashboard",
     POLLS: "/dashboard/polls",
+    VOTES: "/dashboard/votes",
+    STATISTICS: "/dashboard/statistics",
   },
   poll: (pollId: string) => `/${pollId}` as const,
 } as const satisfies Record<string, ROUTE>;

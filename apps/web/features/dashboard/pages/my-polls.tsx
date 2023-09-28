@@ -8,7 +8,7 @@ import { getErrorMessage } from "../../../utils/error";
 import Heading from "../components/heading";
 import { BaseLayout } from "../layouts";
 
-const HomePage = () => {
+const MyPollsPage = () => {
   const {
     data: pages,
     isLoading,
@@ -47,4 +47,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default MyPollsPage;

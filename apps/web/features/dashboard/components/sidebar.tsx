@@ -18,17 +18,17 @@ export const sidebarLinks = [
   },
   {
     text: "My votes",
-    href: routes.DASHBOARD.HOME + "#",
+    href: routes.DASHBOARD.VOTES,
     IconElement: <Icon.Vote />,
   },
   {
     text: "Statistics",
-    href: routes.DASHBOARD.HOME + "#",
+    href: routes.DASHBOARD.STATISTICS,
     IconElement: <Icon.BarChart />,
   },
   {
     text: "Settings",
-    href: routes.DASHBOARD.HOME + "#",
+    href: routes.DASHBOARD.HOME,
     IconElement: <Icon.Settings />,
   },
 ];
