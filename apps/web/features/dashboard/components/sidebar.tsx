@@ -2,6 +2,7 @@ import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 import { routes } from "../../../config/routes";
@@ -16,22 +17,23 @@ export const sidebarLinks = [
   },
   {
     text: "My votes",
-    href: routes.DASHBOARD.HOME,
+    href: routes.DASHBOARD.HOME + "#",
     IconElement: <Icon.Vote />,
   },
   {
     text: "Statistics",
-    href: routes.DASHBOARD.HOME,
+    href: routes.DASHBOARD.HOME + "#",
     IconElement: <Icon.BarChart />,
   },
   {
     text: "Settings",
-    href: routes.DASHBOARD.HOME,
+    href: routes.DASHBOARD.HOME + "#",
     IconElement: <Icon.Settings />,
   },
 ];
 
 const Sidebar = ({ className, ...props }: Props) => {
+  const router = useRouter();
   return (
     <aside
       className={cn(
@@ -44,8 +46,9 @@ const Sidebar = ({ className, ...props }: Props) => {
           <SidebarNavigationLink
             key={link.text}
             as={Link}
-            href={link.text}
-            IconElement={link.IconElement}>
+            href={link.href}
+            IconElement={link.IconElement}
+            isActive={router.asPath === link.href}>
             {link.text}
           </SidebarNavigationLink>
         ))}
