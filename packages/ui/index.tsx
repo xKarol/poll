@@ -7,3 +7,4 @@ export * from "./components/alert";
 export * as Icon from "./components/icon";
 export * from "./components/skeleton";
 export * from "./components/progress";
+export * from "./components/dropdown-menu";

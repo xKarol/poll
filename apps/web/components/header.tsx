@@ -1,19 +1,21 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Button, Icon, Logo } from "@poll/ui";
+import {
+  Button,
+  Icon,
+  Logo,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@poll/ui";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useMedia, useLockBodyScroll } from "react-use";
 
 import { routes } from "../config/routes";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
 
 type HeaderProps = React.ComponentPropsWithoutRef<"header">;
 

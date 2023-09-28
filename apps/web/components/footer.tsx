@@ -1,15 +1,16 @@
 import { cn } from "@poll/lib";
-import { Icon, Logo } from "@poll/ui";
+import {
+  Icon,
+  Logo,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
+} from "@poll/ui";
 import Link from "next/link";
 import React from "react";
 
 import { routes } from "../config/routes";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "./dropdown-menu";
 
 type FooterProps = React.ComponentPropsWithoutRef<"footer">;
 
