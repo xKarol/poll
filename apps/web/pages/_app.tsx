@@ -44,7 +44,12 @@ export default function MyApp({
         <Hydrate state={pageProps.dehydratedState}>
           <SessionProvider session={session}>
             <ThemeProvider attribute="class">
-              <main className={`${inter.variable} font-sans`}>
+              <style jsx global>{`
+                :root {
+                  --font-inter: ${inter.style.fontFamily};
+                }
+              `}</style>
+              <main className="font-sans">
                 <Component {...pageProps} />
               </main>
               <ReactQueryDevtools initialIsOpen={false} />
