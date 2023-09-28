@@ -5,6 +5,7 @@ import React from "react";
 import { routes } from "../../../config/routes";
 import { useUserPolls } from "../../../hooks/use-user-polls";
 import { getErrorMessage } from "../../../utils/error";
+import Heading from "../components/heading";
 import { BaseLayout } from "../layouts";
 
 const HomePage = () => {
@@ -19,7 +20,7 @@ const HomePage = () => {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <BaseLayout>
-      <h1 className="mb-5">User Polls</h1>
+      <Heading className="mb-5">Your polls</Heading>
       {error && <div>{getErrorMessage(error)}</div>}
       {isLoading ? (
         <div>Loading...</div>
