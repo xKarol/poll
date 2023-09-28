@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -35,6 +35,8 @@ export const sidebarLinks = [
 
 const Sidebar = ({ className, ...props }: Props) => {
   const router = useRouter();
+
+  const { data: session } = useSession();
   return (
     <aside
       className={cn(
@@ -42,7 +44,11 @@ const Sidebar = ({ className, ...props }: Props) => {
         className
       )}
       {...props}>
-      <SidebarUser username="John Doe" className="mb-6" />
+      <SidebarUser
+        username={session.user.name}
+        avatarUrl={session.user.image}
+        className="mb-6"
+      />
       <div className="flex flex-1 flex-col justify-between">
         <nav className="space-y-[0.125rem]">
           {sidebarLinks.map((link) => (
