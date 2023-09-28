@@ -37,7 +37,7 @@ const Sidebar = ({ className, ...props }: Props) => {
   return (
     <aside
       className={cn(
-        "flex h-screen w-[220px] flex-col justify-between bg-neutral-800/25 px-2 py-4",
+        "flex h-screen w-[220px] flex-col justify-between border-r border-neutral-200/50 bg-neutral-100 px-2 py-4 dark:border-neutral-800/50 dark:bg-neutral-800/25",
         className
       )}
       {...props}>
@@ -87,8 +87,8 @@ export function SidebarNavigationLink<T extends React.ElementType = "button">({
   return (
     <Component
       className={cn(
-        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm font-medium text-neutral-200 hover:bg-neutral-800 hover:text-white [&_svg]:h-4 [&_svg]:w-4",
-        isActive && "bg-neutral-800",
+        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm font-medium text-neutral-800 hover:bg-neutral-200 hover:text-neutral-900 dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white [&_svg]:h-4 [&_svg]:w-4",
+        isActive && "bg-neutral-200 dark:bg-neutral-800",
         className
       )}
       {...props}>
