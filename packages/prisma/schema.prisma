@@ -50,8 +50,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   plan          Plan      @default(FREE)
-  Poll          Poll[]
-  Vote          Vote[]
+  poll          Poll[]
+  vote          Vote[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -70,7 +70,7 @@ model Poll {
   answers          Answer[]
   user             User?    @relation(fields: [userId], references: [id])
   userId           String?
-  Vote             Vote[]
+  vote             Vote[]
   // settings
   isPublic         Boolean  @default(true)
   requireRecaptcha Boolean  @default(false)
@@ -83,9 +83,9 @@ model Answer {
   id        String   @id @unique @default(cuid())
   text      String
   votes     Int      @default(0)
-  Poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)
   pollId    String?
-  Vote      Vote[]
+  vote      Vote[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -96,7 +96,7 @@ model Vote {
   answerId  String
   user      User?    @relation(fields: [userId], references: [id])
   userId    String?
-  Poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  poll      Poll?    @relation(fields: [pollId], references: [id], onDelete: Cascade)
   pollId    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
