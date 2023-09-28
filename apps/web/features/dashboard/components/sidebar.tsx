@@ -8,6 +8,29 @@ import { routes } from "../../../config/routes";
 
 type Props = React.ComponentPropsWithoutRef<"aside">;
 
+export const sidebarLinks = [
+  {
+    text: "My polls",
+    href: routes.DASHBOARD.POLLS,
+    IconElement: <Icon.PieChart />,
+  },
+  {
+    text: "My votes",
+    href: routes.DASHBOARD.HOME,
+    IconElement: <Icon.Vote />,
+  },
+  {
+    text: "Statistics",
+    href: routes.DASHBOARD.HOME,
+    IconElement: <Icon.BarChart />,
+  },
+  {
+    text: "Settings",
+    href: routes.DASHBOARD.HOME,
+    IconElement: <Icon.Settings />,
+  },
+];
+
 const Sidebar = ({ className, ...props }: Props) => {
   return (
     <aside
@@ -17,30 +40,15 @@ const Sidebar = ({ className, ...props }: Props) => {
       )}
       {...props}>
       <nav className="space-y-[0.125rem]">
-        <SidebarNavigationLink
-          as={Link}
-          href={routes.DASHBOARD.POLLS}
-          IconElement={<Icon.PieChart />}>
-          My polls
-        </SidebarNavigationLink>
-        <SidebarNavigationLink
-          as={Link}
-          href={routes.DASHBOARD.HOME}
-          IconElement={<Icon.Vote />}>
-          My votes
-        </SidebarNavigationLink>
-        <SidebarNavigationLink
-          as={Link}
-          href={routes.DASHBOARD.HOME}
-          IconElement={<Icon.BarChart />}>
-          Statistics
-        </SidebarNavigationLink>
-        <SidebarNavigationLink
-          as={Link}
-          href={routes.DASHBOARD.HOME}
-          IconElement={<Icon.Settings />}>
-          Settings
-        </SidebarNavigationLink>
+        {sidebarLinks.map((link) => (
+          <SidebarNavigationLink
+            key={link.text}
+            as={Link}
+            href={link.text}
+            IconElement={link.IconElement}>
+            {link.text}
+          </SidebarNavigationLink>
+        ))}
       </nav>
       <SidebarNavigationLink
         IconElement={<Icon.LogOut />}
