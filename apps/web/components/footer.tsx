@@ -4,6 +4,12 @@ import Link from "next/link";
 import React from "react";
 
 import { routes } from "../config/routes";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 type FooterProps = React.ComponentPropsWithoutRef<"footer">;
 
@@ -78,13 +84,22 @@ const Footer = ({ className, ...props }: FooterProps) => {
             </Link>
           </li>
         </ul>
-        <div className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
-          <Icon.Globe />
-          <div className="flex space-x-2">
-            <span>English</span>
-            <Icon.ChevronDown />
-          </div>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex w-max cursor-pointer space-x-4 text-neutral-600 dark:text-neutral-300">
+              <Icon.Globe />
+              <div className="flex space-x-2">
+                <span>English</span>
+                <Icon.ChevronDown />
+              </div>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuCheckboxItem checked={true}>
+              English
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="flex flex-col items-center space-y-4">
         <span>
