@@ -21,7 +21,7 @@ const MyPollsPage = () => {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <BaseLayout>
-      <div className="flex items-center justify-between">
+      <div className="mb-8 flex items-center justify-between">
         <Heading className="mb-5">Your polls</Heading>
         <Button asChild>
           {/* TODO open as a modal */}
@@ -31,28 +31,50 @@ const MyPollsPage = () => {
           </Link>
         </Button>
       </div>
-      {error && <div>{getErrorMessage(error)}</div>}
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="flex flex-col space-y-2">
-          {data?.map((poll) => (
-            <Link
-              key={poll.id}
-              href={routes.poll(poll.id)}
-              className="flex justify-between border border-black px-4 py-2">
-              <span>{poll.question}</span>
-              <span>Total Votes:{poll.totalVotes}</span>
-            </Link>
-          ))}
-          <div className="mx-auto">
-            {isFetchingNextPage && <Loader />}
-            {hasNextPage && (
-              <button onClick={() => fetchNextPage()}>Fetch More</button>
-            )}
+      <div className="flex flex-col">
+        <div className="mb-2 flex px-4 py-2 [&>*]:max-w-[150px] [&>*]:flex-1">
+          <span className="!max-w-none space-x-2">Question</span>
+          <div>
+            <div className="flex items-center space-x-2">
+              <span>Votes</span>
+            </div>
           </div>
+          <div>
+            <div className="flex items-center space-x-2">
+              <span>Public</span>
+            </div>
+          </div>
+          <span className="space-x-2"></span>
         </div>
-      )}
+        {error && <div>{getErrorMessage(error)}</div>}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="flex flex-col space-y-2">
+            {data?.map((poll) => (
+              <Link
+                key={poll.id}
+                href={routes.poll(poll.id)}
+                className="flex items-center justify-between rounded-[4px] border border-neutral-700/50 px-4 py-2 text-sm transition-colors hover:bg-neutral-700/5 [&_*]:max-w-[150px] [&_*]:flex-1">
+                <span className="!max-w-none">{poll.question}</span>
+                <span>{poll.totalVotes}</span>
+                <div className="">
+                  <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
+                    {poll.isPublic ? "Public" : "Private"}
+                  </span>
+                </div>
+                <Icon.MoreHorizontal />
+              </Link>
+            ))}
+            <div className="mx-auto">
+              {isFetchingNextPage && <Loader />}
+              {hasNextPage && (
+                <button onClick={() => fetchNextPage()}>Fetch More</button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </BaseLayout>
   );
 };
