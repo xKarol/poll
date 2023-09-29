@@ -11,8 +11,10 @@ import type { FetchNextPageOptions } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React from "react";
+import { useCopyToClipboard } from "react-use";
 
 import { routes } from "../../../config/routes";
+import { getBaseUrl } from "../../../utils/get-base-url";
 
 type Props = {
   data: (Poll & { totalVotes: number })[];
@@ -48,6 +50,7 @@ function PollsTable({
         {data.map((poll) => (
           <PollItem
             key={poll.id}
+            id={poll.id}
             href={routes.poll(poll.id)}
             question={poll.question}
             isPublic={poll.isPublic}
@@ -68,12 +71,16 @@ function PollsTable({
 
 export default PollsTable;
 
-type PollItemsProps = (Pick<Poll, "question" | "isPublic" | "createdAt"> & {
+type PollItemsProps = (Pick<
+  Poll,
+  "id" | "question" | "isPublic" | "createdAt"
+> & {
   totalVotes: number;
 }) &
   Omit<React.ComponentProps<typeof Link>, "children">;
 
 function PollItem({
+  id,
   question,
   isPublic,
   createdAt,
@@ -81,6 +88,11 @@ function PollItem({
   totalVotes,
   ...props
 }: PollItemsProps) {
+  const [, copy] = useCopyToClipboard();
+
+  const handleCopy = () => {
+    copy(`${getBaseUrl()}${routes.poll(id)}`);
+  };
   return (
     <Link
       className={cn(
@@ -107,7 +119,7 @@ function PollItem({
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="space-x-2">
+            <DropdownMenuItem className="space-x-2" onClick={handleCopy}>
               <Icon.Copy className="h-4 w-4" />
               <span>Copy link</span>
             </DropdownMenuItem>
@@ -115,7 +127,7 @@ function PollItem({
               <Icon.Share2 className="h-4 w-4" />
               <span>Share</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="space-x-2 text-red-400 focus:bg-red-400">
+            <DropdownMenuItem className="space-x-2 text-red-400 [&>*]:pointer-events-none">
               <Icon.Trash2 className="h-4 w-4" />
               <span>Delete poll</span>
             </DropdownMenuItem>
