@@ -1,4 +1,5 @@
 import { Button, Icon } from "@poll/ui";
+import dayjs from "dayjs";
 import { Loader } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -49,7 +50,8 @@ const MyPollsPage = () => {
                   <span>Public</span>
                 </div>
               </div>
-              <span className="space-x-2"></span>
+              <span>Created At</span>
+              <span></span>
             </div>
             <div className="flex flex-col space-y-2">
               {data?.map((poll) => (
@@ -59,11 +61,12 @@ const MyPollsPage = () => {
                   className="flex items-center justify-between rounded-[4px] border border-neutral-700/50 px-4 py-2 text-sm transition-colors hover:bg-neutral-700/5 [&_*]:max-w-[150px] [&_*]:flex-1">
                   <span className="!max-w-none">{poll.question}</span>
                   <span>{poll.totalVotes}</span>
-                  <div className="">
+                  <div>
                     <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
                       {poll.isPublic ? "Public" : "Private"}
                     </span>
                   </div>
+                  <div>{dayjs(poll.createdAt).format("DD.MM.YYYY h:mm")}</div>
                   <Icon.MoreHorizontal />
                 </Link>
               ))}
