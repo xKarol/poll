@@ -96,14 +96,14 @@ function PollItem({
   return (
     <Link
       className={cn(
-        "flex items-center justify-between rounded-[4px] border border-neutral-700/50 p-4 text-sm transition-colors hover:bg-neutral-700/5 [&>*]:max-w-[150px] [&>*]:flex-1",
+        "flex items-center justify-between rounded-[4px] border border-neutral-200 p-4 text-sm transition-colors hover:bg-neutral-700/5 dark:border-neutral-700/50 [&>*]:max-w-[150px] [&>*]:flex-1",
         className
       )}
       {...props}>
       <span className="!max-w-none">{question}</span>
       <span>{totalVotes}</span>
       <div>
-        <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
+        <span className="rounded-[2px] bg-neutral-200 p-1 text-xs dark:bg-neutral-800">
           {isPublic ? "Public" : "Private"}
         </span>
       </div>
@@ -114,7 +114,7 @@ function PollItem({
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              className="ml-auto rounded-[4px] p-1 transition-colors hover:bg-neutral-800">
+              className="ml-auto rounded-[4px] p-1 transition-colors hover:bg-neutral-200 hover:dark:bg-neutral-800">
               <Icon.MoreHorizontal className="h-5 w-5" />
             </button>
           </DropdownMenuTrigger>
