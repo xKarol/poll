@@ -27,7 +27,7 @@ import { routes } from "../config/routes";
 import { useCreatePoll } from "../hooks/use-create-poll";
 import { getErrorMessage } from "../utils/error";
 
-export type CreatePollFormProps = Omit<
+export type CreatePollFormProps = { ActionButtons?: JSX.Element[] } & Omit<
   React.ComponentPropsWithoutRef<"form">,
   "children"
 >;
@@ -52,6 +52,7 @@ type FormValues = Poll.CreatePollData;
 
 export const CreatePollForm = ({
   className,
+  ActionButtons = [],
   ...props
 }: CreatePollFormProps) => {
   const router = useRouter();
@@ -189,12 +190,15 @@ export const CreatePollForm = ({
           </div>
         </div>
 
-        <LoadingButton
-          className="ml-auto min-w-[100px]"
-          type="submit"
-          isLoading={isLoading}>
-          Create
-        </LoadingButton>
+        <div className="ml-auto flex space-x-2">
+          {ActionButtons.map((Button) => Button)}
+          <LoadingButton
+            className="min-w-[100px]"
+            type="submit"
+            isLoading={isLoading}>
+            Create
+          </LoadingButton>
+        </div>
       </form>
     </Form>
   );
