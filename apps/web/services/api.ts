@@ -1,7 +1,8 @@
-import type { Poll, Payment } from "@poll/types";
+import type { Poll, Payment, User } from "@poll/types";
 
 import axios from "../lib/axios";
 
+// POLL
 export const createPoll: Poll.Api["createPoll"] = async (pollData) => {
   const { data } = await axios.post("/poll", pollData);
   return data;
@@ -33,19 +34,6 @@ export const votePoll: Poll.Api["votePoll"] = async (
   return data;
 };
 
-export const getUserPolls: Poll.Api["getUserPolls"] = async (
-  page = 1,
-  limit = 10
-) => {
-  const { data } = await axios.get(`/@me/poll`, {
-    params: {
-      page,
-      limit,
-    },
-  });
-  return data;
-};
-
 export const getPollVoters: Poll.Api["getPollVoters"] = async (pollId) => {
   const { data } = await axios.get(`/poll/${pollId}/vote/users`);
   return data;
@@ -70,3 +58,30 @@ export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"]
     });
     return data;
   };
+
+// USER
+export const getUserPolls: Poll.Api["getUserPolls"] = async (
+  page = 1,
+  limit = 10
+) => {
+  const { data } = await axios.get(`/@me/poll`, {
+    params: {
+      page,
+      limit,
+    },
+  });
+  return data;
+};
+
+export const getUserVotes: User.Api["getUserVotes"] = async (
+  page = 1,
+  limit = 10
+) => {
+  const { data } = await axios.get(`/@me/vote`, {
+    params: {
+      page,
+      limit,
+    },
+  });
+  return data;
+};
