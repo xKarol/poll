@@ -13,11 +13,23 @@ export const deleteUser: User.Services["deleteUser"] = async (userId) => {
   await prisma.user.delete({ where: { id: userId } });
 };
 
-export const getUserVotes: User.Services["getUserVotes"] = async (userId) => {
-  const votes = await prisma.vote.findMany({
-    where: { userId: userId },
+export const getUserVotes: User.Services["getUserVotes"] = async (
+  userId,
+  { page = 1, skip, limit = 10 }
+) => {
+  const response = await prisma.vote.findMany({
+    skip: skip,
+    take: limit + 1,
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
     include: { poll: true, answer: true },
   });
-
-  return votes;
+  return {
+    data: response.slice(0, limit),
+    nextPage: response.length > limit ? page + 1 : undefined,
+  };
 };

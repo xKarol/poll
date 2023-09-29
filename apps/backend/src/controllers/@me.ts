@@ -40,7 +40,7 @@ export const DeleteUser: Handler = async (req, res, next) => {
 export const GetUserVotes: Handler = async (req, res, next) => {
   try {
     const { id: userId } = req.user!;
-    const votes = await getUserVotes(userId);
+    const votes = await getUserVotes(userId, req.pagination);
 
     return res.send(votes);
   } catch (error) {
