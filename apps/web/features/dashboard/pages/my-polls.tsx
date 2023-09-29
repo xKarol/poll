@@ -4,9 +4,9 @@ import Link from "next/link";
 import React from "react";
 
 import { routes } from "../../../config/routes";
-import { useUserPolls } from "../../../hooks/use-user-polls";
 import { getErrorMessage } from "../../../utils/error";
 import Heading from "../components/heading";
+import { useUserPolls } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 const MyPollsPage = () => {
