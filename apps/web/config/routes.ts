@@ -19,7 +19,7 @@ export const routes = {
   SETTINGS: {
     HOME: "/settings",
     ACCOUNT: {
-      GENERAL: "/settings/account",
+      GENERAL: "/settings/account/general",
       EDIT: "/settings/account/edit",
     },
     PREFERENCES: {
