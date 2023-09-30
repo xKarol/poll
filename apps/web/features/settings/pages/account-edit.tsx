@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@poll/types";
-import { Alert, AlertTitle, Button, Input } from "@poll/ui";
+import { Alert, AlertTitle, Button, Icon, Input, toast } from "@poll/ui";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -44,11 +44,13 @@ export default function AccountEditPage() {
     try {
       console.log(data);
 
+      toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset();
     } catch (error) {
       form.setError("root", { message: getErrorMessage(error) });
     }
   });
+
   return (
     <BaseLayout>
       <SettingsHeader heading="Edit" description="Edit your account" />

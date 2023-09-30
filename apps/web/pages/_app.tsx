@@ -10,6 +10,7 @@ import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import React, { useState, useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 
 import SEO from "../config/next-seo";
 import { queryClientConfig } from "../config/query-client";
@@ -50,6 +51,9 @@ export default function MyApp({
                 }
               `}</style>
               <Component {...pageProps} />
+              <div>
+                <Toaster position="bottom-right" />
+              </div>
               <ReactQueryDevtools initialIsOpen={false} />
               {showDevtools && (
                 <React.Suspense fallback={null}>
