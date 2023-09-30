@@ -1,6 +1,7 @@
-type ROUTE =
-  | (string | ((...args: string[]) => string))
-  | Record<string, string | ((...args: string[]) => string)>;
+type RouteValue = string | ((...args: string[]) => string);
+type Route = {
+  [key: string]: RouteValue | Route;
+};
 
 export const routes = {
   HOME: "/",
@@ -15,5 +16,15 @@ export const routes = {
     VOTES: "/dashboard/votes",
     STATISTICS: "/dashboard/statistics",
   },
+  SETTINGS: {
+    HOME: "/settings",
+    ACCOUNT: {
+      GENERAL: "/settings/account",
+      EDIT: "/settings/account/edit",
+    },
+    PREFERENCES: {
+      THEMES: "/settings/preferences/themes",
+    },
+  },
   poll: (pollId: string) => `/${pollId}` as const,
-} as const satisfies Record<string, ROUTE>;
+} as const satisfies Route;

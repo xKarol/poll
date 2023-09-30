@@ -12,24 +12,29 @@ type Props = React.ComponentPropsWithoutRef<"aside">;
 
 export const sidebarLinks = [
   {
-    text: "My polls",
-    href: routes.DASHBOARD.POLLS,
-    IconElement: <Icon.PieChart />,
+    category: "Account",
+    tabs: [
+      {
+        text: "General",
+        href: routes.SETTINGS.ACCOUNT.GENERAL,
+        IconElement: <Icon.Hexagon />,
+      },
+      {
+        text: "Edit profile",
+        href: routes.SETTINGS.ACCOUNT.EDIT,
+        IconElement: <Icon.User2 />,
+      },
+    ],
   },
   {
-    text: "My votes",
-    href: routes.DASHBOARD.VOTES,
-    IconElement: <Icon.Vote />,
-  },
-  {
-    text: "Statistics",
-    href: routes.DASHBOARD.STATISTICS,
-    IconElement: <Icon.BarChart />,
-  },
-  {
-    text: "Settings",
-    href: routes.SETTINGS.ACCOUNT.GENERAL,
-    IconElement: <Icon.Settings />,
+    category: "Preferences",
+    tabs: [
+      {
+        text: "Themes",
+        href: routes.SETTINGS.PREFERENCES.THEMES,
+        IconElement: <Icon.Palette />,
+      },
+    ],
   },
 ];
 
@@ -44,6 +49,13 @@ const Sidebar = ({ className, ...props }: Props) => {
         className
       )}
       {...props}>
+      <SidebarNavigationLink
+        as={Link}
+        href={routes.DASHBOARD.HOME}
+        className="mb-[0.125rem]"
+        IconElement={<Icon.ArrowLeft />}>
+        Back
+      </SidebarNavigationLink>
       <div className="mb-6">
         {isLoggedIn ? (
           <SidebarUser
@@ -55,23 +67,39 @@ const Sidebar = ({ className, ...props }: Props) => {
         )}
       </div>
       <div className="flex flex-1 flex-col justify-between">
-        <nav className="space-y-[0.125rem]">
-          {sidebarLinks.map((link) => (
-            <SidebarNavigationLink
-              key={link.text}
-              as={Link}
-              href={link.href}
-              IconElement={link.IconElement}
-              isActive={router.asPath === link.href}>
-              {link.text}
-            </SidebarNavigationLink>
+        <nav className="space-y-4">
+          {sidebarLinks.map(({ category, tabs }) => (
+            <div key={category}>
+              {category ? (
+                <span className="px-2 text-sm font-medium text-neutral-400">
+                  {category}
+                </span>
+              ) : null}
+              <div className="space-y-[0.125rem]">
+                {tabs.map((link) => (
+                  <SidebarNavigationLink
+                    key={link.text}
+                    as={Link}
+                    href={link.href}
+                    IconElement={link.IconElement}
+                    isActive={router.asPath === link.href}>
+                    {link.text}
+                  </SidebarNavigationLink>
+                ))}
+              </div>
+            </div>
           ))}
         </nav>
-        <SidebarNavigationLink
-          IconElement={<Icon.LogOut />}
-          onClick={() => signOut()}>
-          Log Out
-        </SidebarNavigationLink>
+        <div>
+          <SidebarNavigationLink IconElement={<Icon.HelpCircle />}>
+            Support Center
+          </SidebarNavigationLink>
+          <SidebarNavigationLink
+            IconElement={<Icon.LogOut />}
+            onClick={() => signOut()}>
+            Log Out
+          </SidebarNavigationLink>
+        </div>
       </div>
     </aside>
   );
