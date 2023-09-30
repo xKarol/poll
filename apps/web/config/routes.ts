@@ -23,7 +23,7 @@ export const routes = {
       EDIT: "/settings/account/edit",
     },
     PREFERENCES: {
-      THEMES: "/settings/preferences/themes",
+      APPEARANCE: "/settings/preferences/appearance",
     },
   },
   poll: (pollId: string) => `/${pollId}` as const,

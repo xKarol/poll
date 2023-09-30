@@ -35,8 +35,8 @@ export const sidebarLinks: SidebarLinks = [
     category: "Preferences",
     tabs: [
       {
-        text: "Themes",
-        href: routes.SETTINGS.PREFERENCES.THEMES,
+        text: "Appearance",
+        href: routes.SETTINGS.PREFERENCES.APPEARANCE,
         IconElement: <Icon.Palette />,
       },
     ],
