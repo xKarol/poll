@@ -5,7 +5,15 @@ export const updateUserData: User.Services["updateUser"] = async (
   userId,
   data
 ) => {
-  const response = await prisma.user.update({ where: { id: userId }, data });
+  const response = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      name: data.name,
+      image: data.image,
+      // TODO handle email change properly, do not update user email for now
+      // ...data
+    },
+  });
   return response;
 };
 
