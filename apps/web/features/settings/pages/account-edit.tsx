@@ -37,7 +37,11 @@ export default function AccountEditPage() {
       name: session?.user.name ?? "",
     },
   });
-  const { mutateAsync, isLoading } = useUpdateAccount();
+  const { mutateAsync, isLoading } = useUpdateAccount({
+    onError: () => {
+      toast("Something went wrong...");
+    },
+  });
   const hasChanges =
     JSON.stringify(form.formState.defaultValues) !==
     JSON.stringify(form.getValues());
