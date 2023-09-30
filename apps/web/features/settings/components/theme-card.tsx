@@ -8,7 +8,8 @@ import systemThemePreview from "../../../public/system-theme-preview.svg";
 
 type Props = {
   variant: "dark" | "light" | "system";
-} & React.ComponentPropsWithoutRef<"div">;
+  RadioInput: JSX.Element;
+} & Omit<React.ComponentPropsWithoutRef<"div">, "children">;
 
 const variantPreview = {
   light: lightThemePreview,
@@ -16,7 +17,7 @@ const variantPreview = {
   system: systemThemePreview,
 };
 
-function ThemeCard({ variant, className, ...props }: Props) {
+function ThemeCard({ RadioInput, variant, className, ...props }: Props) {
   return (
     <div
       className={cn("rounded-[4px] border border-neutral-700/50", className)}
@@ -25,8 +26,7 @@ function ThemeCard({ variant, className, ...props }: Props) {
         <Image src={variantPreview[variant]} alt={`${variant} theme preview`} />
       </div>
       <div className="flex items-center space-x-2 p-4 text-sm">
-        {/* TODO radio input */}
-        <div className="h-4 w-4 rounded-full border border-neutral-700/50"></div>
+        {RadioInput}
         <p className="capitalize">{variant} theme</p>
       </div>
     </div>
