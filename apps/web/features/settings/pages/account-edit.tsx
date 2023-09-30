@@ -50,7 +50,7 @@ export default function AccountEditPage() {
     try {
       await mutateAsync(data);
       toast("Account updated successfully.", { icon: <Icon.Check /> });
-      form.reset();
+      form.reset(data);
     } catch (error) {
       form.setError("root", { message: getErrorMessage(error) });
     }
