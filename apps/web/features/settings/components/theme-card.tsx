@@ -20,9 +20,12 @@ const variantPreview = {
 function ThemeCard({ RadioInput, variant, className, ...props }: Props) {
   return (
     <div
-      className={cn("rounded-[4px] border border-neutral-700/50", className)}
+      className={cn(
+        "rounded-[4px] border border-neutral-200 dark:border-neutral-700/50",
+        className
+      )}
       {...props}>
-      <div className="flex h-[200px] w-full items-center justify-center bg-neutral-800 px-6 py-4">
+      <div className="flex h-[200px] w-full items-center justify-center bg-neutral-200 px-6 py-4 dark:bg-neutral-800">
         <Image src={variantPreview[variant]} alt={`${variant} theme preview`} />
       </div>
       <div className="flex items-center space-x-2 p-4 text-sm">

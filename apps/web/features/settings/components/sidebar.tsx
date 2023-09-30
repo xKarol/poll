@@ -66,7 +66,7 @@ const Sidebar = ({ className, ...props }: Props) => {
           {sidebarLinks.map(({ category, tabs }) => (
             <div key={category}>
               {category ? (
-                <span className="px-2 text-sm font-medium text-neutral-400">
+                <span className="px-2 text-sm font-medium text-neutral-500 dark:text-neutral-400">
                   {category}
                 </span>
               ) : null}
