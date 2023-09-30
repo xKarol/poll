@@ -10,7 +10,12 @@ import { routes } from "../../../config/routes";
 
 type Props = React.ComponentPropsWithoutRef<"aside">;
 
-export const sidebarLinks = [
+type SidebarLinks = {
+  category: string;
+  tabs: { text: string; href: string; IconElement: JSX.Element }[];
+}[];
+
+export const sidebarLinks: SidebarLinks = [
   {
     category: "Account",
     tabs: [
