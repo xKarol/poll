@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@poll/types";
-import { Alert, AlertTitle, Button, Icon, Input, toast } from "@poll/ui";
+import { Alert, AlertTitle, Icon, Input, LoadingButton, toast } from "@poll/ui";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ import {
 } from "../../../components/form";
 import { getErrorMessage } from "../../../utils/error";
 import SettingsHeader from "../components/settings-header";
+import { useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 export const updateUserSchema = z.object({
@@ -36,14 +37,14 @@ export default function AccountEditPage() {
       name: session?.user.name ?? "",
     },
   });
+  const { mutateAsync, isLoading } = useUpdateAccount();
   const hasChanges =
     JSON.stringify(form.formState.defaultValues) !==
     JSON.stringify(form.getValues());
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
-      console.log(data);
-
+      await mutateAsync(data);
       toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset();
     } catch (error) {
@@ -93,9 +94,12 @@ export default function AccountEditPage() {
               )}
             />
 
-            <Button type="submit" disabled={!hasChanges}>
+            <LoadingButton
+              type="submit"
+              disabled={!hasChanges}
+              isLoading={isLoading}>
               Update
-            </Button>
+            </LoadingButton>
           </div>
         </form>
       </Form>

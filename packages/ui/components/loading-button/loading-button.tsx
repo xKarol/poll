@@ -10,7 +10,11 @@ export type LoadingButtonProps = { isLoading: boolean } & React.ComponentProps<
 const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
   ({ isLoading, className, children, ...props }, ref) => {
     return (
-      <Button className={className} ref={ref} {...props} disabled={isLoading}>
+      <Button
+        className={className}
+        ref={ref}
+        {...props}
+        disabled={props.disabled ?? isLoading}>
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {children}
       </Button>

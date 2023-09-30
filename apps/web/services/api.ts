@@ -85,3 +85,8 @@ export const getUserVotes: User.Api["getUserVotes"] = async (
   });
   return data;
 };
+
+export const updateUser: User.Api["updateUser"] = async (userData) => {
+  const { data } = await axios.patch(`/@me`, userData);
+  return data;
+};
