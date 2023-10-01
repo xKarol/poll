@@ -19,6 +19,7 @@ export default function AccountGeneralPage() {
         onValueChange={(theme) => setTheme(theme)}>
         <ThemeCard
           variant="light"
+          isActive={theme === "light"}
           RadioInput={
             <RadioGroupItem
               //   className="!border-neutral-700/50"
@@ -28,6 +29,7 @@ export default function AccountGeneralPage() {
         />
         <ThemeCard
           variant="dark"
+          isActive={theme === "dark"}
           RadioInput={
             <RadioGroupItem
               //   className="!border-neutral-700/50"
@@ -37,6 +39,7 @@ export default function AccountGeneralPage() {
         />
         <ThemeCard
           variant="system"
+          isActive={theme === "system"}
           RadioInput={
             <RadioGroupItem
               //   className="!border-neutral-700/50"

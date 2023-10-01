@@ -1,13 +1,15 @@
 import { cn } from "@poll/lib";
 import Image from "next/image";
-import React from "react";
+import React, { useId } from "react";
 
+import { Label } from "../../../components/label";
 import darkThemePreview from "../../../public/dark-theme-preview.svg";
 import lightThemePreview from "../../../public/light-theme-preview.svg";
 import systemThemePreview from "../../../public/system-theme-preview.svg";
 
 type Props = {
   variant: "dark" | "light" | "system";
+  isActive?: boolean;
   RadioInput: JSX.Element;
 } & Omit<React.ComponentPropsWithoutRef<"div">, "children">;
 
@@ -17,11 +19,19 @@ const variantPreview = {
   system: systemThemePreview,
 };
 
-function ThemeCard({ RadioInput, variant, className, ...props }: Props) {
+function ThemeCard({
+  RadioInput,
+  isActive,
+  variant,
+  className,
+  ...props
+}: Props) {
+  const id = useId();
   return (
     <div
       className={cn(
         "rounded-[4px] border border-neutral-200 dark:border-neutral-700/50",
+        isActive && "outline outline-2 outline-neutral-900 dark:outline-white",
         className
       )}
       {...props}>
@@ -29,8 +39,10 @@ function ThemeCard({ RadioInput, variant, className, ...props }: Props) {
         <Image src={variantPreview[variant]} alt={`${variant} theme preview`} />
       </div>
       <div className="flex items-center space-x-2 p-4 text-sm">
-        {RadioInput}
-        <p className="capitalize">{variant} theme</p>
+        {React.cloneElement(RadioInput, { id })}
+        <Label className="text-sm capitalize" htmlFor={id}>
+          {variant} theme
+        </Label>
       </div>
     </div>
   );
