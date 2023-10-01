@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useId, useRef } from "react";
 
 import { Label } from "../../../components/label";
+import { RadioGroupItem } from "../../../components/radio-group";
 import darkThemePreview from "../../../public/dark-theme-preview.svg";
 import lightThemePreview from "../../../public/light-theme-preview.svg";
 import systemThemePreview from "../../../public/system-theme-preview.svg";
@@ -10,7 +11,7 @@ import systemThemePreview from "../../../public/system-theme-preview.svg";
 type Props = {
   variant: "dark" | "light" | "system";
   isActive?: boolean;
-  RadioInput: JSX.Element;
+  RadioInput?: JSX.Element;
 } & Omit<React.ComponentPropsWithoutRef<"div">, "children">;
 
 const variantPreview = {
@@ -20,9 +21,9 @@ const variantPreview = {
 };
 
 function ThemeCard({
-  RadioInput,
   isActive,
   variant,
+  RadioInput = <RadioGroupItem value={variant} />,
   className,
   ...props
 }: Props) {

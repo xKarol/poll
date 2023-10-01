@@ -44,7 +44,7 @@ export default function MyApp({
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <SessionProvider session={session}>
-            <ThemeProvider attribute="class">
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <style jsx global>{`
                 :root {
                   --font-inter: ${inter.style.fontFamily};

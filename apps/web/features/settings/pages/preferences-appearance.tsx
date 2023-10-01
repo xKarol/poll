@@ -9,31 +9,35 @@ const themes = ["light", "dark", "system"] as const;
 
 export default function AccountGeneralPage() {
   const { theme, setTheme } = useTheme();
+
   return (
     <BaseLayout>
       <SettingsHeader
         heading="Appearance"
         description="Manage your account preferences"
       />
-
-      <RadioGroup
-        className="flex space-x-4"
-        defaultValue={theme}
-        onValueChange={(theme) => setTheme(theme)}>
-        {themes.map((themeName) => (
-          <ThemeCard
-            key={themeName}
-            variant={themeName}
-            isActive={theme === themeName}
-            RadioInput={
-              <RadioGroupItem
-                //   className="!border-neutral-700/50"
-                value={themeName}
+      <div className="flex space-x-4">
+        <RadioGroup
+          defaultValue={theme}
+          onValueChange={(theme) => setTheme(theme)}
+          asChild>
+          <>
+            {themes.map((themeName) => (
+              <ThemeCard
+                key={themeName}
+                variant={themeName}
+                isActive={theme === themeName}
+                RadioInput={
+                  <RadioGroupItem
+                    //   className="!border-neutral-700/50"
+                    value={themeName}
+                  />
+                }
               />
-            }
-          />
-        ))}
-      </RadioGroup>
+            ))}
+          </>
+        </RadioGroup>
+      </div>
     </BaseLayout>
   );
 }
