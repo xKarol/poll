@@ -1,6 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@poll/types";
-import { Alert, AlertTitle, Icon, Input, LoadingButton, toast } from "@poll/ui";
+import {
+  Alert,
+  AlertTitle,
+  Icon,
+  Input,
+  LoadingButton,
+  Skeleton,
+  toast,
+} from "@poll/ui";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +35,35 @@ export const updateUserSchema = z.object({
 type FormValues = User.UpdateUserData;
 
 export default function AccountEditPage() {
+  const { status } = useSession();
+
+  return (
+    <BaseLayout>
+      <SettingsHeader heading="Edit" description="Edit your account" />
+      {status === "loading" ? (
+        <div className="flex flex-col space-y-3">
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-1/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-1/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          </div>
+          <Skeleton className="h-10 w-20" />
+        </div>
+      ) : (
+        <EditAccountForm />
+      )}
+    </BaseLayout>
+  );
+}
+
+function EditAccountForm() {
   const { data: session, update } = useSession();
+
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
     resolver: zodResolver(updateUserSchema),
@@ -56,58 +92,51 @@ export default function AccountEditPage() {
       form.setError("root", { message: getErrorMessage(error) });
     }
   });
-
   return (
-    <BaseLayout>
-      <SettingsHeader heading="Edit" description="Edit your account" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className={"flex flex-col"}>
+        {form.formState.errors.root?.message ? (
+          <Alert variant="error" className="mb-8">
+            <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+          </Alert>
+        ) : null}
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={"flex flex-col"}>
-          {form.formState.errors.root?.message ? (
-            <Alert variant="error" className="mb-8">
-              <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
-            </Alert>
-          ) : null}
+        <div className="mb-8 space-y-3">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <div className="mb-8 space-y-3">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <LoadingButton
-              type="submit"
-              disabled={!hasChanges}
-              isLoading={isLoading}>
-              Update
-            </LoadingButton>
-          </div>
-        </form>
-      </Form>
-    </BaseLayout>
+          <LoadingButton
+            type="submit"
+            disabled={!hasChanges}
+            isLoading={isLoading}>
+            Update
+          </LoadingButton>
+        </div>
+      </form>
+    </Form>
   );
 }
