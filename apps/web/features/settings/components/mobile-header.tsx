@@ -23,7 +23,8 @@ function MobileHeader({
       <Button
         variant="text"
         className="rounded-[4px] p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700"
-        onClick={onOpen}>
+        onClick={onOpen}
+        asChild>
         {MenuComponent}
       </Button>
     </header>

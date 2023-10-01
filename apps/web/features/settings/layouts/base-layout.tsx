@@ -9,12 +9,13 @@ type Props = React.ComponentPropsWithoutRef<"div">;
 
 export default function BaseLayout({ className, children, ...props }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const isTablet = useMedia("(min-width: 768px)", true);
+  const isNotMobile = useMedia("(min-width: 768px)", true);
 
   useEffect(() => {
     setIsOpen(false);
-  }, [isTablet, setIsOpen]);
+  }, [isNotMobile, setIsOpen]);
 
+  console.log(isNotMobile);
   return (
     <main className={cn("flex", className)} {...props}>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
