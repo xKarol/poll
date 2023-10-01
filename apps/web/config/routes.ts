@@ -25,6 +25,9 @@ export const routes = {
     PREFERENCES: {
       APPEARANCE: "/settings/preferences/appearance",
     },
+    BILLING: {
+      MY_PLAN: "/settings/billing/my-plan",
+    },
   },
   poll: (pollId: string) => `/${pollId}` as const,
 } as const satisfies Route;

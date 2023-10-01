@@ -41,6 +41,16 @@ export const sidebarLinks: SidebarLinks = [
       },
     ],
   },
+  {
+    category: "Billing",
+    tabs: [
+      {
+        text: "My plan",
+        href: routes.SETTINGS.BILLING.MY_PLAN,
+        IconElement: <Icon.CreditCard />,
+      },
+    ],
+  },
 ];
 
 const Sidebar = ({ className, ...props }: Props) => {
