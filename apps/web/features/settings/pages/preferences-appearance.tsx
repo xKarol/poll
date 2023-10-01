@@ -5,6 +5,8 @@ import { RadioGroup, RadioGroupItem } from "../../../components/radio-group";
 import { SettingsHeader, ThemeCard } from "../components";
 import { BaseLayout } from "../layouts";
 
+const themes = ["light", "dark", "system"] as const;
+
 export default function AccountGeneralPage() {
   const { theme, setTheme } = useTheme();
   return (
@@ -13,40 +15,24 @@ export default function AccountGeneralPage() {
         heading="Appearance"
         description="Manage your account preferences"
       />
+
       <RadioGroup
         className="flex space-x-4"
         defaultValue={theme}
         onValueChange={(theme) => setTheme(theme)}>
-        <ThemeCard
-          variant="light"
-          isActive={theme === "light"}
-          RadioInput={
-            <RadioGroupItem
-              //   className="!border-neutral-700/50"
-              value={"light"}
-            />
-          }
-        />
-        <ThemeCard
-          variant="dark"
-          isActive={theme === "dark"}
-          RadioInput={
-            <RadioGroupItem
-              //   className="!border-neutral-700/50"
-              value={"dark"}
-            />
-          }
-        />
-        <ThemeCard
-          variant="system"
-          isActive={theme === "system"}
-          RadioInput={
-            <RadioGroupItem
-              //   className="!border-neutral-700/50"
-              value={"system"}
-            />
-          }
-        />
+        {themes.map((themeName) => (
+          <ThemeCard
+            key={themeName}
+            variant={themeName}
+            isActive={theme === themeName}
+            RadioInput={
+              <RadioGroupItem
+                //   className="!border-neutral-700/50"
+                value={themeName}
+              />
+            }
+          />
+        ))}
       </RadioGroup>
     </BaseLayout>
   );
