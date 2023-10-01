@@ -168,6 +168,7 @@ function EditAccountForm() {
                   </FormControl>
                   <SelectContent>
                     {/* TODO optimize this and add scroll */}
+                    {/* @ts-ignore */}
                     {Intl.supportedValuesOf("timeZone").map((timezone) => (
                       <SelectItem key={timezone} value={timezone}>
                         {timezone}
