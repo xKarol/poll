@@ -11,3 +11,4 @@ export * from "./components/dropdown-menu";
 export * from "./components/dialog";
 export * from "./components/toast";
 export * from "./components/select";
+export * from "./components/sheet";
