@@ -27,7 +27,7 @@ export const updateUserSchema = z.object({
 type FormValues = User.UpdateUserData;
 
 export default function AccountEditPage() {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
     resolver: zodResolver(updateUserSchema),
@@ -49,6 +49,7 @@ export default function AccountEditPage() {
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
       await mutateAsync(data);
+      await update();
       toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset(data);
     } catch (error) {
