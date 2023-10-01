@@ -16,7 +16,7 @@ export default function AccountGeneralPage() {
         heading="Appearance"
         description="Manage your account preferences"
       />
-      <div className="flex space-x-4">
+      <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
         <RadioGroup
           defaultValue={theme}
           onValueChange={(theme) => setTheme(theme)}
