@@ -134,7 +134,7 @@ const Header = ({ className, ...rest }: HeaderProps) => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={routes.DASHBOARD.HOME}>
+                  <Link href={routes.SETTINGS.HOME}>
                     <Icon.Settings className="mr-2 h-4 w-4" />
                     <span>Settings</span>
                   </Link>

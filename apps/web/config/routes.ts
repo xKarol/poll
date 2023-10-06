@@ -13,13 +13,13 @@ export const routes = {
   TERMS_AND_CONDITIONS: "#",
   PRIVACY_POLICY: "#",
   DASHBOARD: {
-    HOME: "/dashboard",
+    HOME: "/dashboard/polls", //alias
     POLLS: "/dashboard/polls",
     VOTES: "/dashboard/votes",
     STATISTICS: "/dashboard/statistics",
   },
   SETTINGS: {
-    HOME: "/settings",
+    HOME: "/settings/account/general", //alias
     ACCOUNT: {
       GENERAL: "/settings/account/general",
       EDIT: "/settings/account/edit",
