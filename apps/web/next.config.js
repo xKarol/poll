@@ -8,6 +8,10 @@ module.exports = {
           source: "/dashboard",
           destination: "/dashboard/polls",
         },
+        {
+          source: "/settings",
+          destination: "/settings/account/general",
+        },
       ],
     };
   },
