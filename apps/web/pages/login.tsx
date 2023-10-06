@@ -126,9 +126,13 @@ export default function Page() {
                 </form>
               </Form>
             </div>
-            <span className="text-center text-sm font-normal text-neutral-400">
-              By clicking &quot;Continue with Google&quot; ...{" "}
-              <u>Terms & Conditions</u> and <u>Privacy Policy</u>.
+            <span className="text-center text-sm font-normal text-neutral-400 [&>a]:underline">
+              By logging in, you agree to our{" "}
+              <Link href={routes.TERMS_AND_CONDITIONS}>
+                Terms and Conditions
+              </Link>
+              , including our{" "}
+              <Link href={routes.PRIVACY_POLICY}>Privacy Policy</Link>.
             </span>
           </div>
         </div>

@@ -10,6 +10,8 @@ export const routes = {
   FEATURES: "/", //TODO change
   PUBLIC_POLLS: "/public",
   LOGIN: "/login",
+  TERMS_AND_CONDITIONS: "#",
+  PRIVACY_POLICY: "#",
   DASHBOARD: {
     HOME: "/dashboard",
     POLLS: "/dashboard/polls",
