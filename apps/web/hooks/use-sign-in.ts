@@ -20,12 +20,13 @@ export const useSignIn = (
   const [loading, setLoading] = useState(initialLoadingData);
 
   const data = useMutation({
-    mutationFn: (provider: Providers) => {
+    mutationFn: async (provider: Providers) => {
       setLoading((prevData) => ({ ...prevData, [provider]: true }));
-      return signIn(provider, {
+      const res = await signIn(provider, {
         callbackUrl: redirectUrl,
         redirect: !!redirectUrl,
       });
+      if (res?.error) throw res.error;
     },
     onError: () => {
       setLoading(() => ({ ...initialLoadingData }));

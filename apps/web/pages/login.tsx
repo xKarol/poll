@@ -32,9 +32,9 @@ const credentialsSchema = z.object({
   password: z.string().min(6),
 });
 
-export default function Page() {
+export default function LoginPage() {
   const router = useRouter();
-  const { mutate, isLoading } = useSignIn({
+  const { mutate, isLoading, error } = useSignIn({
     redirectUrl: router.query.redirect as string | undefined,
   });
   const form = useForm<FormValues>({
@@ -50,6 +50,7 @@ export default function Page() {
       form.setError("root", { message: getErrorMessage(error) });
     }
   });
+
   return (
     <>
       <Header />
@@ -57,9 +58,13 @@ export default function Page() {
       <NextSeo title="Login" />
       <main className="container">
         <div className="mx-auto my-16 flex max-w-[360px] flex-col">
-          {form.formState.errors.root?.message ? (
+          {error || form.formState.errors.root?.message ? (
             <Alert variant="error" className="mb-8">
-              <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
+              <AlertTitle>
+                {error
+                  ? getErrorMessage(error) || form.formState.errors.root.message
+                  : null}
+              </AlertTitle>
             </Alert>
           ) : null}
           <h1 className="mb-16 text-center text-[32px] font-bold">Log In</h1>
