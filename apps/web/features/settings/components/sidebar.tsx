@@ -101,7 +101,7 @@ const Sidebar = ({ className, ...props }: Props) => {
           </SidebarNavigationLink>
           <SidebarNavigationLink
             IconElement={<Icon.LogOut />}
-            onClick={() => signOut()}>
+            onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
             Log Out
           </SidebarNavigationLink>
         </div>
