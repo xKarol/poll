@@ -7,6 +7,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@poll/ui";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import React from "react";
 
@@ -85,22 +87,25 @@ const Footer = ({ className, ...props }: FooterProps) => {
             </Link>
           </li>
         </ul>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="flex w-max cursor-pointer space-x-4 text-neutral-600 dark:text-neutral-300">
-              <Icon.Globe />
-              <div className="flex space-x-2">
-                <span>English</span>
-                <Icon.ChevronDown />
+        <div className="flex space-x-8">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="flex w-max cursor-pointer space-x-4 text-neutral-600 dark:text-neutral-300">
+                <Icon.Globe />
+                <div className="flex space-x-2">
+                  <span>English</span>
+                  <Icon.ChevronDown />
+                </div>
               </div>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuCheckboxItem checked={true}>
-              English
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuCheckboxItem checked={true}>
+                English
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ThemeSwitcher />
+        </div>
       </div>
       <div className="flex flex-col items-center space-y-4">
         <span>
@@ -116,3 +121,34 @@ const Footer = ({ className, ...props }: FooterProps) => {
 };
 
 export default Footer;
+
+function ThemeSwitcher({
+  className,
+  onCheckedChange,
+  checked,
+  ...props
+}: React.ComponentProps<typeof SwitchPrimitives.Root>) {
+  const { theme, setTheme } = useTheme();
+  // TODO fix hydration error
+  return (
+    <SwitchPrimitives.Root
+      onCheckedChange={(checked) => {
+        setTheme(checked ? "dark" : "light");
+        onCheckedChange?.(checked);
+      }}
+      checked={checked || theme === "dark"}
+      className={cn(
+        "focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-neutral-950 data-[state=unchecked]:bg-neutral-200 dark:data-[state=unchecked]:bg-neutral-700",
+        className
+      )}
+      {...props}>
+      <SwitchPrimitives.Thumb
+        className={cn(
+          "pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 [&>*]:h-4 [&>*]:w-4"
+        )}>
+        <Icon.Sun className={cn(theme !== "light" && "hidden")} />
+        <Icon.Moon className={cn(theme !== "dark" && "hidden")} />
+      </SwitchPrimitives.Thumb>
+    </SwitchPrimitives.Root>
+  );
+}

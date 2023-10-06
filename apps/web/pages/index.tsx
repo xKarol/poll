@@ -1,8 +1,7 @@
 import { cn } from "@poll/lib";
 import { Button, Icon } from "@poll/ui";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { signOut, useSession } from "next-auth/react";
-import { useTheme } from "next-themes";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,7 +32,6 @@ export default function Page({
   stats,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { data: session } = useSession();
-  const { setTheme, theme } = useTheme();
 
   console.log({ session });
 
@@ -136,16 +134,6 @@ export default function Page({
           </div>
         </section>
         <Footer />
-        <Icon.MoonIcon
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        />
-        {session ? (
-          <button
-            className="border border-black p-2 px-4"
-            onClick={() => signOut()}>
-            Logout
-          </button>
-        ) : null}
       </main>
     </>
   );
