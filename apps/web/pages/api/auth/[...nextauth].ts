@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+import { routes } from "../../../config/routes";
 import { defaultCookies } from "../../../lib/default-cookies";
 import prisma from "../../../lib/prisma";
 
@@ -43,7 +44,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: routes.LOGIN,
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
