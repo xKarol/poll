@@ -10,7 +10,7 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import Header from "../components/header";
+import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { usePricingPlans } from "../hooks/use-pricing-plans";
 import { paymentOptions } from "../queries/payment";

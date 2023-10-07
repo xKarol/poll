@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
-import Header from "../components/header";
+import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { useSignIn } from "../hooks/use-sign-in";
 import { getErrorMessage } from "../utils/error";

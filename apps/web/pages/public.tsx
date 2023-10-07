@@ -3,7 +3,7 @@ import { Loader } from "lucide-react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
-import Header from "../components/header";
+import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import dayjs from "../lib/dayjs";

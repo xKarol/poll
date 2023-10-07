@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo";
 
 import { CreatePollForm } from "../components/create-poll-form";
-import Header from "../components/header";
+import Header from "../components/header/header";
 
 export default function Page() {
   return (

@@ -10,7 +10,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
-import Header from "../components/header";
+import Header from "../components/header/header";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";

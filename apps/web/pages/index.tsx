@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Footer from "../components/footer";
-import Header from "../components/header";
+import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import prisma from "../lib/prisma";
 import HeroImage from "../public/hero-image.svg";
