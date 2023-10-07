@@ -77,9 +77,14 @@ const Header = ({ className, ...rest }: HeaderProps) => {
                   </li>
                 ))}
                 {session ? (
-                  <li className="cursor-pointer" onClick={() => signOut()}>
-                    Logout
-                  </li>
+                  <>
+                    <li>
+                      <Link href={routes.DASHBOARD.HOME}>Dashboard</Link>
+                    </li>
+                    <li className="cursor-pointer" onClick={() => signOut()}>
+                      Logout
+                    </li>
+                  </>
                 ) : null}
               </ul>
               {session ? (
