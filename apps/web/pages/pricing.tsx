@@ -10,9 +10,9 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { usePricingPlans } from "../hooks/use-pricing-plans";
+import { BaseLayout } from "../layouts";
 import { paymentOptions } from "../queries/payment";
 import { createPlanCheckoutSession } from "../services/api";
 import { getErrorMessage } from "../utils/error";
@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
-export default function Page() {
+export default function PricingPage() {
   const [error, setError] = useState<string>(undefined);
 
   const { status, data: session } = useSession();
@@ -94,9 +94,8 @@ export default function Page() {
 
   return (
     <>
-      <Header />
       <NextSeo title="Pricing" />
-      <main className="container">
+      <div className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
           {error !== undefined ? (
             <Alert variant="error">
@@ -176,10 +175,12 @@ export default function Page() {
             })}
           </section>
         </div>
-      </main>
+      </div>
     </>
   );
 }
+
+PricingPage.Layout = BaseLayout;
 
 type PricingCardProps = {
   planName: string;

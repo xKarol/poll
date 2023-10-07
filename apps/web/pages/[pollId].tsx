@@ -10,13 +10,13 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
-import Header from "../components/header/header";
 import { RadioGroup, RadioGroupItem } from "../components/radio-group";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";
 import { useLiveAnswers } from "../hooks/use-live-answers";
 import { usePollAnswerUserChoice } from "../hooks/use-poll-answer-user-choice";
 import { useVotePoll } from "../hooks/use-vote-poll";
+import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
 import { getErrorMessage } from "../utils/error";
@@ -138,7 +138,6 @@ const PollPage = () => {
   if (isLoading) return <CircularProgress />;
   return (
     <>
-      <Header />
       {isSuccess && (
         <>
           <ReCAPTCHA
@@ -249,3 +248,5 @@ const PollPage = () => {
 };
 
 export default PollPage;
+
+PollPage.Layout = BaseLayout;

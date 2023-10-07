@@ -3,13 +3,13 @@ import { Loader } from "lucide-react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
-import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
+import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { getErrorMessage } from "../utils/error";
 
-export default function Page() {
+export default function PublicPage() {
   const {
     data: pages,
     isLoading,
@@ -23,8 +23,6 @@ export default function Page() {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <>
-      <Header />
-
       <NextSeo title="Public Polls" />
       <div className="container mt-8 space-y-8 md:max-w-2xl lg:mt-16 xl:max-w-4xl">
         <div className="flex items-center justify-between">
@@ -72,3 +70,5 @@ export default function Page() {
     </>
   );
 }
+
+PublicPage.Layout = BaseLayout;

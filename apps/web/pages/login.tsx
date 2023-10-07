@@ -52,7 +52,7 @@ export default function LoginPage() {
   });
 
   return (
-    <AuthLayout>
+    <>
       <NextSeo title="Login" />
       <main className="container">
         <div className="mx-auto my-16 flex max-w-[360px] flex-col">
@@ -140,9 +140,11 @@ export default function LoginPage() {
           </div>
         </div>
       </main>
-    </AuthLayout>
+    </>
   );
 }
+
+LoginPage.Layout = AuthLayout;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res } = context;
