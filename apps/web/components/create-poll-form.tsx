@@ -8,6 +8,7 @@ import {
   Switch,
   Alert,
   AlertTitle,
+  Icon,
 } from "@poll/ui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -67,7 +68,7 @@ export const CreatePollForm = ({
     },
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "answers",
   });
@@ -126,7 +127,15 @@ export const CreatePollForm = ({
                     <FormItem>
                       {index === 0 && <FormLabel>Answer options</FormLabel>}
                       <FormControl>
-                        <Input placeholder={`Option ${index + 1}`} {...field} />
+                        <Input
+                          placeholder={`Option ${index + 1}`}
+                          {...field}
+                          RightIcon={
+                            fields.length > 2 ? (
+                              <Icon.X onClick={() => remove(index)} />
+                            ) : null
+                          }
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
