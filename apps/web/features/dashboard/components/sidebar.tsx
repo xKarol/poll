@@ -9,6 +9,7 @@ import {
   SidebarNavigationLink,
   SidebarProfile,
 } from "../../../components/sidebar";
+import { SidebarNavigationList } from "../../../components/sidebar/sidebar";
 import { routes } from "../../../config/routes";
 
 type Props = React.ComponentProps<typeof Sidebar>;
@@ -54,7 +55,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
         )}
       </div>
       <div className="flex flex-1 flex-col justify-between">
-        <nav className="space-y-[0.125rem]">
+        <SidebarNavigationList>
           {sidebarLinks.map((link) => (
             <SidebarNavigationLink
               key={link.text}
@@ -65,7 +66,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
               {link.text}
             </SidebarNavigationLink>
           ))}
-        </nav>
+        </SidebarNavigationList>
         <SidebarNavigationLink
           IconElement={<Icon.LogOut />}
           onClick={() => signOut({ callbackUrl: routes.LOGIN })}>

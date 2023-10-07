@@ -29,7 +29,7 @@ export type SidebarNavigationLinkProps<T extends React.ElementType> = {
   IconElement: JSX.Element;
 };
 
-export function SidebarNavigationLink<T extends React.ElementType = "button">({
+export function SidebarNavigationLink<T extends React.ElementType = "div">({
   isActive,
   IconElement,
   className,
@@ -52,6 +52,29 @@ export function SidebarNavigationLink<T extends React.ElementType = "button">({
       {...props}>
       {IconElement}
       <span>{children}</span>
+    </Component>
+  );
+}
+
+export type SidebarNavigationListProps<T extends React.ElementType> = {
+  as?: T;
+  children?: React.ReactNode;
+};
+
+export function SidebarNavigationList<T extends React.ElementType = "nav">({
+  className,
+  children,
+  as,
+  ...props
+}: SidebarNavigationListProps<T> &
+  Omit<
+    React.ComponentPropsWithoutRef<T>,
+    keyof SidebarNavigationLinkProps<T>
+  >) {
+  const Component = as || "nav";
+  return (
+    <Component className={cn("space-y-[0.125rem]", className)} {...props}>
+      {children}
     </Component>
   );
 }

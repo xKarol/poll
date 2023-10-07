@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { Sidebar, SidebarNavigationLink } from "../../../components/sidebar";
+import { SidebarNavigationList } from "../../../components/sidebar/sidebar";
 import { routes } from "../../../config/routes";
 
 type Props = React.ComponentProps<typeof Sidebar>;
@@ -74,7 +75,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
                   {category}
                 </span>
               ) : null}
-              <div className="space-y-[0.125rem]">
+              <SidebarNavigationList as="div">
                 {tabs.map((link) => (
                   <SidebarNavigationLink
                     key={link.text}
@@ -85,7 +86,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
                     {link.text}
                   </SidebarNavigationLink>
                 ))}
-              </div>
+              </SidebarNavigationList>
             </div>
           ))}
         </nav>
