@@ -16,9 +16,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/form";
-import Header from "../components/header/header";
 import { routes } from "../config/routes";
 import { useSignIn } from "../hooks/use-sign-in";
+import { AuthLayout } from "../layouts";
 import { getErrorMessage } from "../utils/error";
 import { getServerSession } from "../utils/get-server-session";
 
@@ -52,9 +52,7 @@ export default function LoginPage() {
   });
 
   return (
-    <>
-      <Header />
-
+    <AuthLayout>
       <NextSeo title="Login" />
       <main className="container">
         <div className="mx-auto my-16 flex max-w-[360px] flex-col">
@@ -142,7 +140,7 @@ export default function LoginPage() {
           </div>
         </div>
       </main>
-    </>
+    </AuthLayout>
   );
 }
 
