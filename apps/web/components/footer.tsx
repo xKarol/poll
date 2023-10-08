@@ -2,10 +2,11 @@ import { cn } from "@poll/lib";
 import {
   Icon,
   Logo,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useTheme } from "next-themes";
@@ -88,22 +89,17 @@ const Footer = ({ className, ...props }: FooterProps) => {
           </li>
         </ul>
         <div className="flex space-x-8">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="flex w-max cursor-pointer space-x-4 text-neutral-600 dark:text-neutral-300">
-                <Icon.Globe />
-                <div className="flex space-x-2">
-                  <span>English</span>
-                  <Icon.ChevronDown />
-                </div>
+          <Select>
+            <SelectTrigger className="w-[130px]">
+              <div className="flex items-center space-x-2">
+                <Icon.Globe className="h-4 w-4" />
+                <SelectValue defaultValue="English" placeholder="English" />
               </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuCheckboxItem checked={true}>
-                English
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="English">English</SelectItem>
+            </SelectContent>
+          </Select>
           <ThemeSwitcher />
         </div>
       </div>
