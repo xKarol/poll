@@ -89,7 +89,7 @@ export function HeaderRoot({
     <HeaderContext.Provider value={{ isOpen, setIsOpen, session }}>
       <header
         className={cn(
-          "container flex items-center justify-between py-6",
+          "container z-50 flex items-center justify-between py-6",
           className
         )}
         {...rest}>
@@ -179,7 +179,7 @@ function MobileNavigationMenu({
   return (
     <nav
       className={cn(
-        "fixed bottom-0 left-0 right-0 top-0 z-10 bg-neutral-50 dark:bg-neutral-900",
+        "fixed bottom-0 left-0 right-0 top-0 z-40 bg-neutral-50 dark:bg-neutral-900",
         className
       )}
       {...rest}>
