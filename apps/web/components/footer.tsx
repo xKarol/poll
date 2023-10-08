@@ -50,7 +50,7 @@ const Footer = ({ className, ...props }: FooterProps) => {
       <div className="flex flex-col md:flex-row md:justify-between">
         <div className="mb-8 flex flex-col space-y-16">
           <Logo />
-          <p className="text-neutral-600 dark:text-neutral-300">
+          <p className="max-w-xs text-neutral-600 dark:text-neutral-300">
             Discover, Share, and Engage with Quick Poll – Your Polling Partner!
           </p>
         </div>
