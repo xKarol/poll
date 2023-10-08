@@ -13,6 +13,7 @@ import {
 import type { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useMedia, useLockBodyScroll } from "react-use";
 
@@ -174,7 +175,16 @@ function MobileNavigationMenu({
   className,
   ...rest
 }: MobileNavigationMenuProps) {
-  const { session } = useHeaderContext();
+  const { session, setIsOpen } = useHeaderContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChangeComplete = () => setIsOpen(false);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+    };
+  }, [router.events, setIsOpen]);
 
   return (
     <nav
