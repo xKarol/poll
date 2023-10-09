@@ -11,7 +11,7 @@ export default function BaseLayout({
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="my-16 md:my-32">{children}</main>
       <Footer />
     </>
   );
