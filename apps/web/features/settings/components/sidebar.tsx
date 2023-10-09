@@ -90,7 +90,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
             </div>
           ))}
         </nav>
-        <div>
+        <SidebarNavigationList as="div">
           <SidebarNavigationLink IconElement={<Icon.HelpCircle />}>
             Support Center
           </SidebarNavigationLink>
@@ -99,7 +99,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
             onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
             Log Out
           </SidebarNavigationLink>
-        </div>
+        </SidebarNavigationList>
       </div>
     </Sidebar>
   );

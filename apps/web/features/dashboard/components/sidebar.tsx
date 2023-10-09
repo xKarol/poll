@@ -1,4 +1,4 @@
-import { Icon, Skeleton } from "@poll/ui";
+import { Icon, Logo, Skeleton } from "@poll/ui";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -44,16 +44,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
 
   return (
     <Sidebar className={className} {...props}>
-      <div className="mb-6">
-        {isLoggedIn ? (
-          <SidebarProfile
-            username={session?.user.name}
-            avatarUrl={session?.user.image}
-          />
-        ) : (
-          <Skeleton className="h-9 w-full bg-neutral-200" />
-        )}
-      </div>
+      <Logo className="mb-6 w-20" />
       <div className="flex flex-1 flex-col justify-between">
         <SidebarNavigationList>
           {sidebarLinks.map((link) => (
@@ -67,11 +58,24 @@ export default function SidebarContainer({ className, ...props }: Props) {
             </SidebarNavigationLink>
           ))}
         </SidebarNavigationList>
-        <SidebarNavigationLink
-          IconElement={<Icon.LogOut />}
-          onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
-          Log Out
-        </SidebarNavigationLink>
+        <SidebarNavigationList as="div">
+          {isLoggedIn ? (
+            <SidebarProfile
+              username={session?.user.name}
+              avatarUrl={session?.user.image}
+            />
+          ) : (
+            <Skeleton className="h-9 w-full bg-neutral-200" />
+          )}
+          <SidebarNavigationLink IconElement={<Icon.HelpCircle />}>
+            Support Center
+          </SidebarNavigationLink>
+          <SidebarNavigationLink
+            IconElement={<Icon.LogOut />}
+            onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
+            Log Out
+          </SidebarNavigationLink>
+        </SidebarNavigationList>
       </div>
     </Sidebar>
   );
