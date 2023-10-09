@@ -31,20 +31,21 @@ function PollsTable({
 }: Props) {
   return (
     <>
-      <div className="mb-2 flex px-4 py-2 [&>*]:max-w-[150px] [&>*]:flex-1">
-        <span className="!max-w-none space-x-2">Question</span>
-        <div>
-          <div className="flex items-center space-x-2">
-            <span>Votes</span>
+      <div className="mb-2 px-4 py-2">
+        <div className="flex [&>*]:max-w-[150px] [&>*]:flex-1">
+          <span className="!max-w-none space-x-2">Question</span>
+          <div>
+            <div className="flex items-center space-x-2">
+              <span>Votes</span>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="flex items-center space-x-2">
-            <span>Public</span>
+          <div>
+            <div className="flex items-center space-x-2">
+              <span>Public</span>
+            </div>
           </div>
+          <span>Created At</span>
         </div>
-        <span>Created At</span>
-        <span></span>
       </div>
       <div className="flex flex-col space-y-2">
         {data.map((poll) => (
@@ -94,21 +95,23 @@ function PollItem({
     copy(`${getBaseUrl()}${routes.poll(id)}`);
   };
   return (
-    <Link
+    <div
       className={cn(
-        "flex items-center justify-between rounded-[4px] border border-neutral-200 p-4 text-sm transition-colors hover:bg-neutral-700/5 dark:border-neutral-700/50 [&>*]:max-w-[150px] [&>*]:flex-1",
+        "flex rounded-[4px] border border-neutral-200 p-4 text-sm transition-colors hover:bg-neutral-700/5 dark:border-neutral-700/50",
         className
-      )}
-      {...props}>
-      <span className="!max-w-none">{question}</span>
-      <span>{totalVotes}</span>
-      <div>
-        <span className="rounded-[2px] bg-neutral-200 p-1 text-xs dark:bg-neutral-800">
-          {isPublic ? "Public" : "Private"}
-        </span>
-      </div>
-      <div>{dayjs(createdAt).format("DD.MM.YYYY h:mm")}</div>
-
+      )}>
+      <Link
+        className="flex w-full items-center justify-between [&>*]:max-w-[150px] [&>*]:flex-1"
+        {...props}>
+        <span className="!max-w-none">{question}</span>
+        <span>{totalVotes}</span>
+        <div>
+          <span className="rounded-[2px] bg-neutral-200 p-1 text-xs dark:bg-neutral-800">
+            {isPublic ? "Public" : "Private"}
+          </span>
+        </div>
+        <div>{dayjs(createdAt).format("DD.MM.YYYY h:mm")}</div>
+      </Link>
       <div className="flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -134,6 +137,6 @@ function PollItem({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </Link>
+    </div>
   );
 }
