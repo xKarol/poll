@@ -1,6 +1,5 @@
 import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Icon } from "@poll/ui";
 import React from "react";
 
 export type SidebarProps = React.ComponentPropsWithoutRef<"aside">;
@@ -93,7 +92,7 @@ export function SidebarProfile({
   return (
     <div
       className={cn(
-        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm transition-colors hover:bg-neutral-200 hover:dark:bg-neutral-800",
+        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-200 hover:text-black dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white",
         className
       )}
       {...props}>
@@ -102,7 +101,6 @@ export function SidebarProfile({
       </Avatar>
       <div className="flex items-center space-x-2">
         <span>{username}</span>
-        <Icon.ChevronDown className="h-4 w-4" />
       </div>
     </div>
   );

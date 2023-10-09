@@ -67,9 +67,6 @@ export default function SidebarContainer({ className, ...props }: Props) {
           ) : (
             <Skeleton className="h-9 w-full bg-neutral-200" />
           )}
-          <SidebarNavigationLink IconElement={<Icon.HelpCircle />}>
-            Support Center
-          </SidebarNavigationLink>
           <SidebarNavigationLink
             IconElement={<Icon.LogOut />}
             onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
