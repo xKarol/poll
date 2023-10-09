@@ -10,7 +10,7 @@ import {
 import type { FetchNextPageOptions } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
 import { routes } from "../../../config/routes";
@@ -89,11 +89,15 @@ function PollItem({
   totalVotes,
   ...props
 }: PollItemsProps) {
+  const [isCopied, setIsCopied] = useState(false);
   const [, copy] = useCopyToClipboard();
 
-  const handleCopy = () => {
+  const handleCopy = (e: Event) => {
+    e.preventDefault();
+    setIsCopied(true);
     copy(`${getBaseUrl()}${routes.poll(id)}`);
   };
+
   return (
     <div
       className={cn(
@@ -113,7 +117,12 @@ function PollItem({
         <div>{dayjs(createdAt).format("DD.MM.YYYY h:mm")}</div>
       </Link>
       <div className="flex">
-        <DropdownMenu>
+        <DropdownMenu
+          onOpenChange={(open) => {
+            if (open && isCopied) {
+              setIsCopied(false);
+            }
+          }}>
           <DropdownMenuTrigger asChild>
             <button
               type="button"
@@ -121,9 +130,15 @@ function PollItem({
               <Icon.MoreHorizontal className="h-5 w-5" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="space-x-2" onClick={handleCopy}>
-              <Icon.Copy className="h-4 w-4" />
+          <DropdownMenuContent
+            align="end"
+            onCloseAutoFocus={(e) => e.preventDefault()}>
+            <DropdownMenuItem className="space-x-2" onSelect={handleCopy}>
+              {isCopied ? (
+                <Icon.Check className="h-4 w-4" />
+              ) : (
+                <Icon.Copy className="h-4 w-4" />
+              )}
               <span>Copy link</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="space-x-2">
