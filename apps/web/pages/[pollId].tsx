@@ -149,7 +149,7 @@ const PollPage = () => {
           <NextSeo title={data.question} />
           <form
             onSubmit={handleSubmit}
-            className="container m-auto mt-3 flex max-w-6xl flex-col md:mt-8 xl:mt-16">
+            className="container m-auto flex flex-col xl:max-w-6xl">
             {voteError ? (
               <Alert variant="error" className="mb-4 xl:mb-8">
                 <AlertTitle>{getErrorMessage(voteError)}</AlertTitle>
