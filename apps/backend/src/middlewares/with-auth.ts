@@ -12,6 +12,9 @@ declare global {
   }
 }
 
+const isSecure = process.env.NODE_ENV === "production";
+const cookiePrefix = isSecure ? "__Secure-" : "";
+
 export const withAuth = async (
   req: Request,
   res: Response,
@@ -19,9 +22,10 @@ export const withAuth = async (
 ) => {
   const jwtData = (await decode({
     secret: process.env.NEXTAUTH_SECRET as string,
-    token: cookie.parse(req.headers.cookie || "")["next-auth.session-token"],
+    token: cookie.parse(req.headers.cookie || "")[
+      `${cookiePrefix}next-auth.session-token`
+    ],
   })) as Auth.JWTPayload | null;
-
   req.user = jwtData;
   next();
 };
