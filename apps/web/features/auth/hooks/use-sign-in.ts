@@ -2,9 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
-import { routes } from "../config/routes";
-
-type Providers = "google";
+import { routes } from "../../../config/routes";
+import type { Providers } from "../types";
 
 const initialLoadingData: Record<Providers, boolean> = {
   google: false,
