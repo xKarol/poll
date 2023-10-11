@@ -23,7 +23,8 @@
         "STRIPE_WEBHOOK_SECRET",
         "STRIPE_STANDARD_PLAN_PRODUCT_ID",
         "STRIPE_PREMIUM_PLAN_PRODUCT_ID",
-        "RECAPTCHA_SECRET_TOKEN"
+        "RECAPTCHA_SECRET_TOKEN",
+        "TINYBIRD_TOKEN"
       ]
     },
     "build": {
