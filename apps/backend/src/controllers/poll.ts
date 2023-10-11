@@ -12,6 +12,7 @@ import {
   getPollUserAnswerChoice,
 } from "../services/poll";
 import { verifyReCaptcha } from "../services/recaptcha";
+import * as Analytics from "../services/tinybird";
 
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -92,7 +93,15 @@ export const Vote = async (
       const { success: isValidCaptcha } = await verifyReCaptcha(reCaptchaToken);
       if (!isValidCaptcha) throw new Error("Invalid reCAPTCHA verification.");
     }
+
     const data = await votePoll({ userId, pollId, answerId });
+    await Analytics.sendPollVoteData({
+      userId,
+      pollId,
+      voteId: data.id,
+      answerId,
+      time: Date.now(),
+    });
 
     return res.send(data);
   } catch (error) {
