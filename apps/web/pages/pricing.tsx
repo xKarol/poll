@@ -11,7 +11,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@poll/ui";
-import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { QueryClient, dehydrate, useMutation } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
@@ -262,35 +261,3 @@ function PricingCard({
     </div>
   );
 }
-
-export const PricingSwitch = React.forwardRef<
-  React.ElementRef<typeof SwitchPrimitives.Root>,
-  { leftText: string; rightText: string } & React.ComponentPropsWithoutRef<
-    typeof SwitchPrimitives.Root
-  >
->(({ leftText, rightText, className, onCheckedChange, ...props }, ref) => {
-  const [isChecked, setIsChecked] = useState(false);
-  return (
-    <SwitchPrimitives.Root
-      className={cn(
-        "focus-visible:ring-ring focus-visible:ring-offset-background peer relative inline-flex h-[40px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent bg-neutral-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-800",
-        className
-      )}
-      onCheckedChange={(checked) => {
-        onCheckedChange(checked);
-        setIsChecked(checked);
-      }}
-      ref={ref}
-      {...props}>
-      <span className="z-10 mr-2 px-2 font-medium">{leftText}</span>
-      <span className="z-10 px-2 font-medium">{rightText}</span>
-      <SwitchPrimitives.Thumb
-        className={cn(
-          "pointer-events-none absolute top-1/2 block h-9 -translate-y-1/2 rounded-full bg-white px-2 text-transparent shadow-lg ring-0 transition-all data-[state=checked]:left-full data-[state=unchecked]:left-0 data-[state=checked]:-translate-x-full dark:bg-neutral-900"
-        )}>
-        {isChecked ? rightText : leftText}
-      </SwitchPrimitives.Thumb>
-    </SwitchPrimitives.Root>
-  );
-});
-PricingSwitch.displayName = SwitchPrimitives.Root.displayName;
