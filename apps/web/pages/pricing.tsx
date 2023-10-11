@@ -1,7 +1,16 @@
 import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
 import type { Payment } from "@poll/types";
-import { Alert, AlertTitle, Button, Icon } from "@poll/ui";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  Icon,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@poll/ui";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { QueryClient, dehydrate, useMutation } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
@@ -54,13 +63,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
+const paymentCycles: Payment.PaymentCycle[] = ["month", "year"];
+
 export default function PricingPage() {
   const [error, setError] = useState<string>(undefined);
 
   const { status, data: session } = useSession();
   const router = useRouter();
-  const [paymentCycle, setPaymentCycle] =
-    useState<Payment.PaymentCycle>("month");
   const { data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
     mutationFn: ({ priceId }: { priceId: string }) => {
@@ -110,48 +119,30 @@ export default function PricingPage() {
               platform.
             </p>
           </div>
-          <PricingSwitch
-            leftText="Monthly"
-            rightText="Yearly"
-            checked={paymentCycle === "month" ? false : true}
-            onCheckedChange={(checked) =>
-              setPaymentCycle(checked === false ? "month" : "year")
-            }
-          />
-          <section className="flex flex-wrap gap-4">
-            <PricingCard
-              className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
-              planName="Free"
-              description="Ideal for simple polls and initial experimentation."
-              price={0}
-              planType={paymentCycle}
-              features={["Some feature 1", "Some feature 2", "Some feature 3"]}
-              ActionComponent={
-                <Button
-                  type="button"
-                  disabled={
-                    status === "unauthenticated"
-                      ? false
-                      : isPlanOwned("FREE", session?.user.plan || "FREE")
-                  }
-                  onClick={redirectUnauthenticatedToLoginPage}
-                  className="capitalize">
-                  Get Free
-                </Button>
-              }
-            />
-            {plansData.map(({ name, description }, index) => {
-              const selectedCyclePrice = pricingPlans[index].prices.find(
-                (price) => price.interval === paymentCycle
-              );
-              return (
+
+          <Tabs defaultValue="month" className="flex flex-col items-center">
+            <TabsList className="mb-4 flex w-[400px]">
+              {paymentCycles.map((cycle) => (
+                <TabsTrigger
+                  key={cycle}
+                  value={cycle}
+                  className="flex-1 capitalize">
+                  {cycle + "ly"}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {paymentCycles.map((cycle) => (
+              <TabsContent
+                key={cycle}
+                value={cycle}
+                className="mt-0 flex flex-wrap gap-4">
                 <PricingCard
-                  key={name}
                   className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
-                  planName={name}
-                  description={description}
-                  price={selectedCyclePrice.amount / 100}
-                  planType={paymentCycle}
+                  planName="Free"
+                  description="Ideal for simple polls and initial experimentation."
+                  price={0}
+                  planType={cycle}
                   features={[
                     "Some feature 1",
                     "Some feature 2",
@@ -163,17 +154,52 @@ export default function PricingPage() {
                       disabled={
                         status === "unauthenticated"
                           ? false
-                          : isPlanOwned(name, session?.user.plan || "FREE")
+                          : isPlanOwned("FREE", session?.user.plan || "FREE")
                       }
-                      onClick={async () => handlePayment(selectedCyclePrice.id)}
+                      onClick={redirectUnauthenticatedToLoginPage}
                       className="capitalize">
-                      Get {name.toLowerCase()}
+                      Get Free
                     </Button>
                   }
                 />
-              );
-            })}
-          </section>
+                {plansData.map(({ name, description }, index) => {
+                  const selectedCyclePrice = pricingPlans[index].prices.find(
+                    (price) => price.interval === cycle
+                  );
+                  return (
+                    <PricingCard
+                      key={name}
+                      className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
+                      planName={name}
+                      description={description}
+                      price={selectedCyclePrice.amount / 100}
+                      planType={cycle}
+                      features={[
+                        "Some feature 1",
+                        "Some feature 2",
+                        "Some feature 3",
+                      ]}
+                      ActionComponent={
+                        <Button
+                          type="button"
+                          disabled={
+                            status === "unauthenticated"
+                              ? false
+                              : isPlanOwned(name, session?.user.plan || "FREE")
+                          }
+                          onClick={async () =>
+                            handlePayment(selectedCyclePrice.id)
+                          }
+                          className="capitalize">
+                          Get {name.toLowerCase()}
+                        </Button>
+                      }
+                    />
+                  );
+                })}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </div>
     </>
