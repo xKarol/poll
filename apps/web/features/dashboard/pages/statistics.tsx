@@ -18,9 +18,10 @@ import { BaseLayout } from "../layouts";
 // TODO change param type
 const sortData = (d: unknown[]) => {
   return [
-    ...Array.from({ length: 12 }, (_, index) => ({
+    ...Array.from({ length: 11 }, (_, index) => ({
       name: dayjs().set("M", index).format("MMM"),
       totalVotes: 0,
+      time: 0,
     })),
     ...d.map((dd) => ({
       // @ts-expect-error
@@ -29,6 +30,8 @@ const sortData = (d: unknown[]) => {
         // @ts-expect-error
         (ddd) => dayjs(ddd.time).day() === dayjs(dd.time).day()
       ).length,
+      // @ts-expect-error
+      time: dd.time,
     })),
   ];
 };
@@ -52,7 +55,13 @@ const StatisticsPage = () => {
             bottom: 5,
           }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis
+            dataKey="time"
+            tickFormatter={(tick) => dayjs(tick).format("MMM")}
+            type="number"
+            scale="time"
+            domain={["dataMin", "dataMax"]}
+          />
           <YAxis />
           <Tooltip />
           <Legend />
