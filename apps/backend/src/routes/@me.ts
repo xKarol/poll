@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import express from "express";
 
 import * as MeController from "../controllers/@me";
@@ -8,14 +9,27 @@ import * as UserSchema from "../schemas/user";
 
 const router = express.Router();
 
-router.get("/@me/poll", requireAuth, withPagination, MeController.GetPolls);
 router.patch(
-  "/@me",
+  apiUrls.user.update,
   validateSchema(UserSchema.updateUser),
   requireAuth,
   MeController.UpdateData
 );
-router.delete("/@me", requireAuth, MeController.DeleteUser);
-router.get("/@me/vote", requireAuth, withPagination, MeController.GetUserVotes);
+
+router.delete(apiUrls.user.delete, requireAuth, MeController.DeleteUser);
+
+router.get(
+  apiUrls.user.getVotes,
+  requireAuth,
+  withPagination,
+  MeController.GetUserVotes
+);
+
+router.get(
+  apiUrls.user.getPolls,
+  requireAuth,
+  withPagination,
+  MeController.GetPolls
+);
 
 export default router;

@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import prisma, { type Plan } from "@poll/prisma";
 import express from "express";
 
@@ -6,7 +7,7 @@ import { stripe } from "../lib/stripe";
 const router = express.Router();
 
 router.post(
-  "/webhook/stripe",
+  apiUrls.webhooks.stripe,
   express.raw({ type: "application/json" }),
   async (request, response, next) => {
     try {

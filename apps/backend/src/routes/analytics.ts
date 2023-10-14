@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import express from "express";
 
 import * as AnalyticsController from "../controllers/analytics";
@@ -16,7 +17,7 @@ const router = express.Router();
 // );
 
 router.get(
-  "/analytics/poll/vote",
+  apiUrls.analytics.userPollVotes,
   requireAuth,
   AnalyticsController.GetUserPollVotesData
 );

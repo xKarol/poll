@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import express from "express";
 
 import * as PollController from "../controllers/poll";
@@ -8,7 +9,7 @@ import * as PollSchema from "../schemas/poll";
 const router = express.Router();
 
 router.get(
-  "/poll/:pollId",
+  apiUrls.poll.getOne(":pollId"),
   validateSchema(PollSchema.getPoll),
   PollController.GetOne
 );
@@ -16,27 +17,27 @@ router.get(
 router.get("/poll", withPagination, PollController.Get);
 
 router.post(
-  "/poll",
+  apiUrls.poll.create,
   validateSchema(PollSchema.createPoll),
   PollController.Create
 );
 
 router.delete(
-  "/poll/:pollId",
+  apiUrls.poll.delete(":pollId"),
   validateSchema(PollSchema.deletePoll),
   PollController.Delete
 );
 
 router.post(
-  "/poll/:pollId/vote/:answerId",
+  apiUrls.poll.vote(":pollId", ":answerId"),
   validateSchema(PollSchema.votePoll),
   PollController.Vote
 );
 
-router.get("/poll/:pollId/vote/users", PollController.GetPollVoters);
+router.get(apiUrls.poll.getVoters(":pollId"), PollController.GetPollVoters);
 
 router.get(
-  "/poll/:pollId/answers/user-choice",
+  apiUrls.poll.getUserAnswerChoice(":pollId"),
   PollController.GetPollUserAnswerChoice
 );
 

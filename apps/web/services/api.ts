@@ -1,15 +1,16 @@
+import { apiUrls } from "@poll/config/api-urls";
 import type { Poll, Payment, User, Analytics } from "@poll/types";
 
 import axios from "../lib/axios";
 
 // POLL
 export const createPoll: Poll.Api["createPoll"] = async (pollData) => {
-  const { data } = await axios.post("/poll", pollData);
+  const { data } = await axios.post(apiUrls.poll.create, pollData);
   return data;
 };
 
 export const getPolls: Poll.Api["getPolls"] = async (page = 1, limit = 10) => {
-  const { data } = await axios.get(`/poll`, {
+  const { data } = await axios.get(apiUrls.poll.getAll, {
     params: {
       page,
       limit,
@@ -19,7 +20,7 @@ export const getPolls: Poll.Api["getPolls"] = async (page = 1, limit = 10) => {
 };
 
 export const getPoll: Poll.Api["getPoll"] = async (pollId) => {
-  const { data } = await axios.get(`/poll/${pollId}`);
+  const { data } = await axios.get(apiUrls.poll.getOne(pollId));
   return data;
 };
 
@@ -28,34 +29,37 @@ export const votePoll: Poll.Api["votePoll"] = async (
   answerId,
   reCaptchaToken
 ) => {
-  const { data } = await axios.post(`/poll/${pollId}/vote/${answerId}`, {
+  const { data } = await axios.post(apiUrls.poll.vote(pollId, answerId), {
     reCaptchaToken,
   });
   return data;
 };
 
 export const getPollVoters: Poll.Api["getPollVoters"] = async (pollId) => {
-  const { data } = await axios.get(`/poll/${pollId}/vote/users`);
+  const { data } = await axios.get(apiUrls.poll.getVoters(pollId));
   return data;
 };
 
 export const getPollUserAnswerChoice: Poll.Api["getPollUserAnswerChoice"] =
   async (pollId) => {
-    const { data } = await axios.get(`/poll/${pollId}/answers/user-choice`);
+    const { data } = await axios.get(apiUrls.poll.getUserAnswerChoice(pollId));
     return data;
   };
 
 // PAYMENTS
 export const getPricingPlans: Payment.Api["getPricingPlans"] = async () => {
-  const { data } = await axios.get("/payment/plan");
+  const { data } = await axios.get(apiUrls.payment.getPricingPlans);
   return data;
 };
 
 export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"] =
   async (priceId) => {
-    const { data } = await axios.post("/payment/plan/checkout-session", {
-      priceId,
-    });
+    const { data } = await axios.post(
+      apiUrls.payment.createPlanCheckoutSession,
+      {
+        priceId,
+      }
+    );
     return data;
   };
 
@@ -64,7 +68,7 @@ export const getUserPolls: Poll.Api["getUserPolls"] = async (
   page = 1,
   limit = 10
 ) => {
-  const { data } = await axios.get(`/@me/poll`, {
+  const { data } = await axios.get(apiUrls.user.getPolls, {
     params: {
       page,
       limit,
@@ -77,7 +81,7 @@ export const getUserVotes: User.Api["getUserVotes"] = async (
   page = 1,
   limit = 10
 ) => {
-  const { data } = await axios.get(`/@me/vote`, {
+  const { data } = await axios.get(apiUrls.user.getVotes, {
     params: {
       page,
       limit,
@@ -87,7 +91,7 @@ export const getUserVotes: User.Api["getUserVotes"] = async (
 };
 
 export const updateUser: User.Api["updateUser"] = async (userData) => {
-  const { data } = await axios.patch(`/@me`, userData);
+  const { data } = await axios.patch(apiUrls.user.update, userData);
   return data;
 };
 
@@ -95,6 +99,6 @@ export const updateUser: User.Api["updateUser"] = async (userData) => {
 
 export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
   async () => {
-    const { data } = await axios.get(`/analytics/poll/vote`);
+    const { data } = await axios.get(apiUrls.analytics.userPollVotes);
     return data;
   };

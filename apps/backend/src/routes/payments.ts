@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import express from "express";
 import { z } from "zod";
 
@@ -7,10 +8,10 @@ import { validateSchema } from "../middlewares/validate-schema";
 
 const router = express.Router();
 
-router.get("/payment/plan", PaymentsController.GetPricingPlans);
+router.get(apiUrls.payment.getPricingPlans, PaymentsController.GetPricingPlans);
 
 router.post(
-  "/payment/plan/checkout-session",
+  apiUrls.payment.createPlanCheckoutSession,
   requireAuth,
   validateSchema(
     z.object({ body: z.object({ priceId: z.string().nonempty() }) })
