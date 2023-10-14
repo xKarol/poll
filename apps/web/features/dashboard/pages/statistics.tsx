@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import {
   BarChart,
@@ -10,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { getUserPollVotes } from "../../../services/api";
 import Heading from "../components/heading";
 import { BaseLayout } from "../layouts";
 
@@ -59,6 +61,11 @@ const data = [
 ];
 
 const StatisticsPage = () => {
+  const d = useQuery({
+    queryKey: ["analytic"],
+    queryFn: getUserPollVotes,
+  });
+  console.log(d.data);
   return (
     <BaseLayout>
       <Heading className="mb-5">Statistics</Heading>

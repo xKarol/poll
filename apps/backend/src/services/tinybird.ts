@@ -1,5 +1,3 @@
-import "../config/env";
-
 import { z } from "zod";
 
 import tinybird from "../lib/tinybird";
@@ -25,13 +23,14 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
   }),
 });
 
-export const getPollData = tinybird.buildPipe({
-  pipe: "poll_v1",
+export const getUserPollVotesData = tinybird.buildPipe({
+  pipe: "vote_v1",
   parameters: z.object({
-    id: z.string(),
+    userId: z.string(),
   }),
   data: z.object({
-    pageNumber: z.string(),
-    avg_duration: z.number(),
+    voteId: z.string(),
+    city: z.string(),
+    time: z.number().int(),
   }),
 });

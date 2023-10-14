@@ -1,4 +1,4 @@
-import type { Poll, Payment, User } from "@poll/types";
+import type { Poll, Payment, User, Analytics } from "@poll/types";
 
 import axios from "../lib/axios";
 
@@ -88,5 +88,12 @@ export const getUserVotes: User.Api["getUserVotes"] = async (
 
 export const updateUser: User.Api["updateUser"] = async (userData) => {
   const { data } = await axios.patch(`/@me`, userData);
+  return data;
+};
+
+// ANALYTICS
+
+export const getUserPollVotes: Analytics.Api["getUserPollVotes"] = async () => {
+  const { data } = await axios.get(`/analytics/poll/vote`);
   return data;
 };
