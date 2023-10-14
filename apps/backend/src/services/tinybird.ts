@@ -3,7 +3,7 @@ import { z } from "zod";
 import tinybird from "../lib/tinybird";
 
 export const sendPollVoteData = tinybird.buildIngestEndpoint({
-  datasource: "analytics_poll-vote__v1",
+  datasource: "analytics_poll_vote__v1",
   event: z.object({
     voteId: z.string(),
     userId: z.string().optional(),
