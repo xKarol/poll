@@ -93,7 +93,8 @@ export const updateUser: User.Api["updateUser"] = async (userData) => {
 
 // ANALYTICS
 
-export const getUserPollVotes: Analytics.Api["getUserPollVotes"] = async () => {
-  const { data } = await axios.get(`/analytics/poll/vote`);
-  return data;
-};
+export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
+  async () => {
+    const { data } = await axios.get(`/analytics/poll/vote`);
+    return data;
+  };
