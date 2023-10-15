@@ -95,9 +95,17 @@ export const Vote = async (
     }
 
     const data = await votePoll({ userId, pollId, answerId });
+
+    const { userId: ownerId } =
+      (await prisma.poll.findUnique({
+        where: { id: pollId },
+        select: { userId: true },
+      })) || {};
+
     await Analytics.sendPollVoteData({
       userId,
       pollId,
+      ownerId: ownerId || "unknown",
       voteId: data.id,
       answerId,
       time: Date.now(),

@@ -7,6 +7,7 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
   event: z.object({
     voteId: z.string(),
     userId: z.string().optional(),
+    ownerId: z.string(),
     pollId: z.string(),
     answerId: z.string(),
     time: z.number().int(),
@@ -26,7 +27,7 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
 export const getUserPollVotesData = tinybird.buildPipe({
   pipe: "vote_v1",
   parameters: z.object({
-    userId: z.string(),
+    ownerId: z.string(),
   }),
   data: z.object({
     voteId: z.string(),
