@@ -1,4 +1,5 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
+import { cn } from "@poll/lib";
 import { Alert, AlertTitle, Icon, Input, LoadingButton, toast } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
@@ -299,34 +300,34 @@ const PollPage = () => {
                     />
                   </div>
                 </div>
-                <div className="my-4 flex flex-wrap gap-4 text-neutral-600 dark:text-neutral-500 [&_svg]:h-5 [&_svg]:w-5">
-                  <EmailShareButton url={shareUrl}>
+                <div className="my-4 flex flex-wrap gap-4">
+                  <ShareSocial as={EmailShareButton} url={shareUrl}>
                     <Icon.LucideMail />
-                  </EmailShareButton>
+                  </ShareSocial>
 
-                  <FacebookShareButton url={shareUrl}>
+                  <ShareSocial as={FacebookShareButton} url={shareUrl}>
                     <Icon.Facebook />
-                  </FacebookShareButton>
+                  </ShareSocial>
 
-                  <LinkedinShareButton url={shareUrl}>
+                  <ShareSocial as={LinkedinShareButton} url={shareUrl}>
                     <Icon.Linkedin />
-                  </LinkedinShareButton>
+                  </ShareSocial>
 
-                  <RedditShareButton url={shareUrl}>
+                  <ShareSocial as={RedditShareButton} url={shareUrl}>
                     <Icon.Reddit />
-                  </RedditShareButton>
+                  </ShareSocial>
 
-                  <TelegramShareButton url={shareUrl}>
+                  <ShareSocial as={TelegramShareButton} url={shareUrl}>
                     <Icon.Telegram />
-                  </TelegramShareButton>
+                  </ShareSocial>
 
-                  <TwitterShareButton url={shareUrl}>
+                  <ShareSocial as={TwitterShareButton} url={shareUrl}>
                     <Icon.Twitter />
-                  </TwitterShareButton>
+                  </ShareSocial>
 
-                  <WhatsappShareButton url={shareUrl}>
+                  <ShareSocial as={WhatsappShareButton} url={shareUrl}>
                     <Icon.Whatsapp />
-                  </WhatsappShareButton>
+                  </ShareSocial>
                 </div>
               </div>
             </div>
@@ -340,3 +341,27 @@ const PollPage = () => {
 export default PollPage;
 
 PollPage.Layout = BaseLayout;
+
+export type ShareSocialProps<T extends React.ElementType> = {
+  as?: T;
+};
+
+export function ShareSocial<T extends React.ElementType = "button">({
+  className,
+  children,
+  as,
+  ...props
+}: ShareSocialProps<T> &
+  Omit<React.ComponentPropsWithoutRef<T>, keyof ShareSocialProps<T>>) {
+  const Component = as || "button";
+  return (
+    <Component
+      className={cn(
+        "!text-neutral-600 transition-colors hover:!text-black dark:!text-neutral-500 [&_svg]:h-5 [&_svg]:w-5",
+        className
+      )}
+      {...props}>
+      {children}
+    </Component>
+  );
+}
