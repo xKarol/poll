@@ -17,6 +17,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from "react-share";
+import { useCopyToClipboard } from "react-use";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
@@ -69,7 +70,9 @@ const PollPage = () => {
   } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
   const recaptchaRef = useRef<ReCAPTCHA>();
+  const [, copy] = useCopyToClipboard();
   useLiveAnswers(pollId);
+
   const sortedAnswers = useMemo(
     () =>
       data.answers.sort((a, b) => {
@@ -84,6 +87,7 @@ const PollPage = () => {
     typeof window === "undefined"
       ? ""
       : `${window.location.origin}${router.asPath}`;
+
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
     return Number.isNaN(percent) ? 0 : percent;
@@ -115,6 +119,12 @@ const PollPage = () => {
     const [answer] = data.answers.filter((answer) => answer.text === value);
     setSelectedAnswerId(answer.id);
   };
+
+  const copyLink = () => {
+    copy(shareUrl);
+    toast("Copied to clipboard", { icon: <Icon.Check /> });
+  };
+
   const dataChart = data.answers.map((answer) => ({
     name: answer.text,
     value: (answer.votes / totalVotes) * 100,
@@ -280,7 +290,9 @@ const PollPage = () => {
                       className="w-full max-w-[450px] rounded-r-none border-r-0 pr-8"
                       value={shareUrl}
                       RightIcon={
-                        <div className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white">
+                        <div
+                          className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white"
+                          onClick={copyLink}>
                           <Icon.Copy className="h-4 w-4" />
                         </div>
                       }
