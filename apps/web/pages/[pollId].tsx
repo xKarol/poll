@@ -1,5 +1,5 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
-import { Alert, AlertTitle, Icon, Input, LoadingButton } from "@poll/ui";
+import { Alert, AlertTitle, Icon, Input, LoadingButton, toast } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
@@ -117,7 +117,7 @@ const PollPage = () => {
         reCaptchaToken: token,
       });
     } catch (error) {
-      // TODO handle error
+      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
       console.log(error);
     }
   };
