@@ -287,7 +287,7 @@ const PollPage = () => {
                   <p className="text-sm">Share link</p>
                   <div className="flex">
                     <Input
-                      className="w-full max-w-[450px] rounded-r-none border-r-0 pr-8"
+                      className="w-full max-w-[450px] rounded-r-none border-r-0"
                       value={shareUrl}
                       RightIcon={
                         <div
