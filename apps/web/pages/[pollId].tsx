@@ -8,6 +8,27 @@ import { useRouter } from "next/router";
 import React, { useMemo, useRef, useState } from "react";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton,
+} from "react-share";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
@@ -71,7 +92,10 @@ const PollPage = () => {
     [data.answers]
   );
   const isVoted = !!userChoiceAnswerId;
-
+  const shareUrl =
+    typeof window === "undefined"
+      ? ""
+      : `${window.location.origin}${router.asPath}`;
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
     return Number.isNaN(percent) ? 0 : percent;
@@ -242,7 +266,7 @@ const PollPage = () => {
                   <div className="flex">
                     <Input
                       className="w-full max-w-[450px] rounded-r-none border-r-0 pr-8"
-                      value={`${window.location.origin}${router.asPath}`}
+                      value={shareUrl}
                       RightIcon={
                         <div className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white">
                           <Icon.Copy className="h-4 w-4" />
@@ -250,6 +274,35 @@ const PollPage = () => {
                       }
                     />
                   </div>
+                </div>
+                <div className="my-4 flex flex-wrap gap-4 text-neutral-600 [&_svg]:h-5 [&_svg]:w-5">
+                  <EmailShareButton url={shareUrl}>
+                    <Icon.LucideMail />
+                  </EmailShareButton>
+
+                  <FacebookShareButton url={shareUrl}>
+                    <Icon.Facebook />
+                  </FacebookShareButton>
+
+                  <LinkedinShareButton url={shareUrl}>
+                    <Icon.Linkedin />
+                  </LinkedinShareButton>
+
+                  <RedditShareButton url={shareUrl}>
+                    <Icon.Reddit />
+                  </RedditShareButton>
+
+                  <TelegramShareButton url={shareUrl}>
+                    <Icon.Telegram />
+                  </TelegramShareButton>
+
+                  <TwitterShareButton url={shareUrl}>
+                    <Icon.Twitter />
+                  </TwitterShareButton>
+
+                  <WhatsappShareButton url={shareUrl}>
+                    <Icon.Whatsapp />
+                  </WhatsappShareButton>
                 </div>
               </div>
             </div>
