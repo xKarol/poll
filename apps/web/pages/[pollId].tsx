@@ -277,8 +277,8 @@ const PollPage = () => {
                 </PieChart>
               </ResponsiveContainer>
             )}
-            <div className="rounded-[4px] border-[2px] border-neutral-300">
-              <div className="flex items-center space-x-2 border-b border-neutral-300 p-4">
+            <div className="rounded-[4px] border-[2px] border-neutral-300 dark:border-neutral-800">
+              <div className="flex items-center space-x-2 border-b border-neutral-300 p-4 dark:border-neutral-800">
                 <Icon.LucideShare2 className="h-4 w-4" />
                 <h1 className="text-base font-medium">Share</h1>
               </div>
@@ -291,7 +291,7 @@ const PollPage = () => {
                       value={shareUrl}
                       RightIcon={
                         <div
-                          className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white"
+                          className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                           onClick={copyLink}>
                           <Icon.Copy className="h-4 w-4" />
                         </div>
@@ -299,7 +299,7 @@ const PollPage = () => {
                     />
                   </div>
                 </div>
-                <div className="my-4 flex flex-wrap gap-4 text-neutral-600 [&_svg]:h-5 [&_svg]:w-5">
+                <div className="my-4 flex flex-wrap gap-4 text-neutral-600 dark:text-neutral-500 [&_svg]:h-5 [&_svg]:w-5">
                   <EmailShareButton url={shareUrl}>
                     <Icon.LucideMail />
                   </EmailShareButton>
