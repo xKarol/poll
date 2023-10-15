@@ -277,12 +277,12 @@ const PollPage = () => {
                 </PieChart>
               </ResponsiveContainer>
             )}
-            <div className="rounded-[4px] border-[2px] border-neutral-300 pb-4">
+            <div className="rounded-[4px] border-[2px] border-neutral-300">
               <div className="flex items-center space-x-2 border-b border-neutral-300 p-4">
                 <Icon.LucideShare2 className="h-4 w-4" />
                 <h1 className="text-base font-medium">Share</h1>
               </div>
-              <div className="flex flex-col items-center justify-center p-4">
+              <div className="flex flex-col items-center justify-center p-4 py-6">
                 <div className="flex flex-col space-y-2">
                   <p className="text-sm">Share link</p>
                   <div className="flex">
