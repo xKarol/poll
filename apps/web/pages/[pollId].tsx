@@ -11,23 +11,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 import {
   EmailShareButton,
   FacebookShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
   LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
   RedditShareButton,
   TelegramShareButton,
-  TumblrShareButton,
   TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
   WhatsappShareButton,
-  WorkplaceShareButton,
 } from "react-share";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
@@ -255,6 +243,30 @@ const PollPage = () => {
                 ) : null}
               </div>
             </form>
+            {isVoted && (
+              <ResponsiveContainer width={"100%"} height={400}>
+                <PieChart width={400} height={400}>
+                  <Pie
+                    dataKey="value"
+                    data={dataChart}
+                    cx={"50%"}
+                    cy={"50%"}
+                    strokeWidth={2}
+                    outerRadius={120}
+                    fill="#8884d8"
+                    labelLine={false}
+                    label={renderCustomizedLabel}>
+                    {dataChart.map((entry, index) => (
+                      <Cell
+                        key={`cell-${entry.name}`}
+                        fill={colors[index % colors.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
             <div className="rounded-[4px] border-[2px] border-neutral-300 pb-4">
               <div className="flex items-center space-x-2 border-b border-neutral-300 p-4">
                 <Icon.LucideShare2 className="h-4 w-4" />
@@ -306,30 +318,6 @@ const PollPage = () => {
                 </div>
               </div>
             </div>
-            {isVoted && (
-              <ResponsiveContainer width={"100%"} height={400}>
-                <PieChart width={400} height={400}>
-                  <Pie
-                    dataKey="value"
-                    data={dataChart}
-                    cx={"50%"}
-                    cy={"50%"}
-                    strokeWidth={2}
-                    outerRadius={120}
-                    fill="#8884d8"
-                    labelLine={false}
-                    label={renderCustomizedLabel}>
-                    {dataChart.map((entry, index) => (
-                      <Cell
-                        key={`cell-${entry.name}`}
-                        fill={colors[index % colors.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            )}
           </div>
         </>
       )}
