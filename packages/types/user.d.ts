@@ -1,6 +1,8 @@
 import type { Answer, User, Vote } from "@poll/prisma";
 
-export type UpdateUserData = Partial<Pick<User, "email" | "name" | "image">>;
+export type UpdateUserData = Partial<
+  Pick<User, "email" | "name" | "image" | "timeZone" | "clockType">
+>;
 
 // TODO import this style
 export type PaginationResult<T = unknown> = {

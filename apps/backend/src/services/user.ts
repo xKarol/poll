@@ -5,11 +5,14 @@ export const updateUserData: User.Services["updateUser"] = async (
   userId,
   data
 ) => {
+  console.log(data);
   const response = await prisma.user.update({
     where: { id: userId },
     data: {
       name: data.name,
       image: data.image,
+      clockType: data.clockType,
+      timeZone: data.timeZone,
       // TODO handle email change properly, do not update user email for now
       // ...data
     },

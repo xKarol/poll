@@ -63,7 +63,7 @@ export default function AccountGeneralPage() {
 
 type FormValues = {
   language: string;
-  clockType: string;
+  clockType: "12h" | "24h";
   timeZone: string;
 };
 
@@ -82,7 +82,7 @@ function EditAccountForm() {
     defaultValues: {
       language: "English",
       clockType: session.user.clockType === 12 ? "12h" : "24h",
-      timeZone: session.user.timeZone,
+      timeZone: session?.user.timeZone || "",
     },
   });
   const { mutateAsync, isLoading } = useUpdateAccount();
@@ -92,8 +92,10 @@ function EditAccountForm() {
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
-      console.log(data);
-      await mutateAsync(data);
+      await mutateAsync({
+        ...data,
+        clockType: data.clockType === "12h" ? 12 : 24,
+      });
       await update();
       toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset(data);
