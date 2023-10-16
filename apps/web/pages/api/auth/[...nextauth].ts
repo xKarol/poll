@@ -30,6 +30,8 @@ export const authOptions: NextAuthOptions = {
           email: true,
           name: true,
           plan: true,
+          timezone: true,
+          clockType: true,
         },
       });
       if (!user) return token;
@@ -40,7 +42,15 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
-      return { ...session, user: { ...session.user, plan: token.plan } };
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          plan: token.plan,
+          clockType: token.clockType,
+          timezone: token.timezone,
+        },
+      };
     },
   },
   pages: {
