@@ -9,6 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Skeleton,
   toast,
 } from "@poll/ui";
 import { useSession } from "next-auth/react";
@@ -30,13 +31,35 @@ import { useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 export default function AccountGeneralPage() {
+  const { status } = useSession();
+
   return (
     <BaseLayout>
       <SettingsHeader
         heading="General"
         description="Manage your account preferences"
       />
-      <EditAccountForm />
+      {status === "loading" ? (
+        <div className="flex flex-col space-y-3">
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-1/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-1/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-1/4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          </div>
+          <Skeleton className="h-10 w-20" />
+        </div>
+      ) : (
+        <EditAccountForm />
+      )}
     </BaseLayout>
   );
 }
@@ -54,15 +77,15 @@ export const updateUserSchema = z.object({
 });
 
 function EditAccountForm() {
-  const { update } = useSession();
+  const { data: session, update } = useSession();
 
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       language: "English",
-      clockType: "12h",
-      timeZone: "Europe/Warsaw",
+      clockType: session.user.clockType === 12 ? "12h" : "24h",
+      timeZone: session.user.timezone,
     },
   });
   const { mutateAsync, isLoading } = useUpdateAccount({
