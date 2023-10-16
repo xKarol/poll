@@ -1,7 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Alert,
-  AlertTitle,
   Icon,
   LoadingButton,
   Select,
@@ -25,7 +23,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../components/form";
-import { getErrorMessage } from "../../../utils/error";
 import SettingsHeader from "../components/settings-header";
 import { useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
@@ -88,11 +85,7 @@ function EditAccountForm() {
       timeZone: session.user.timeZone,
     },
   });
-  const { mutateAsync, isLoading } = useUpdateAccount({
-    onError: () => {
-      toast("Something went wrong...");
-    },
-  });
+  const { mutateAsync, isLoading } = useUpdateAccount();
   const hasChanges =
     JSON.stringify(form.formState.defaultValues) !==
     JSON.stringify(form.getValues());
@@ -104,20 +97,14 @@ function EditAccountForm() {
       await update();
       toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset(data);
-    } catch (error) {
-      form.setError("root", { message: getErrorMessage(error) });
+    } catch {
+      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
     }
   });
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"flex flex-col"}>
-        {form.formState.errors.root?.message ? (
-          <Alert variant="error" className="mb-8">
-            <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
-          </Alert>
-        ) : null}
-
         <div className="mb-8 space-y-3">
           <FormField
             control={form.control}
