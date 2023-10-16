@@ -50,6 +50,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   plan          Plan      @default(FREE)
+  timezone      String
+  clockType     Int?      @default(12)
   poll          Poll[]
   vote          Vote[]
   createdAt     DateTime  @default(now())
