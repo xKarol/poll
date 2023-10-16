@@ -42,7 +42,7 @@ export function generateFakeUserData() {
     emailVerified: faker.date.past(),
     image: faker.internet.avatar(),
     plan: faker.helpers.arrayElement(["FREE", "STANDARD", "PREMIUM"]),
-    timezone: faker.location.timeZone(),
+    timeZone: faker.location.timeZone(),
     clockType: 12,
     ...getFakeDate(),
   };

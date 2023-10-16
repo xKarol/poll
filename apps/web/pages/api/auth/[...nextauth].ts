@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
           email: true,
           name: true,
           plan: true,
-          timezone: true,
+          timeZone: true,
           clockType: true,
         },
       });
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           plan: token.plan,
           clockType: token.clockType,
-          timezone: token.timezone,
+          timeZone: token.timeZone,
         },
       };
     },

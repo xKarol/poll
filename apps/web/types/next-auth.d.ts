@@ -10,7 +10,7 @@ declare module "next-auth" {
     user?: {
       id?: string;
       plan: Plan;
-      timezone: string;
+      timeZone: string;
       clockType: 12 | 24;
     } & DefaultSession["user"];
   }
