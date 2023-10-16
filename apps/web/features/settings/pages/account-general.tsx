@@ -82,7 +82,9 @@ function EditAccountForm() {
     defaultValues: {
       language: "English",
       clockType: session.user.clockType === 12 ? "12h" : "24h",
-      timeZone: session?.user.timeZone || "",
+      timeZone:
+        session?.user.timeZone ||
+        Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   });
   const { mutateAsync, isLoading } = useUpdateAccount();
