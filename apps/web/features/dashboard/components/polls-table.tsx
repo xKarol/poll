@@ -197,7 +197,7 @@ function PollItem({
         </div>
       </div>
       <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
-        <DialogContent hideClose>
+        <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} hideClose>
           <DialogHeader>
             <DialogTitle>Delete poll</DialogTitle>
             <DialogDescription>
