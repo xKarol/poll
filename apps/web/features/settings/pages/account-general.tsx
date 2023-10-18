@@ -109,93 +109,91 @@ function EditAccountForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"flex flex-col"}>
-        <div className="mb-8 space-y-3">
-          <FormField
-            control={form.control}
-            name="language"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Language</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue
-                        defaultValue="English"
-                        placeholder="Select a language"
-                      />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="English">English</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="clockType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Clock type</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue
-                        defaultValue="12 hours"
-                        placeholder="Select a clock type"
-                      />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="12h">12 hours</SelectItem>
-                    <SelectItem value="24h">24 hours</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="timeZone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Timezone</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue
-                        defaultValue="Europe/Warsaw"
-                        placeholder="Select your timezone"
-                      />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {/* TODO optimize this and add scroll */}
-                    {/* @ts-ignore */}
-                    {Intl.supportedValuesOf("timeZone").map((timezone) => (
-                      <SelectItem key={timezone} value={timezone}>
-                        {timezone}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="mb-8 space-y-4">
+          <div className="space-y-3">
+            <FormField
+              control={form.control}
+              name="language"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Language</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue="English"
+                          placeholder="Select a language"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="English">English</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="clockType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Clock type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue="12 hours"
+                          placeholder="Select a clock type"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="12h">12 hours</SelectItem>
+                      <SelectItem value="24h">24 hours</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="timeZone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Timezone</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue="Europe/Warsaw"
+                          placeholder="Select your timezone"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {/* TODO optimize this and add scroll */}
+                      {/* @ts-ignore */}
+                      {Intl.supportedValuesOf("timeZone").map((timezone) => (
+                        <SelectItem key={timezone} value={timezone}>
+                          {timezone}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <LoadingButton
             type="submit"
