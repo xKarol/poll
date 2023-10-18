@@ -1,7 +1,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divider } from "@mui/material";
 import type { User } from "@poll/types";
-import { Icon, Input, LoadingButton, Skeleton, toast } from "@poll/ui";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Icon,
+  Input,
+  LoadingButton,
+  Skeleton,
+  toast,
+} from "@poll/ui";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -135,13 +149,33 @@ function DangerZone() {
   return (
     <div className="flex flex-col space-y-2 text-red-500 dark:text-red-700">
       <h2 className="font-medium">Danger zone</h2>
-      <LoadingButton
-        isLoading={isLoading}
-        variant="destructive"
-        className="max-w-max"
-        onClick={() => deleteAccount()}>
-        Delete account
-      </LoadingButton>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive" className="max-w-max">
+            Delete account
+          </Button>
+        </DialogTrigger>
+        <DialogContent hideClose>
+          <DialogHeader>
+            <DialogTitle>Delete account</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete your account?
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button variant="text" asChild>
+              <DialogTrigger>Cancel</DialogTrigger>
+            </Button>
+            <LoadingButton
+              variant="destructive"
+              isLoading={isLoading}
+              onClick={() => deleteAccount()}>
+              Delete account
+            </LoadingButton>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
