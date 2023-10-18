@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
   Icon,
   LoadingButton,
+  toast,
 } from "@poll/ui";
 import type { FetchNextPageOptions } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -25,6 +26,7 @@ import { useCopyToClipboard } from "react-use";
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
 import { getBaseUrl } from "../../../utils/get-base-url";
+import { useDeletePoll } from "../hooks";
 
 type Props = {
   data: (Poll & { totalVotes: number })[];
@@ -101,14 +103,18 @@ function PollItem({
   const [isCopied, setIsCopied] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [, copy] = useCopyToClipboard();
+  const { isLoading: isDeletePollLoading, mutate: deletePoll } = useDeletePoll({
+    onSuccess: () => {
+      toast("Poll has been deleted.", { icon: <Icon.Check /> });
+      setOpenDeleteModal(false);
+    },
+  });
 
   const handleCopy = (e: Event) => {
     e.preventDefault();
     setIsCopied(true);
     copy(`${getBaseUrl()}${routes.poll(id)}`);
   };
-
-  console.log(openDeleteModal);
 
   return (
     <>
@@ -184,7 +190,10 @@ function PollItem({
             <DialogTrigger asChild>
               <Button variant="text">Cancel</Button>
             </DialogTrigger>
-            <LoadingButton variant="destructive" isLoading={false}>
+            <LoadingButton
+              variant="destructive"
+              isLoading={isDeletePollLoading}
+              onClick={() => deletePoll(id)}>
               <Icon.Trash2 />
               <span>Delete poll</span>
             </LoadingButton>

@@ -24,6 +24,11 @@ export const getPoll: Poll.Api["getPoll"] = async (pollId) => {
   return data;
 };
 
+export const deletePoll: Poll.Api["deletePoll"] = async (pollId) => {
+  const { data } = await axios.delete(apiUrls.poll.delete(pollId));
+  return data;
+};
+
 export const votePoll: Poll.Api["votePoll"] = async (
   pollId,
   answerId,
