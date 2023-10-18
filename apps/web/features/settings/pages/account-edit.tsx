@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Divider } from "@mui/material";
 import type { User } from "@poll/types";
 import { Icon, Input, LoadingButton, Skeleton, toast } from "@poll/ui";
 import { useSession } from "next-auth/react";
@@ -15,7 +16,7 @@ import {
   FormMessage,
 } from "../../../components/form";
 import SettingsHeader from "../components/settings-header";
-import { useUpdateAccount } from "../hooks";
+import { useDeleteAccount, useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 export const updateUserSchema = z.object({
@@ -46,7 +47,11 @@ export default function AccountEditPage() {
           <Skeleton className="h-10 w-20" />
         </div>
       ) : (
-        <EditAccountForm />
+        <div>
+          <EditAccountForm />
+          <Divider className="!my-8 dark:!border-neutral-700" />
+          <DangerZone />
+        </div>
       )}
     </BaseLayout>
   );
@@ -82,33 +87,35 @@ function EditAccountForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className={"flex flex-col"}>
-        <div className="mb-8 space-y-3">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="space-y-4">
+          <div className="space-y-3">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <LoadingButton
             type="submit"
@@ -119,5 +126,22 @@ function EditAccountForm() {
         </div>
       </form>
     </Form>
+  );
+}
+
+function DangerZone() {
+  const { isLoading, mutate: deleteAccount } = useDeleteAccount();
+
+  return (
+    <div className="flex flex-col space-y-2 text-red-500 dark:text-red-700">
+      <h2 className="font-medium">Danger zone</h2>
+      <LoadingButton
+        isLoading={isLoading}
+        variant="destructive"
+        className="max-w-max"
+        onClick={() => deleteAccount()}>
+        Delete account
+      </LoadingButton>
+    </div>
   );
 }

@@ -18,6 +18,7 @@ export type GetUserVotesResponse = (Vote & {
 // Frontend
 export interface Api {
   updateUser: (data: UpdateUserData) => Promise<User>;
+  deleteUser: () => Promise<undefined>;
   getUserVotes: (
     page?: number,
     limit?: number

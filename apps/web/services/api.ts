@@ -95,6 +95,11 @@ export const updateUser: User.Api["updateUser"] = async (userData) => {
   return data;
 };
 
+export const deleteUser: User.Api["deleteUser"] = async () => {
+  const { data } = await axios.patch(apiUrls.user.delete);
+  return data;
+};
+
 // ANALYTICS
 
 export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
