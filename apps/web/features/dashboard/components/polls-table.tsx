@@ -17,7 +17,10 @@ import {
   LoadingButton,
   toast,
 } from "@poll/ui";
-import type { FetchNextPageOptions } from "@tanstack/react-query";
+import {
+  useQueryClient,
+  type FetchNextPageOptions,
+} from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -25,6 +28,7 @@ import { useCopyToClipboard } from "react-use";
 
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
+import { userKeys } from "../../../queries/user";
 import { getBaseUrl } from "../../../utils/get-base-url";
 import { useDeletePoll } from "../hooks";
 
@@ -103,10 +107,25 @@ function PollItem({
   const [isCopied, setIsCopied] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [, copy] = useCopyToClipboard();
+  const queryClient = useQueryClient();
   const { isLoading: isDeletePollLoading, mutate: deletePoll } = useDeletePoll({
-    onSuccess: () => {
+    onSuccess: (_, pollId) => {
       toast("Poll has been deleted.", { icon: <Icon.Check /> });
       setOpenDeleteModal(false);
+
+      queryClient.setQueryData(userKeys.userPolls, (data) => {
+        return {
+          // @ts-ignore
+          ...data,
+          // @ts-ignore
+          pages: data.pages.map((page) => {
+            return {
+              ...page,
+              data: page.data.filter((result) => result.id !== pollId),
+            };
+          }),
+        };
+      });
     },
   });
 
