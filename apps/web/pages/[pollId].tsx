@@ -330,6 +330,7 @@ function ShareContainer() {
             <Input
               className="w-full max-w-[450px] rounded-r-none border-r-0"
               value={shareUrl}
+              readOnly
               RightIcon={
                 <div
                   className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
