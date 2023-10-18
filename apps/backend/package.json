@@ -2,7 +2,7 @@
   "name": "@poll/backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/index.js --tsconfig=tsconfig.json",
     "dev": "cross-env NODE_ENV=development concurrently \"esbuild src/index.ts --bundle --packages=external --platform=node --target=node16 --outfile=dist/index.js --watch\" \"nodemon -q dist/index.js'\"",
