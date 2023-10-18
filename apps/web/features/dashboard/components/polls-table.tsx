@@ -13,6 +13,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
+import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
 import { getBaseUrl } from "../../../utils/get-base-url";
 
@@ -47,25 +48,24 @@ function PollsTable({
           <span>Created At</span>
         </div>
       </div>
-      <div className="flex flex-col space-y-2">
-        {data.map((poll) => (
-          <PollItem
-            key={poll.id}
-            id={poll.id}
-            href={routes.poll(poll.id)}
-            question={poll.question}
-            isPublic={poll.isPublic}
-            createdAt={poll.createdAt}
-            totalVotes={poll.totalVotes}
-          />
-        ))}
-        <div className="mx-auto">
-          {isFetchingNextPage && <Icon.Loader />}
-          {hasNextPage && (
-            <button onClick={() => fetchNextPage()}>Fetch More</button>
-          )}
+      <InfiniteScrollContainer
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}>
+        <div className="flex flex-col space-y-2">
+          {data.map((poll) => (
+            <PollItem
+              key={poll.id}
+              id={poll.id}
+              href={routes.poll(poll.id)}
+              question={poll.question}
+              isPublic={poll.isPublic}
+              createdAt={poll.createdAt}
+              totalVotes={poll.totalVotes}
+            />
+          ))}
         </div>
-      </div>
+      </InfiniteScrollContainer>
     </>
   );
 }

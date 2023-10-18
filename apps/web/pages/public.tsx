@@ -1,8 +1,8 @@
 import { Button, Icon, Skeleton } from "@poll/ui";
-import { Loader } from "lucide-react";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
+import { InfiniteScrollContainer } from "../components/infinite-scroll-container";
 import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import { BaseLayout } from "../layouts";
@@ -42,7 +42,10 @@ export default function PublicPage() {
         {/* TODO ADD error UI */}
         {isError && <div>{getErrorMessage(error)}</div>}
         {isSuccess && (
-          <div className="flex flex-col space-y-8">
+          <InfiniteScrollContainer
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}>
             <ul className="flex flex-col space-y-8">
               {data?.map((poll) => (
                 <Link
@@ -57,14 +60,7 @@ export default function PublicPage() {
                 </Link>
               ))}
             </ul>
-
-            <div className="mx-auto">
-              {isFetchingNextPage && <Loader />}
-              {hasNextPage && (
-                <button onClick={() => fetchNextPage()}>Fetch More</button>
-              )}
-            </div>
-          </div>
+          </InfiniteScrollContainer>
         )}
       </div>
     </>

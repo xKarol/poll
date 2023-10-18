@@ -2,6 +2,7 @@ import { Icon } from "@poll/ui";
 import dayjs from "dayjs";
 import React from "react";
 
+import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { getErrorMessage } from "../../../utils/error";
 import Heading from "../components/heading";
 import { useUserPollVotes } from "../hooks";
@@ -34,31 +35,32 @@ const MyVotesPage = () => {
               <span>Voted Date</span>
               <span className="space-x-2"></span>
             </div>
-            <div className="flex flex-col space-y-2">
-              {data?.map((vote) => (
-                <div
-                  key={vote.id}
-                  className="flex items-center justify-between rounded-[4px] border border-neutral-700/50 px-4 py-2 text-sm transition-colors hover:bg-neutral-700/5 [&_*]:max-w-[150px] [&_*]:flex-1">
-                  {/* @ts-expect-error TODO fix */}
-                  <span className="!max-w-none">{vote.poll.question}</span>
-                  <span className="!max-w-none">{vote.answer.text}</span>
-                  <div>
-                    <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
-                      {/* @ts-expect-error TODO fix */}
-                      {vote.poll.isPublic ? "Public" : "Private"}
+            <InfiniteScrollContainer
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+              hasNextPage={hasNextPage}>
+              <div className="flex flex-col space-y-2">
+                {data?.map((vote) => (
+                  <div
+                    key={vote.id}
+                    className="flex items-center justify-between rounded-[4px] border border-neutral-700/50 px-4 py-2 text-sm transition-colors hover:bg-neutral-700/5 [&_*]:max-w-[150px] [&_*]:flex-1">
+                    {/* @ts-expect-error TODO fix */}
+                    <span className="!max-w-none">{vote.poll.question}</span>
+                    <span className="!max-w-none">{vote.answer.text}</span>
+                    <div>
+                      <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
+                        {/* @ts-expect-error TODO fix */}
+                        {vote.poll.isPublic ? "Public" : "Private"}
+                      </span>
+                    </div>
+                    <span>
+                      {dayjs(vote.createdAt).format("DD.MM.YYYY h:mm")}
                     </span>
+                    <Icon.MoreHorizontal />
                   </div>
-                  <span>{dayjs(vote.createdAt).format("DD.MM.YYYY h:mm")}</span>
-                  <Icon.MoreHorizontal />
-                </div>
-              ))}
-              <div className="mx-auto">
-                {isFetchingNextPage && <Icon.Loader2 />}
-                {hasNextPage && (
-                  <button onClick={() => fetchNextPage()}>Fetch More</button>
-                )}
+                ))}
               </div>
-            </div>
+            </InfiniteScrollContainer>
           </>
         )}
       </div>
