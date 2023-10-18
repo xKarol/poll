@@ -71,7 +71,6 @@ const PollPage = () => {
   } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
   const recaptchaRef = useRef<ReCAPTCHA>();
-  const [, copy] = useCopyToClipboard();
   useLiveAnswers(pollId);
 
   const sortedAnswers = useMemo(
@@ -84,10 +83,6 @@ const PollPage = () => {
     [data.answers]
   );
   const isVoted = !!userChoiceAnswerId;
-  const shareUrl =
-    typeof window === "undefined"
-      ? ""
-      : `${window.location.origin}${router.asPath}`;
 
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
@@ -119,11 +114,6 @@ const PollPage = () => {
     if (!data.answers) return;
     const [answer] = data.answers.filter((answer) => answer.text === value);
     setSelectedAnswerId(answer.id);
-  };
-
-  const copyLink = () => {
-    copy(shareUrl);
-    toast("Copied to clipboard", { icon: <Icon.Check /> });
   };
 
   const dataChart = data.answers.map((answer) => ({
@@ -278,59 +268,7 @@ const PollPage = () => {
                 </PieChart>
               </ResponsiveContainer>
             )}
-            <div className="rounded-[4px] border-[2px] border-neutral-300 dark:border-neutral-800">
-              <div className="flex items-center space-x-2 border-b border-neutral-300 p-4 dark:border-neutral-800">
-                <Icon.LucideShare2 className="h-4 w-4" />
-                <h1 className="text-base font-medium">Share</h1>
-              </div>
-              <div className="flex flex-col items-center justify-center p-4 py-6">
-                <div className="flex flex-col space-y-2">
-                  <p className="text-sm">Share link</p>
-                  <div className="flex">
-                    <Input
-                      className="w-full max-w-[450px] rounded-r-none border-r-0"
-                      value={shareUrl}
-                      RightIcon={
-                        <div
-                          className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
-                          onClick={copyLink}>
-                          <Icon.Copy className="h-4 w-4" />
-                        </div>
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="my-4 flex flex-wrap gap-4">
-                  <ShareSocial as={EmailShareButton} url={shareUrl}>
-                    <Icon.LucideMail />
-                  </ShareSocial>
-
-                  <ShareSocial as={FacebookShareButton} url={shareUrl}>
-                    <Icon.Facebook />
-                  </ShareSocial>
-
-                  <ShareSocial as={LinkedinShareButton} url={shareUrl}>
-                    <Icon.Linkedin />
-                  </ShareSocial>
-
-                  <ShareSocial as={RedditShareButton} url={shareUrl}>
-                    <Icon.Reddit />
-                  </ShareSocial>
-
-                  <ShareSocial as={TelegramShareButton} url={shareUrl}>
-                    <Icon.Telegram />
-                  </ShareSocial>
-
-                  <ShareSocial as={TwitterShareButton} url={shareUrl}>
-                    <Icon.Twitter />
-                  </ShareSocial>
-
-                  <ShareSocial as={WhatsappShareButton} url={shareUrl}>
-                    <Icon.Whatsapp />
-                  </ShareSocial>
-                </div>
-              </div>
-            </div>
+            <ShareContainer />
           </div>
         </>
       )}
@@ -363,5 +301,75 @@ export function ShareSocial<T extends React.ElementType = "button">({
       {...props}>
       {children}
     </Component>
+  );
+}
+
+function ShareContainer() {
+  const router = useRouter();
+  const [, copy] = useCopyToClipboard();
+  const shareUrl =
+    typeof window === "undefined"
+      ? ""
+      : `${window.location.origin}${router.asPath}`;
+
+  const copyLink = () => {
+    copy(shareUrl);
+    toast("Copied to clipboard", { icon: <Icon.Check /> });
+  };
+
+  return (
+    <div className="rounded-[4px] border-[2px] border-neutral-300 dark:border-neutral-800">
+      <div className="flex items-center space-x-2 border-b-[2px] border-neutral-300 p-4 dark:border-neutral-800">
+        <Icon.LucideShare2 className="h-4 w-4" />
+        <h1 className="text-base font-medium">Share</h1>
+      </div>
+      <div className="flex flex-col items-center justify-center p-4 py-6">
+        <div className="flex flex-col space-y-2">
+          <p className="text-sm">Share link</p>
+          <div className="flex">
+            <Input
+              className="w-full max-w-[450px] rounded-r-none border-r-0"
+              value={shareUrl}
+              RightIcon={
+                <div
+                  className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
+                  onClick={copyLink}>
+                  <Icon.Copy className="h-4 w-4" />
+                </div>
+              }
+            />
+          </div>
+        </div>
+        <div className="my-4 flex flex-wrap gap-4">
+          <ShareSocial as={EmailShareButton} url={shareUrl}>
+            <Icon.LucideMail />
+          </ShareSocial>
+
+          <ShareSocial as={FacebookShareButton} url={shareUrl}>
+            <Icon.Facebook />
+          </ShareSocial>
+
+          <ShareSocial as={LinkedinShareButton} url={shareUrl}>
+            <Icon.Linkedin />
+          </ShareSocial>
+
+          <ShareSocial as={RedditShareButton} url={shareUrl}>
+            <Icon.Reddit />
+          </ShareSocial>
+
+          <ShareSocial as={TelegramShareButton} url={shareUrl}>
+            <Icon.Telegram />
+          </ShareSocial>
+
+          <ShareSocial as={TwitterShareButton} url={shareUrl}>
+            <Icon.Twitter />
+          </ShareSocial>
+
+          <ShareSocial as={WhatsappShareButton} url={shareUrl}>
+            <Icon.Whatsapp />
+          </ShareSocial>
+        </div>
+      </div>
+    </div>
   );
 }
