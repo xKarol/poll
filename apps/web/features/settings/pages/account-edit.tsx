@@ -152,7 +152,8 @@ function DangerZone() {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="destructive" className="max-w-max">
-            Delete account
+            <Icon.Trash2 />
+            <span>Delete account</span>
           </Button>
         </DialogTrigger>
         <DialogContent hideClose>
@@ -171,7 +172,8 @@ function DangerZone() {
               variant="destructive"
               isLoading={isLoading}
               onClick={() => deleteAccount()}>
-              Delete account
+              <Icon.Trash2 />
+              <span>Delete account</span>
             </LoadingButton>
           </DialogFooter>
         </DialogContent>
