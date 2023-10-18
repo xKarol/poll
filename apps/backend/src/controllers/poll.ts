@@ -67,8 +67,7 @@ export const Delete = async (
   try {
     const { pollId } = req.params;
     await deletePoll(pollId);
-
-    return res.status(200);
+    return res.status(200).send(null);
   } catch (error) {
     next(error);
   }
