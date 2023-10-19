@@ -285,7 +285,7 @@ export function ShareSocial<T extends React.ElementType = "button">({
   return (
     <Component
       className={cn(
-        "!text-neutral-600 transition-colors hover:!text-black dark:!text-neutral-500 [&_svg]:h-5 [&_svg]:w-5",
+        "!text-neutral-600 transition-colors hover:!text-black dark:!text-neutral-500 hover:dark:!text-neutral-300 [&_svg]:h-5 [&_svg]:w-5",
         className
       )}
       {...props}>
@@ -318,14 +318,14 @@ function ShareContainer() {
           <p className="text-sm">Share link</p>
           <div className="flex">
             <Input
-              className="w-full max-w-[450px] rounded-r-none border-r-0"
+              className="peer w-full max-w-[450px] rounded-r-none border-r-0"
               value={shareUrl}
               readOnly
               RightIcon={
                 <div
-                  className="flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
+                  className="group flex h-full w-16 cursor-pointer items-center justify-center rounded-r-[4px] bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                   onClick={copyLink}>
-                  <Icon.Copy className="h-4 w-4" />
+                  <Icon.Copy className="h-4 w-4 transition-transform ease-out group-active:scale-75" />
                 </div>
               }
             />
