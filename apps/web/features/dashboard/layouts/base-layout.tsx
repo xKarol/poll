@@ -33,8 +33,7 @@ export default function BaseLayout({ className, children, ...props }: Props) {
         </SheetContent>
       </Sheet>
       <Sidebar className={cn("hidden md:flex", isOpen && "hidden")} />
-      {/* container mt-12 flex max-w-5xl flex-1 flex-col space-y-6 py-12 md:mt-0 */}
-      <div className="mt-12 flex flex-1 flex-col px-12 py-8 md:mt-0">
+      <div className="container mt-12 flex max-w-7xl flex-1 flex-col space-y-6 md:mt-0 lg:py-12">
         {children}
       </div>
     </main>
