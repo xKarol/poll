@@ -9,6 +9,7 @@ export const GetUserPollVotesData: Handler = async (req, res, next) => {
     const { data } = await getUserPollVotesData({ ownerId: userId });
     return res.send(data);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

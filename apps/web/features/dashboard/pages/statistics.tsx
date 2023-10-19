@@ -21,17 +21,13 @@ const sortData = (d: unknown[]) => {
     ...Array.from({ length: 11 }, (_, index) => ({
       name: dayjs().set("M", index).format("MMM"),
       totalVotes: 0,
-      time: 0,
+      timestamp: 0,
     })),
     ...d.map((dd) => ({
       // @ts-expect-error
-      name: dayjs(dd.time).format("MMM"),
-      totalVotes: d.filter(
-        // @ts-expect-error
-        (ddd) => dayjs(ddd.time).day() === dayjs(dd.time).day()
-      ).length,
+      totalVotes: dd.totalVotes,
       // @ts-expect-error
-      time: dd.time,
+      timestamp: dd.timestamp,
     })),
   ];
 };
@@ -56,7 +52,7 @@ const StatisticsPage = () => {
           }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            dataKey="time"
+            dataKey="timestamp"
             tickFormatter={(tick) => dayjs(tick).format("MMM")}
             type="number"
             scale="time"

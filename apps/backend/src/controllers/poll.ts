@@ -107,7 +107,7 @@ export const Vote = async (
       ownerId: ownerId || "unknown",
       voteId: data.id,
       answerId,
-      time: Date.now(),
+      timestamp: Date.now(),
     });
 
     return res.send(data);

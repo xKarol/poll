@@ -10,7 +10,7 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
     ownerId: z.string(),
     pollId: z.string(),
     answerId: z.string(),
-    time: z.number().int(),
+    timestamp: z.number().int(),
     country: z.string().optional().default("Unknown"),
     city: z.string().optional().default("Unknown"),
     region: z.string().optional().default("Unknown"),
@@ -30,8 +30,7 @@ export const getUserPollVotesData = tinybird.buildPipe({
     ownerId: z.string(),
   }),
   data: z.object({
-    voteId: z.string(),
-    city: z.string(),
-    time: z.number().int(),
+    timestamp: z.string(),
+    totalVotes: z.number().positive(),
   }),
 });
