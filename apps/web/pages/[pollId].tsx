@@ -1,6 +1,6 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Alert, AlertTitle, Icon, Input, LoadingButton, toast } from "@poll/ui";
+import { Icon, Input, LoadingButton, toast } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
@@ -31,7 +31,6 @@ import { useVotePoll } from "../hooks/use-vote-poll";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
-import { getErrorMessage } from "../utils/error";
 import { getServerSession } from "../utils/get-server-session";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -64,11 +63,7 @@ const PollPage = () => {
   const { isLoading, isSuccess, data } = useGetPoll(pollId);
   const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
-  const {
-    mutateAsync,
-    isLoading: isVoteLoading,
-    error: voteError,
-  } = useVotePoll();
+  const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
   const recaptchaRef = useRef<ReCAPTCHA>();
   useLiveAnswers(pollId);
@@ -163,11 +158,6 @@ const PollPage = () => {
           <NextSeo title={data.question} />
           <div className="container m-auto flex flex-col space-y-16 xl:max-w-6xl">
             <form onSubmit={handleSubmit} className="flex flex-col">
-              {voteError ? (
-                <Alert variant="error" className="mb-4 xl:mb-8">
-                  <AlertTitle>{getErrorMessage(voteError)}</AlertTitle>
-                </Alert>
-              ) : null}
               <div className="space-y-4 leading-[2]">
                 <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                   {data.question}
