@@ -107,7 +107,7 @@ const PollPage = () => {
 
   const onChange = (value: string) => {
     if (!data.answers) return;
-    const [answer] = data.answers.filter((answer) => answer.text === value);
+    const [answer] = data.answers.filter((answer) => answer.id === value);
     setSelectedAnswerId(answer.id);
   };
 
@@ -184,7 +184,7 @@ const PollPage = () => {
                     value={calcPercent(answer.votes)}
                     RadioComponent={
                       <RadioGroupPrimitive.Item
-                        value={answer.text}
+                        value={answer.id}
                         className="aspect-square h-[30px] w-[30px] rounded-full border-[3px] border-neutral-300 text-white ring-offset-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state='checked']:border-black data-[state='checked']:bg-black dark:border-neutral-700 dark:text-black dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 data-[state='checked']:dark:border-white data-[state='checked']:dark:bg-white">
                         <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
                           <svg
