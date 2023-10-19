@@ -18,16 +18,11 @@ import { BaseLayout } from "../layouts";
 // TODO change param type
 const sortData = (d: unknown[]) => {
   return [
-    ...Array.from({ length: 11 }, (_, index) => ({
-      name: dayjs().set("M", index).format("MMM"),
-      totalVotes: 0,
-      timestamp: 0,
-    })),
     ...d.map((dd) => ({
       // @ts-expect-error
       totalVotes: dd.totalVotes,
       // @ts-expect-error
-      timestamp: dd.timestamp,
+      timestamp: dayjs(dd.timestamp).unix(),
     })),
   ];
 };
