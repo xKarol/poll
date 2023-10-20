@@ -85,13 +85,12 @@ export default function HomePage({
       <section className="container flex flex-col">
         <div className="mx-auto mb-32 flex max-w-4xl flex-col space-y-8">
           <h1 className="text-center text-3xl font-bold xl:text-5xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-            delectus!
+            Discover Our Powerful Features
           </h1>
           <p className="text-center text-lg font-medium text-neutral-500 xl:text-xl">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci,
-            modi magnam voluptates excepturi amet corrupti praesentium facilis.
-            Ea, sequi eligendi.
+            Our platform is designed to make polling and engagement easy,
+            informative, and engaging. See how we can help you make better
+            decisions and gather insights effortlessly.
           </p>
         </div>
         <div className="flex flex-col gap-16 md:flex-row md:flex-wrap md:gap-8">
@@ -122,7 +121,7 @@ export default function HomePage({
               Join the Poll Now!
             </h1>
             <p className="text-lg font-semibold text-neutral-500 xl:text-2xl">
-              Lorem, ipsum dolor.
+              Start polling and engaging instantly.
             </p>
           </div>
           <Button asChild className="w-full md:w-auto">
