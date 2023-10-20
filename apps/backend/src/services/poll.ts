@@ -1,126 +1,101 @@
 import prisma from "@poll/prisma";
 import type { Poll } from "@poll/types";
-import createError from "http-errors";
 
 export const getPolls: Poll.Services["getPolls"] = async ({
   page = 1,
   skip,
   limit = 10,
 }) => {
-  try {
-    const response = await prisma.poll.findMany({
-      skip: skip,
-      take: limit + 1,
-      where: {
-        isPublic: true,
-      },
-      orderBy: {
-        updatedAt: "desc",
-      },
-      include: { answers: true },
-    });
+  const response = await prisma.poll.findMany({
+    skip: skip,
+    take: limit + 1,
+    where: {
+      isPublic: true,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+    include: { answers: true },
+  });
 
-    return {
-      data: response
-        .map(({ answers: _answers, ...data }) => {
-          const totalVotes = _answers
-            .map(({ votes }) => votes)
-            .reduce((total, votes) => total + Number(votes), 0);
-          return { ...data, totalVotes };
-        })
-        .slice(0, limit),
-      nextPage: response.length > limit ? page + 1 : undefined,
-    };
-  } catch {
-    throw createError(400, "Could not find polls.");
-  }
+  return {
+    data: response
+      .map(({ answers: _answers, ...data }) => {
+        const totalVotes = _answers
+          .map(({ votes }) => votes)
+          .reduce((total, votes) => total + Number(votes), 0);
+        return { ...data, totalVotes };
+      })
+      .slice(0, limit),
+    nextPage: response.length > limit ? page + 1 : undefined,
+  };
 };
 
 export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
-  try {
-    const response = await prisma.poll.findUniqueOrThrow({
-      where: {
-        id: pollId,
-      },
-      include: { answers: true, user: true },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not find poll.");
-  }
+  const response = await prisma.poll.findUniqueOrThrow({
+    where: {
+      id: pollId,
+    },
+    include: { answers: true, user: true },
+  });
+  return response;
 };
 
 export const getUserPolls: Poll.Services["getUserPolls"] = async (
   userId,
   { page = 1, skip, limit = 10 }
 ) => {
-  try {
-    const response = await prisma.poll.findMany({
-      skip: skip,
-      take: limit + 1,
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        updatedAt: "desc",
-      },
-      include: { answers: true },
-    });
-    return {
-      data: response
-        .map(({ answers: _answers, ...data }) => {
-          const totalVotes = _answers
-            .map(({ votes }) => votes)
-            .reduce((total, votes) => total + Number(votes), 0);
-          return { ...data, totalVotes };
-        })
-        .slice(0, limit),
-      nextPage: response.length > limit ? page + 1 : undefined,
-    };
-  } catch {
-    throw createError(400, "Could not find user poll.");
-  }
+  const response = await prisma.poll.findMany({
+    skip: skip,
+    take: limit + 1,
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+    include: { answers: true },
+  });
+  return {
+    data: response
+      .map(({ answers: _answers, ...data }) => {
+        const totalVotes = _answers
+          .map(({ votes }) => votes)
+          .reduce((total, votes) => total + Number(votes), 0);
+        return { ...data, totalVotes };
+      })
+      .slice(0, limit),
+    nextPage: response.length > limit ? page + 1 : undefined,
+  };
 };
 
 export const getPollVotes = async (pollId: string) => {
-  try {
-    const response = await prisma.answer.findMany({
-      where: {
-        pollId: pollId,
-      },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not find poll votes.");
-  }
+  const response = await prisma.answer.findMany({
+    where: {
+      pollId: pollId,
+    },
+  });
+  return response;
 };
 export const createPoll: Poll.Services["createPoll"] = async (data) => {
-  try {
-    const response = await prisma.poll.create({
-      data: {
-        userId: data.userId,
-        question: data.question,
-        isPublic: data.isPublic,
-        requireRecaptcha: data.requireRecaptcha,
-        answers: {
-          createMany: { data: data.answers },
-        },
+  const response = await prisma.poll.create({
+    data: {
+      userId: data.userId,
+      question: data.question,
+      isPublic: data.isPublic,
+      requireRecaptcha: data.requireRecaptcha,
+      answers: {
+        createMany: { data: data.answers },
       },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not create poll.");
-  }
+    },
+  });
+  return response;
 };
 
 export const deletePoll: Poll.Services["deletePoll"] = async (pollId) => {
-  try {
-    await prisma.poll.delete({
-      where: { id: pollId },
-    });
-  } catch {
-    throw createError(400, "Could not delete poll.");
-  }
+  await prisma.poll.delete({
+    where: { id: pollId },
+  });
 };
 
 export const votePoll: Poll.Services["votePoll"] = async ({
@@ -128,66 +103,54 @@ export const votePoll: Poll.Services["votePoll"] = async ({
   pollId,
   answerId,
 }) => {
-  try {
-    await prisma.poll.update({
-      where: { id: pollId },
-      data: {
-        answers: {
-          update: {
-            where: {
-              id: answerId,
-            },
-            data: { votes: { increment: 1 } },
+  await prisma.poll.update({
+    where: { id: pollId },
+    data: {
+      answers: {
+        update: {
+          where: {
+            id: answerId,
           },
+          data: { votes: { increment: 1 } },
         },
       },
-    });
-    const response = await prisma.vote.create({
-      data: {
-        userId: userId,
-        pollId,
-        answerId,
-      },
-    });
-    return response;
-  } catch {
-    throw createError(400, "Could not vote in the poll.");
-  }
+    },
+  });
+  const response = await prisma.vote.create({
+    data: {
+      userId: userId,
+      pollId,
+      answerId,
+    },
+  });
+  return response;
 };
 
 export const getPollVoters: Poll.Services["getPollVoters"] = async (pollId) => {
-  try {
-    const users = await prisma.vote.findMany({
-      take: 10,
-      where: {
-        pollId,
-      },
-      distinct: ["userId"],
-      select: {
-        user: true,
-      },
-    });
+  const users = await prisma.vote.findMany({
+    take: 10,
+    where: {
+      pollId,
+    },
+    distinct: ["userId"],
+    select: {
+      user: true,
+    },
+  });
 
-    return users
-      .filter((data) => data.user !== null)
-      .map(({ user }) => user as NonNullable<typeof user>);
-  } catch {
-    throw createError(400, "Could not find vote users.");
-  }
+  return users
+    .filter((data) => data.user !== null)
+    .map(({ user }) => user as NonNullable<typeof user>);
 };
 
 export const getPollUserAnswerChoice: Poll.Services["getPollUserAnswerChoice"] =
   async (userId, pollId) => {
-    try {
-      const vote = await prisma.vote.findFirst({
-        where: {
-          pollId,
-          userId,
-        },
-      });
+    const vote = await prisma.vote.findFirst({
+      where: {
+        pollId,
+        userId,
+      },
+    });
 
-      return vote;
-    } catch {
-      throw createError(400, "Could not find user selected answer.");
-    }
+    return vote;
   };
