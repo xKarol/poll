@@ -93,24 +93,24 @@ export default function HomePage({
             decisions and gather insights effortlessly.
           </p>
         </div>
-        <div className="flex flex-col gap-16 md:flex-row md:flex-wrap md:gap-8">
+        <div className="flex flex-col gap-16 md:flex-row md:flex-wrap md:gap-12 lg:gap-8">
           <FeatureCard
             heading="User-Friendly Poll Creation"
             description="Easily create polls using a simple and intuitive interface. No technical skills required"
             Icon={<Icon.BarChart2 />}
-            className="min-h-max w-full  md:max-w-[calc((100%/3)-32px)]"
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
           />
           <FeatureCard
             heading="Real-time Results"
             description="Watch poll results update in real time as participants cast their votes"
             Icon={<Icon.Radio />}
-            className="min-h-max w-full md:max-w-[calc((100%/3)-32px)]"
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
           />
           <FeatureCard
             heading="In-Depth Poll Analytics"
             description="Get valuable data and insights to make informed decisions with our detailed poll statistics"
             Icon={<Icon.LineChart />}
-            className="min-h-max w-full md:max-w-[calc((100%/3)-32px)]"
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
           />
         </div>
       </section>
