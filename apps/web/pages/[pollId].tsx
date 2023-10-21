@@ -1,6 +1,6 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Icon, Input, LoadingButton, toast } from "@poll/ui";
+import { Icon, Input, LoadingButton, toast, Badge } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
@@ -162,10 +162,18 @@ const PollPage = () => {
                 <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                   {data.question}
                 </h1>
-                <span className="text-base font-normal text-neutral-400">
-                  by a {data.user?.name || "guest"} ·{" "}
-                  {dayjs(data.createdAt).fromNow()}
-                </span>
+                <div className="flex flex-wrap space-x-2">
+                  <span className="text-base font-normal text-neutral-400">
+                    by a {data.user?.name || "guest"} ·{" "}
+                    {dayjs(data.createdAt).fromNow()}
+                  </span>
+                  {!data.isPublic ? (
+                    <Badge variant="secondary">
+                      <Icon.Lock />
+                      <span>Private</span>
+                    </Badge>
+                  ) : null}
+                </div>
               </div>
               <RadioGroup
                 className="my-10 flex flex-col"
