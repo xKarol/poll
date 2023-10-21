@@ -2,28 +2,26 @@ import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
 import type { Payment } from "@poll/types";
 import {
-  Alert,
-  AlertTitle,
   Button,
   Icon,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
+  toast,
 } from "@poll/ui";
 import { QueryClient, dehydrate, useMutation } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 
 import { routes } from "../config/routes";
 import { usePricingPlans } from "../hooks/use-pricing-plans";
 import { BaseLayout } from "../layouts";
 import { paymentOptions } from "../queries/payment";
 import { createPlanCheckoutSession } from "../services/api";
-import { getErrorMessage } from "../utils/error";
 import { getBaseUrl } from "../utils/get-base-url";
 
 const plansData: {
@@ -65,8 +63,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const paymentCycles: Payment.PaymentCycle[] = ["month", "year"];
 
 export default function PricingPage() {
-  const [error, setError] = useState<string>(undefined);
-
   const { status, data: session } = useSession();
   const router = useRouter();
   const { data: pricingPlans } = usePricingPlans();
@@ -83,10 +79,11 @@ export default function PricingPage() {
       }
       if (status === "authenticated") {
         const url = await mutateAsync({ priceId });
-        router.push(url);
+        await router.push(url);
       }
     } catch (e) {
-      setError(getErrorMessage(e));
+      console.log(e);
+      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
     }
   };
 
@@ -105,12 +102,6 @@ export default function PricingPage() {
       <NextSeo title="Pricing" />
       <div className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
-          {error !== undefined ? (
-            <Alert variant="error">
-              <AlertTitle>{error}</AlertTitle>
-            </Alert>
-          ) : null}
-
           <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
             <p className="text-center text-xl font-medium text-neutral-400">
