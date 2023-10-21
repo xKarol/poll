@@ -1,3 +1,4 @@
+import { cn } from "@poll/lib";
 import { Loader2 } from "lucide-react";
 import React from "react";
 
@@ -11,7 +12,10 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
   ({ isLoading, className, children, ...props }, ref) => {
     return (
       <Button
-        className={className}
+        className={cn(
+          "disabled:pointer-events-auto disabled:cursor-not-allowed",
+          className
+        )}
         ref={ref}
         {...props}
         disabled={props.disabled ?? isLoading}>
