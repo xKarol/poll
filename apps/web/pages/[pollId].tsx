@@ -168,7 +168,7 @@ const PollPage = () => {
           <NextSeo title={data.question} />
           <div className="container m-auto flex flex-col space-y-16 xl:max-w-6xl">
             <form onSubmit={handleSubmit} className="flex flex-col">
-              <div className="space-y-4 leading-[2]">
+              <div className="space-y-2 leading-[2]">
                 <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                   {data.question}
                 </h1>
@@ -251,7 +251,7 @@ const PollPage = () => {
                       ))}
                     </AvatarGroup>
                   ) : null}
-                  <p className="text-base font-normal">
+                  <p className="text-sm font-normal">
                     Total Votes: {totalVotes}
                   </p>
                 </div>
