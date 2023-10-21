@@ -13,3 +13,4 @@ export * from "./components/toast";
 export * from "./components/select";
 export * from "./components/sheet";
 export * from "./components/tabs";
+export * from "./components/badge";
