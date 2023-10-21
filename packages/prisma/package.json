@@ -14,7 +14,7 @@
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
-    "post-install": "prisma generate"
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node --transpile-only ./seed.ts"
