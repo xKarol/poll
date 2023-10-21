@@ -1,6 +1,7 @@
-import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
+import { AvatarGroup, CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
 import {
+  Avatar,
   Icon,
   Input,
   LoadingButton,
@@ -244,7 +245,7 @@ const PollPage = () => {
                           key={voter.id}
                           alt={`${voter.name} voter`}
                           src={voter.image}
-                          sx={{ width: 30, height: 30 }}>
+                          className="h-8 w-8 border-2 border-white">
                           {voter.name[0]}
                         </Avatar>
                       ))}

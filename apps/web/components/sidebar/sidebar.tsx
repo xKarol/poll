@@ -1,5 +1,5 @@
-import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
+import { Avatar } from "@poll/ui";
 import React from "react";
 
 export type SidebarProps = React.ComponentPropsWithoutRef<"aside">;
@@ -96,7 +96,7 @@ export function SidebarProfile({
         className
       )}
       {...props}>
-      <Avatar sx={{ width: 20, height: 20 }} src={avatarUrl}>
+      <Avatar className="h-5 w-5" src={avatarUrl} alt={`${username}'s profile`}>
         {username[0]}
       </Avatar>
       <div className="flex items-center space-x-2">

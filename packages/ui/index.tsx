@@ -15,3 +15,4 @@ export * from "./components/sheet";
 export * from "./components/tabs";
 export * from "./components/badge";
 export * from "./components/tooltip";
+export * from "./components/avatar";

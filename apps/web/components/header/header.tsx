@@ -1,6 +1,6 @@
-import { Avatar } from "@mui/material";
 import { cn } from "@poll/lib";
 import {
+  Avatar,
   Button,
   Icon,
   Logo,
@@ -124,9 +124,7 @@ export function HeaderNavigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="flex items-center justify-center space-x-2">
-                <Avatar
-                  src={session.user.image}
-                  sx={{ width: "32px", height: "32px" }}>
+                <Avatar src={session.user.image} className="h-8 w-8">
                   {session.user.name[0]}
                 </Avatar>
                 <span>{session.user.name}</span>
@@ -213,9 +211,7 @@ function MobileNavigationMenu({
         </ul>
         {session ? (
           <div className="flex items-center justify-center space-x-2">
-            <Avatar
-              src={session?.user?.image}
-              sx={{ width: "32px", height: "32px" }}>
+            <Avatar src={session?.user?.image} className="h-8 w-8">
               {session?.user.name[0]}
             </Avatar>
             <span>{session?.user.name}</span>
