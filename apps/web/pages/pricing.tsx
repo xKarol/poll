@@ -120,7 +120,7 @@ export default function PricingPage() {
           </div>
 
           <Tabs defaultValue="month" className="flex flex-col items-center">
-            <TabsList className="mb-4 flex w-[400px]">
+            <TabsList className="mb-4 flex w-full max-w-[300px] sm:max-w-[400px]">
               {paymentCycles.map((cycle) => (
                 <TabsTrigger
                   key={cycle}
