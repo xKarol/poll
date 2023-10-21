@@ -124,7 +124,7 @@ function ThemeSwitcher({
   checked,
   ...props
 }: React.ComponentProps<typeof SwitchPrimitives.Root>) {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -141,7 +141,7 @@ function ThemeSwitcher({
         setTheme(checked ? "dark" : "light");
         onCheckedChange?.(checked);
       }}
-      checked={checked || theme === "dark"}
+      checked={checked || resolvedTheme === "dark"}
       className={cn(
         "focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-neutral-950 data-[state=unchecked]:bg-neutral-200 dark:data-[state=unchecked]:bg-neutral-700",
         className
@@ -151,8 +151,8 @@ function ThemeSwitcher({
         className={cn(
           "pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 [&>*]:h-4 [&>*]:w-4"
         )}>
-        <Icon.Sun className={cn(theme !== "light" && "hidden")} />
-        <Icon.Moon className={cn(theme !== "dark" && "hidden")} />
+        <Icon.Sun className={cn(resolvedTheme !== "light" && "hidden")} />
+        <Icon.Moon className={cn(resolvedTheme !== "dark" && "hidden")} />
       </SwitchPrimitives.Thumb>
     </SwitchPrimitives.Root>
   );
