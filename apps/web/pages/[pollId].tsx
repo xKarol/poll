@@ -1,6 +1,15 @@
 import { Avatar, AvatarGroup, CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
-import { Icon, Input, LoadingButton, toast, Badge } from "@poll/ui";
+import {
+  Icon,
+  Input,
+  LoadingButton,
+  toast,
+  Badge,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
@@ -173,10 +182,17 @@ const PollPage = () => {
                       <span>Private</span>
                     </Badge>
                   ) : null}
-                  <span className="relative !ml-4 flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
-                  </span>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="relative !ml-4 flex h-2.5 w-2.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Real-time data is updated every 5 seconds</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </div>
               <RadioGroup

@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@poll/ui";
 import {
   Hydrate,
   QueryClient,
@@ -63,22 +64,24 @@ export default function MyApp({
                   --font-inter: ${inter.style.fontFamily};
                 }
               `}</style>
-              {Component.Layout !== undefined ? (
-                <Component.Layout>
+              <TooltipProvider>
+                {Component.Layout !== undefined ? (
+                  <Component.Layout>
+                    <Component {...pageProps} />
+                  </Component.Layout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.Layout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-              <div>
-                <Toaster position="bottom-right" />
-              </div>
-              <ReactQueryDevtools initialIsOpen={false} />
-              {showDevtools && (
-                <React.Suspense fallback={null}>
-                  <ReactQueryDevtoolsProduction />
-                </React.Suspense>
-              )}
+                )}
+                <div>
+                  <Toaster position="bottom-right" />
+                </div>
+                <ReactQueryDevtools initialIsOpen={false} />
+                {showDevtools && (
+                  <React.Suspense fallback={null}>
+                    <ReactQueryDevtoolsProduction />
+                  </React.Suspense>
+                )}
+              </TooltipProvider>
             </ThemeProvider>
           </SessionProvider>
         </Hydrate>
