@@ -11,7 +11,7 @@ import {
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { routes } from "../config/routes";
 
@@ -125,7 +125,16 @@ function ThemeSwitcher({
   ...props
 }: React.ComponentProps<typeof SwitchPrimitives.Root>) {
   const { theme, setTheme } = useTheme();
-  // TODO fix hydration error
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <SwitchPrimitives.Root
       onCheckedChange={(checked) => {
