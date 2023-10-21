@@ -1,3 +1,4 @@
+import { cn } from "@poll/lib";
 import { Icon, LoadingButton } from "@poll/ui";
 import React from "react";
 
@@ -12,13 +13,22 @@ const variantIcons: Record<Providers, JSX.Element> = {
   google: <Icon.Google />,
 };
 
-export default function AuthProvider({ variant, ...props }: AuthProviderProps) {
+export default function AuthProvider({
+  variant,
+  isLoading,
+  className,
+  ...props
+}: AuthProviderProps) {
   return (
     <LoadingButton
       isLoading={false}
       type="button"
       variant="secondary"
-      className="space-x-4 border border-neutral-200 dark:border-none dark:bg-neutral-700 dark:text-white hover:dark:bg-neutral-700/50"
+      className={cn(
+        "space-x-4 border border-neutral-200 dark:border-none dark:bg-neutral-700 dark:text-white hover:dark:bg-neutral-700/50",
+        isLoading && "animate-pulse opacity-75 [&_svg:last-child]:hidden",
+        className
+      )}
       {...props}>
       {variantIcons[variant]}
       <span>
