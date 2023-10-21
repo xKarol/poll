@@ -14,7 +14,8 @@
     "type-check": "turbo run type-check",
     "format": "prettier --check \"**/*.{ts,tsx,md}\"",
     "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "vitest run"
+    "test": "vitest run",
+    "postinstall": "turbo run postinstall"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
