@@ -53,8 +53,8 @@ export default function PublicPage() {
           <div className="flex flex-col space-y-8">
             {Array.from({ length: 5 }).map((_, index) => (
               <Skeleton key={index} className="space-y-6 px-3 py-4">
-                <Skeleton key={index} className="h-6 w-3/4 max-w-full" />
-                <Skeleton key={index} className="h-4 w-20 max-w-full" />
+                <Skeleton className="h-6 w-3/4 max-w-full" />
+                <Skeleton className="h-4 w-20 max-w-full" />
               </Skeleton>
             ))}
           </div>
