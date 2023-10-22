@@ -1,5 +1,6 @@
 import type { OrderBy, Poll } from "@poll/types";
 import {
+  Avatar,
   Select,
   SelectContent,
   SelectGroup,
@@ -74,9 +75,12 @@ export default function PublicPage() {
         {isLoading && (
           <div className="flex flex-col space-y-8">
             {Array.from({ length: 5 }).map((_, index) => (
-              <Skeleton key={index} className="space-y-6 px-3 py-4">
+              <Skeleton key={index} className="space-y-5 px-3 py-4">
                 <Skeleton className="h-6 w-3/4 max-w-full" />
-                <Skeleton className="h-4 w-20 max-w-full" />
+                <span className="flex items-center space-x-2">
+                  <Skeleton className="h-6 w-6 rounded-full" />
+                  <Skeleton className="h-4 w-40 max-w-full" />
+                </span>
               </Skeleton>
             ))}
           </div>
@@ -96,7 +100,18 @@ export default function PublicPage() {
                   className="space-y-4 rounded-[4px] bg-neutral-100 px-3 py-4 dark:bg-neutral-800">
                   <h1 className="text-lg">{poll.question}</h1>
                   <div className="flex items-center justify-between text-sm font-normal text-neutral-400">
-                    <span>{dayjs(poll.createdAt).fromNow()}</span>
+                    <div className="flex items-center space-x-2">
+                      <Avatar
+                        className="h-6 w-6"
+                        src={poll.user?.image}
+                        alt={`${poll.user?.name || "guest"}'s profile`}>
+                        {poll.user?.name[0]}
+                      </Avatar>
+                      <span>
+                        by {poll.user?.name || "guest"} ·{" "}
+                        {dayjs(poll.createdAt).fromNow()}
+                      </span>
+                    </div>
                     <span>{poll.totalVotes} votes</span>
                   </div>
                 </Link>

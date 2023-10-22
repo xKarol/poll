@@ -1,6 +1,7 @@
 import prisma from "@poll/prisma";
 import type { Poll } from "@poll/types";
 
+// @ts-expect-error TODO fix
 export const getPolls: Poll.Services["getPolls"] = async ({
   page = 1,
   skip,
@@ -17,7 +18,7 @@ export const getPolls: Poll.Services["getPolls"] = async ({
     orderBy: {
       [sortBy]: orderBy,
     },
-    include: { answers: true },
+    include: { user: true },
   });
 
   return {

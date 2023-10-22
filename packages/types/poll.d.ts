@@ -43,7 +43,9 @@ export interface Api {
       page?: number;
       limit?: number;
     } & SortingParams<SortPollFields>
-  ) => Promise<PaginationResult<Poll[]>>;
+  ) => Promise<
+    PaginationResult<(Poll & { user: User; userId: string | null })[]>
+  >;
   getUserPolls: (
     page?: number,
     limit?: number
@@ -61,6 +63,7 @@ export interface Api {
 }
 
 // Backend
+// @ts-expect-error
 export interface Services extends Api {
   getPolls: (
     params: {
@@ -68,7 +71,9 @@ export interface Services extends Api {
       skip: number;
       limit?: number;
     } & SortingParams<SortPollFields>
-  ) => Promise<PaginationResult<Poll[]>>;
+  ) => Promise<
+    PaginationResult<(Poll & { user: User; userId: string | null })[]>
+  >;
   getUserPolls: (
     userId: string,
     params: {
