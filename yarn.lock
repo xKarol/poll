@@ -703,20 +703,6 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.0.tgz#ca394a1c53c215f4c6bf7f7460d8211298d7bbf6"
   integrity sha512-SYBOVCatVDUf/lbrLGah09bHhX5WfUXg7kSskfLILr6SvKRni0NLp0aonxQ0SMALVVK3Qwa6cW4CdWuwS0gC1w==
 
-"@mui/lab@^5.0.0-alpha.136":
-  version "5.0.0-alpha.136"
-  resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.136.tgz#ffa1af4a72fbe7a773d3a008979a72f895241504"
-  integrity sha512-ai6LspCkyKRD8rL2HEtaTPBbeYkARNNKvSbjOLVJtro9bIFpZ0noH21Pp7t50Y2eFemuYeC+D5Tto3OvGKrhnQ==
-  dependencies:
-    "@babel/runtime" "^7.22.5"
-    "@mui/base" "5.0.0-beta.7"
-    "@mui/system" "^5.14.0"
-    "@mui/types" "^7.2.4"
-    "@mui/utils" "^5.13.7"
-    clsx "^1.2.1"
-    prop-types "^15.8.1"
-    react-is "^18.2.0"
-
 "@mui/material@^5.14.0":
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.14.0.tgz#3d2afb4a3643774370cb5add873abcbbe8e7af27"

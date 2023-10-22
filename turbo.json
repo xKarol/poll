@@ -35,7 +35,7 @@
     },
     "lint": {},
     "type-check": {},
-    "postinstall": {},
+    "post-install": {},
     "dev": {
       "cache": false,
       "persistent": true
