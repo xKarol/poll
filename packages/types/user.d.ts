@@ -7,7 +7,7 @@ export type UpdateUserData = Partial<
 >;
 
 export type GetUserVotesResponse = (Vote & {
-  // poll: Poll; TODO FIX include this and fix error in /backend/services/user file
+  poll: Poll;
   answer: Answer;
 })[];
 

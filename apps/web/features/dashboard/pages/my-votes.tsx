@@ -44,12 +44,10 @@ const MyVotesPage = () => {
                   <div
                     key={vote.id}
                     className="flex items-center justify-between rounded-[4px] border border-neutral-700/50 px-4 py-2 text-sm transition-colors hover:bg-neutral-700/5 [&_*]:max-w-[150px] [&_*]:flex-1">
-                    {/* @ts-expect-error TODO fix */}
                     <span className="!max-w-none">{vote.poll.question}</span>
                     <span className="!max-w-none">{vote.answer.text}</span>
                     <div>
                       <span className="rounded-[2px] bg-neutral-800 p-1 text-xs">
-                        {/* @ts-expect-error TODO fix */}
                         {vote.poll.isPublic ? "Public" : "Private"}
                       </span>
                     </div>
