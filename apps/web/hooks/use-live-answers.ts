@@ -18,6 +18,10 @@ export const useLiveAnswers = (pollId: string) => {
         (old: Poll & { answers: Answer[] }) => {
           return {
             ...old,
+            totalVotes:
+              parsedData
+                ?.map((answer) => answer.votes)
+                .reduce((prev, next) => prev + next) || old.totalVotes,
             answers: parsedData,
           };
         }
