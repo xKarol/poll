@@ -14,7 +14,7 @@ router.get(
   PollController.GetOne
 );
 
-router.get("/poll", withPagination, PollController.Get);
+router.get(apiUrls.poll.getAll, withPagination, PollController.Get);
 
 router.post(
   apiUrls.poll.create,
