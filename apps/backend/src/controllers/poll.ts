@@ -102,6 +102,9 @@ export const Vote = async (
       voteId: data.id,
       answerId,
       timestamp: Date.now(),
+    }).catch((e) => {
+      console.log("Vote Analytics error:", e);
+      return null;
     });
 
     return res.send(data);
