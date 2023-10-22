@@ -240,7 +240,7 @@ const PollPage = () => {
                 <div className="flex items-center space-x-2">
                   {voters?.length >= 2 ? (
                     <AvatarGroup max={4} spacing="small">
-                      {voters.map((voter) => (
+                      {voters.slice(0, 4).map((voter) => (
                         <Avatar
                           key={voter.id}
                           alt={`${voter.name} voter`}
