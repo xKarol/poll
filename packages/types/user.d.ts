@@ -1,14 +1,10 @@
 import type { Answer, User, Vote } from "@poll/prisma";
 
+import type { PaginationResult } from "./global.d.ts";
+
 export type UpdateUserData = Partial<
   Pick<User, "email" | "name" | "image" | "timeZone" | "clockType">
 >;
-
-// TODO import this style
-export type PaginationResult<T = unknown> = {
-  data: T;
-  nextPage: number | undefined;
-};
 
 export type GetUserVotesResponse = (Vote & {
   // poll: Poll; TODO FIX include this and fix error in /backend/services/user file

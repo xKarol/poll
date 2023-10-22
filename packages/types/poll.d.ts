@@ -1,5 +1,7 @@
 import type { Poll, Answer, User, Vote } from "@poll/prisma";
 
+import type { PaginationResult } from "./global.d.ts";
+
 export type CreatePollData = {
   userId?: string;
   question: string;
@@ -28,11 +30,6 @@ export type GetVoteUsersData = {
 export type UpdatePollData = Partial<
   Pick<Poll, "isPublic" | "requireRecaptcha" | "question">
 >;
-
-export type PaginationResult<T = unknown> = {
-  data: T;
-  nextPage: number | undefined;
-};
 
 // Frontend
 export interface Api {
