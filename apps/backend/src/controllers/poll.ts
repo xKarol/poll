@@ -17,6 +17,8 @@ import * as Analytics from "../services/tinybird";
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { page, limit, skip } = req.pagination;
+    const { sortBy, order } = req.sorting;
+    console.log({ sortBy, order });
     const data = await getPolls({ page, limit, skip });
 
     return res.send(data);

@@ -4,6 +4,7 @@ import express from "express";
 import * as PollController from "../controllers/poll";
 import { validateSchema } from "../middlewares/validate-schema";
 import { withPagination } from "../middlewares/with-pagination";
+import { withSorting } from "../middlewares/with-sorting";
 import * as PollSchema from "../schemas/poll";
 
 const router = express.Router();
@@ -14,7 +15,12 @@ router.get(
   PollController.GetOne
 );
 
-router.get(apiUrls.poll.getAll, withPagination, PollController.Get);
+router.get(
+  apiUrls.poll.getAll,
+  withPagination,
+  withSorting({ allowedFields: ["date", "votes"], defaultField: "date" }),
+  PollController.Get
+);
 
 router.post(
   apiUrls.poll.create,
