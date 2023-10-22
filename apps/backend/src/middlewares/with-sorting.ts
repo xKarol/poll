@@ -1,7 +1,6 @@
+import type { OrderBy } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 import z from "zod";
-
-type Order = "asc" | "desc";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -9,20 +8,20 @@ declare global {
     interface Request {
       sorting: {
         sortBy: string;
-        order: Order;
+        orderBy: OrderBy;
       };
     }
   }
 }
 
 const sortingParams = z.object({
-  order: z.enum(["asc", "desc"]).default("desc").optional(),
+  orderBy: z.enum(["asc", "desc"]).default("desc").optional(),
 });
 
 type withSortingParams<T> = {
   allowedFields: readonly [T, ...T[]];
   defaultField: NonNullable<T>;
-  defaultOrder?: Order;
+  defaultOrder?: OrderBy;
 };
 
 export const withSorting =
@@ -33,14 +32,14 @@ export const withSorting =
   }: withSortingParams<T>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { sortBy, order } = sortingParams
+      const { sortBy, orderBy } = sortingParams
         .extend({
           sortBy: z.enum(allowedFields).optional(),
         })
         .parse(req.query);
       req.sorting = {
         sortBy: sortBy || defaultField,
-        order: order || defaultOrder,
+        orderBy: orderBy || defaultOrder,
       };
       next();
     } catch (error) {

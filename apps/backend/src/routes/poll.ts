@@ -1,4 +1,5 @@
 import { apiUrls } from "@poll/config";
+import type { Poll } from "@poll/types";
 import express from "express";
 
 import * as PollController from "../controllers/poll";
@@ -18,7 +19,10 @@ router.get(
 router.get(
   apiUrls.poll.getAll,
   withPagination,
-  withSorting({ allowedFields: ["date", "votes"], defaultField: "date" }),
+  withSorting<Poll.SortPollFields>({
+    allowedFields: ["createdAt", "totalVotes"],
+    defaultField: "createdAt",
+  }),
   PollController.Get
 );
 

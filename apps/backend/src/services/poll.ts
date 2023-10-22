@@ -5,6 +5,8 @@ export const getPolls: Poll.Services["getPolls"] = async ({
   page = 1,
   skip,
   limit = 10,
+  orderBy = "desc",
+  sortBy = "createdAt",
 }) => {
   const response = await prisma.poll.findMany({
     skip: skip,
@@ -13,7 +15,7 @@ export const getPolls: Poll.Services["getPolls"] = async ({
       isPublic: true,
     },
     orderBy: {
-      updatedAt: "desc",
+      [sortBy]: orderBy,
     },
     include: { answers: true },
   });

@@ -1,3 +1,4 @@
+export type * from "./global";
 export type * as Poll from "./poll";
 export type * as User from "./user";
 export type * as WebSocket from "./websocket";

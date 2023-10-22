@@ -1,5 +1,5 @@
 import prisma from "@poll/prisma";
-import type { Poll } from "@poll/types";
+import type { Poll, SortingParams } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 
 import {
@@ -17,9 +17,10 @@ import * as Analytics from "../services/tinybird";
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { page, limit, skip } = req.pagination;
-    const { sortBy, order } = req.sorting;
-    console.log({ sortBy, order });
-    const data = await getPolls({ page, limit, skip });
+    const { sortBy, orderBy } =
+      req.sorting as SortingParams<Poll.SortPollFields>;
+
+    const data = await getPolls({ page, limit, skip, sortBy, orderBy });
 
     return res.send(data);
   } catch (error) {
