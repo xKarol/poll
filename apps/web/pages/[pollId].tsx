@@ -90,14 +90,9 @@ const PollPage = () => {
   const isVoted = !!userChoiceAnswerId;
 
   const calcPercent = (votes: number) => {
-    const percent = (votes / totalVotes) * 100;
+    const percent = (votes / data.totalVotes) * 100;
     return Number.isNaN(percent) ? 0 : percent;
   };
-
-  const totalVotes =
-    data?.answers
-      ?.map((answer) => answer.votes)
-      .reduce((prev, next) => prev + next) || 0;
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -123,7 +118,7 @@ const PollPage = () => {
 
   const dataChart = data.answers.map((answer) => ({
     name: answer.text,
-    value: (answer.votes / totalVotes) * 100,
+    value: (answer.votes / data.totalVotes) * 100,
   }));
 
   const renderCustomizedLabel = ({
@@ -252,7 +247,7 @@ const PollPage = () => {
                     </AvatarGroup>
                   ) : null}
                   <p className="text-sm font-normal">
-                    Total Votes: {totalVotes}
+                    Total Votes: {data.totalVotes}
                   </p>
                 </div>
                 {!isVoted ? (
