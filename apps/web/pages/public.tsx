@@ -48,10 +48,12 @@ export default function PublicPage() {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-medium">Public Polls</h1>
           <Select onValueChange={(value: SortValue) => setSortValue(value)}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="min-w-[120px] max-w-max">
               <SelectValue placeholder="Sort" />
             </SelectTrigger>
-            <SelectContent align="end">
+            <SelectContent
+              align="end"
+              onCloseAutoFocus={(e) => e.preventDefault()}>
               <SelectGroup>
                 <SelectLabel>Sort by</SelectLabel>
                 <SelectSeparator />
