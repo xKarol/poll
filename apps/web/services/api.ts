@@ -12,11 +12,15 @@ export const createPoll: Poll.Api["createPoll"] = async (pollData) => {
 export const getPolls: Poll.Api["getPolls"] = async ({
   page = 1,
   limit = 10,
+  orderBy,
+  sortBy,
 }) => {
   const { data } = await axios.get(apiUrls.poll.getAll, {
     params: {
       page,
       limit,
+      orderBy,
+      sortBy,
     },
   });
   return data;

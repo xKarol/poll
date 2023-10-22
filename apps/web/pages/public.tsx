@@ -1,15 +1,18 @@
+import type { Poll } from "@poll/types";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
   Skeleton,
 } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
+import { useState } from "react";
 
 import { InfiniteScrollContainer } from "../components/infinite-scroll-container";
 import { routes } from "../config/routes";
@@ -18,7 +21,11 @@ import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { getErrorMessage } from "../utils/error";
 
+type SortValue = `${Poll.SortPollFields}.${"desc" | "asc"}`;
+
 export default function PublicPage() {
+  const [sortValue, setSortValue] = useState<SortValue>("createdAt.desc");
+  const [sortBy, orderBy] = sortValue.split(".");
   const {
     data: pages,
     isLoading,
@@ -28,23 +35,34 @@ export default function PublicPage() {
     error,
     hasNextPage,
     fetchNextPage,
-  } = usePolls();
+    // @ts-expect-error
+  } = usePolls({ sortBy, orderBy });
   const data = pages?.pages.flatMap(({ data }) => data);
+
   return (
     <>
       <NextSeo title="Public Polls" />
       <div className="container mt-8 space-y-8 md:max-w-2xl lg:mt-16 xl:max-w-4xl">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-medium">Public Polls</h1>
-          <Select>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Filter" />
+          <Select onValueChange={(value: SortValue) => setSortValue(value)}>
+            <SelectTrigger className="w-[120px]">
+              <SelectValue placeholder="Sort" />
             </SelectTrigger>
             <SelectContent align="end">
               <SelectGroup>
-                <SelectLabel>Filter by</SelectLabel>
-                <SelectItem value="date">Date</SelectItem>
-                <SelectItem value="votes">Votes</SelectItem>
+                <SelectLabel>Sort by</SelectLabel>
+                <SelectSeparator />
+                <SelectItem value="createdAt.desc">
+                  Date - Descending
+                </SelectItem>
+                <SelectItem value="createdAt.asc">Date - Ascending</SelectItem>
+                <SelectItem value="totalVotes.desc">
+                  Votes - Descending
+                </SelectItem>
+                <SelectItem value="totalVotes.asc">
+                  Votes - Ascending
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

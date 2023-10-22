@@ -1,3 +1,4 @@
+import type { SortingParams, Poll } from "@poll/types";
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 import {
@@ -7,8 +8,15 @@ import {
 } from "../services/api";
 
 export const pollKeys = {
-  all: ["poll"] as const,
-  single: (pollId: string) => [...pollKeys.all, pollId] as const,
+  all: (
+    { sortBy, orderBy }: SortingParams<Poll.SortPollFields> = {
+      sortBy: "createdAt",
+      orderBy: "desc",
+    }
+  ) => {
+    return ["poll", { sortBy, orderBy }] as const;
+  },
+  single: (pollId: string) => [...pollKeys.all(), pollId] as const,
   getPollVoters: (pollId: string) => ["poll-voters", pollId] as const,
   getPollAnswerUserChoice: (pollId: string) =>
     ["poll-answer-user-choice", pollId] as const,
