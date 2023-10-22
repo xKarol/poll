@@ -9,7 +9,7 @@ export const useCreatePoll = () => {
   return useMutation({
     mutationFn: createPoll,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: pollKeys.all });
+      queryClient.invalidateQueries({ queryKey: pollKeys.all() });
       queryClient.invalidateQueries({ queryKey: userKeys.userPolls });
     },
   });
