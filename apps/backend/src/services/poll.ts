@@ -57,14 +57,7 @@ export const getUserPolls: Poll.Services["getUserPolls"] = async (
     include: { answers: true },
   });
   return {
-    data: response
-      .map(({ answers: _answers, ...data }) => {
-        const totalVotes = _answers
-          .map(({ votes }) => votes)
-          .reduce((total, votes) => total + Number(votes), 0);
-        return { ...data, totalVotes };
-      })
-      .slice(0, limit),
+    data: response.slice(0, limit),
     nextPage: response.length > limit ? page + 1 : undefined,
   };
 };
@@ -92,6 +85,16 @@ export const createPoll: Poll.Services["createPoll"] = async (data) => {
   return response;
 };
 
+export const updatePoll: Poll.Services["updatePoll"] = async (pollId, data) => {
+  const response = await prisma.poll.update({
+    where: { id: pollId },
+    data: {
+      ...data,
+    },
+  });
+  return response;
+};
+
 export const deletePoll: Poll.Services["deletePoll"] = async (pollId) => {
   await prisma.poll.delete({
     where: { id: pollId },
@@ -106,6 +109,9 @@ export const votePoll: Poll.Services["votePoll"] = async ({
   await prisma.poll.update({
     where: { id: pollId },
     data: {
+      totalVotes: {
+        increment: 1,
+      },
       answers: {
         update: {
           where: {

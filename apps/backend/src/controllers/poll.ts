@@ -83,10 +83,10 @@ export const Vote = async (
     const { reCaptchaToken } = req.body as { reCaptchaToken: string };
     const { id: userId } = req.user || {};
 
-    const { requireRecaptcha: isReCaptchaRequired } =
+    const { requireRecaptcha: isReCaptchaRequired, userId: ownerId } =
       await prisma.poll.findUniqueOrThrow({
         where: { id: pollId },
-        select: { requireRecaptcha: true },
+        select: { requireRecaptcha: true, userId: true },
       });
     if (isReCaptchaRequired) {
       const { success: isValidCaptcha } = await verifyReCaptcha(reCaptchaToken);
@@ -94,12 +94,6 @@ export const Vote = async (
     }
 
     const data = await votePoll({ userId, pollId, answerId });
-
-    const { userId: ownerId } =
-      (await prisma.poll.findUnique({
-        where: { id: pollId },
-        select: { userId: true },
-      })) || {};
 
     await Analytics.sendPollVoteData({
       userId,

@@ -25,6 +25,10 @@ export type GetVoteUsersData = {
   pollId: string;
 };
 
+export type UpdatePollData = Partial<
+  Pick<Poll, "isPublic" | "requireRecaptcha" | "question">
+>;
+
 export type PaginationResult<T = unknown> = {
   data: T;
   nextPage: number | undefined;
@@ -45,6 +49,7 @@ export interface Api {
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
+  updatePoll: (data: UpdatePollData) => Promise<Poll>;
   votePoll: (
     pollId: string,
     answerId: string,
@@ -69,6 +74,7 @@ export interface Services extends Api {
       limit?: number;
     }
   ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  updatePoll: (pollId: string, data: UpdatePollData) => Promise<Poll>;
   votePoll: (params: {
     userId?: string;
     pollId: string;

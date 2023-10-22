@@ -66,9 +66,10 @@ async function seedVotes() {
       {
         length: faker.number.int({ min: 0, max: 10 }),
       },
-      () => {
+      (_, index) => {
         const answerId =
           poll.answers[Math.floor(Math.random() * poll.answers.length)].id;
+        const pollId = polls[index].id;
         transactions.push(
           prisma.vote.create({
             data: {
@@ -85,6 +86,16 @@ async function seedVotes() {
             },
             data: {
               votes: { increment: 1 },
+            },
+          })
+        );
+        transactions.push(
+          prisma.poll.update({
+            where: {
+              id: pollId,
+            },
+            data: {
+              totalVotes: { increment: 1 },
             },
           })
         );

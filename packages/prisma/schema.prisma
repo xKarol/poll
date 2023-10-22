@@ -73,6 +73,7 @@ model Poll {
   user             User?    @relation(fields: [userId], references: [id])
   userId           String?
   vote             Vote[]
+  totalVotes       Int      @default(0)
   // settings
   isPublic         Boolean  @default(true)
   requireRecaptcha Boolean  @default(false)
