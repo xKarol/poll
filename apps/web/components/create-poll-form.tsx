@@ -156,45 +156,19 @@ export const CreatePollForm = ({
         <div className="mb-8 space-y-2">
           <h2 className="text-normal font-medium">Settings</h2>
           <div className="space-y-2">
-            <FormField
+            <PollOptionField
               control={form.control}
               name="isPublic"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-3 dark:border-none dark:bg-neutral-800">
-                  <div className="space-y-2">
-                    <FormLabel>Public</FormLabel>
-                    <FormDescription className="text-sm font-medium">
-                      Make this poll public
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
+              Icon={<Icon.Globe className="h-7 w-7" />}
+              heading="Public"
+              description="Make this poll public"
             />
-            <FormField
+            <PollOptionField
               control={form.control}
               name="requireRecaptcha"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-3 dark:border-none dark:bg-neutral-800">
-                  <div className="space-y-2">
-                    <FormLabel>Require ReCAPTCHA</FormLabel>
-                    <FormDescription className="text-sm font-medium">
-                      Require ReCAPTCHA
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
+              Icon={<Icon.Shield className="h-7 w-7" />}
+              heading="Require ReCAPTCHA"
+              description="Protect your poll from bot spam"
             />
           </div>
         </div>
@@ -212,3 +186,45 @@ export const CreatePollForm = ({
     </Form>
   );
 };
+
+type PollOptionFieldProps = {
+  Icon: JSX.Element;
+  heading: string;
+  description: string;
+} & Omit<React.ComponentProps<typeof FormField<FormValues>>, "render">;
+
+function PollOptionField({
+  Icon,
+  heading,
+  description,
+  ...props
+}: PollOptionFieldProps) {
+  return (
+    <>
+      <FormField
+        {...props}
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-6 dark:border-none dark:bg-neutral-800 sm:pl-0">
+            <div className="flex">
+              <div className="my-auto hidden justify-center px-4 sm:flex">
+                {Icon}
+              </div>
+              <div>
+                <FormLabel>{heading}</FormLabel>
+                <FormDescription className="text-sm font-medium">
+                  {description}
+                </FormDescription>
+              </div>
+            </div>
+            <FormControl>
+              <Switch
+                checked={field.value as boolean}
+                onCheckedChange={field.onChange}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    </>
+  );
+}
