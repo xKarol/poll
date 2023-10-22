@@ -91,7 +91,7 @@ const PollPage = () => {
 
   const calcPercent = (votes: number) => {
     const percent = (votes / data.totalVotes) * 100;
-    return Number.isNaN(percent) ? 0 : percent;
+    return Number.isNaN(percent) || !Number.isFinite(percent) ? 0 : percent;
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {

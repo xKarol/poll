@@ -30,6 +30,7 @@ export const useVotePoll = () => {
         (old: Poll & { answers: Answer[] }) => {
           return {
             ...old,
+            totalVotes: old.totalVotes + 1,
             answers: old.answers.map((answer) => {
               if (answer.id === answerId) {
                 return { ...answer, votes: answer.votes + 1 };
