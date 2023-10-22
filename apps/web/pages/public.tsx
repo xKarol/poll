@@ -1,4 +1,4 @@
-import type { Poll } from "@poll/types";
+import type { OrderBy, Poll } from "@poll/types";
 import {
   Select,
   SelectContent,
@@ -25,7 +25,10 @@ type SortValue = `${Poll.SortPollFields}.${"desc" | "asc"}`;
 
 export default function PublicPage() {
   const [sortValue, setSortValue] = useState<SortValue>("createdAt.desc");
-  const [sortBy, orderBy] = sortValue.split(".");
+  const [sortBy, orderBy] = sortValue.split(".") as [
+    Poll.SortPollFields,
+    OrderBy,
+  ];
   const {
     data: pages,
     isLoading,
@@ -35,7 +38,6 @@ export default function PublicPage() {
     error,
     hasNextPage,
     fetchNextPage,
-    // @ts-expect-error
   } = usePolls({ sortBy, orderBy });
   const data = pages?.pages.flatMap(({ data }) => data);
 
