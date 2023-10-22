@@ -9,7 +9,10 @@ export const createPoll: Poll.Api["createPoll"] = async (pollData) => {
   return data;
 };
 
-export const getPolls: Poll.Api["getPolls"] = async (page = 1, limit = 10) => {
+export const getPolls: Poll.Api["getPolls"] = async ({
+  page = 1,
+  limit = 10,
+}) => {
   const { data } = await axios.get(apiUrls.poll.getAll, {
     params: {
       page,

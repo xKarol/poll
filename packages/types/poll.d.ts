@@ -1,6 +1,6 @@
 import type { Poll, Answer, User, Vote } from "@poll/prisma";
 
-import type { PaginationResult } from "./global.d.ts";
+import type { PaginationResult, SortingParams } from "./global.d.ts";
 
 export type CreatePollData = {
   userId?: string;
@@ -27,6 +27,8 @@ export type GetVoteUsersData = {
   pollId: string;
 };
 
+export type SortPollFields = Extract<keyof Poll, "createdAt" | "totalVotes">;
+
 export type UpdatePollData = Partial<
   Pick<Poll, "isPublic" | "requireRecaptcha" | "question">
 >;
@@ -37,13 +39,15 @@ export interface Api {
     pollId: string
   ) => Promise<Poll & { answers: Answer[]; user: User | null }>;
   getPolls: (
-    page?: number,
-    limit?: number
-  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+    params: {
+      page?: number;
+      limit?: number;
+    } & SortingParams<SortPollFields>
+  ) => Promise<PaginationResult<Poll[]>>;
   getUserPolls: (
     page?: number,
     limit?: number
-  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  ) => Promise<PaginationResult<Poll[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   updatePoll: (data: UpdatePollData) => Promise<Poll>;
@@ -58,11 +62,13 @@ export interface Api {
 
 // Backend
 export interface Services extends Api {
-  getPolls: (params: {
-    page?: number;
-    skip: number;
-    limit?: number;
-  }) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  getPolls: (
+    params: {
+      page?: number;
+      skip: number;
+      limit?: number;
+    } & SortingParams<SortPollFields>
+  ) => Promise<PaginationResult<Poll[]>>;
   getUserPolls: (
     userId: string,
     params: {
@@ -70,7 +76,7 @@ export interface Services extends Api {
       skip: number;
       limit?: number;
     }
-  ) => Promise<PaginationResult<(Poll & { totalVotes: number })[]>>;
+  ) => Promise<PaginationResult<Poll[]>>;
   updatePoll: (pollId: string, data: UpdatePollData) => Promise<Poll>;
   votePoll: (params: {
     userId?: string;
