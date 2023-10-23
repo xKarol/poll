@@ -103,9 +103,9 @@ export const Vote = async (
     ua.setUA(userAgent).getResult();
 
     await Analytics.sendPollVoteData({
-      userId,
+      userId: userId || "Unknown",
       pollId,
-      ownerId: ownerId || "unknown",
+      ownerId: ownerId || "Unknown",
       voteId: data.id,
       answerId,
       timestamp: Date.now(),
