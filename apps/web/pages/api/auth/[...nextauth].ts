@@ -3,15 +3,15 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 import { routes } from "../../../config/routes";
-import { defaultCookies } from "../../../lib/default-cookies";
+// import { defaultCookies } from "../../../lib/default-cookies";
 import prisma from "../../../lib/prisma";
 
-const isSecure = process.env.NODE_ENV === "production";
+// const isSecure = process.env.NODE_ENV === "production";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  cookies: defaultCookies(isSecure),
-  useSecureCookies: isSecure,
+  // cookies: defaultCookies(isSecure),
+  // useSecureCookies: isSecure,
   session: {
     strategy: "jwt",
   },
