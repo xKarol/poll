@@ -59,8 +59,8 @@ const StatisticsPage = () => {
           Icon={<Icon.Share2 className="h-4 w-4" />}
         />
       </div>
-      <div className="flex h-full">
-        <div className="flex-1">
+      <div className="flex h-full space-x-8">
+        <div className="flex-1 rounded-[4px] border border-neutral-300 dark:border-neutral-800">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               width={500}
