@@ -3,7 +3,8 @@ import { Icon, Sheet, SheetContent, SheetTrigger } from "@poll/ui";
 import React, { useEffect, useState } from "react";
 import { useMedia } from "react-use";
 
-import { Sidebar, MobileHeader } from "../components";
+import { DashboardMobileHeader } from "../../../components/dashboard-mobile-header";
+import { Sidebar } from "../components";
 
 type Props = React.ComponentPropsWithoutRef<"div">;
 
@@ -19,7 +20,7 @@ export default function BaseLayout({ className, children, ...props }: Props) {
   return (
     <main className={cn("flex", className)} {...props}>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <MobileHeader
+        <DashboardMobileHeader
           MenuComponent={
             <SheetTrigger>
               <Icon.Menu />

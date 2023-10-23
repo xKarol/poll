@@ -7,8 +7,7 @@ type MobileHeaderProps = {
   onOpen?: () => void;
 } & Omit<React.ComponentPropsWithoutRef<"header">, "children">;
 
-// TODO reuse this component from /features/settings folder
-function MobileHeader({
+export function DashboardMobileHeader({
   MenuComponent = <Icon.Menu />,
   onOpen,
   className,
@@ -31,5 +30,3 @@ function MobileHeader({
     </header>
   );
 }
-
-export default MobileHeader;
