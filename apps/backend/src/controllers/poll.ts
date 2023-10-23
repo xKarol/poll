@@ -2,6 +2,7 @@ import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 
+import { ua } from "../lib/useragent";
 import {
   createPoll,
   deletePoll,
@@ -98,6 +99,9 @@ export const Vote = async (
 
     const data = await votePoll({ userId, pollId, answerId });
 
+    const userAgent = req.headers["user-agent"] || "";
+    ua.setUA(userAgent).getResult();
+
     await Analytics.sendPollVoteData({
       userId,
       pollId,
@@ -105,6 +109,13 @@ export const Vote = async (
       voteId: data.id,
       answerId,
       timestamp: Date.now(),
+      browser: ua.getBrowser().name || "Unknown",
+      browser_version: ua.getBrowser().version || "Unknown",
+      os: ua.getOS().name || "Unknown",
+      os_version: ua.getOS().version || "Unknown",
+      device: ua.getDevice().type || "Unknown",
+      device_model: ua.getDevice().model || "Unknown",
+      device_vendor: ua.getDevice().vendor || "Unknown",
     }).catch((e) => {
       console.log("Vote Analytics error:", e);
       return null;

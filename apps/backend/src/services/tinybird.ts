@@ -11,16 +11,13 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
     pollId: z.string(),
     answerId: z.string(),
     timestamp: z.number().int(),
-    country: z.string().optional().default("Unknown"),
-    city: z.string().optional().default("Unknown"),
-    region: z.string().optional().default("Unknown"),
-    latitude: z.string().optional().default("Unknown"),
-    longitude: z.string().optional().default("Unknown"),
     browser: z.string().optional().default("Unknown"),
     browser_version: z.string().optional().default("Unknown"),
     os: z.string().optional().default("Unknown"),
     os_version: z.string().optional().default("Unknown"),
     device: z.string().optional().default("Desktop"),
+    device_vendor: z.string().optional().default("Unknown"),
+    device_model: z.string().optional().default("Unknown"),
   }),
 });
 
