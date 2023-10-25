@@ -58,10 +58,10 @@ function PollsTable({
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
         hasNextPage={hasNextPage}>
-        <Table className="border-spacing-4">
+        <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="max-w-sm">Question</TableHead>
+              <TableHead>Question</TableHead>
               <TableHead>Votes</TableHead>
               <TableHead>Type</TableHead>
               <TableHead className="text-right">Date</TableHead>
@@ -140,7 +140,9 @@ function PollItemRow({
   return (
     <>
       <TableRow key={id} className={cn("border-x", className)} {...props}>
-        <TableCell className="truncate font-medium">{question}</TableCell>
+        <TableCell className="max-w-xs truncate font-medium">
+          {question}
+        </TableCell>
         <TableCell>{totalVotes}</TableCell>
         <TableCell>
           <Badge variant="secondary">
