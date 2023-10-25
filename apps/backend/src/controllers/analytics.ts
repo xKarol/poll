@@ -33,7 +33,14 @@ export const GetPollData = async (
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
     const { id: userId } = req.user!;
-    const { data } = await getUserPollTopDevices({ ownerId: userId });
+    const { data: rawData } = await getUserPollTopDevices({ ownerId: userId });
+
+    const data = {
+      mobile: rawData.find((d) => d.device === "mobile")?.total || 0,
+      tablet: rawData.find((d) => d.device === "tablet")?.total || 0,
+      desktop: rawData.find((d) => d.device === "desktop")?.total || 0,
+    };
+
     return res.send(data);
   } catch (error) {
     next(error);
