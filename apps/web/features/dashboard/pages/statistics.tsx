@@ -13,8 +13,9 @@ import {
   Line,
 } from "recharts";
 
+import { TopDevices } from "../components";
 import Heading from "../components/heading";
-import { useAnalyticsTopDevices, useVotesAnalytics } from "../hooks";
+import { useVotesAnalytics } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 // TODO change param type
@@ -31,9 +32,8 @@ const sortData = (d: unknown[]) => {
 
 const StatisticsPage = () => {
   const d = useVotesAnalytics();
-  const topDevices = useAnalyticsTopDevices();
+
   console.log(d.data);
-  console.log(topDevices);
 
   return (
     <BaseLayout>
@@ -157,44 +157,7 @@ const StatisticsPage = () => {
               />
             </div>
           </section>
-          <section className="w-60 space-y-2">
-            <h1 className="text-sm font-medium">Top devices</h1>
-            <div className="flex flex-col space-y-1">
-              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
-                <div className="flex items-center space-x-4">
-                  <Icon.Tablet className="h-4 w-4" />
-                  <span>Tablet</span>
-                </div>
-
-                <div className="flex items-center space-x-1">
-                  <span className="font-medium">100</span>
-                  <Icon.BarChart2 className="h-3 w-3" />
-                </div>
-              </div>
-              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
-                <div className="flex items-center space-x-4">
-                  <Icon.Smartphone className="h-4 w-4" />
-                  <span>Mobile</span>
-                </div>
-
-                <div className="flex items-center space-x-1">
-                  <span className="font-medium">50</span>
-                  <Icon.BarChart2 className="h-3 w-3" />
-                </div>
-              </div>
-              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
-                <div className="flex items-center space-x-4">
-                  <Icon.Monitor className="h-4 w-4" />
-                  <span>Desktop</span>
-                </div>
-
-                <div className="flex items-center space-x-1">
-                  <span className="font-medium">150</span>
-                  <Icon.BarChart2 className="h-3 w-3" />
-                </div>
-              </div>
-            </div>
-          </section>
+          <TopDevices />
         </div>
       </div>
     </BaseLayout>
