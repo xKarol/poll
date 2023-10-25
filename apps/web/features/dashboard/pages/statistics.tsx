@@ -92,68 +92,108 @@ const StatisticsPage = () => {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <section className="w-60 space-y-2">
-          <h1 className="text-sm font-medium">Top countries</h1>
-          <div className="flex flex-col space-y-1">
-            <Country
-              countryName="Poland"
-              countryFlag={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="10"
-                  id="Flag of Poland"
-                  viewBox="0 0 16 10">
-                  <rect width="16" height="10" fill="#fff" />
-                  <rect width="16" height="5" fill="#dc143c" y="5" />
-                </svg>
-              }
-              value={124}
-            />
-            <Country
-              countryName="USA"
-              countryFlag={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="10"
-                  viewBox="0 0 7410 3900">
-                  <rect width="7410" height="3900" fill="#b22234" />
-                  <path
-                    d="M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0"
-                    stroke="#fff"
-                    stroke-width="300"
-                  />
-                  <rect width="2964" height="2100" fill="#3c3b6e" />
-                  <g fill="#fff">
-                    <g id="s18">
-                      <g id="s9">
-                        <g id="s5">
-                          <g id="s4">
-                            <path
-                              id="s"
-                              d="M247,90 317.534230,307.082039 132.873218,172.917961H361.126782L176.465770,307.082039z"
-                            />
-                            <use y="420" />
-                            <use y="840" />
-                            <use y="1260" />
+        <div className="flex flex-col space-y-4">
+          <section className="w-60 space-y-2">
+            <h1 className="text-sm font-medium">Top countries</h1>
+            <div className="flex flex-col space-y-1">
+              <Country
+                countryName="Poland"
+                countryFlag={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="10"
+                    id="Flag of Poland"
+                    viewBox="0 0 16 10">
+                    <rect width="16" height="10" fill="#fff" />
+                    <rect width="16" height="5" fill="#dc143c" y="5" />
+                  </svg>
+                }
+                value={124}
+              />
+              <Country
+                countryName="USA"
+                countryFlag={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="10"
+                    viewBox="0 0 7410 3900">
+                    <rect width="7410" height="3900" fill="#b22234" />
+                    <path
+                      d="M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0"
+                      stroke="#fff"
+                      stroke-width="300"
+                    />
+                    <rect width="2964" height="2100" fill="#3c3b6e" />
+                    <g fill="#fff">
+                      <g id="s18">
+                        <g id="s9">
+                          <g id="s5">
+                            <g id="s4">
+                              <path
+                                id="s"
+                                d="M247,90 317.534230,307.082039 132.873218,172.917961H361.126782L176.465770,307.082039z"
+                              />
+                              <use y="420" />
+                              <use y="840" />
+                              <use y="1260" />
+                            </g>
+                            <use y="1680" />
                           </g>
-                          <use y="1680" />
+                          <use x="247" y="210" />
                         </g>
-                        <use x="247" y="210" />
+                        <use x="494" />
                       </g>
-                      <use x="494" />
+                      <use x="988" />
+                      <use x="1976" />
+                      <use x="2470" />
                     </g>
-                    <use x="988" />
-                    <use x="1976" />
-                    <use x="2470" />
-                  </g>
-                </svg>
-              }
-              value={87}
-            />
-          </div>
-        </section>
+                  </svg>
+                }
+                value={87}
+              />
+            </div>
+          </section>
+          <section className="w-60 space-y-2">
+            <h1 className="text-sm font-medium">Top devices</h1>
+            <div className="flex flex-col space-y-1">
+              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
+                <div className="flex items-center space-x-4">
+                  <Icon.Tablet className="h-4 w-4" />
+                  <span>Tablet</span>
+                </div>
+
+                <div className="flex items-center space-x-1">
+                  <span className="font-medium">100</span>
+                  <Icon.BarChart2 className="h-3 w-3" />
+                </div>
+              </div>
+              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
+                <div className="flex items-center space-x-4">
+                  <Icon.Smartphone className="h-4 w-4" />
+                  <span>Mobile</span>
+                </div>
+
+                <div className="flex items-center space-x-1">
+                  <span className="font-medium">50</span>
+                  <Icon.BarChart2 className="h-3 w-3" />
+                </div>
+              </div>
+              <div className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
+                <div className="flex items-center space-x-4">
+                  <Icon.Monitor className="h-4 w-4" />
+                  <span>Desktop</span>
+                </div>
+
+                <div className="flex items-center space-x-1">
+                  <span className="font-medium">150</span>
+                  <Icon.BarChart2 className="h-3 w-3" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </BaseLayout>
   );
@@ -201,7 +241,7 @@ function Country({ countryFlag, countryName, value, className }: CountryProps) {
   return (
     <div
       className={cn(
-        "relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs",
+        "relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800",
         className
       )}>
       <div className="flex items-center space-x-4">
