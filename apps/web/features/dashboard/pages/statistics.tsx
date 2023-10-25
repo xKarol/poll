@@ -14,7 +14,7 @@ import {
 } from "recharts";
 
 import Heading from "../components/heading";
-import { useVotesAnalytics } from "../hooks";
+import { useAnalyticsTopDevices, useVotesAnalytics } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 // TODO change param type
@@ -31,7 +31,9 @@ const sortData = (d: unknown[]) => {
 
 const StatisticsPage = () => {
   const d = useVotesAnalytics();
+  const topDevices = useAnalyticsTopDevices();
   console.log(d.data);
+  console.log(topDevices);
 
   return (
     <BaseLayout>

@@ -6,4 +6,7 @@ export type GetPollData = {
 export interface Api {
   // TODO add type
   getUserPollVotes: () => Promise<unknown[]>;
+  getUserPollTopDevices: () => Promise<
+    { device: "mobile" | "desktop" | "tablet"; total: number }[]
+  >;
 }

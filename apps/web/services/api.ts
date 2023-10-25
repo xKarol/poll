@@ -119,3 +119,9 @@ export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
     const { data } = await axios.get(apiUrls.analytics.userPollVotes);
     return data;
   };
+
+export const getAnalyticsUserPollTopDevices: Analytics.Api["getUserPollTopDevices"] =
+  async () => {
+    const { data } = await axios.get(apiUrls.analytics.getUserPollTopDevices);
+    return data;
+  };

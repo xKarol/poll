@@ -22,4 +22,10 @@ router.get(
   AnalyticsController.GetUserPollVotesData
 );
 
+router.get(
+  apiUrls.analytics.getUserPollTopDevices,
+  requireAuth,
+  AnalyticsController.GetUserPollTopDevicesData
+);
+
 export default router;
