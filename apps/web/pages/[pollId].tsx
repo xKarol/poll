@@ -167,7 +167,7 @@ const PollPage = () => {
                 <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
                   {data.question}
                 </h1>
-                <div className="flex flex-wrap items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-4">
                   <span className="text-base font-normal text-neutral-400">
                     by a {data.user?.name || "guest"} ·{" "}
                     {dayjs(data.createdAt).fromNow()}
@@ -181,7 +181,7 @@ const PollPage = () => {
                   {isVoted ? (
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="relative !ml-4 flex h-2.5 w-2.5">
+                        <span className="relative flex h-2.5 w-2.5">
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
                           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
                         </span>
