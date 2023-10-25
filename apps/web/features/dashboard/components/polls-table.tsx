@@ -1,6 +1,7 @@
 import { cn } from "@poll/lib";
 import type { Poll } from "@poll/prisma";
 import {
+  Badge,
   Button,
   Dialog,
   DialogContent,
@@ -15,6 +16,12 @@ import {
   DropdownMenuTrigger,
   Icon,
   LoadingButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   toast,
 } from "@poll/ui";
 import {
@@ -22,7 +29,7 @@ import {
   type FetchNextPageOptions,
 } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
@@ -47,39 +54,33 @@ function PollsTable({
 }: Props) {
   return (
     <>
-      <div className="mb-2 px-4 py-2">
-        <div className="flex [&>*]:max-w-[150px] [&>*]:flex-1">
-          <span className="!max-w-none space-x-2">Question</span>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span>Votes</span>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span>Public</span>
-            </div>
-          </div>
-          <span>Created At</span>
-        </div>
-      </div>
       <InfiniteScrollContainer
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
         hasNextPage={hasNextPage}>
-        <div className="flex flex-col space-y-2">
-          {data.map((poll) => (
-            <PollItem
-              key={poll.id}
-              id={poll.id}
-              href={routes.poll(poll.id)}
-              question={poll.question}
-              isPublic={poll.isPublic}
-              createdAt={poll.createdAt}
-              totalVotes={poll.totalVotes}
-            />
-          ))}
-        </div>
+        <Table className="border-spacing-4">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="max-w-sm">Question</TableHead>
+              <TableHead>Votes</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead className="text-right">Date</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((poll) => (
+              <PollItemRow
+                key={poll.id}
+                id={poll.id}
+                question={poll.question}
+                isPublic={poll.isPublic}
+                createdAt={poll.createdAt}
+                totalVotes={poll.totalVotes}
+              />
+            ))}
+          </TableBody>
+        </Table>
       </InfiniteScrollContainer>
     </>
   );
@@ -87,15 +88,15 @@ function PollsTable({
 
 export default PollsTable;
 
-type PollItemsProps = (Pick<
+type PollItemRowProps = (Pick<
   Poll,
   "id" | "question" | "isPublic" | "createdAt"
 > & {
   totalVotes: number;
 }) &
-  Omit<React.ComponentProps<typeof Link>, "children">;
+  Omit<React.ComponentPropsWithoutRef<"tr">, "children">;
 
-function PollItem({
+function PollItemRow({
   id,
   question,
   isPublic,
@@ -103,11 +104,12 @@ function PollItem({
   className,
   totalVotes,
   ...props
-}: PollItemsProps) {
+}: PollItemRowProps) {
   const [isCopied, setIsCopied] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { isLoading: isDeletePollLoading, mutate: deletePoll } = useDeletePoll({
     onSuccess: (_, pollId) => {
       toast("Poll has been deleted.", { icon: <Icon.Check /> });
@@ -137,24 +139,28 @@ function PollItem({
 
   return (
     <>
-      <div
-        className={cn(
-          "flex rounded-[4px] border border-neutral-200 p-4 text-sm transition-colors hover:bg-neutral-700/5 dark:border-neutral-700/50",
-          className
-        )}>
-        <Link
-          className="flex w-full items-center justify-between [&>*]:max-w-[150px] [&>*]:flex-1"
-          {...props}>
-          <span className="!max-w-none">{question}</span>
-          <span>{totalVotes}</span>
-          <div>
-            <span className="rounded-[2px] bg-neutral-200 p-1 text-xs dark:bg-neutral-800">
-              {isPublic ? "Public" : "Private"}
-            </span>
-          </div>
-          <div>{dayjs(createdAt).format("DD.MM.YYYY h:mm")}</div>
-        </Link>
-        <div className="flex">
+      <TableRow key={id} className={cn("border-x", className)} {...props}>
+        <TableCell className="truncate font-medium">{question}</TableCell>
+        <TableCell>{totalVotes}</TableCell>
+        <TableCell>
+          <Badge variant="secondary">
+            {isPublic ? (
+              <>
+                <Icon.Globe />
+                <span>Public</span>
+              </>
+            ) : (
+              <>
+                <Icon.Lock />
+                <span>Private</span>
+              </>
+            )}
+          </Badge>
+        </TableCell>
+        <TableCell className="truncate text-right">
+          {dayjs(createdAt).format("DD.MM.YYYY h:mm")}
+        </TableCell>
+        <TableCell className="text-right">
           <DropdownMenu
             onOpenChange={(open) => {
               if (open && isCopied) {
@@ -171,6 +177,12 @@ function PollItem({
             <DropdownMenuContent
               align="end"
               onCloseAutoFocus={(e) => e.preventDefault()}>
+              <DropdownMenuItem
+                className="space-x-2"
+                onSelect={() => router.push(routes.poll(id))}>
+                <Icon.ExternalLink className="h-4 w-4" />
+                <span>Open link</span>
+              </DropdownMenuItem>
               <DropdownMenuItem className="space-x-2" onSelect={handleCopy}>
                 {isCopied ? (
                   <Icon.Check className="h-4 w-4" />
@@ -194,8 +206,9 @@ function PollItem({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      </div>
+        </TableCell>
+      </TableRow>
+
       <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} hideClose>
           <DialogHeader>
