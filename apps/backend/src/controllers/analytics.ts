@@ -41,7 +41,11 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
       desktop: rawData.find((d) => d.device === "desktop")?.total || 0,
     };
 
-    return res.send(data);
+    const sortedData = Object.entries(data)
+      .sort(([, a], [, b]) => b - a)
+      .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+
+    return res.send(sortedData);
   } catch (error) {
     next(error);
   }
