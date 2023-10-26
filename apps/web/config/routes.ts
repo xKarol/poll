@@ -16,7 +16,10 @@ export const routes = {
     HOME: "/dashboard/polls", //alias
     POLLS: "/dashboard/polls",
     VOTES: "/dashboard/votes",
-    ANALYTICS: "/dashboard/analytics",
+    ANALYTICS: {
+      HOME: "/dashboard/analytics",
+      poll: (pollId: string) => `/dashboard/analytics/poll/${pollId}` as const,
+    },
   },
   SETTINGS: {
     HOME: "/settings/account/general", //alias

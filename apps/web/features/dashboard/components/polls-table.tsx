@@ -193,9 +193,13 @@ function PollItemRow({
                 )}
                 <span>Copy link</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="space-x-2">
-                <Icon.Share2 className="h-4 w-4" />
-                <span>Share</span>
+              <DropdownMenuItem
+                className="space-x-2"
+                onSelect={() =>
+                  router.push(routes.DASHBOARD.ANALYTICS.poll(id))
+                }>
+                <Icon.BarChart2 className="h-4 w-4" />
+                <span>Analytics</span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="space-x-2 text-red-400 [&>*]:pointer-events-none"

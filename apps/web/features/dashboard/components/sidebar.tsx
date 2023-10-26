@@ -27,8 +27,8 @@ export const sidebarLinks = [
   },
   {
     text: "Analytics",
-    href: routes.DASHBOARD.ANALYTICS,
-    IconElement: <Icon.BarChart />,
+    href: routes.DASHBOARD.ANALYTICS.HOME,
+    IconElement: <Icon.BarChart2 />,
   },
   {
     text: "Settings",
