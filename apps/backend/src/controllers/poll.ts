@@ -113,7 +113,7 @@ export const Vote = async (
       browser_version: ua.getBrowser().version || "Unknown",
       os: ua.getOS().name || "Unknown",
       os_version: ua.getOS().version || "Unknown",
-      device: ua.getDevice().type || "Unknown",
+      device: ua.getDevice().type || "desktop",
       device_model: ua.getDevice().model || "Unknown",
       device_vendor: ua.getDevice().vendor || "Unknown",
     }).catch((e) => {
