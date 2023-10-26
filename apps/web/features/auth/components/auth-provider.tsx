@@ -4,12 +4,14 @@ import React from "react";
 
 import type { Providers } from "../types";
 
-export type AuthProviderProps = { variant: Providers } & Omit<
+type AuthProviders = Exclude<Providers, "credentials">;
+
+export type AuthProviderProps = { variant: AuthProviders } & Omit<
   React.ComponentProps<typeof LoadingButton>,
   "variant"
 >;
 
-const variantIcons: Record<Providers, JSX.Element> = {
+const variantIcons: Record<AuthProviders, JSX.Element> = {
   google: <Icon.Google />,
 };
 
