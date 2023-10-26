@@ -31,7 +31,11 @@ const credentialsSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
-  const { mutate, isLoading, error } = useSignIn({
+  const {
+    mutateAsync: signIn,
+    isLoading,
+    error,
+  } = useSignIn({
     redirectUrl: router.query.redirect as string | undefined,
   });
   const form = useForm<FormValues>({
@@ -42,6 +46,13 @@ export default function LoginPage() {
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
       console.log(data);
+      await signIn({
+        provider: "credentials",
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      });
       form.reset();
     } catch (error) {
       form.setError("root", { message: getErrorMessage(error) });
@@ -64,7 +75,7 @@ export default function LoginPage() {
         <AuthProvider
           variant="google"
           isLoading={isLoading.google}
-          onClick={() => mutate("google")}
+          onClick={() => signIn({ provider: "google" })}
         />
         <Divider className="!mb-8 !mt-12 border-neutral-200 dark:border-neutral-600" />
         <div className="flex flex-col space-y-16">

@@ -6,6 +6,7 @@ import { routes } from "../../../config/routes";
 import type { Providers } from "../types";
 
 const initialLoadingData: Record<Providers, boolean> = {
+  credentials: false,
   google: false,
 };
 
@@ -19,11 +20,23 @@ export const useSignIn = (
   const [loading, setLoading] = useState(initialLoadingData);
 
   const data = useMutation({
-    mutationFn: async (provider: Providers) => {
+    mutationFn: async ({
+      provider,
+      // @ts-expect-error TODO fix
+      data: credentials = {},
+    }:
+      | {
+          provider: Exclude<Providers, "credentials">;
+        }
+      | {
+          provider: "credentials";
+          data: { email: string; password: string };
+        }) => {
       setLoading((prevData) => ({ ...prevData, [provider]: true }));
       const res = await signIn(provider, {
         callbackUrl: redirectUrl,
         redirect: !!redirectUrl,
+        ...credentials,
       });
       if (res?.error) throw res.error;
     },

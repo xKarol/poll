@@ -1,5 +1,6 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { type NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 import { routes } from "../../../config/routes";
@@ -20,7 +21,28 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_OAUTH_ID,
       clientSecret: process.env.GOOGLE_OAUTH_SECRET,
     }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Enter your email address...",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+          placeholder: "••••••••••",
+        },
+      },
+      async authorize(credentials) {
+        // TODO add credentials auth
+        console.log(credentials);
+        throw new Error("Credentials auth is disabled");
+      },
+    }),
   ],
+
   callbacks: {
     async jwt({ token }) {
       const user = await prisma.user.findFirst({
@@ -40,7 +62,6 @@ export const authOptions: NextAuthOptions = {
         ...user,
       };
     },
-
     async session({ session, token }) {
       return {
         ...session,
