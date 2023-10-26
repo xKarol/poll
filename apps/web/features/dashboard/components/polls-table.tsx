@@ -29,7 +29,7 @@ import {
   type FetchNextPageOptions,
 } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
@@ -109,7 +109,6 @@ function PollItemRow({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [, copy] = useCopyToClipboard();
   const queryClient = useQueryClient();
-  const router = useRouter();
   const { isLoading: isDeletePollLoading, mutate: deletePoll } = useDeletePoll({
     onSuccess: (_, pollId) => {
       toast("Poll has been deleted.", { icon: <Icon.Check /> });
@@ -179,11 +178,11 @@ function PollItemRow({
             <DropdownMenuContent
               align="end"
               onCloseAutoFocus={(e) => e.preventDefault()}>
-              <DropdownMenuItem
-                className="space-x-2"
-                onSelect={() => router.push(routes.poll(id))}>
-                <Icon.ExternalLink className="h-4 w-4" />
-                <span>Open link</span>
+              <DropdownMenuItem className="space-x-2" asChild>
+                <Link href={routes.poll(id)}>
+                  <Icon.ExternalLink className="h-4 w-4" />
+                  <span>Open link</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="space-x-2" onSelect={handleCopy}>
                 {isCopied ? (
@@ -193,13 +192,11 @@ function PollItemRow({
                 )}
                 <span>Copy link</span>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                className="space-x-2"
-                onSelect={() =>
-                  router.push(routes.DASHBOARD.ANALYTICS.poll(id))
-                }>
-                <Icon.BarChart2 className="h-4 w-4" />
-                <span>Analytics</span>
+              <DropdownMenuItem className="space-x-2" asChild>
+                <Link href={routes.DASHBOARD.ANALYTICS.poll(id)}>
+                  <Icon.BarChart2 className="h-4 w-4" />
+                  <span>Analytics</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="space-x-2 text-red-400 [&>*]:pointer-events-none"
