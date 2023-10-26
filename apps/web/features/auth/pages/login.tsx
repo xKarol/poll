@@ -41,6 +41,10 @@ export default function LoginPage() {
   const form = useForm<FormValues>({
     // @ts-expect-error
     resolver: zodResolver(credentialsSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
