@@ -26,8 +26,8 @@ export const sidebarLinks = [
     IconElement: <Icon.Vote />,
   },
   {
-    text: "Statistics",
-    href: routes.DASHBOARD.STATISTICS,
+    text: "Analytics",
+    href: routes.DASHBOARD.ANALYTICS,
     IconElement: <Icon.BarChart />,
   },
   {

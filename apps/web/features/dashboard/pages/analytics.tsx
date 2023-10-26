@@ -30,14 +30,14 @@ const sortData = (d: unknown[]) => {
   ];
 };
 
-const StatisticsPage = () => {
+const AnalyticsPage = () => {
   const d = useVotesAnalytics();
 
   console.log(d.data);
 
   return (
     <BaseLayout>
-      <Heading className="mb-5">Statistics</Heading>
+      <Heading className="mb-5">Analytics</Heading>
       <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
         <StatisticCard
           className="flex-1"
@@ -164,7 +164,7 @@ const StatisticsPage = () => {
   );
 };
 
-export default StatisticsPage;
+export default AnalyticsPage;
 
 type StatisticCardProps = {
   heading: string;

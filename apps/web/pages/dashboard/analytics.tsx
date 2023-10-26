@@ -1,6 +1,6 @@
 import { NextSeo } from "next-seo";
 
-import { StatisticsPage } from "../../features/dashboard";
+import { AnalyticsPage } from "../../features/dashboard";
 import { useUnauthorizedRedirect } from "../../hooks/use-unauthorized-redirect";
 
 export default function Page() {
@@ -8,8 +8,8 @@ export default function Page() {
 
   return (
     <>
-      <NextSeo title="Statistics" />
-      <StatisticsPage />
+      <NextSeo title="Analytics" />
+      <AnalyticsPage />
     </>
   );
 }
