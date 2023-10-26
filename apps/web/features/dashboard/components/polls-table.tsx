@@ -30,7 +30,7 @@ import {
 } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
@@ -129,6 +129,16 @@ function PollItemRow({
       });
     },
   });
+
+  useEffect(() => {
+    if (isCopied) {
+      toast("Copied to clipboard.", { icon: <Icon.Check /> });
+    }
+    const timeout = setTimeout(() => {
+      if (isCopied) setIsCopied(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, [isCopied]);
 
   const handleCopy = (e: Event) => {
     e.preventDefault();
