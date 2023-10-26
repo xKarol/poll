@@ -1,6 +1,6 @@
 import { cn } from "@poll/lib";
 import type { Analytics } from "@poll/types";
-import { Icon } from "@poll/ui";
+import { Icon, Skeleton } from "@poll/ui";
 import React from "react";
 
 import { useAnalyticsTopDevices } from "../hooks";
@@ -14,7 +14,7 @@ const deviceIcon: Record<Analytics.Devices, JSX.Element> = {
 };
 
 export default function TopDevices({ className, ...props }: TopDevicesProps) {
-  const { data, isSuccess, isError } = useAnalyticsTopDevices();
+  const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices();
   return (
     <div className={cn("flex w-60 flex-col space-y-2", className)} {...props}>
       <h1 className="text-sm font-medium">Top devices</h1>
@@ -22,6 +22,18 @@ export default function TopDevices({ className, ...props }: TopDevicesProps) {
         <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
           Something went wrong...
         </span>
+      )}
+      {isLoading && (
+        <div className="flex flex-col space-y-1">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="flex w-full items-center justify-between px-4 py-2">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-10" />
+            </Skeleton>
+          ))}
+        </div>
       )}
       {isSuccess && (
         <div className="flex flex-col space-y-1">
