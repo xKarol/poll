@@ -66,6 +66,7 @@ export const authOptions: NextAuthOptions = {
       return {
         ...session,
         user: {
+          id: token.id,
           ...session.user,
           plan: token.plan,
           clockType: token.clockType,
