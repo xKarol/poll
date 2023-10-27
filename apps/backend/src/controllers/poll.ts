@@ -100,8 +100,8 @@ export const Vote = async (
 
     const data = await votePoll({ userId, pollId, answerId });
 
-    console.log(req.ip, req.headers);
-    const geo = await getGeoData(req.ip).catch(() => null);
+    const ip = (req.headers["true-client-ip"] as string | undefined) || req.ip;
+    const geo = await getGeoData(ip).catch(() => null);
     const userAgent = req.headers["user-agent"] || "";
     ua.setUA(userAgent).getResult();
 
