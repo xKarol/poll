@@ -102,7 +102,6 @@ export const Vote = async (
 
     const ip = (req.headers["true-client-ip"] as string | undefined) || req.ip;
     const geo = await getGeoData(ip).catch(() => null);
-    console.log(geo);
     const userAgent = req.headers["user-agent"] || "";
     ua.setUA(userAgent).getResult();
 
@@ -122,8 +121,8 @@ export const Vote = async (
       device_vendor: ua.getDevice().vendor,
       country_code: geo?.country_code,
       country_name: geo?.country_name,
-      latitude: geo?.latitude,
-      longitude: geo?.longitude,
+      latitude: `${geo?.latitude}`,
+      longitude: `${geo?.longitude}`,
       region: geo?.region,
     }).catch((e) => {
       console.log("Vote Analytics error:", e);

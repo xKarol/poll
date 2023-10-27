@@ -21,8 +21,8 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
     region: z.string().optional().default("Unknown"),
     country_code: z.string().optional().default("Unknown"),
     country_name: z.string().optional().default("Unknown"),
-    latitude: z.number().optional().default(0),
-    longitude: z.number().optional().default(0),
+    latitude: z.string().optional().default("0"),
+    longitude: z.string().optional().default("0"),
   }),
 });
 
