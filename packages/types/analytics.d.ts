@@ -4,11 +4,19 @@ export type GetPollData = {
 
 export type Devices = "mobile" | "tablet" | "desktop";
 
+export type VotesData = { timestamp: number; totalVotes: number };
+
+export type TopCountriesData = {
+  country_name: string;
+  country_code: string;
+  total: number;
+};
+
+export type TopDevicesData = Record<Devices, number>;
+
 // Frontend
 export interface Api {
-  getUserPollVotes: () => Promise<{ timestamp: number; totalVotes: number }[]>;
-  getUserPollTopDevices: () => Promise<Record<Devices, number>>;
-  getUserPollTopCountries: () => Promise<
-    { country_name: string; country_code: string; total: number }[]
-  >;
+  getUserPollVotes: () => Promise<VotesData[]>;
+  getUserPollTopDevices: () => Promise<TopDevicesData>;
+  getUserPollTopCountries: () => Promise<TopCountriesData[]>;
 }

@@ -1,40 +1,12 @@
 import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
-import dayjs from "dayjs";
 import React from "react";
-import {
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-} from "recharts";
 
-import { TopCountries, TopDevices } from "../components";
+import { TopCountries, TopDevices, VotesLineChart } from "../components";
 import Heading from "../components/heading";
-import { useVotesAnalytics } from "../hooks";
 import { BaseLayout } from "../layouts";
 
-// TODO change param type
-const sortData = (d: unknown[]) => {
-  return [
-    ...d.map((dd) => ({
-      // @ts-expect-error
-      totalVotes: dd.totalVotes,
-      // @ts-expect-error
-      timestamp: dayjs(dd.timestamp).unix(),
-    })),
-  ];
-};
-
 const AnalyticsPage = () => {
-  const d = useVotesAnalytics();
-
-  console.log(d.data);
-
   return (
     <BaseLayout>
       <Heading className="mb-5">Analytics</Heading>
@@ -62,38 +34,7 @@ const AnalyticsPage = () => {
         />
       </div>
       <div className="flex h-full space-x-8">
-        <div className="flex-1 rounded-[4px] border border-neutral-300 dark:border-neutral-800">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={500}
-              height={300}
-              data={d.isSuccess ? sortData(d.data) : []}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="timestamp"
-                tickFormatter={(tick) => dayjs(tick).format("MMM")}
-                type="number"
-                scale="time"
-                domain={["dataMin", "dataMax"]}
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="totalVotes"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+        <VotesLineChart />
         <div className="flex flex-col space-y-4">
           <TopCountries />
           <TopDevices />
