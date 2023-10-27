@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Divider } from "@mui/material";
-import { Alert, AlertTitle, Input, LoadingButton } from "@poll/ui";
+import { Alert, AlertTitle, Input, LoadingButton, Separator } from "@poll/ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -81,7 +80,7 @@ export default function LoginPage() {
           isLoading={isLoading.google}
           onClick={() => signIn({ provider: "google" })}
         />
-        <Divider className="!mb-8 !mt-12 border-neutral-200 dark:border-neutral-600" />
+        <Separator className="mb-8 mt-12" />
         <div className="flex flex-col space-y-16">
           <div className="flex flex-col justify-center">
             <Form {...form}>

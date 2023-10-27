@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Divider } from "@mui/material";
 import type { User } from "@poll/types";
 import {
   Button,
@@ -13,6 +12,7 @@ import {
   Icon,
   Input,
   LoadingButton,
+  Separator,
   Skeleton,
   toast,
 } from "@poll/ui";
@@ -63,7 +63,7 @@ export default function AccountEditPage() {
       ) : (
         <div>
           <EditAccountForm />
-          <Divider className="!my-8 dark:!border-neutral-700" />
+          <Separator className="my-8" />
           <DangerZone />
         </div>
       )}

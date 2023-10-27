@@ -17,3 +17,4 @@ export * from "./components/badge";
 export * from "./components/tooltip";
 export * from "./components/avatar";
 export * from "./components/table";
+export * from "./components/separator";
