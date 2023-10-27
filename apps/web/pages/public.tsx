@@ -12,8 +12,8 @@ import {
   Skeleton,
 } from "@poll/ui";
 import { NextSeo } from "next-seo";
+import { useQueryState } from "next-usequerystate";
 import Link from "next/link";
-import { useState } from "react";
 
 import { InfiniteScrollContainer } from "../components/infinite-scroll-container";
 import { routes } from "../config/routes";
@@ -25,7 +25,10 @@ import { getErrorMessage } from "../utils/error";
 type SortValue = `${Poll.SortPollFields}.${"desc" | "asc"}`;
 
 export default function PublicPage() {
-  const [sortValue, setSortValue] = useState<SortValue>("createdAt.desc");
+  const [sortValue, setSortValue] = useQueryState("sort", {
+    defaultValue: "createdAt.desc",
+  });
+
   const [sortBy, orderBy] = sortValue.split(".") as [
     Poll.SortPollFields,
     OrderBy,
