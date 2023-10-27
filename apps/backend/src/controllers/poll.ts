@@ -2,6 +2,7 @@ import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 
+import { getGeoData } from "../lib/geoip";
 import { ua } from "../lib/useragent";
 import {
   createPoll,
@@ -99,6 +100,7 @@ export const Vote = async (
 
     const data = await votePoll({ userId, pollId, answerId });
 
+    const geo = await getGeoData(req.ip).catch(() => null);
     const userAgent = req.headers["user-agent"] || "";
     ua.setUA(userAgent).getResult();
 
@@ -109,13 +111,18 @@ export const Vote = async (
       voteId: data.id,
       answerId,
       timestamp: Date.now(),
-      browser: ua.getBrowser().name || "Unknown",
-      browser_version: ua.getBrowser().version || "Unknown",
-      os: ua.getOS().name || "Unknown",
-      os_version: ua.getOS().version || "Unknown",
-      device: ua.getDevice().type || "desktop",
-      device_model: ua.getDevice().model || "Unknown",
-      device_vendor: ua.getDevice().vendor || "Unknown",
+      browser: ua.getBrowser().name,
+      browser_version: ua.getBrowser().version,
+      os: ua.getOS().name,
+      os_version: ua.getOS().version,
+      device: ua.getDevice().type,
+      device_model: ua.getDevice().model,
+      device_vendor: ua.getDevice().vendor,
+      country_code: geo?.country_code,
+      country_name: geo?.country_name,
+      latitude: geo?.latitude,
+      longitude: geo?.longitude,
+      region: geo?.region,
     }).catch((e) => {
       console.log("Vote Analytics error:", e);
       return null;
