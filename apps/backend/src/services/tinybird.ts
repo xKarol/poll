@@ -6,8 +6,8 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
   datasource: "analytics_poll_vote__v1",
   event: z.object({
     voteId: z.string(),
-    userId: z.string().optional(),
-    ownerId: z.string(),
+    userId: z.string().optional().default("Unknown"),
+    ownerId: z.string().optional().default("Unknown"),
     pollId: z.string(),
     answerId: z.string(),
     timestamp: z.number().int(),
@@ -21,8 +21,8 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
     region: z.string().optional().default("Unknown"),
     country_code: z.string().optional().default("Unknown"),
     country_name: z.string().optional().default("Unknown"),
-    // latitude: z.number().optional().default(0),
-    // longitude: z.number().optional().default(0),
+    latitude: z.number().optional().default(0.01),
+    longitude: z.number().optional().default(0.01),
   }),
 });
 
