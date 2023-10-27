@@ -121,8 +121,8 @@ export const Vote = async (
       device_vendor: ua.getDevice().vendor,
       country_code: geo?.country_code,
       country_name: geo?.country_name,
-      latitude: `${geo?.latitude}`,
-      longitude: `${geo?.longitude}`,
+      // latitude: geo?.latitude,
+      // longitude: geo?.longitude,
       region: geo?.region,
     }).catch((e) => {
       console.log("Vote Analytics error:", e);
