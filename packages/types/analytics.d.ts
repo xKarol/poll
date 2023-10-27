@@ -9,6 +9,6 @@ export interface Api {
   getUserPollVotes: () => Promise<{ timestamp: number; totalVotes: number }[]>;
   getUserPollTopDevices: () => Promise<Record<Devices, number>>;
   getUserPollTopCountries: () => Promise<
-    { country_name: string; country_code: string; totalVotes: number }[]
+    { country_name: string; country_code: string; total: number }[]
   >;
 }
