@@ -27,7 +27,7 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
 });
 
 export const getUserPollVotesData = tinybird.buildPipe({
-  pipe: process.env.TINYBIRD_PIPE_USER_POLL_TOP_DEVICES_ID as string,
+  pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
   parameters: z.object({
     ownerId: z.string(),
   }),
