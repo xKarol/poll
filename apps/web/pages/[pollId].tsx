@@ -10,10 +10,23 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  Button,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
 import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import React, { useMemo, useRef, useState } from "react";
@@ -75,6 +88,7 @@ const PollPage = () => {
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
   const userChoiceAnswerId = usePollAnswerUserChoice(pollId);
+  const { data: session } = useSession();
   const recaptchaRef = useRef<ReCAPTCHA>();
   useLiveAnswers(pollId);
 
@@ -163,35 +177,78 @@ const PollPage = () => {
           <NextSeo title={data.question} />
           <div className="container m-auto flex flex-col space-y-16 xl:max-w-6xl">
             <form onSubmit={handleSubmit} className="flex flex-col">
-              <div className="space-y-2 leading-[2]">
-                <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
-                  {data.question}
-                </h1>
-                <div className="flex flex-wrap items-center gap-4">
-                  <span className="text-base font-normal text-neutral-400">
-                    by a {data.user?.name || "guest"} ·{" "}
-                    {dayjs(data.createdAt).fromNow()}
-                  </span>
-                  {!data.isPublic ? (
-                    <Badge variant="secondary">
-                      <Icon.Lock />
-                      <span>Private</span>
-                    </Badge>
-                  ) : null}
-                  {isVoted ? (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="relative flex h-2.5 w-2.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
-                          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Real-time data is updated every 5 seconds</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  ) : null}
+              <div className="flex justify-between space-x-2">
+                <div className="w-full space-y-2 leading-[2]">
+                  <h1 className="text-[22px] font-normal leading-[1.2] md:text-2xl xl:text-[32px]">
+                    {data.question}
+                  </h1>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <span className="text-base font-normal text-neutral-400">
+                      by a {data.user?.name || "guest"} ·{" "}
+                      {dayjs(data.createdAt).fromNow()}
+                    </span>
+                    {!data.isPublic ? (
+                      <Badge variant="secondary">
+                        <Icon.Lock />
+                        <span>Private</span>
+                      </Badge>
+                    ) : null}
+                    {isVoted ? (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="relative flex h-2.5 w-2.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-75"></span>
+                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Real-time data is updated every 5 seconds</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ) : null}
+                  </div>
                 </div>
+                {session?.user.id === data.userId ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="text" className="p-4">
+                        <Icon.MoreHorizontal className="!h-6 !w-6" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <DropdownMenuItem
+                            className="space-x-2 text-red-400"
+                            onSelect={(e) => e.preventDefault()}>
+                            <Icon.Trash2 className="h-4 w-4" />
+                            <span>Delete poll</span>
+                          </DropdownMenuItem>
+                        </DialogTrigger>
+                        <DialogContent hideClose>
+                          <DialogHeader>
+                            <DialogTitle>Delete poll</DialogTitle>
+                            <DialogDescription>
+                              Are you sure you want to delete this poll?
+                            </DialogDescription>
+                          </DialogHeader>
+
+                          <DialogFooter>
+                            <Button variant="text" asChild>
+                              <DialogTrigger>Cancel</DialogTrigger>
+                            </Button>
+                            <LoadingButton
+                              variant="destructive"
+                              isLoading={false}>
+                              <Icon.Trash2 />
+                              <span>Delete poll</span>
+                            </LoadingButton>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : null}
               </div>
               <RadioGroup
                 className="my-10 flex flex-col"
