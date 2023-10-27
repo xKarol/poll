@@ -1,6 +1,7 @@
 import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
 import dayjs from "dayjs";
+import Image from "next/image";
 import React from "react";
 import {
   XAxis,
@@ -98,63 +99,8 @@ const AnalyticsPage = () => {
           <section className="w-60 space-y-2">
             <h1 className="text-sm font-medium">Top countries</h1>
             <div className="flex flex-col space-y-1">
-              <Country
-                countryName="Poland"
-                countryFlag={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="10"
-                    id="Flag of Poland"
-                    viewBox="0 0 16 10">
-                    <rect width="16" height="10" fill="#fff" />
-                    <rect width="16" height="5" fill="#dc143c" y="5" />
-                  </svg>
-                }
-                value={124}
-              />
-              <Country
-                countryName="USA"
-                countryFlag={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="10"
-                    viewBox="0 0 7410 3900">
-                    <rect width="7410" height="3900" fill="#b22234" />
-                    <path
-                      d="M0,450H7410m0,600H0m0,600H7410m0,600H0m0,600H7410m0,600H0"
-                      stroke="#fff"
-                      stroke-width="300"
-                    />
-                    <rect width="2964" height="2100" fill="#3c3b6e" />
-                    <g fill="#fff">
-                      <g id="s18">
-                        <g id="s9">
-                          <g id="s5">
-                            <g id="s4">
-                              <path
-                                id="s"
-                                d="M247,90 317.534230,307.082039 132.873218,172.917961H361.126782L176.465770,307.082039z"
-                              />
-                              <use y="420" />
-                              <use y="840" />
-                              <use y="1260" />
-                            </g>
-                            <use y="1680" />
-                          </g>
-                          <use x="247" y="210" />
-                        </g>
-                        <use x="494" />
-                      </g>
-                      <use x="988" />
-                      <use x="1976" />
-                      <use x="2470" />
-                    </g>
-                  </svg>
-                }
-                value={87}
-              />
+              <Country countryName="Poland" countryCode="PL" value={124} />
+              <Country countryName="USA" countryCode="US" value={87} />
             </div>
           </section>
           <TopDevices />
@@ -197,12 +143,12 @@ function StatisticCard({
 }
 
 type CountryProps = {
-  countryFlag: JSX.Element;
+  countryCode: string;
   countryName: string;
   value: number;
 } & React.ComponentPropsWithoutRef<"section">;
 
-function Country({ countryFlag, countryName, value, className }: CountryProps) {
+function Country({ countryCode, countryName, value, className }: CountryProps) {
   return (
     <div
       className={cn(
@@ -210,7 +156,12 @@ function Country({ countryFlag, countryName, value, className }: CountryProps) {
         className
       )}>
       <div className="flex items-center space-x-4">
-        {countryFlag}
+        <Image
+          width={16}
+          height={12}
+          src={`/flags/${countryCode}.svg`}
+          alt={`${countryName} flag`}
+        />
         <span>{countryName}</span>
       </div>
 
