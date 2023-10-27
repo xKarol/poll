@@ -28,4 +28,10 @@ router.get(
   AnalyticsController.GetUserPollTopDevicesData
 );
 
+router.get(
+  apiUrls.analytics.getUserPollTopCountries,
+  requireAuth,
+  AnalyticsController.GetUserPollTopCountriesData
+);
+
 export default router;

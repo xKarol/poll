@@ -1,6 +1,7 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 import {
+  getAnalyticsUserPollTopCountries,
   getAnalyticsUserPollTopDevices,
   getAnalyticsUserPollVotes,
 } from "../services/api";
@@ -8,6 +9,7 @@ import {
 export const analyticsKeys = {
   getUserPollsVotes: ["analytics.votes"] as const,
   getUserPollTopDevices: ["analytics.top-devices"] as const,
+  getUserPollTopCountries: ["analytics.top-countries"] as const,
 };
 
 export const analyticsOptions = {
@@ -22,5 +24,11 @@ export const analyticsOptions = {
     queryFn: getAnalyticsUserPollTopDevices,
   } satisfies UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
+  >,
+  getUserPollTopCountries: {
+    queryKey: analyticsKeys.getUserPollTopCountries,
+    queryFn: getAnalyticsUserPollTopCountries,
+  } satisfies UseQueryOptions<
+    Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
   >,
 } satisfies Record<keyof typeof analyticsKeys, unknown>;

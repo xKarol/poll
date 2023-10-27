@@ -125,3 +125,9 @@ export const getAnalyticsUserPollTopDevices: Analytics.Api["getUserPollTopDevice
     const { data } = await axios.get(apiUrls.analytics.getUserPollTopDevices);
     return data;
   };
+
+export const getAnalyticsUserPollTopCountries: Analytics.Api["getUserPollTopCountries"] =
+  async () => {
+    const { data } = await axios.get(apiUrls.analytics.getUserPollTopCountries);
+    return data;
+  };

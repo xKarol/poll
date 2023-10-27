@@ -4,6 +4,7 @@ import type { Handler, NextFunction, Request, Response } from "express";
 import {
   getUserPollTopDevices,
   getUserPollVotesData,
+  getUserPollTopCountries,
 } from "../services/tinybird";
 
 export const GetUserPollVotesData: Handler = async (req, res, next) => {
@@ -46,6 +47,23 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
       .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
     return res.send(sortedData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
+  try {
+    const { id: userId } = req.user!;
+    const { data: rawData } = await getUserPollTopCountries({
+      ownerId: userId,
+    });
+
+    const data = rawData.filter(
+      (countryData) => countryData.country_code.length === 2
+    );
+
+    return res.send(data);
   } catch (error) {
     next(error);
   }

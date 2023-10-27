@@ -28,6 +28,7 @@ export const apiUrls = {
   analytics: {
     userPollVotes: "/analytics/poll/vote",
     getUserPollTopDevices: "/analytics/poll/top-devices",
+    getUserPollTopCountries: "/analytics/poll/top-countries",
   },
   webhooks: {
     stripe: "/webhook/stripe",

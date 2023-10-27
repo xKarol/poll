@@ -16,7 +16,7 @@ import {
 
 import { TopDevices } from "../components";
 import Heading from "../components/heading";
-import { useVotesAnalytics } from "../hooks";
+import { useAnalyticsTopCountries, useVotesAnalytics } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 // TODO change param type
@@ -33,6 +33,8 @@ const sortData = (d: unknown[]) => {
 
 const AnalyticsPage = () => {
   const d = useVotesAnalytics();
+  const countries = useAnalyticsTopCountries();
+  console.log({ countries });
 
   console.log(d.data);
 

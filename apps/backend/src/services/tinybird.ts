@@ -47,3 +47,15 @@ export const getUserPollTopDevices = tinybird.buildPipe({
     total: z.number().positive(),
   }),
 });
+
+export const getUserPollTopCountries = tinybird.buildPipe({
+  pipe: process.env.TINYBIRD_PIPE_USER_TOP_COUNTRIES_ID as string,
+  parameters: z.object({
+    ownerId: z.string(),
+  }),
+  data: z.object({
+    country_name: z.string(),
+    country_code: z.string(),
+    total: z.number().positive(),
+  }),
+});
