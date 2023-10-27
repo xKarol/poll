@@ -1,7 +1,6 @@
 import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
 import dayjs from "dayjs";
-import Image from "next/image";
 import React from "react";
 import {
   XAxis,
@@ -14,9 +13,9 @@ import {
   Line,
 } from "recharts";
 
-import { TopDevices } from "../components";
+import { TopCountries, TopDevices } from "../components";
 import Heading from "../components/heading";
-import { useAnalyticsTopCountries, useVotesAnalytics } from "../hooks";
+import { useVotesAnalytics } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 // TODO change param type
@@ -33,8 +32,6 @@ const sortData = (d: unknown[]) => {
 
 const AnalyticsPage = () => {
   const d = useVotesAnalytics();
-  const countries = useAnalyticsTopCountries();
-  console.log({ countries });
 
   console.log(d.data);
 
@@ -98,13 +95,7 @@ const AnalyticsPage = () => {
           </ResponsiveContainer>
         </div>
         <div className="flex flex-col space-y-4">
-          <section className="w-60 space-y-2">
-            <h1 className="text-sm font-medium">Top countries</h1>
-            <div className="flex flex-col space-y-1">
-              <Country countryName="Poland" countryCode="PL" value={124} />
-              <Country countryName="USA" countryCode="US" value={87} />
-            </div>
-          </section>
+          <TopCountries />
           <TopDevices />
         </div>
       </div>
@@ -141,36 +132,5 @@ function StatisticCard({
       <h2 className="text-xl font-bold">{statsValue}</h2>
       <p className="text-xs text-neutral-400">{statsDifference}</p>
     </section>
-  );
-}
-
-type CountryProps = {
-  countryCode: string;
-  countryName: string;
-  value: number;
-} & React.ComponentPropsWithoutRef<"section">;
-
-function Country({ countryCode, countryName, value, className }: CountryProps) {
-  return (
-    <div
-      className={cn(
-        "relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800",
-        className
-      )}>
-      <div className="flex items-center space-x-4">
-        <Image
-          width={16}
-          height={12}
-          src={`/flags/${countryCode}.svg`}
-          alt={`${countryName} flag`}
-        />
-        <span>{countryName}</span>
-      </div>
-
-      <div className="flex items-center space-x-1">
-        <span className="font-medium">{value}</span>
-        <Icon.BarChart2 className="h-3 w-3" />
-      </div>
-    </div>
   );
 }

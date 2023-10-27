@@ -1,0 +1,88 @@
+import { cn } from "@poll/lib";
+import { Icon, Skeleton } from "@poll/ui";
+import Image from "next/image";
+import React from "react";
+
+import { useAnalyticsTopCountries } from "../hooks";
+
+type TopCountriesProps = React.ComponentPropsWithoutRef<"div">;
+
+export default function TopCountries({
+  className,
+  ...props
+}: TopCountriesProps) {
+  const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries();
+  const isEmpty = isSuccess && data.length === 0;
+  return (
+    <div className={cn("flex w-60 flex-col space-y-2", className)} {...props}>
+      <h1 className="text-sm font-medium">Top countries</h1>
+      {isError && (
+        <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
+          Something went wrong...
+        </span>
+      )}
+      {isEmpty && (
+        <div className="flex">
+          <span className="mx-auto my-10 text-xs text-neutral-400 dark:text-neutral-300">
+            No data available
+          </span>
+        </div>
+      )}
+      {isLoading && (
+        <div className="flex flex-col space-y-1">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="flex w-full items-center justify-between px-4 py-2">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-10" />
+            </Skeleton>
+          ))}
+        </div>
+      )}
+      {isSuccess && (
+        <div className="flex flex-col space-y-1">
+          {data.map(({ country_name, country_code, total }) => (
+            <Country
+              key={country_code}
+              countryName={country_name}
+              countryCode={country_code}
+              value={total}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type CountryProps = {
+  countryCode: string;
+  countryName: string;
+  value: number;
+} & React.ComponentPropsWithoutRef<"section">;
+
+function Country({ countryCode, countryName, value, className }: CountryProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800",
+        className
+      )}>
+      <div className="flex items-center space-x-4">
+        <Image
+          width={16}
+          height={12}
+          src={`/flags/${countryCode}.svg`}
+          alt={`${countryName} flag`}
+        />
+        <span>{countryName}</span>
+      </div>
+
+      <div className="flex items-center space-x-1">
+        <span className="font-medium">{value}</span>
+        <Icon.BarChart2 className="h-3 w-3" />
+      </div>
+    </div>
+  );
+}
