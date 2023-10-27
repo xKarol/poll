@@ -19,7 +19,7 @@ import React from "react";
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
 import { getErrorMessage } from "../../../utils/error";
-import Heading from "../components/heading";
+import { Header } from "../components";
 import { useUserPollVotes } from "../hooks";
 import { BaseLayout } from "../layouts";
 
@@ -38,7 +38,8 @@ const MyVotesPage = () => {
 
   return (
     <BaseLayout>
-      <Heading className="mb-5">Your votes</Heading>
+      <Header heading="Your votes" />
+
       <div>
         {error && <div>{getErrorMessage(error)}</div>}
         {isLoading && <Icon.Loader2 className="m-auto animate-spin" />}

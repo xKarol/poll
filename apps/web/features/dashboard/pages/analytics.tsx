@@ -2,14 +2,18 @@ import { cn } from "@poll/lib";
 import { Icon } from "@poll/ui";
 import React from "react";
 
-import { TopCountries, TopDevices, VotesLineChart } from "../components";
-import Heading from "../components/heading";
+import {
+  Header,
+  TopCountries,
+  TopDevices,
+  VotesLineChart,
+} from "../components";
 import { BaseLayout } from "../layouts";
 
 const AnalyticsPage = () => {
   return (
     <BaseLayout>
-      <Heading className="mb-5">Analytics</Heading>
+      <Header heading="Analytics" />
       <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
         <StatisticCard
           className="flex-1"

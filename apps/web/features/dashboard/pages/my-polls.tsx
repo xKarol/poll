@@ -3,7 +3,7 @@ import React from "react";
 
 import { CreatePollForm } from "../../../components/create-poll-form";
 import { getErrorMessage } from "../../../utils/error";
-import Heading from "../components/heading";
+import { Header } from "../components";
 import PollsTable from "../components/polls-table";
 import { useUserPolls } from "../hooks";
 import { BaseLayout } from "../layouts";
@@ -21,26 +21,28 @@ const MyPollsPage = () => {
   const data = pages?.pages.flatMap(({ data }) => data);
   return (
     <BaseLayout>
-      <div className="mb-8 flex items-center justify-between">
-        <Heading className="mb-5">Your polls</Heading>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <Icon.Plus />
-              <span>Create a poll</span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent hideClose>
-            <CreatePollForm
-              ActionButtons={[
-                <Button variant="text" key="close-modal-btn" asChild>
-                  <DialogTrigger>Close</DialogTrigger>
-                </Button>,
-              ]}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
+      <Header
+        heading="Your polls"
+        ActionComponent={
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm">
+                <Icon.Plus />
+                <span>Create a poll</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent hideClose>
+              <CreatePollForm
+                ActionButtons={[
+                  <Button variant="text" key="close-modal-btn" asChild>
+                    <DialogTrigger>Close</DialogTrigger>
+                  </Button>,
+                ]}
+              />
+            </DialogContent>
+          </Dialog>
+        }
+      />
       <div className="flex flex-col">
         {error && <div>{getErrorMessage(error)}</div>}
         {isLoading && <Icon.Loader2 className="m-auto animate-spin" />}
