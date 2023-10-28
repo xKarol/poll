@@ -29,7 +29,9 @@ export default function VotesLineChart({
   className,
   ...props
 }: VotesLineChartProps) {
-  const d = useVotesAnalytics();
+  const d = useVotesAnalytics({
+    interval: "day",
+  });
 
   console.log(d.data);
   return (

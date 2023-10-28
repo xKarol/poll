@@ -15,9 +15,11 @@ export type TopCountriesData = {
 
 export type TopDevicesData = Record<Devices, number>;
 
+export type getUserPollVotesParams = { interval?: Interval };
+
 // Frontend
 export interface Api {
-  getUserPollVotes: () => Promise<VotesData[]>;
+  getUserPollVotes: (params: getUserPollVotesParams) => Promise<VotesData[]>;
   getUserPollTopDevices: () => Promise<TopDevicesData>;
   getUserPollTopCountries: () => Promise<TopCountriesData[]>;
 }

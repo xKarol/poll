@@ -115,8 +115,10 @@ export const deleteUser: User.Api["deleteUser"] = async () => {
 // ANALYTICS
 
 export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
-  async () => {
-    const { data } = await axios.get(apiUrls.analytics.userPollVotes);
+  async (params) => {
+    const { data } = await axios.get(apiUrls.analytics.userPollVotes, {
+      params,
+    });
     return data;
   };
 

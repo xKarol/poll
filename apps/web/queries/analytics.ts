@@ -1,3 +1,4 @@
+import type { Analytics } from "@poll/types";
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 import {
@@ -7,18 +8,21 @@ import {
 } from "../services/api";
 
 export const analyticsKeys = {
-  getUserPollsVotes: ["analytics.votes"] as const,
+  getUserPollsVotes: (params: Analytics.getUserPollVotesParams) =>
+    ["analytics.votes", { ...params }] as const,
   getUserPollTopDevices: ["analytics.top-devices"] as const,
   getUserPollTopCountries: ["analytics.top-countries"] as const,
 };
 
 export const analyticsOptions = {
-  getUserPollsVotes: {
-    queryKey: analyticsKeys.getUserPollsVotes,
-    queryFn: getAnalyticsUserPollVotes,
-  } satisfies UseQueryOptions<
+  getUserPollsVotes: (
+    params: Analytics.getUserPollVotesParams
+  ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
-  >,
+  > => ({
+    queryKey: analyticsKeys.getUserPollsVotes(params),
+    queryFn: () => getAnalyticsUserPollVotes(params),
+  }),
   getUserPollTopDevices: {
     queryKey: analyticsKeys.getUserPollTopDevices,
     queryFn: getAnalyticsUserPollTopDevices,
