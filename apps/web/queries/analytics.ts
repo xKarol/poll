@@ -8,8 +8,10 @@ import {
 } from "../services/api";
 
 export const analyticsKeys = {
-  getUserPollsVotes: (params: Analytics.getUserPollVotesParams) =>
-    ["analytics.votes", { ...params }] as const,
+  getUserPollsVotes: ({
+    interval = "hour",
+  }: Analytics.getUserPollVotesParams) =>
+    ["analytics.votes", { interval }] as const,
   getUserPollTopDevices: ["analytics.top-devices"] as const,
   getUserPollTopCountries: ["analytics.top-countries"] as const,
 };

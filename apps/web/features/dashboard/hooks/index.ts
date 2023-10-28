@@ -4,3 +4,4 @@ export { default as useVotesAnalytics } from "./use-votes-analytics";
 export { default as useDeletePoll } from "./use-delete-poll";
 export { default as useAnalyticsTopDevices } from "./use-analytics-top-devices";
 export { default as useAnalyticsTopCountries } from "./use-analytics-top-countries";
+export { default as useAnalyticsQueryParams } from "./use-analytics-query-params";

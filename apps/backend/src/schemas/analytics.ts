@@ -14,7 +14,7 @@ export const interval = z
     "hour",
     "minute",
   ])
-  .default("day");
+  .default("hour");
 
 export const getAllPollVoteData: z.Schema = z.object({
   params: z.object({

@@ -12,7 +12,7 @@ import {
   Line,
 } from "recharts";
 
-import { useVotesAnalytics } from "../hooks";
+import { useAnalyticsQueryParams, useVotesAnalytics } from "../hooks";
 
 type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -29,8 +29,9 @@ export default function VotesLineChart({
   className,
   ...props
 }: VotesLineChartProps) {
+  const { interval } = useAnalyticsQueryParams();
   const d = useVotesAnalytics({
-    interval: "day",
+    interval,
   });
 
   console.log(d.data);
