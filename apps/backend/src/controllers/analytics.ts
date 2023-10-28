@@ -1,16 +1,25 @@
 import type { Analytics } from "@poll/types";
 import type { Handler, NextFunction, Request, Response } from "express";
 
+import type { GetAllPollVoteData } from "../schemas/analytics";
 import {
   getUserPollTopDevices,
   getUserPollVotesData,
   getUserPollTopCountries,
 } from "../services/tinybird";
 
-export const GetUserPollVotesData: Handler = async (req, res, next) => {
+export const GetUserPollVotesData = async (
+  req: Request<GetAllPollVoteData>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
+    const { interval } = req.query as { interval: Analytics.Interval };
     const { id: userId } = req.user!;
-    const { data } = await getUserPollVotesData({ ownerId: userId });
+    const { data } = await getUserPollVotesData({
+      ownerId: userId,
+      interval,
+    });
     return res.send(data);
   } catch (error) {
     next(error);

@@ -19,7 +19,7 @@ type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
 const sortData = (d: Analytics.VotesData[]) => {
   return [
     ...d.map((dd) => ({
-      totalVotes: dd.totalVotes,
+      total: dd.total,
       timestamp: dayjs(dd.timestamp).unix() * 1000,
     })),
   ];
@@ -62,7 +62,7 @@ export default function VotesLineChart({
           <Tooltip />
           <Line
             type="monotone"
-            dataKey="totalVotes"
+            dataKey="total"
             stroke="#8884d8"
             activeDot={{ r: 8 }}
           />

@@ -111,7 +111,7 @@ export const Vote = async (
       ownerId: ownerId || undefined,
       voteId: data.id,
       answerId,
-      timestamp: Date.now(),
+      timestamp: new Date().toISOString(),
       browser: ua.getBrowser().name,
       browser_version: ua.getBrowser().version,
       os: ua.getOS().name,

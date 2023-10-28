@@ -3,8 +3,9 @@ export type GetPollData = {
 };
 
 export type Devices = "mobile" | "tablet" | "desktop";
+export type Interval = "day" | "hour" | "minute";
 
-export type VotesData = { timestamp: number; totalVotes: number };
+export type VotesData = { timestamp: number; total: number };
 
 export type TopCountriesData = {
   country_name: string;

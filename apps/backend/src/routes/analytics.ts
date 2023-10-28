@@ -3,9 +3,8 @@ import express from "express";
 
 import * as AnalyticsController from "../controllers/analytics";
 import { requireAuth } from "../middlewares/require-auth";
-
-// import { validateSchema } from "../middlewares/validate-schema";
-// import * as AnalyticsSchema from "../schemas/analytics";
+import { validateSchema } from "../middlewares/validate-schema";
+import * as AnalyticsSchema from "../schemas/analytics";
 
 const router = express.Router();
 
@@ -19,6 +18,7 @@ const router = express.Router();
 router.get(
   apiUrls.analytics.userPollVotes,
   requireAuth,
+  validateSchema(AnalyticsSchema.getAllPollVoteData),
   AnalyticsController.GetUserPollVotesData
 );
 

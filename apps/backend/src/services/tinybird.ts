@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import tinybird from "../lib/tinybird";
+import * as AnalyticsSchema from "../schemas/analytics";
 
 export const sendPollVoteData = tinybird.buildIngestEndpoint({
   datasource: "analytics_poll_vote__v1",
@@ -10,7 +11,7 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
     ownerId: z.string().optional().default("Unknown"),
     pollId: z.string(),
     answerId: z.string(),
-    timestamp: z.number().int(),
+    timestamp: z.string(),
     browser: z.string().optional().default("Unknown"),
     browser_version: z.string().optional().default("Unknown"),
     os: z.string().optional().default("Unknown"),
@@ -30,10 +31,11 @@ export const getUserPollVotesData = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
   parameters: z.object({
     ownerId: z.string(),
+    interval: AnalyticsSchema.interval,
   }),
   data: z.object({
     timestamp: z.string(),
-    totalVotes: z.number().positive(),
+    total: z.number().positive(),
   }),
 });
 
