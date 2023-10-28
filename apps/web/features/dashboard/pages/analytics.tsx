@@ -1,5 +1,13 @@
 import { cn } from "@poll/lib";
-import { Icon } from "@poll/ui";
+import {
+  Icon,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@poll/ui";
+import { useQueryState } from "next-usequerystate";
 import React from "react";
 
 import {
@@ -11,9 +19,30 @@ import {
 import { BaseLayout } from "../layouts";
 
 const AnalyticsPage = () => {
+  const [interval, setInterval] = useQueryState("interval");
   return (
     <BaseLayout>
-      <Header heading="Analytics" />
+      <Header
+        heading="Analytics"
+        ActionComponent={
+          <Select onValueChange={setInterval} defaultValue={interval || "24h"}>
+            <SelectTrigger className="min-w-[180px] max-w-max">
+              <div className="flex items-center space-x-2">
+                <Icon.Calendar className="h-4 w-4" />
+                <SelectValue placeholder="Select a language" />
+              </div>
+            </SelectTrigger>
+            <SelectContent
+              align="end"
+              onCloseAutoFocus={(e) => e.preventDefault()}>
+              <SelectItem value="1h">Last hour</SelectItem>
+              <SelectItem value="24h">Last 24 hours</SelectItem>
+              <SelectItem value="7d">Last 7 days</SelectItem>
+              <SelectItem value="30d">Last 30 days</SelectItem>
+            </SelectContent>
+          </Select>
+        }
+      />
       <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
         <StatisticCard
           className="flex-1"
