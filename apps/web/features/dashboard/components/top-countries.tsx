@@ -14,7 +14,7 @@ export default function TopCountries({
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries();
   const isEmpty = isSuccess && data.length === 0;
   return (
-    <div className={cn("flex w-60 flex-col space-y-2", className)} {...props}>
+    <div className={cn("flex flex-col space-y-2", className)} {...props}>
       <h1 className="text-sm font-medium">Top countries</h1>
       {isError && (
         <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">

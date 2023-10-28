@@ -43,34 +43,29 @@ const AnalyticsPage = () => {
           </Select>
         }
       />
-      <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatisticCard
-          className="flex-1"
           heading="Total Views"
           statsValue="0"
           statsDifference="+0% from last month"
           Icon={<Icon.Eye className="h-4 w-4" />}
         />
         <StatisticCard
-          className="flex-1"
           heading="Total Votes"
           statsValue="0"
           statsDifference="+0% from last month"
           Icon={<Icon.CheckCircle className="h-4 w-4" />}
         />
         <StatisticCard
-          className="flex-1"
           heading="Total Shares"
           statsValue="0"
           statsDifference="+0% from last month"
           Icon={<Icon.Share2 className="h-4 w-4" />}
         />
-      </div>
-      <div className="flex h-full space-x-8">
-        <VotesLineChart />
-        <div className="flex flex-col space-y-4">
-          <TopCountries />
-          <TopDevices />
+        <VotesLineChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
+        <div className="flex flex-wrap gap-4 lg:flex-col lg:flex-nowrap">
+          <TopCountries className="min-w-[160px] flex-1" />
+          <TopDevices className="min-w-[160px] flex-1" />
         </div>
       </div>
     </BaseLayout>
