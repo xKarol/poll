@@ -16,42 +16,44 @@ export default function TopCountries({
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>
       <h1 className="text-sm font-medium">Top countries</h1>
-      {isError && (
-        <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
-          Something went wrong...
-        </span>
-      )}
-      {isEmpty && (
-        <div className="flex">
-          <span className="mx-auto my-10 text-xs text-neutral-400 dark:text-neutral-300">
-            No data available
+      <div className="flex max-h-[192px] flex-col overflow-y-auto">
+        {isError && (
+          <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
+            Something went wrong...
           </span>
-        </div>
-      )}
-      {isLoading && (
-        <div className="flex flex-col space-y-1">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <Skeleton
-              key={index}
-              className="flex w-full items-center justify-between px-4 py-2">
-              <Skeleton className="h-4 w-20" />
-              <Skeleton className="h-4 w-10" />
-            </Skeleton>
-          ))}
-        </div>
-      )}
-      {isSuccess && (
-        <div className="flex flex-col space-y-1">
-          {data.map(({ country_name, country_code, total }) => (
-            <Country
-              key={country_code}
-              countryName={country_name}
-              countryCode={country_code}
-              value={total}
-            />
-          ))}
-        </div>
-      )}
+        )}
+        {isEmpty && (
+          <div className="flex">
+            <span className="mx-auto my-10 text-xs text-neutral-400 dark:text-neutral-300">
+              No data available
+            </span>
+          </div>
+        )}
+        {isLoading && (
+          <div className="flex flex-col space-y-1">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                className="flex w-full items-center justify-between px-4 py-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-4 w-10" />
+              </Skeleton>
+            ))}
+          </div>
+        )}
+        {isSuccess && (
+          <div className="flex flex-col space-y-1">
+            {data.map(({ country_name, country_code, total }) => (
+              <Country
+                key={country_code}
+                countryName={country_name}
+                countryCode={country_code}
+                value={total}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
