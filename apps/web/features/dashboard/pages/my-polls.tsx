@@ -1,4 +1,11 @@
-import { Button, Icon, Dialog, DialogContent, DialogTrigger } from "@poll/ui";
+import {
+  Button,
+  Icon,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  ScrollArea,
+} from "@poll/ui";
 import React from "react";
 
 import { CreatePollForm } from "../../../components/create-poll-form";
@@ -32,13 +39,15 @@ const MyPollsPage = () => {
               </Button>
             </DialogTrigger>
             <DialogContent hideClose>
-              <CreatePollForm
-                ActionButtons={[
-                  <Button variant="text" key="close-modal-btn" asChild>
-                    <DialogTrigger>Close</DialogTrigger>
-                  </Button>,
-                ]}
-              />
+              <ScrollArea className="h-[80vh]">
+                <CreatePollForm
+                  ActionButtons={[
+                    <Button variant="text" key="close-modal-btn" asChild>
+                      <DialogTrigger>Close</DialogTrigger>
+                    </Button>,
+                  ]}
+                />
+              </ScrollArea>
             </DialogContent>
           </Dialog>
         }
