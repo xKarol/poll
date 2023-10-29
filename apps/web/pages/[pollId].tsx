@@ -15,13 +15,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
 } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
@@ -45,7 +38,9 @@ import { useCopyToClipboard } from "react-use";
 import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 
 import { AnswerItem } from "../components/answer-item";
+import DeletePollDialog from "../components/delete-poll-dialog";
 import { RadioGroup } from "../components/radio-group";
+import { routes } from "../config/routes";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";
 import { useLiveAnswers } from "../hooks/use-live-answers";
@@ -216,36 +211,20 @@ const PollPage = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <DropdownMenuItem
-                            className="space-x-2 text-red-400"
-                            onSelect={(e) => e.preventDefault()}>
-                            <Icon.Trash2 className="h-4 w-4" />
-                            <span>Delete poll</span>
-                          </DropdownMenuItem>
-                        </DialogTrigger>
-                        <DialogContent hideClose>
-                          <DialogHeader>
-                            <DialogTitle>Delete poll</DialogTitle>
-                            <DialogDescription>
-                              Are you sure you want to delete this poll?
-                            </DialogDescription>
-                          </DialogHeader>
-
-                          <DialogFooter>
-                            <Button variant="text" asChild>
-                              <DialogTrigger>Cancel</DialogTrigger>
-                            </Button>
-                            <LoadingButton
-                              variant="destructive"
-                              isLoading={false}>
-                              <Icon.Trash2 />
-                              <span>Delete poll</span>
-                            </LoadingButton>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
+                      <DeletePollDialog
+                        pollId={pollId}
+                        onDelete={() => {
+                          if (router.asPath === routes.poll(pollId)) {
+                            router.replace(routes.HOME);
+                          }
+                        }}>
+                        <DropdownMenuItem
+                          className="space-x-2 text-red-400"
+                          onSelect={(e) => e.preventDefault()}>
+                          <Icon.Trash2 className="h-4 w-4" />
+                          <span>Delete poll</span>
+                        </DropdownMenuItem>
+                      </DeletePollDialog>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : null}

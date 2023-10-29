@@ -2,20 +2,11 @@ import { cn } from "@poll/lib";
 import type { Poll } from "@poll/prisma";
 import {
   Badge,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
-  LoadingButton,
   Table,
   TableBody,
   TableCell,
@@ -24,20 +15,16 @@ import {
   TableRow,
   toast,
 } from "@poll/ui";
-import {
-  useQueryClient,
-  type FetchNextPageOptions,
-} from "@tanstack/react-query";
+import { type FetchNextPageOptions } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
+import DeletePollDialog from "../../../components/delete-poll-dialog";
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
-import { userKeys } from "../../../queries/user";
 import { getBaseUrl } from "../../../utils/get-base-url";
-import { useDeletePoll } from "../hooks";
 
 type Props = {
   data: (Poll & { totalVotes: number })[];
@@ -106,29 +93,7 @@ function PollItemRow({
   ...props
 }: PollItemRowProps) {
   const [isCopied, setIsCopied] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [, copy] = useCopyToClipboard();
-  const queryClient = useQueryClient();
-  const { isLoading: isDeletePollLoading, mutate: deletePoll } = useDeletePoll({
-    onSuccess: (_, pollId) => {
-      toast("Poll has been deleted.", { icon: <Icon.Check /> });
-      setOpenDeleteModal(false);
-
-      queryClient.setQueryData(userKeys.userPolls, (data) => {
-        return {
-          // @ts-ignore
-          ...data,
-          // @ts-ignore
-          pages: data.pages.map((page) => {
-            return {
-              ...page,
-              data: page.data.filter((result) => result.id !== pollId),
-            };
-          }),
-        };
-      });
-    },
-  });
 
   useEffect(() => {
     if (isCopied) {
@@ -208,43 +173,18 @@ function PollItemRow({
                   <span>Analytics</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem
-                className="space-x-2 text-red-400 [&>*]:pointer-events-none"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenDeleteModal(true);
-                }}>
-                <Icon.Trash2 className="h-4 w-4" />
-                <span>Delete poll</span>
-              </DropdownMenuItem>
+              <DeletePollDialog pollId={id}>
+                <DropdownMenuItem
+                  className="space-x-2 text-red-400"
+                  onSelect={(e) => e.preventDefault()}>
+                  <Icon.Trash2 className="h-4 w-4" />
+                  <span>Delete poll</span>
+                </DropdownMenuItem>
+              </DeletePollDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
       </TableRow>
-
-      <Dialog open={openDeleteModal} onOpenChange={setOpenDeleteModal}>
-        <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} hideClose>
-          <DialogHeader>
-            <DialogTitle>Delete poll</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this poll?
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter>
-            <DialogTrigger asChild>
-              <Button variant="text">Cancel</Button>
-            </DialogTrigger>
-            <LoadingButton
-              variant="destructive"
-              isLoading={isDeletePollLoading}
-              onClick={() => deletePoll(id)}>
-              <Icon.Trash2 />
-              <span>Delete poll</span>
-            </LoadingButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
