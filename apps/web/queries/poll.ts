@@ -1,10 +1,14 @@
 import type { SortingParams, Poll } from "@poll/types";
-import type { UseQueryOptions } from "@tanstack/react-query";
+import type {
+  UseInfiniteQueryOptions,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 
 import {
   getPoll,
   getPollUserAnswerChoice,
   getPollVoters,
+  getPolls,
 } from "../services/api";
 
 export const pollKeys = {
@@ -23,7 +27,15 @@ export const pollKeys = {
 };
 
 export const pollOptions = {
-  all: {},
+  all: (
+    sortParams?: SortingParams<Poll.SortPollFields>
+  ): UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPolls>>> => ({
+    queryKey: pollKeys.all(sortParams),
+    queryFn: ({ pageParam = 1 }) => {
+      return getPolls({ page: pageParam, limit: 10, ...sortParams });
+    },
+    getNextPageParam: ({ nextPage }) => nextPage,
+  }),
   single: (
     pollId: string
   ): UseQueryOptions<Awaited<ReturnType<typeof getPoll>>> => ({
