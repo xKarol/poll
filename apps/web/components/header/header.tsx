@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  ScrollArea,
 } from "@poll/ui";
 import type { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
@@ -191,36 +192,40 @@ function MobileNavigationMenu({
         className
       )}
       {...rest}>
-      <div className="container flex flex-col items-center space-y-8 pt-[7.5rem]">
-        <ul className="flex w-full flex-col items-center space-y-8 text-xl font-semibold">
-          {navLinks.map((link) => (
-            <li key={link.text}>
-              <Link href={link.href}>{link.text}</Link>
-            </li>
-          ))}
-          {session ? (
-            <>
-              <li>
-                <Link href={routes.DASHBOARD.HOME}>Dashboard</Link>
-              </li>
-              <li className="cursor-pointer" onClick={() => signOut()}>
-                Logout
-              </li>
-            </>
-          ) : null}
-        </ul>
-        {session ? (
-          <div className="flex items-center justify-center space-x-2">
-            <Avatar src={session?.user?.image} className="h-8 w-8">
-              {session?.user.name[0]}
-            </Avatar>
-            <span>{session?.user.name}</span>
+      <div className="container">
+        <ScrollArea className="h-screen pt-[7.5rem]">
+          <div className="container flex flex-col items-center space-y-8">
+            <ul className="flex w-full flex-col items-center space-y-8 text-xl font-semibold">
+              {navLinks.map((link) => (
+                <li key={link.text}>
+                  <Link href={link.href}>{link.text}</Link>
+                </li>
+              ))}
+              {session ? (
+                <>
+                  <li>
+                    <Link href={routes.DASHBOARD.HOME}>Dashboard</Link>
+                  </li>
+                  <li className="cursor-pointer" onClick={() => signOut()}>
+                    Logout
+                  </li>
+                </>
+              ) : null}
+            </ul>
+            {session ? (
+              <div className="flex items-center justify-center space-x-2">
+                <Avatar src={session?.user?.image} className="h-8 w-8">
+                  {session?.user.name[0]}
+                </Avatar>
+                <span>{session?.user.name}</span>
+              </div>
+            ) : (
+              <Button asChild variant="secondary" className="!bg-green-500">
+                <Link href={routes.LOGIN}>Login</Link>
+              </Button>
+            )}
           </div>
-        ) : (
-          <Button asChild variant="secondary" className="!bg-green-500">
-            <Link href={routes.LOGIN}>Login</Link>
-          </Button>
-        )}
+        </ScrollArea>
       </div>
     </nav>
   );
