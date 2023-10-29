@@ -11,6 +11,7 @@ export default function useAnalyticsQueryParams() {
   const [interval] = useQueryState("interval");
   const [value, intervalName] = intervals?.[interval] || [undefined, undefined];
   return {
+    queryParam: interval,
     interval: intervalName,
     value,
   };
