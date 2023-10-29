@@ -29,10 +29,12 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
 
 export const getUserPollVotesData = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
-  parameters: z.object({
-    ownerId: z.string(),
-    interval: AnalyticsSchema.interval,
-  }),
+  parameters: z
+    .object({
+      ownerId: z.string(),
+      interval: AnalyticsSchema.interval,
+    })
+    .extend(AnalyticsSchema.defaultParameters),
   data: z.object({
     timestamp: z.string(),
     total: z.number().positive(),
@@ -41,9 +43,11 @@ export const getUserPollVotesData = tinybird.buildPipe({
 
 export const getUserPollTopDevices = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_POLL_TOP_DEVICES_ID as string,
-  parameters: z.object({
-    ownerId: z.string(),
-  }),
+  parameters: z
+    .object({
+      ownerId: z.string(),
+    })
+    .extend(AnalyticsSchema.defaultParameters),
   data: z.object({
     device: z.string(),
     total: z.number().positive(),
@@ -52,9 +56,11 @@ export const getUserPollTopDevices = tinybird.buildPipe({
 
 export const getUserPollTopCountries = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_TOP_COUNTRIES_ID as string,
-  parameters: z.object({
-    ownerId: z.string(),
-  }),
+  parameters: z
+    .object({
+      ownerId: z.string(),
+    })
+    .extend(AnalyticsSchema.defaultParameters),
   data: z.object({
     country_name: z.string(),
     country_code: z.string(),

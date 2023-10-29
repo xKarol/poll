@@ -22,19 +22,23 @@ export const analyticsOptions = {
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
   > => ({
-    queryKey: analyticsKeys.getUserPollsVotes(params),
+    queryKey: analyticsKeys.getUserPollsVotes({ interval: params.interval }),
     queryFn: () => getAnalyticsUserPollVotes(params),
   }),
-  getUserPollTopDevices: {
-    queryKey: analyticsKeys.getUserPollTopDevices,
-    queryFn: getAnalyticsUserPollTopDevices,
-  } satisfies UseQueryOptions<
+  getUserPollTopDevices: (
+    params: Analytics.DefaultAnalyticsProps
+  ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
-  >,
-  getUserPollTopCountries: {
-    queryKey: analyticsKeys.getUserPollTopCountries,
-    queryFn: getAnalyticsUserPollTopCountries,
-  } satisfies UseQueryOptions<
+  > => ({
+    queryKey: analyticsKeys.getUserPollTopDevices,
+    queryFn: () => getAnalyticsUserPollTopDevices(params),
+  }),
+  getUserPollTopCountries: (
+    params: Analytics.DefaultAnalyticsProps
+  ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
-  >,
+  > => ({
+    queryKey: analyticsKeys.getUserPollTopCountries,
+    queryFn: () => getAnalyticsUserPollTopCountries(params),
+  }),
 } satisfies Record<keyof typeof analyticsKeys, unknown>;

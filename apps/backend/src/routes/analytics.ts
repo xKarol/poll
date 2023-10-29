@@ -25,12 +25,14 @@ router.get(
 router.get(
   apiUrls.analytics.getUserPollTopDevices,
   requireAuth,
+  validateSchema(AnalyticsSchema.getAnalyticsData),
   AnalyticsController.GetUserPollTopDevicesData
 );
 
 router.get(
   apiUrls.analytics.getUserPollTopCountries,
   requireAuth,
+  validateSchema(AnalyticsSchema.getAnalyticsData),
   AnalyticsController.GetUserPollTopCountriesData
 );
 

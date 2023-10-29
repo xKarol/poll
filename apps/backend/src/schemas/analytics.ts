@@ -16,10 +16,21 @@ export const interval = z
   ])
   .default("hour");
 
+export const defaultParameters = {
+  limit: z.number().optional(),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+};
+
 export const getAllPollVoteData: z.Schema = z.object({
   params: z.object({
     interval: interval,
+    ...defaultParameters,
   }),
+});
+
+export const getAnalyticsData: z.Schema = z.object({
+  params: z.object(defaultParameters),
 });
 
 export type GetAllPollVoteData = z.infer<typeof getAllPollVoteData>;

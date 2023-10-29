@@ -14,11 +14,11 @@ export const GetUserPollVotesData = async (
   next: NextFunction
 ) => {
   try {
-    const { interval } = req.query as { interval: Analytics.Interval };
+    const params = req.query as Analytics.getUserPollVotesParams;
     const { id: userId } = req.user!;
     const { data } = await getUserPollVotesData({
       ownerId: userId,
-      interval,
+      ...params,
     });
     return res.send(data);
   } catch (error) {
@@ -42,8 +42,12 @@ export const GetPollData = async (
 
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
+    const params = req.query as Analytics.DefaultAnalyticsProps;
     const { id: userId } = req.user!;
-    const { data: rawData } = await getUserPollTopDevices({ ownerId: userId });
+    const { data: rawData } = await getUserPollTopDevices({
+      ownerId: userId,
+      ...params,
+    });
 
     const data = {
       mobile: rawData.find((d) => d.device === "mobile")?.total || 0,
@@ -63,9 +67,11 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
+    const params = req.query as Analytics.DefaultAnalyticsProps;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
+      ...params,
     });
 
     const data = rawData.filter(

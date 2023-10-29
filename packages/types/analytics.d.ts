@@ -15,11 +15,23 @@ export type TopCountriesData = {
 
 export type TopDevicesData = Record<Devices, number>;
 
-export type getUserPollVotesParams = { interval?: Interval };
+export type DefaultAnalyticsProps<RestProps = unknown> = {
+  start_date?: string;
+  end_date?: string;
+  limit?: number;
+} & RestProps;
+
+export type getUserPollVotesParams = DefaultAnalyticsProps<{
+  interval?: Interval;
+}>;
 
 // Frontend
 export interface Api {
   getUserPollVotes: (params: getUserPollVotesParams) => Promise<VotesData[]>;
-  getUserPollTopDevices: () => Promise<TopDevicesData>;
-  getUserPollTopCountries: () => Promise<TopCountriesData[]>;
+  getUserPollTopDevices: (
+    params?: DefaultAnalyticsProps
+  ) => Promise<TopDevicesData>;
+  getUserPollTopCountries: (
+    params?: DefaultAnalyticsProps
+  ) => Promise<TopCountriesData[]>;
 }
