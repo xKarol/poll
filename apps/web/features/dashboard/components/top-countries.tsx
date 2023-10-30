@@ -3,6 +3,7 @@ import { Icon, Skeleton } from "@poll/ui";
 import Image from "next/image";
 import React from "react";
 
+import { nFormatter } from "../../../utils/misc";
 import { useAnalyticsParams, useAnalyticsTopCountries } from "../hooks";
 
 type TopCountriesProps = React.ComponentPropsWithoutRef<"div">;
@@ -86,7 +87,7 @@ function Country({ countryCode, countryName, value, className }: CountryProps) {
       </div>
 
       <div className="flex items-center space-x-1">
-        <span className="font-medium">{value}</span>
+        <span className="font-medium">{nFormatter(value)}</span>
         <Icon.BarChart2 className="h-3 w-3" />
       </div>
     </div>

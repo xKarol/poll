@@ -50,6 +50,7 @@ import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
 import { getServerSession } from "../utils/get-server-session";
+import { nFormatter } from "../utils/misc";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
@@ -283,7 +284,7 @@ const PollPage = () => {
                     </AvatarGroup>
                   ) : null}
                   <p className="text-sm font-normal">
-                    Total Votes: {data.totalVotes}
+                    Total Votes: {nFormatter(data.totalVotes)}
                   </p>
                 </div>
                 {!isVoted ? (

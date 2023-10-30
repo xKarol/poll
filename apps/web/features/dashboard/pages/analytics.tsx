@@ -10,6 +10,7 @@ import {
 import { useQueryState } from "next-usequerystate";
 import React from "react";
 
+import { nFormatter } from "../../../utils/misc";
 import {
   Header,
   TopCountries,
@@ -46,19 +47,19 @@ const AnalyticsPage = () => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatisticCard
           heading="Total Views"
-          statsValue="0"
+          statsValue={0}
           statsDifference="+0% from last month"
           Icon={<Icon.Eye className="h-4 w-4" />}
         />
         <StatisticCard
           heading="Total Votes"
-          statsValue="0"
+          statsValue={0}
           statsDifference="+0% from last month"
           Icon={<Icon.CheckCircle className="h-4 w-4" />}
         />
         <StatisticCard
           heading="Total Shares"
-          statsValue="0"
+          statsValue={0}
           statsDifference="+0% from last month"
           Icon={<Icon.Share2 className="h-4 w-4" />}
         />
@@ -77,7 +78,7 @@ export default AnalyticsPage;
 type StatisticCardProps = {
   heading: string;
   Icon: JSX.Element;
-  statsValue: string;
+  statsValue: number;
   statsDifference: string;
 } & React.ComponentPropsWithoutRef<"section">;
 
@@ -98,7 +99,7 @@ function StatisticCard({
         <h1 className="text-sm font-medium">{heading}</h1>
         {Icon}
       </div>
-      <h2 className="text-xl font-bold">{statsValue}</h2>
+      <h2 className="text-xl font-bold">{nFormatter(statsValue)}</h2>
       <p className="text-xs text-neutral-400">{statsDifference}</p>
     </section>
   );

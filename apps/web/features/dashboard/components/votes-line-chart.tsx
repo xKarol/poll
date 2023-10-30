@@ -17,6 +17,7 @@ import type {
   NameType,
 } from "recharts/types/component/DefaultTooltipContent";
 
+import { nFormatter } from "../../../utils/misc";
 import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
 type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
@@ -63,7 +64,11 @@ export default function VotesLineChart({
             tickCount={24}
             domain={[startDate, endDate]}
           />
-          <YAxis type="number" domain={["auto", "auto"]} />
+          <YAxis
+            type="number"
+            domain={["auto", "auto"]}
+            tickFormatter={nFormatter}
+          />
           <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
@@ -91,7 +96,7 @@ function CustomTooltip({
         </p>
         <p>
           <strong className="font-medium">Total:</strong>{" "}
-          <span>{payload[0].value}</span>
+          <span>{nFormatter(+payload[0].value)}</span>
         </p>
       </div>
     );

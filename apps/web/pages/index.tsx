@@ -9,6 +9,7 @@ import { routes } from "../config/routes";
 import { BaseLayout } from "../layouts";
 import prisma from "../lib/prisma";
 import HeroImage from "../public/hero-image.svg";
+import { nFormatter } from "../utils/misc";
 
 type Stats = {
   totalPolls: number;
@@ -55,7 +56,7 @@ export default function HomePage({
         <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
-              {stats.totalPolls}
+              {nFormatter(stats.totalPolls)}
             </p>
             <p className="text-base font-semibold uppercase md:text-lg">
               Polls
@@ -64,7 +65,7 @@ export default function HomePage({
           <div className="hidden h-[50px] w-[1px] bg-neutral-100 dark:bg-neutral-800 md:block"></div>
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
-              {stats.totalVotes}
+              {nFormatter(stats.totalVotes)}
             </p>
             <p className="text-base font-semibold uppercase md:text-lg">
               Votes
@@ -74,7 +75,7 @@ export default function HomePage({
 
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
-              {stats.totalUsers}
+              {nFormatter(stats.totalUsers)}
             </p>
             <p className="text-base font-semibold uppercase md:text-lg">
               Users

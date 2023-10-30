@@ -21,6 +21,7 @@ import { usePolls } from "../hooks/use-polls";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { getErrorMessage } from "../utils/error";
+import { nFormatter } from "../utils/misc";
 
 type SortValue = `${Poll.SortPollFields}.${"desc" | "asc"}`;
 
@@ -115,7 +116,7 @@ export default function PublicPage() {
                         {dayjs(poll.createdAt).fromNow()}
                       </span>
                     </div>
-                    <span>{poll.totalVotes} votes</span>
+                    <span>{nFormatter(poll.totalVotes)} votes</span>
                   </div>
                 </Link>
               ))}

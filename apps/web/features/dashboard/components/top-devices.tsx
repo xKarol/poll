@@ -3,6 +3,7 @@ import type { Analytics } from "@poll/types";
 import { Icon, Skeleton } from "@poll/ui";
 import React from "react";
 
+import { nFormatter } from "../../../utils/misc";
 import { useAnalyticsParams, useAnalyticsTopDevices } from "../hooks";
 
 type TopDevicesProps = React.ComponentPropsWithoutRef<"div">;
@@ -51,7 +52,7 @@ export default function TopDevices({ className, ...props }: TopDevicesProps) {
               </div>
 
               <div className="flex items-center space-x-1">
-                <span className="font-medium">{total}</span>
+                <span className="font-medium">{nFormatter(total)}</span>
                 <Icon.BarChart2 className="h-3 w-3" />
               </div>
             </div>
