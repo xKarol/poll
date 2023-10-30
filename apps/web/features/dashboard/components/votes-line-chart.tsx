@@ -65,6 +65,7 @@ export default function VotesLineChart({
             domain={[startDate, endDate]}
           />
           <YAxis
+            allowDecimals={false}
             type="number"
             domain={["auto", "auto"]}
             tickFormatter={nFormatter}
