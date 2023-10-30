@@ -14,10 +14,14 @@ export const GetUserPollVotesData = async (
   next: NextFunction
 ) => {
   try {
-    const params = req.query as Analytics.getUserPollVotesParams;
+    const { startDate, endDate, ...params } =
+      req.query as Analytics.getUserPollVotesParams;
     const { id: userId } = req.user!;
+
     const { data } = await getUserPollVotesData({
       ownerId: userId,
+      start_date: startDate,
+      end_date: endDate,
       ...params,
     });
     return res.send(data);
@@ -42,10 +46,13 @@ export const GetPollData = async (
 
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
-    const params = req.query as Analytics.DefaultAnalyticsProps;
+    const { startDate, endDate, ...params } =
+      req.query as Analytics.DefaultAnalyticsProps;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
+      start_date: startDate,
+      end_date: endDate,
       ...params,
     });
 
@@ -67,10 +74,13 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
-    const params = req.query as Analytics.DefaultAnalyticsProps;
+    const { startDate, endDate, ...params } =
+      req.query as Analytics.DefaultAnalyticsProps;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
+      start_date: startDate,
+      end_date: endDate,
       ...params,
     });
 

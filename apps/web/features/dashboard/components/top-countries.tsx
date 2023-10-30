@@ -3,7 +3,7 @@ import { Icon, Skeleton } from "@poll/ui";
 import Image from "next/image";
 import React from "react";
 
-import { useAnalyticsTopCountries } from "../hooks";
+import { useAnalyticsParams, useAnalyticsTopCountries } from "../hooks";
 
 type TopCountriesProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -11,7 +11,11 @@ export default function TopCountries({
   className,
   ...props
 }: TopCountriesProps) {
-  const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries();
+  const { startDate, endDate } = useAnalyticsParams();
+  const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries({
+    startDate,
+    endDate,
+  });
   const isEmpty = isSuccess && data.length === 0;
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>

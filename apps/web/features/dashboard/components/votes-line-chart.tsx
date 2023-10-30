@@ -29,6 +29,8 @@ export default function VotesLineChart({
   const { interval, startDate, endDate } = useAnalyticsParams();
   const { data } = useAnalyticsVotes({
     interval,
+    startDate,
+    endDate,
   });
 
   return (

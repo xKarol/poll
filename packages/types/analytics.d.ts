@@ -16,8 +16,8 @@ export type TopCountriesData = {
 export type TopDevicesData = Record<Devices, number>;
 
 export type DefaultAnalyticsProps<RestProps = unknown> = {
-  start_date?: string;
-  end_date?: string;
+  startDate?: number;
+  endDate?: number;
   limit?: number;
 } & RestProps;
 

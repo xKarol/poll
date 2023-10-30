@@ -3,7 +3,7 @@ import type { Analytics } from "@poll/types";
 import { Icon, Skeleton } from "@poll/ui";
 import React from "react";
 
-import { useAnalyticsTopDevices } from "../hooks";
+import { useAnalyticsParams, useAnalyticsTopDevices } from "../hooks";
 
 type TopDevicesProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -14,7 +14,11 @@ const deviceIcon: Record<Analytics.Devices, JSX.Element> = {
 };
 
 export default function TopDevices({ className, ...props }: TopDevicesProps) {
-  const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices();
+  const { startDate, endDate } = useAnalyticsParams();
+  const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices({
+    startDate,
+    endDate,
+  });
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>
       <h1 className="text-sm font-medium">Top devices</h1>

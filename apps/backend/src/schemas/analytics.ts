@@ -17,9 +17,9 @@ export const interval = z
   .default("hour");
 
 export const defaultParameters = {
-  limit: z.number().optional(),
-  start_date: z.string().optional(),
-  end_date: z.string().optional(),
+  limit: z.coerce.number().positive().optional(),
+  start_date: z.coerce.number().positive().optional(),
+  end_date: z.coerce.number().positive().optional(),
 };
 
 export const getAllPollVoteData: z.Schema = z.object({
