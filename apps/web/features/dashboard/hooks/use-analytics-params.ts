@@ -28,11 +28,11 @@ export default function useAnalyticsQueryParams() {
 
 function calculateDate(value: string) {
   const convertedValue = convertIntervals[value];
-  if (convertedValue === "1h") return dateDiff(60, "m");
+  if (convertedValue === "1h") return dateDiff(1, "h");
   if (convertedValue === "24h") return dateDiff(24, "h");
   if (convertedValue === "7d") return dateDiff(7, "d");
   if (convertedValue === "30d") return dateDiff(30, "d");
-  return dateDiff(60, "m");
+  return dateDiff(24, "h");
 }
 
 function dateDiff(diff: number, unit: "h" | "d" | "m") {
