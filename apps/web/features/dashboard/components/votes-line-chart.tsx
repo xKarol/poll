@@ -16,15 +16,6 @@ import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
 type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
 
-const sortData = (d: Analytics.VotesData[]) => {
-  return [
-    ...d.map((dd) => ({
-      total: dd.total,
-      timestamp: dayjs(dd.timestamp).unix() * 1000,
-    })),
-  ];
-};
-
 // TODO improve
 const formatTick = (tick: string, unit: "h" | "d" | "m") => {
   if (unit === "d") return dayjs(tick).format("DD.MM");
@@ -36,9 +27,10 @@ export default function VotesLineChart({
   ...props
 }: VotesLineChartProps) {
   const { interval, startDate, endDate } = useAnalyticsParams();
-  const d = useAnalyticsVotes({
+  const { data } = useAnalyticsVotes({
     interval,
   });
+
   return (
     <div
       className={cn(
@@ -50,7 +42,7 @@ export default function VotesLineChart({
         <LineChart
           width={500}
           height={300}
-          data={d.isSuccess ? sortData(d.data) : []}>
+          data={data?.length ? sortData(data) : []}>
           <CartesianGrid
             strokeDasharray="3 3"
             stroke="#A3A3A3"
@@ -76,4 +68,15 @@ export default function VotesLineChart({
       </ResponsiveContainer>
     </div>
   );
+}
+
+function sortData(data: Analytics.VotesData[]) {
+  return [
+    ...data
+      .map((voteData) => ({
+        total: voteData.total,
+        timestamp: dayjs(voteData.timestamp).unix() * 1000,
+      }))
+      .sort((a, b) => a.timestamp - b.timestamp),
+  ];
 }
