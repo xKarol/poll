@@ -12,7 +12,7 @@ import {
   Line,
 } from "recharts";
 
-import { useAnalyticsQueryParams, useAnalyticsVotes } from "../hooks";
+import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
 type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -25,19 +25,6 @@ const sortData = (d: Analytics.VotesData[]) => {
   ];
 };
 
-const dateDiff = (diff: number, unit: "h" | "d" | "m") => ({
-  startDate: dayjs().subtract(diff, unit).unix() * 1000,
-  endDate: dayjs().unix() * 1000,
-});
-
-const calculateDate = (value: string) => {
-  if (value === "1h") return dateDiff(60, "m");
-  if (value === "24h") return dateDiff(24, "h");
-  if (value === "7d") return dateDiff(7, "d");
-  if (value === "30d") return dateDiff(30, "d");
-  return dateDiff(60, "m");
-};
-
 // TODO improve
 const formatTick = (tick: string, unit: "h" | "d" | "m") => {
   if (unit === "d") return dayjs(tick).format("DD.MM");
@@ -48,12 +35,10 @@ export default function VotesLineChart({
   className,
   ...props
 }: VotesLineChartProps) {
-  const { interval, queryParam } = useAnalyticsQueryParams();
+  const { interval, startDate, endDate } = useAnalyticsParams();
   const d = useAnalyticsVotes({
     interval,
   });
-  const { startDate, endDate } = calculateDate(queryParam);
-
   return (
     <div
       className={cn(
