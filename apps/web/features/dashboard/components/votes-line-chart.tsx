@@ -10,7 +10,12 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
+  type TooltipProps,
 } from "recharts";
+import type {
+  ValueType,
+  NameType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
@@ -59,7 +64,7 @@ export default function VotesLineChart({
             domain={[startDate, endDate]}
           />
           <YAxis type="number" domain={["auto", "auto"]} />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
             dataKey="total"
@@ -70,6 +75,29 @@ export default function VotesLineChart({
       </ResponsiveContainer>
     </div>
   );
+}
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+}: TooltipProps<ValueType, NameType>) {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-[4px] border border-neutral-200 bg-neutral-100 px-4 py-2 text-sm dark:border-neutral-800 dark:bg-neutral-900">
+        <p>
+          <strong className="font-medium">Date:</strong>{" "}
+          <span>{dayjs(label).format("DD MMM YYYY  HH:mm:ss")}</span>
+        </p>
+        <p>
+          <strong className="font-medium">Total:</strong>{" "}
+          <span>{payload[0].value}</span>
+        </p>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 function sortData(data: Analytics.VotesData[]) {
