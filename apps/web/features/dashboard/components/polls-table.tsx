@@ -25,6 +25,7 @@ import DeletePollDialog from "../../../components/delete-poll-dialog";
 import { InfiniteScrollContainer } from "../../../components/infinite-scroll-container";
 import { routes } from "../../../config/routes";
 import { getBaseUrl } from "../../../utils/get-base-url";
+import { nFormatter } from "../../../utils/misc";
 
 type Props = {
   data: (Poll & { totalVotes: number })[];
@@ -117,7 +118,7 @@ function PollItemRow({
         <TableCell className="max-w-xs truncate font-medium">
           {question}
         </TableCell>
-        <TableCell>{totalVotes}</TableCell>
+        <TableCell>{nFormatter(totalVotes)}</TableCell>
         <TableCell>
           <Badge variant="secondary">
             {isPublic ? (
