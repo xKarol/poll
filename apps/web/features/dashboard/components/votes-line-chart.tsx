@@ -76,8 +76,8 @@ function sortData(data: Analytics.VotesData[]) {
   return [
     ...data
       .map((voteData) => ({
-        total: voteData.total,
-        timestamp: dayjs(voteData.timestamp).unix() * 1000,
+        ...voteData,
+        timestamp: voteData.timestamp * 1000,
       }))
       .sort((a, b) => a.timestamp - b.timestamp),
   ];

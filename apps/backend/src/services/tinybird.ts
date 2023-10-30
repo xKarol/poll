@@ -36,7 +36,7 @@ export const getUserPollVotesData = tinybird.buildPipe({
     })
     .extend(AnalyticsSchema.defaultParameters),
   data: z.object({
-    timestamp: z.string(),
+    timestamp: z.number(),
     total: z.number().positive(),
   }),
 });
