@@ -20,7 +20,7 @@ import type {
 import { nFormatter } from "../../../utils/misc";
 import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
-type VotesLineChartProps = React.ComponentPropsWithoutRef<"div">;
+type VotesLineChartProps = React.ComponentProps<typeof ResponsiveContainer>;
 
 // TODO improve
 const formatTick = (tick: string, unit: "h" | "d" | "m") => {
@@ -40,46 +40,54 @@ export default function VotesLineChart({
   });
 
   return (
-    <div
+    <ResponsiveContainer
+      width="100%"
+      height="100%"
+      aspect={16 / 9}
       className={cn(
-        "flex-1 rounded-[4px] border border-neutral-300 dark:border-neutral-800",
+        "rounded-[4px] border border-neutral-300 dark:border-neutral-800",
         className
       )}
       {...props}>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={500}
-          height={300}
-          data={data?.length ? sortData(data) : []}>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="#A3A3A3"
-            strokeOpacity={0.2}
-          />
-          <XAxis
-            dataKey="timestamp"
-            // TODO get unit from queryparams hook
-            tickFormatter={(tick) => formatTick(tick, interval?.[0])}
-            type="number"
-            tickCount={24}
-            domain={[startDate, endDate]}
-          />
-          <YAxis
-            allowDecimals={false}
-            type="number"
-            domain={["auto", "auto"]}
-            tickFormatter={nFormatter}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="total"
-            stroke="#98FB98"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+      <LineChart
+        data={data?.length ? sortData(data) : []}
+        margin={{ left: 8, bottom: 8 }}>
+        <CartesianGrid
+          strokeDasharray="3"
+          strokeWidth={1}
+          vertical={false}
+          stroke="#A3A3A3"
+          strokeOpacity={0.1}
+        />
+        <XAxis
+          tickMargin={10}
+          axisLine={false}
+          height={30}
+          dataKey="timestamp"
+          // TODO get unit from queryparams hook
+          tickFormatter={(tick) => formatTick(tick, interval?.[0])}
+          type="number"
+          tickCount={24}
+          domain={[startDate, endDate]}
+        />
+        <YAxis
+          tickMargin={10}
+          axisLine={false}
+          width={30}
+          allowDecimals={false}
+          type="number"
+          domain={[0, "auto"]}
+          tickFormatter={nFormatter}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Line
+          type="monotone"
+          dataKey="total"
+          stroke="#98FB98"
+          activeDot={{ r: 8 }}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
 
