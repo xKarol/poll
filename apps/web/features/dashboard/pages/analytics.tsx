@@ -15,7 +15,7 @@ import {
   Header,
   TopCountries,
   TopDevices,
-  VotesLineChart,
+  VotesAreaChart,
 } from "../components";
 import { BaseLayout } from "../layouts";
 
@@ -63,7 +63,7 @@ const AnalyticsPage = () => {
           statsDifference="+0% from last month"
           Icon={<Icon.Share2 className="h-4 w-4" />}
         />
-        <VotesLineChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
+        <VotesAreaChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
         <div className="flex flex-wrap gap-4 lg:flex-col lg:flex-nowrap lg:gap-0 lg:space-y-8">
           <TopCountries className="min-w-[160px] flex-1" />
           <TopDevices className="min-w-[160px] flex-1" />

@@ -8,9 +8,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
   type TooltipProps,
+  Area,
 } from "recharts";
 import type {
   ValueType,
@@ -20,7 +20,10 @@ import type {
 import { nFormatter } from "../../../utils/misc";
 import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
 
-type VotesLineChartProps = React.ComponentProps<typeof ResponsiveContainer>;
+type VotesAreaChartProps = Omit<
+  React.ComponentProps<typeof ResponsiveContainer>,
+  "children"
+>;
 
 // TODO improve
 const formatTick = (tick: string, unit: "h" | "d" | "m") => {
@@ -28,10 +31,10 @@ const formatTick = (tick: string, unit: "h" | "d" | "m") => {
   return dayjs(tick).format("HH:mm");
 };
 
-export default function VotesLineChart({
+export default function VotesAreaChart({
   className,
   ...props
-}: VotesLineChartProps) {
+}: VotesAreaChartProps) {
   const { interval, startDate, endDate } = useAnalyticsParams();
   const { data } = useAnalyticsVotes({
     interval,
@@ -49,9 +52,15 @@ export default function VotesLineChart({
         className
       )}
       {...props}>
-      <LineChart
+      <AreaChart
         data={data?.length ? sortData(data) : []}
         margin={{ left: 8, bottom: 8 }}>
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#98FB98" stopOpacity={0.1} />
+            <stop offset="95%" stopColor="#98FB98" stopOpacity={0} />
+          </linearGradient>
+        </defs>
         <CartesianGrid
           strokeDasharray="3"
           strokeWidth={1}
@@ -80,13 +89,15 @@ export default function VotesLineChart({
           tickFormatter={nFormatter}
         />
         <Tooltip content={<CustomTooltip />} />
-        <Line
-          type="monotone"
+
+        <Area
           dataKey="total"
+          type="monotone"
           stroke="#98FB98"
-          activeDot={{ r: 8 }}
+          fill={`url(#colorUv)`}
+          strokeWidth={2}
         />
-      </LineChart>
+      </AreaChart>
     </ResponsiveContainer>
   );
 }

@@ -3,4 +3,4 @@ export { default as Heading } from "./heading";
 export { default as Header } from "./header";
 export { default as TopDevices } from "./top-devices";
 export { default as TopCountries } from "./top-countries";
-export { default as VotesLineChart } from "./votes-line-chart";
+export { default as VotesAreaChart } from "./votes-area-chart";
