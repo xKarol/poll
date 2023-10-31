@@ -1,9 +1,9 @@
 import _axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const axios = _axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_URL,
   withCredentials: true,
 });
 

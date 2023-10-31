@@ -4,10 +4,7 @@ export function defaultCookies(secure: boolean): CookiesOptions {
   const cookiePrefix = secure ? "__Secure-" : "";
 
   const defaultOptions: CookieOption["options"] = {
-    sameSite: secure
-      ? "none"
-      : // eslint-disable-next-line turbo/no-undeclared-env-vars
-        (process.env.COOKIE_SAMESITE as "lax" | "strict" | "none") || "lax",
+    sameSite: "lax",
     path: "/",
     secure: secure,
   };
