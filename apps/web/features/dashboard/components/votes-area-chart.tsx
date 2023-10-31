@@ -35,11 +35,11 @@ export default function VotesAreaChart({
   className,
   ...props
 }: VotesAreaChartProps) {
-  const { interval, startDate, endDate } = useAnalyticsParams();
+  const { interval, dateFrom, dateTo } = useAnalyticsParams();
   const { data } = useAnalyticsVotes({
     interval,
-    startDate,
-    endDate,
+    dateFrom,
+    dateTo,
   });
 
   return (
@@ -77,7 +77,7 @@ export default function VotesAreaChart({
           tickFormatter={(tick) => formatTick(tick, interval?.[0])}
           type="number"
           tickCount={24}
-          domain={[startDate, endDate]}
+          domain={[dateFrom, dateTo]}
         />
         <YAxis
           tickMargin={10}

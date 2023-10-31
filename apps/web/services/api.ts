@@ -123,13 +123,20 @@ export const getAnalyticsUserPollVotes: Analytics.Api["getUserPollVotes"] =
   };
 
 export const getAnalyticsUserPollTopDevices: Analytics.Api["getUserPollTopDevices"] =
-  async () => {
-    const { data } = await axios.get(apiUrls.analytics.getUserPollTopDevices);
+  async (params) => {
+    const { data } = await axios.get(apiUrls.analytics.getUserPollTopDevices, {
+      params,
+    });
     return data;
   };
 
 export const getAnalyticsUserPollTopCountries: Analytics.Api["getUserPollTopCountries"] =
-  async () => {
-    const { data } = await axios.get(apiUrls.analytics.getUserPollTopCountries);
+  async (params) => {
+    const { data } = await axios.get(
+      apiUrls.analytics.getUserPollTopCountries,
+      {
+        params,
+      }
+    );
     return data;
   };

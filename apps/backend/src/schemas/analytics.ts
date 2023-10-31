@@ -1,4 +1,5 @@
 import type { Analytics } from "@poll/types";
+import dayjs from "dayjs";
 import { z } from "zod";
 
 export const getPollData: z.Schema<{ params: Analytics.GetPollData }> =
@@ -18,8 +19,12 @@ export const interval = z
 
 export const defaultParameters = {
   limit: z.coerce.number().positive().optional(),
-  start_date: z.coerce.number().positive().optional(),
-  end_date: z.coerce.number().positive().optional(),
+  date_from: z.coerce.number().positive().optional(),
+  date_to: z.coerce
+    .number()
+    .positive()
+    .optional()
+    .transform((date) => dayjs(date).format("YYYY-MM-DD HH:mm:ss")),
 };
 
 export const getAllPollVoteData: z.Schema = z.object({
@@ -29,8 +34,10 @@ export const getAllPollVoteData: z.Schema = z.object({
   }),
 });
 
+export type GetAllPollVoteData = z.infer<typeof getAllPollVoteData>;
+
 export const getAnalyticsData: z.Schema = z.object({
   params: z.object(defaultParameters),
 });
 
-export type GetAllPollVoteData = z.infer<typeof getAllPollVoteData>;
+export type AnalyticsDataParams = z.infer<typeof getAnalyticsData>;

@@ -15,10 +15,10 @@ const deviceIcon: Record<Analytics.Devices, JSX.Element> = {
 };
 
 export default function TopDevices({ className, ...props }: TopDevicesProps) {
-  const { startDate, endDate } = useAnalyticsParams();
+  const { dateFrom, dateTo } = useAnalyticsParams();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices({
-    startDate,
-    endDate,
+    dateFrom,
+    dateTo,
   });
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>

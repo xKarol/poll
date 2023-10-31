@@ -1,7 +1,10 @@
 import type { Analytics } from "@poll/types";
 import type { Handler, NextFunction, Request, Response } from "express";
 
-import type { GetAllPollVoteData } from "../schemas/analytics";
+import type {
+  GetAllPollVoteData,
+  AnalyticsDataParams,
+} from "../schemas/analytics";
 import {
   getUserPollTopDevices,
   getUserPollVotesData,
@@ -14,14 +17,13 @@ export const GetUserPollVotesData = async (
   next: NextFunction
 ) => {
   try {
-    const { startDate, endDate, ...params } =
-      req.query as Analytics.getUserPollVotesParams;
+    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
     const { id: userId } = req.user!;
 
     const { data } = await getUserPollVotesData({
       ownerId: userId,
-      start_date: startDate,
-      end_date: endDate,
+      date_from: dateFrom,
+      date_to: dateTo,
       ...params,
     });
     return res.send(data);
@@ -46,13 +48,12 @@ export const GetPollData = async (
 
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
-    const { startDate, endDate, ...params } =
-      req.query as Analytics.DefaultAnalyticsProps;
+    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
-      start_date: startDate,
-      end_date: endDate,
+      date_from: dateFrom,
+      date_to: dateTo,
       ...params,
     });
 
@@ -74,13 +75,12 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
-    const { startDate, endDate, ...params } =
-      req.query as Analytics.DefaultAnalyticsProps;
+    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
-      start_date: startDate,
-      end_date: endDate,
+      date_from: dateFrom,
+      date_to: dateTo,
       ...params,
     });
 

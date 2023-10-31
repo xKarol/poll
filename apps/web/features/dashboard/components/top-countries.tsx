@@ -12,10 +12,10 @@ export default function TopCountries({
   className,
   ...props
 }: TopCountriesProps) {
-  const { startDate, endDate } = useAnalyticsParams();
+  const { dateFrom, dateTo } = useAnalyticsParams();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries({
-    startDate,
-    endDate,
+    dateFrom,
+    dateTo,
   });
   const isEmpty = isSuccess && data.length === 0;
   return (

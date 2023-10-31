@@ -18,8 +18,10 @@ const convertIntervals = {
 export default function useAnalyticsQueryParams() {
   const [interval] = useQueryState("interval");
   const [value, intervalName] = intervals?.[interval] || [undefined, undefined];
+  const { dateFrom, dateTo } = calculateDate(interval);
   return {
-    ...calculateDate(interval),
+    dateFrom,
+    dateTo,
     queryParam: interval,
     interval: intervalName,
     value,
@@ -37,7 +39,7 @@ function calculateDate(value: string) {
 
 function dateDiff(diff: number, unit: "h" | "d" | "m") {
   return {
-    startDate: dayjs().subtract(diff, unit).unix() * 1000,
-    endDate: dayjs().unix() * 1000,
+    dateFrom: dayjs().subtract(diff, unit).unix() * 1000,
+    dateTo: dayjs().unix() * 1000,
   };
 }
