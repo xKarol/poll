@@ -13,7 +13,7 @@ export const routes = {
   TERMS_AND_CONDITIONS: "#",
   PRIVACY_POLICY: "#",
   DASHBOARD: {
-    HOME: "/dashboard/polls", //alias
+    HOME: "/dashboard/analytics", //alias
     POLLS: "/dashboard/polls",
     VOTES: "/dashboard/votes",
     ANALYTICS: {

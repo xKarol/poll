@@ -16,6 +16,11 @@ type Props = React.ComponentProps<typeof Sidebar>;
 
 export const sidebarLinks = [
   {
+    text: "Analytics",
+    href: routes.DASHBOARD.ANALYTICS.HOME,
+    IconElement: <Icon.BarChart2 />,
+  },
+  {
     text: "My polls",
     href: routes.DASHBOARD.POLLS,
     IconElement: <Icon.PieChart />,
@@ -25,11 +30,7 @@ export const sidebarLinks = [
     href: routes.DASHBOARD.VOTES,
     IconElement: <Icon.Vote />,
   },
-  {
-    text: "Analytics",
-    href: routes.DASHBOARD.ANALYTICS.HOME,
-    IconElement: <Icon.BarChart2 />,
-  },
+
   {
     text: "Settings",
     href: routes.SETTINGS.ACCOUNT.GENERAL,
