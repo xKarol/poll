@@ -57,7 +57,7 @@ export default function VotesAreaChart({
         margin={{ left: 8, bottom: 8 }}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#98FB98" stopOpacity={0.1} />
+            <stop offset="5%" stopColor="#98FB98" stopOpacity={0.2} />
             <stop offset="95%" stopColor="#98FB98" stopOpacity={0} />
           </linearGradient>
         </defs>
