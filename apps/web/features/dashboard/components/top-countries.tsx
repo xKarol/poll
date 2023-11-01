@@ -80,7 +80,7 @@ function Country({ countryCode, countryName, value, className }: CountryProps) {
         <Image
           width={16}
           height={12}
-          src={`/flags/${countryCode}.svg`}
+          src={`/flags/${countryCode.toLowerCase()}.svg`}
           alt={`${countryName} flag`}
         />
         <span>{countryName}</span>
