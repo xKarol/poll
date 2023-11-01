@@ -26,7 +26,7 @@ type VotesAreaChartProps = Omit<
 >;
 
 // TODO improve
-const formatTick = (tick: string, unit: "h" | "d" | "m") => {
+const formatTick = (tick: number, unit: "h" | "d" | "m") => {
   if (unit === "d") return dayjs(tick).format("DD.MM");
   return dayjs(tick).format("HH:mm");
 };
@@ -77,7 +77,7 @@ export default function VotesAreaChart({
           tickFormatter={(tick) => formatTick(tick, interval?.[0])}
           type="number"
           tickCount={24}
-          domain={[dateFrom, dateTo]}
+          domain={[dateFrom * 1000, dateTo * 1000]}
         />
         <YAxis
           tickMargin={10}

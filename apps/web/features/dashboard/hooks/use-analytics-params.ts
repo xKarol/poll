@@ -39,7 +39,7 @@ function calculateDate(value: string) {
 
 function dateDiff(diff: number, unit: "h" | "d" | "m") {
   return {
-    dateFrom: dayjs().subtract(diff, unit).unix() * 1000,
-    dateTo: dayjs().unix() * 1000,
+    dateFrom: dayjs().subtract(diff, unit).unix(),
+    dateTo: dayjs().unix(),
   };
 }

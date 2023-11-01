@@ -22,8 +22,8 @@ export const GetUserPollVotesData = async (
 
     const { data } = await getUserPollVotesData({
       ownerId: userId,
-      date_from: dateFrom,
-      date_to: dateTo,
+      date_from: +dateFrom,
+      date_to: +dateTo,
       ...params,
     });
     return res.send(data);
@@ -52,8 +52,8 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
-      date_from: dateFrom,
-      date_to: dateTo,
+      date_from: +dateFrom,
+      date_to: +dateTo,
       ...params,
     });
 
@@ -79,8 +79,8 @@ export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
-      date_from: dateFrom,
-      date_to: dateTo,
+      date_from: +dateFrom,
+      date_to: +dateTo,
       ...params,
     });
 
