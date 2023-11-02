@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@poll/ui";
 import { useQueryState } from "next-usequerystate";
+import numeral from "numeral";
 import React from "react";
 
 import { nFormatter } from "../../../utils/misc";
@@ -51,20 +52,20 @@ const AnalyticsPage = () => {
         <StatisticCard
           heading="Total Views"
           statsValue={0}
-          statsDifference="+0% from last month"
-          Icon={<Icon.Eye className="h-4 w-4" />}
+          lastMonthValue={0}
+          StatIcon={<Icon.Eye className="h-4 w-4" />}
         />
         <StatisticCard
           heading="Total Votes"
           statsValue={0}
-          statsDifference="+0% from last month"
-          Icon={<Icon.CheckCircle className="h-4 w-4" />}
+          lastMonthValue={0}
+          StatIcon={<Icon.CheckCircle className="h-4 w-4" />}
         />
         <StatisticCard
           heading="Total Shares"
           statsValue={0}
-          statsDifference="+0% from last month"
-          Icon={<Icon.Share2 className="h-4 w-4" />}
+          lastMonthValue={0}
+          StatIcon={<Icon.Share2 className="h-4 w-4" />}
         />
         <VotesAreaChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
         <div className="flex flex-wrap gap-4 lg:flex-col lg:flex-nowrap lg:gap-0 lg:space-y-8">
@@ -80,18 +81,26 @@ export default AnalyticsPage;
 
 type StatisticCardProps = {
   heading: string;
-  Icon: JSX.Element;
+  StatIcon: JSX.Element;
   statsValue: number;
-  statsDifference: string;
+  lastMonthValue: number;
 } & React.ComponentPropsWithoutRef<"section">;
 
+const pFormatter = (percent: number) => {
+  return numeral(percent).format("+0.[00]a%").toUpperCase();
+};
+
 function StatisticCard({
-  Icon,
+  StatIcon,
   heading,
   statsValue,
-  statsDifference,
+  lastMonthValue,
   className,
 }: StatisticCardProps) {
+  const percent = (statsValue - lastMonthValue) / lastMonthValue;
+  const monthDiffPercent = pFormatter(percent);
+  const status =
+    percent > 0 ? "increase" : percent < 0 ? "decrease" : "neutral";
   return (
     <section
       className={cn(
@@ -100,10 +109,18 @@ function StatisticCard({
       )}>
       <div className="mb-2 flex items-center justify-between">
         <h1 className="text-sm font-medium">{heading}</h1>
-        {Icon}
+        {StatIcon}
       </div>
       <h2 className="text-xl font-bold">{nFormatter(statsValue)}</h2>
-      <p className="text-xs text-neutral-400">{statsDifference}</p>
+      <p className="flex items-center space-x-1 text-xs text-neutral-400">
+        {status === "increase" && (
+          <Icon.ArrowUpRight className="h-3 w-3 text-green-400" />
+        )}
+        {status === "decrease" && (
+          <Icon.ArrowDownRight className="h-3 w-3 text-red-400" />
+        )}
+        <span>{monthDiffPercent} from last month</span>
+      </p>
     </section>
   );
 }
