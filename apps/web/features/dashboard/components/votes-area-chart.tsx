@@ -89,7 +89,7 @@ export default function VotesAreaChart({
           dataKey="timestamp"
           tickFormatter={(tick) => formatTick(tick, groupBy)}
           type="number"
-          tickCount={24}
+          scale="time"
           domain={[dateFrom * 1000, dateTo * 1000]}
         />
         <YAxis
