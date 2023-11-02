@@ -15,7 +15,6 @@ export const GetUserPollVotesData = async (
   try {
     const params = req.analytics;
     const { id: userId } = req.user!;
-
     const { data } = await getUserPollVotesData({
       ownerId: userId,
       ...params,

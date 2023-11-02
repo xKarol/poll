@@ -17,7 +17,7 @@ const convertIntervals = {
 
 export default function useAnalyticsQueryParams() {
   const [interval] = useQueryState("interval");
-  const [value, intervalName] = intervals?.[interval] || [undefined, undefined];
+  const [value, intervalName] = intervals[interval] || [undefined, undefined];
   const { dateFrom, dateTo } = calculateDate(interval);
   return {
     dateFrom,

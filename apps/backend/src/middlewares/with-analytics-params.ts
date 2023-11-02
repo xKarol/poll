@@ -1,3 +1,4 @@
+import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import type { NextFunction, Request, Response } from "express";
 import z from "zod";
@@ -10,7 +11,7 @@ declare global {
   namespace Express {
     interface Request {
       analytics: {
-        groupBy: "month" | "day" | "hour";
+        groupBy: Analytics.Interval;
         dateFrom: number;
         dateTo: number;
         limit: number;
@@ -42,7 +43,6 @@ export const withAnalyticsParams =
       } = analyticsParamsSchema.parse(req.query);
 
       const [value, unit] = interval;
-
       req.analytics = {
         ...params,
         groupBy: groupByName[unit],
