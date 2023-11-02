@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { useQueryState } from "next-usequerystate";
 
 const intervals = {
-  "1h": [1, "hour"],
+  "1h": [60, "minute"],
   "24h": [24, "hour"],
   "7d": [7, "day"],
   "30d": [30, "day"],

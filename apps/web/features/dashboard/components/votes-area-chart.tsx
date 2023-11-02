@@ -1,7 +1,7 @@
 import { cn } from "@poll/lib";
 import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useCallback } from "react";
 import {
   XAxis,
   YAxis,
@@ -34,6 +34,30 @@ export default function VotesAreaChart({
     interval: interval,
   });
 
+  const generatePlaceholderData = useCallback(() => {
+    const ticks = dayjs(dateTo * 1000).diff(dateFrom * 1000, groupBy);
+    let date = dayjs(dateTo * 1000)
+      .set("millisecond", 0)
+      .set("second", 0)
+      .set("minutes", 0);
+
+    if (groupBy === "minute") {
+      date = date.set("minutes", dayjs(dateTo * 1000).minute());
+    }
+
+    const data = Array.from({ length: ticks + 1 }, (_, i) => ({
+      total: 0,
+      timestamp: date.subtract(i, groupBy).unix(),
+    }));
+    return data;
+  }, [dateFrom, dateTo, groupBy]);
+
+  const placeholderData = generatePlaceholderData();
+
+  const chartData = data?.length
+    ? sortData([...placeholderData, ...data])
+    : sortData(placeholderData);
+
   return (
     <ResponsiveContainer
       width="100%"
@@ -44,9 +68,7 @@ export default function VotesAreaChart({
         className
       )}
       {...props}>
-      <AreaChart
-        data={data?.length ? sortData(data) : []}
-        margin={{ left: 8, bottom: 8 }}>
+      <AreaChart data={chartData} margin={{ left: 8, bottom: 8 }}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#98FB98" stopOpacity={0.2} />
@@ -65,7 +87,6 @@ export default function VotesAreaChart({
           axisLine={false}
           height={30}
           dataKey="timestamp"
-          // TODO get unit from queryparams hook
           tickFormatter={(tick) => formatTick(tick, groupBy)}
           type="number"
           tickCount={24}
