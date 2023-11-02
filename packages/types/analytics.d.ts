@@ -22,12 +22,11 @@ export type ClientAnalyticsParams = {
   interval?: Interval;
 };
 
-export type AnalyticsParams = Required<
+export type AnalyticsParams<TParams = Record<string, unknown>> = Required<
   Omit<ClientAnalyticsParams, "interval">
 > & {
   ownerId: string;
-  groupBy: Interval;
-};
+} & TParams;
 
 type TinyBirdResponse<TData extends Record<string, unknown>> = {
   data: TData;
@@ -60,7 +59,9 @@ export interface Api {
 // Backend
 export interface Services {
   getUserPollVotes: (
-    params: AnalyticsParams
+    params: AnalyticsParams<{
+      groupBy: Interval;
+    }>
   ) => Promise<TinyBirdResponse<VotesData[]>>;
   getUserPollTopDevices: (
     params: AnalyticsParams
