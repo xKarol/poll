@@ -38,8 +38,8 @@ const MyPollsPage = () => {
                 <span>Create a poll</span>
               </Button>
             </DialogTrigger>
-            <DialogContent hideClose>
-              <ScrollArea className="h-[80vh]">
+            <DialogContent hideClose className="px-0">
+              <ScrollArea className="h-[80vh] px-6">
                 <CreatePollForm
                   ActionButtons={[
                     <Button variant="text" key="close-modal-btn" asChild>
