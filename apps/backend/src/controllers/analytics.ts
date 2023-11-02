@@ -1,10 +1,6 @@
 import type { Analytics } from "@poll/types";
 import type { Handler, NextFunction, Request, Response } from "express";
 
-import type {
-  GetAllPollVoteData,
-  AnalyticsDataParams,
-} from "../schemas/analytics";
 import {
   getUserPollTopDevices,
   getUserPollVotesData,
@@ -12,18 +8,16 @@ import {
 } from "../services/tinybird";
 
 export const GetUserPollVotesData = async (
-  req: Request<GetAllPollVoteData>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
+    const params = req.analytics;
     const { id: userId } = req.user!;
 
     const { data } = await getUserPollVotesData({
       ownerId: userId,
-      date_from: +dateFrom,
-      date_to: +dateTo,
       ...params,
     });
     return res.send(data);
@@ -48,12 +42,11 @@ export const GetPollData = async (
 
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
-    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
+    const params = req.analytics;
     const { id: userId } = req.user!;
+
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
-      date_from: +dateFrom,
-      date_to: +dateTo,
       ...params,
     });
 
@@ -75,12 +68,10 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
-    const { dateFrom, dateTo, ...params } = req.query as AnalyticsDataParams;
+    const params = req.analytics;
     const { id: userId } = req.user!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
-      date_from: +dateFrom,
-      date_to: +dateTo,
       ...params,
     });
 

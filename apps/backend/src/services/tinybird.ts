@@ -1,7 +1,7 @@
+import type { Analytics } from "@poll/types";
 import { z } from "zod";
 
 import tinybird from "../lib/tinybird";
-import * as AnalyticsSchema from "../schemas/analytics";
 
 export const sendPollVoteData = tinybird.buildIngestEndpoint({
   datasource: "analytics_poll_vote__v1",
@@ -27,43 +27,54 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
   }),
 });
 
-export const getUserPollVotesData = tinybird.buildPipe({
+const parametersSchema = z.object({
+  ownerId: z.string(),
+  limit: z.number().positive().optional(),
+  dateFrom: z.number().positive().optional(),
+  dateTo: z.number().positive().optional(),
+  groupBy: z.enum(["day", "hour", "minute"]),
+});
+
+const votesPipe = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
-  parameters: z
-    .object({
-      ownerId: z.string(),
-      interval: AnalyticsSchema.interval,
-    })
-    .extend(AnalyticsSchema.defaultParameters),
+  parameters: parametersSchema,
   data: z.object({
     timestamp: z.number(),
     total: z.number().positive(),
   }),
 });
 
-export const getUserPollTopDevices = tinybird.buildPipe({
+const topDevicesPipe = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_TOP_DEVICES_ID as string,
-  parameters: z
-    .object({
-      ownerId: z.string(),
-    })
-    .extend(AnalyticsSchema.defaultParameters),
+  parameters: parametersSchema,
   data: z.object({
-    device: z.string(),
+    device: z.enum(["desktop", "mobile", "tablet"]),
     total: z.number().positive(),
   }),
 });
 
-export const getUserPollTopCountries = tinybird.buildPipe({
+const topCountriesPipe = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_TOP_COUNTRIES_ID as string,
-  parameters: z
-    .object({
-      ownerId: z.string(),
-    })
-    .extend(AnalyticsSchema.defaultParameters),
+  parameters: parametersSchema,
   data: z.object({
     country_name: z.string(),
     country_code: z.string(),
     total: z.number().positive(),
   }),
 });
+
+export const getUserPollVotesData: Analytics.Services["getUserPollVotes"] = (
+  params
+) => {
+  return votesPipe(params);
+};
+
+export const getUserPollTopDevices: Analytics.Services["getUserPollTopDevices"] =
+  (params) => {
+    return topDevicesPipe(params);
+  };
+
+export const getUserPollTopCountries: Analytics.Services["getUserPollTopCountries"] =
+  (params) => {
+    return topCountriesPipe(params);
+  };

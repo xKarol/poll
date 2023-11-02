@@ -18,11 +18,11 @@ export const interval = z
 
 export const defaultParameters = {
   limit: z.coerce.number().positive().optional(),
-  date_from: z.coerce.number().positive().optional(),
-  date_to: z.coerce.number().positive().optional(),
+  dateFrom: z.coerce.number().positive().optional(),
+  dateTo: z.coerce.number().positive().optional(),
 };
 
-export const getAllPollVoteData: z.Schema = z.object({
+export const getAllPollVoteData = z.object({
   params: z.object({
     interval: interval,
     ...defaultParameters,
@@ -31,8 +31,8 @@ export const getAllPollVoteData: z.Schema = z.object({
 
 export type GetAllPollVoteData = z.infer<typeof getAllPollVoteData>;
 
-export const getAnalyticsData: z.Schema = z.object({
+export const getAnalyticsData = z.object({
   params: z.object(defaultParameters),
 });
 
-export type AnalyticsDataParams = z.infer<typeof getAnalyticsData>;
+export type AnalyticsDataParams = z.infer<typeof getAnalyticsData>["params"];

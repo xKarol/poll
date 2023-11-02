@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { analyticsOptions } from "../../../queries/analytics";
 
-const useAnalyticsTopCountries = (params?: Analytics.DefaultAnalyticsProps) =>
+const useAnalyticsTopCountries = (params?: Analytics.ClientAnalyticsParams) =>
   useQuery(analyticsOptions.getUserPollTopCountries(params));
 
 export default useAnalyticsTopCountries;

@@ -3,8 +3,7 @@ import express from "express";
 
 import * as AnalyticsController from "../controllers/analytics";
 import { requireAuth } from "../middlewares/require-auth";
-import { validateSchema } from "../middlewares/validate-schema";
-import * as AnalyticsSchema from "../schemas/analytics";
+import { withAnalyticsParams } from "../middlewares/with-analytics-params";
 
 const router = express.Router();
 
@@ -18,21 +17,21 @@ const router = express.Router();
 router.get(
   apiUrls.analytics.userPollVotes,
   requireAuth,
-  validateSchema(AnalyticsSchema.getAllPollVoteData),
+  withAnalyticsParams,
   AnalyticsController.GetUserPollVotesData
 );
 
 router.get(
   apiUrls.analytics.getUserPollTopDevices,
   requireAuth,
-  validateSchema(AnalyticsSchema.getAnalyticsData),
+  withAnalyticsParams,
   AnalyticsController.GetUserPollTopDevicesData
 );
 
 router.get(
   apiUrls.analytics.getUserPollTopCountries,
   requireAuth,
-  validateSchema(AnalyticsSchema.getAnalyticsData),
+  withAnalyticsParams,
   AnalyticsController.GetUserPollTopCountriesData
 );
 

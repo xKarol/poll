@@ -15,23 +15,57 @@ export type TopCountriesData = {
 
 export type TopDevicesData = Record<Devices, number>;
 
-export type DefaultAnalyticsProps<RestProps = unknown> = {
+export type ClientAnalyticsParams = {
   dateFrom?: number;
   dateTo?: number;
   limit?: number;
-} & RestProps;
-
-export type getUserPollVotesParams = DefaultAnalyticsProps<{
   interval?: Interval;
-}>;
+};
+
+export type AnalyticsParams = Required<
+  Omit<ClientAnalyticsParams, "interval">
+> & {
+  ownerId: string;
+  groupBy: Interval;
+};
+
+type TinyBirdResponse<TData extends Record<string, unknown>> = {
+  data: TData;
+  meta: {
+    name: string;
+    type: string;
+  }[];
+  rows?: number | undefined;
+  rows_before_limit_at_least?: number | undefined;
+  statistics?:
+    | {
+        elapsed?: number | undefined;
+        rows_read?: number | undefined;
+        bytes_read?: number | undefined;
+      }
+    | undefined;
+};
 
 // Frontend
 export interface Api {
-  getUserPollVotes: (params: getUserPollVotesParams) => Promise<VotesData[]>;
+  getUserPollVotes: (params?: ClientAnalyticsParams) => Promise<VotesData[]>;
   getUserPollTopDevices: (
-    params?: DefaultAnalyticsProps
+    params?: ClientAnalyticsParams
   ) => Promise<TopDevicesData>;
   getUserPollTopCountries: (
-    params?: DefaultAnalyticsProps
+    params?: ClientAnalyticsParams
   ) => Promise<TopCountriesData[]>;
+}
+
+// Backend
+export interface Services {
+  getUserPollVotes: (
+    params: AnalyticsParams
+  ) => Promise<TinyBirdResponse<VotesData[]>>;
+  getUserPollTopDevices: (
+    params: AnalyticsParams
+  ) => Promise<TinyBirdResponse<{ device: Devices; total: number }[]>>;
+  getUserPollTopCountries: (
+    params: AnalyticsParams
+  ) => Promise<TinyBirdResponse<TopCountriesData[]>>;
 }

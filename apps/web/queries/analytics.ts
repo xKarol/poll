@@ -8,9 +8,7 @@ import {
 } from "../services/api";
 
 export const analyticsKeys = {
-  getUserPollsVotes: ({
-    interval = "hour",
-  }: Analytics.getUserPollVotesParams) =>
+  getUserPollsVotes: ({ interval = "hour" }: Analytics.ClientAnalyticsParams) =>
     ["analytics.votes", { interval }] as const,
   getUserPollTopDevices: ["analytics.top-devices"] as const,
   getUserPollTopCountries: ["analytics.top-countries"] as const,
@@ -18,7 +16,7 @@ export const analyticsKeys = {
 
 export const analyticsOptions = {
   getUserPollsVotes: (
-    params: Analytics.getUserPollVotesParams
+    params: Analytics.ClientAnalyticsParams
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
   > => ({
@@ -26,7 +24,7 @@ export const analyticsOptions = {
     queryFn: () => getAnalyticsUserPollVotes(params),
   }),
   getUserPollTopDevices: (
-    params: Analytics.DefaultAnalyticsProps
+    params: Analytics.ClientAnalyticsParams
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
   > => ({
@@ -34,7 +32,7 @@ export const analyticsOptions = {
     queryFn: () => getAnalyticsUserPollTopDevices(params),
   }),
   getUserPollTopCountries: (
-    params: Analytics.DefaultAnalyticsProps
+    params: Analytics.ClientAnalyticsParams
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
   > => ({
