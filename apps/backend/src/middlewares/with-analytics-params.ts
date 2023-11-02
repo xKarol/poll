@@ -10,7 +10,7 @@ declare global {
   namespace Express {
     interface Request {
       analytics: {
-        groupBy: "hour" | "minute" | "day";
+        groupBy: "month" | "day" | "hour";
         dateFrom: number;
         dateTo: number;
         limit: number;
@@ -26,9 +26,9 @@ export const analyticsParamsSchema = z
   .extend(defaultParameters);
 
 const groupByName = {
-  D: "day",
-  m: "minute",
-  H: "hour",
+  h: "hour",
+  d: "day",
+  m: "month",
 } as const;
 
 export const withAnalyticsParams =

@@ -1,4 +1,4 @@
-const allowedUnits = ["H", "m", "D"] as const;
+const allowedUnits = ["m", "d", "h"] as const;
 type Unit = (typeof allowedUnits)[number];
 
 export const parseInterval = (interval: string): [number, Unit] => {
