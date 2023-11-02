@@ -22,7 +22,7 @@ declare global {
 
 export const analyticsParamsSchema = z
   .object({
-    interval: z.string().transform(parseInterval),
+    interval: z.string().default("1h").transform(parseInterval),
   })
   .extend(defaultParameters);
 
@@ -32,28 +32,31 @@ const groupByName = {
   m: "month",
 } as const;
 
-export const withAnalyticsParams =
-  () => async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const {
-        interval,
-        limit = 50,
-        dateTo = Date.now(),
-        ...params
-      } = analyticsParamsSchema.parse(req.query);
+export const withAnalyticsParams = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      interval,
+      limit = 50,
+      dateTo = dayjs().unix(),
+      ...params
+    } = analyticsParamsSchema.parse(req.query);
 
-      const [value, unit] = interval;
-      req.analytics = {
-        ...params,
-        groupBy: groupByName[unit],
-        dateFrom:
-          params.dateFrom || dayjs().subtract(value, groupByName[unit]).unix(),
-        dateTo,
-        limit,
-      };
+    const [value, unit] = interval;
+    req.analytics = {
+      ...params,
+      groupBy: groupByName[unit],
+      dateFrom:
+        params.dateFrom || dayjs().subtract(value, groupByName[unit]).unix(),
+      dateTo,
+      limit,
+    };
 
-      next();
-    } catch (error) {
-      next(error);
-    }
-  };
+    next();
+  } catch (error) {
+    next(error);
+  }
+};

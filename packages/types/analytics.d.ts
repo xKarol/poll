@@ -19,7 +19,7 @@ export type ClientAnalyticsParams = {
   dateFrom?: number;
   dateTo?: number;
   limit?: number;
-  interval?: Interval;
+  interval?: string;
 };
 
 export type AnalyticsParams<TParams = Record<string, unknown>> = Required<

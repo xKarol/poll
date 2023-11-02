@@ -35,11 +35,9 @@ export default function VotesAreaChart({
   className,
   ...props
 }: VotesAreaChartProps) {
-  const { interval, dateFrom, dateTo } = useAnalyticsParams();
+  const { interval, queryParam, dateFrom, dateTo } = useAnalyticsParams();
   const { data } = useAnalyticsVotes({
-    interval,
-    dateFrom,
-    dateTo,
+    interval: queryParam,
   });
 
   return (
