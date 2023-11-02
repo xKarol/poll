@@ -106,11 +106,11 @@ export const Vote = async (
     ua.setUA(userAgent).getResult();
 
     await Analytics.sendPollVoteData({
-      userId,
-      pollId,
-      ownerId: ownerId || undefined,
-      voteId: data.id,
-      answerId,
+      user_id: userId,
+      poll_id: pollId,
+      owner_id: ownerId || undefined,
+      vote_id: data.id,
+      answer_id: answerId,
       timestamp: new Date().toISOString(),
       browser: ua.getBrowser().name,
       browser_version: ua.getBrowser().version,

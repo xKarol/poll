@@ -6,11 +6,11 @@ import tinybird from "../lib/tinybird";
 export const sendPollVoteData = tinybird.buildIngestEndpoint({
   datasource: "analytics_poll_vote__v1",
   event: z.object({
-    voteId: z.string(),
-    userId: z.string().optional().default("Unknown"),
-    ownerId: z.string().optional().default("Unknown"),
-    pollId: z.string(),
-    answerId: z.string(),
+    vote_id: z.string(),
+    user_id: z.string().optional().default("Unknown"),
+    owner_id: z.string().optional().default("Unknown"),
+    poll_id: z.string(),
+    answer_id: z.string(),
     timestamp: z.string(),
     browser: z.string().optional().default("Unknown"),
     browser_version: z.string().optional().default("Unknown"),
@@ -28,16 +28,17 @@ export const sendPollVoteData = tinybird.buildIngestEndpoint({
 });
 
 const parametersSchema = z.object({
-  ownerId: z.string(),
+  owner_id: z.string(),
   limit: z.number().positive().optional(),
-  dateFrom: z.number().positive().optional(),
-  dateTo: z.number().positive().optional(),
-  groupBy: z.enum(["day", "hour", "minute"]),
+  date_from: z.number().positive().optional(),
+  date_to: z.number().positive().optional(),
 });
 
 const votesPipe = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
-  parameters: parametersSchema,
+  parameters: parametersSchema.extend({
+    group_by: z.enum(["day", "hour", "minute"]),
+  }),
   data: z.object({
     timestamp: z.number(),
     total: z.number().positive(),
@@ -66,15 +67,27 @@ const topCountriesPipe = tinybird.buildPipe({
 export const getUserPollVotesData: Analytics.Services["getUserPollVotes"] = (
   params
 ) => {
-  return votesPipe(params);
+  return votesPipe({
+    ...transformParamsToSnakeCase(params),
+    group_by: params.groupBy,
+  });
 };
 
 export const getUserPollTopDevices: Analytics.Services["getUserPollTopDevices"] =
   (params) => {
-    return topDevicesPipe(params);
+    return topDevicesPipe(transformParamsToSnakeCase(params));
   };
 
 export const getUserPollTopCountries: Analytics.Services["getUserPollTopCountries"] =
   (params) => {
-    return topCountriesPipe(params);
+    return topCountriesPipe(transformParamsToSnakeCase(params));
   };
+
+function transformParamsToSnakeCase(params: Analytics.AnalyticsParams) {
+  return {
+    owner_id: params.ownerId,
+    date_from: params.dateFrom,
+    date_to: params.dateTo,
+    limit: params.limit,
+  };
+}
