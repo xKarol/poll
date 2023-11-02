@@ -25,19 +25,13 @@ type VotesAreaChartProps = Omit<
   "children"
 >;
 
-// TODO improve
-const formatTick = (tick: number, unit: "h" | "d" | "m") => {
-  if (unit === "d") return dayjs(tick).format("DD.MM");
-  return dayjs(tick).format("HH:mm");
-};
-
 export default function VotesAreaChart({
   className,
   ...props
 }: VotesAreaChartProps) {
-  const { interval, queryParam, dateFrom, dateTo } = useAnalyticsParams();
+  const { interval, groupBy, dateFrom, dateTo } = useAnalyticsParams();
   const { data } = useAnalyticsVotes({
-    interval: queryParam,
+    interval: interval,
   });
 
   return (
@@ -72,7 +66,7 @@ export default function VotesAreaChart({
           height={30}
           dataKey="timestamp"
           // TODO get unit from queryparams hook
-          tickFormatter={(tick) => formatTick(tick, interval?.[0])}
+          tickFormatter={(tick) => formatTick(tick, groupBy)}
           type="number"
           tickCount={24}
           domain={[dateFrom * 1000, dateTo * 1000]}
@@ -132,4 +126,10 @@ function sortData(data: Analytics.VotesData[]) {
       }))
       .sort((a, b) => a.timestamp - b.timestamp),
   ];
+}
+
+function formatTick(tick: number, group: "hour" | "day" | "month") {
+  if (group === "month") return dayjs(tick).format("MMM");
+  if (group === "day") return dayjs(tick).format("DD.MM");
+  return dayjs(tick).format("HH:mm");
 }

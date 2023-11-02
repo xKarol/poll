@@ -17,27 +17,27 @@ const convertIntervals = {
 
 export default function useAnalyticsQueryParams() {
   const [interval] = useQueryState("interval");
-  const [value, intervalName] = intervals[interval] || [undefined, undefined];
+  const [, groupBy] = intervals[interval] || [24, "hour"];
   const { dateFrom, dateTo } = calculateDate(interval);
   return {
     dateFrom,
     dateTo,
-    queryParam: interval,
-    interval: intervalName,
-    value,
+    groupBy,
+    interval: interval || "24h",
+    queryParams: { interval },
   };
 }
 
 function calculateDate(value: string) {
   const convertedValue = convertIntervals[value];
-  if (convertedValue === "1h") return dateDiff(1, "h");
-  if (convertedValue === "24h") return dateDiff(24, "h");
-  if (convertedValue === "7d") return dateDiff(7, "d");
-  if (convertedValue === "30d") return dateDiff(30, "d");
+  if (convertedValue === "1h") return dateDiff(1, "hour");
+  if (convertedValue === "24h") return dateDiff(24, "hour");
+  if (convertedValue === "7d") return dateDiff(7, "day");
+  if (convertedValue === "30d") return dateDiff(30, "day");
   return dateDiff(24, "h");
 }
 
-function dateDiff(diff: number, unit: "h" | "d" | "m") {
+function dateDiff(diff: number, unit: dayjs.ManipulateType) {
   return {
     dateFrom: dayjs().subtract(diff, unit).unix(),
     dateTo: dayjs().unix(),

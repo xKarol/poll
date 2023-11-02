@@ -8,10 +8,12 @@ import {
 } from "../services/api";
 
 export const analyticsKeys = {
-  getUserPollsVotes: ({ interval = "hour" }: Analytics.ClientAnalyticsParams) =>
+  getUserPollsVotes: ({ interval }: Analytics.ClientAnalyticsParams) =>
     ["analytics.votes", { interval }] as const,
-  getUserPollTopDevices: ["analytics.top-devices"] as const,
-  getUserPollTopCountries: ["analytics.top-countries"] as const,
+  getUserPollTopDevices: ({ interval }: Analytics.ClientAnalyticsParams) =>
+    ["analytics.top-devices", { interval }] as const,
+  getUserPollTopCountries: ({ interval }: Analytics.ClientAnalyticsParams) =>
+    ["analytics.top-countries", { interval }] as const,
 };
 
 export const analyticsOptions = {
@@ -28,7 +30,9 @@ export const analyticsOptions = {
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
   > => ({
-    queryKey: analyticsKeys.getUserPollTopDevices,
+    queryKey: analyticsKeys.getUserPollTopDevices({
+      interval: params.interval,
+    }),
     queryFn: () => getAnalyticsUserPollTopDevices(params),
   }),
   getUserPollTopCountries: (
@@ -36,7 +40,9 @@ export const analyticsOptions = {
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
   > => ({
-    queryKey: analyticsKeys.getUserPollTopCountries,
+    queryKey: analyticsKeys.getUserPollTopCountries({
+      interval: params.interval,
+    }),
     queryFn: () => getAnalyticsUserPollTopCountries(params),
   }),
 } satisfies Record<keyof typeof analyticsKeys, unknown>;

@@ -12,9 +12,9 @@ export default function TopCountries({
   className,
   ...props
 }: TopCountriesProps) {
-  const { queryParam } = useAnalyticsParams();
+  const { interval } = useAnalyticsParams();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries({
-    interval: queryParam,
+    interval: interval,
   });
   const isEmpty = isSuccess && data.length === 0;
   return (
