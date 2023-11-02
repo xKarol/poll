@@ -1,3 +1,4 @@
+import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import type { NextFunction, Request, Response } from "express";
@@ -22,7 +23,10 @@ declare global {
 
 export const analyticsParamsSchema = z
   .object({
-    interval: z.string().default("24h").transform(parseInterval),
+    interval: z
+      .string()
+      .default(DEFAULT_ANALYTICS_INTERVAL)
+      .transform(parseInterval),
   })
   .extend(defaultParameters);
 

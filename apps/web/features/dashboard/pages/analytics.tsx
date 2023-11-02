@@ -1,3 +1,4 @@
+import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import { cn } from "@poll/lib";
 import {
   Icon,
@@ -26,7 +27,9 @@ const AnalyticsPage = () => {
       <Header
         heading="Analytics"
         ActionComponent={
-          <Select onValueChange={setInterval} defaultValue={interval || "24h"}>
+          <Select
+            onValueChange={setInterval}
+            defaultValue={interval || DEFAULT_ANALYTICS_INTERVAL}>
             <SelectTrigger className="min-w-[180px] max-w-max">
               <div className="flex items-center space-x-2">
                 <Icon.Calendar className="h-4 w-4" />

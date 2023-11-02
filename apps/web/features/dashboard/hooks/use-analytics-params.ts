@@ -1,3 +1,4 @@
+import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import dayjs from "dayjs";
 import { useQueryState } from "next-usequerystate";
 
@@ -23,7 +24,7 @@ export default function useAnalyticsQueryParams() {
     dateFrom,
     dateTo,
     groupBy,
-    interval: interval || "24h",
+    interval: interval || DEFAULT_ANALYTICS_INTERVAL,
     queryParams: { interval },
   };
 }
