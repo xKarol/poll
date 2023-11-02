@@ -3,7 +3,7 @@ export type GetPollData = {
 };
 
 export type Devices = "mobile" | "tablet" | "desktop";
-export type Interval = "month" | "day" | "hour";
+export type GroupBy = "month" | "day" | "hour" | "minute";
 
 export type VotesData = { timestamp: number; total: number };
 

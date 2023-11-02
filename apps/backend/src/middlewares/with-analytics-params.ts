@@ -11,7 +11,7 @@ declare global {
   namespace Express {
     interface Request {
       analytics: {
-        groupBy: Analytics.Interval;
+        groupBy: Analytics.GroupBy;
         dateFrom: number;
         dateTo: number;
         limit: number;
@@ -22,7 +22,7 @@ declare global {
 
 export const analyticsParamsSchema = z
   .object({
-    interval: z.string().default("1h").transform(parseInterval),
+    interval: z.string().default("24h").transform(parseInterval),
   })
   .extend(defaultParameters);
 
@@ -46,9 +46,16 @@ export const withAnalyticsParams = async (
     } = analyticsParamsSchema.parse(req.query);
 
     const [value, unit] = interval;
+    const fullInterval = `${value}${unit}`;
+
+    const getGroupBy = (interval: string) => {
+      if (interval === "1h") return "minute";
+      return groupByName[unit];
+    };
+
     req.analytics = {
       ...params,
-      groupBy: groupByName[unit],
+      groupBy: getGroupBy(fullInterval),
       dateFrom:
         params.dateFrom || dayjs().subtract(value, groupByName[unit]).unix(),
       dateTo,

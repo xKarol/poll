@@ -37,10 +37,11 @@ const parametersSchema = z.object({
 const votesPipe = tinybird.buildPipe({
   pipe: process.env.TINYBIRD_PIPE_USER_ALL_VOTES_ID as string,
   parameters: parametersSchema.extend({
-    group_by: z.enum<string, [Analytics.Interval, ...Analytics.Interval[]]>([
+    group_by: z.enum<string, [Analytics.GroupBy, ...Analytics.GroupBy[]]>([
       "month",
       "day",
       "hour",
+      "minute",
     ]),
   }),
   data: z.object({
