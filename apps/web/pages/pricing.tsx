@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { routes } from "../config/routes";
+import { useHasPermission } from "../hooks/use-has-permission";
 import { usePricingPlans } from "../hooks/use-pricing-plans";
 import { BaseLayout } from "../layouts";
 import { paymentOptions } from "../queries/payment";
@@ -38,12 +39,6 @@ const plansData: {
   },
 ];
 
-const plans: Plan[] = ["FREE", "BASIC", "PRO"];
-const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
-  if (plans.indexOf(currentPlan) >= plans.indexOf(planName)) return true;
-  return false;
-};
-
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const queryClient = new QueryClient();
@@ -63,8 +58,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const paymentCycles: Payment.PaymentCycle[] = ["month", "year"];
 
 export default function PricingPage() {
-  const { status, data: session } = useSession();
+  const { status } = useSession();
   const router = useRouter();
+  const { hasPermission } = useHasPermission();
   const { data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
     mutationFn: ({ priceId }: { priceId: string }) => {
@@ -144,7 +140,7 @@ export default function PricingPage() {
                       disabled={
                         status === "unauthenticated"
                           ? false
-                          : isPlanOwned("FREE", session?.user.plan || "FREE")
+                          : hasPermission("FREE")
                       }
                       onClick={redirectUnauthenticatedToLoginPage}
                       className="capitalize">
@@ -175,7 +171,7 @@ export default function PricingPage() {
                           disabled={
                             status === "unauthenticated"
                               ? false
-                              : isPlanOwned(name, session?.user.plan || "FREE")
+                              : hasPermission(name)
                           }
                           onClick={async () =>
                             handlePayment(selectedCyclePrice.id)

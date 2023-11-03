@@ -28,6 +28,7 @@ import {
 } from "../components/form";
 import { routes } from "../config/routes";
 import { useCreatePoll } from "../hooks/use-create-poll";
+import { useHasPermission } from "../hooks/use-has-permission";
 import { getErrorMessage } from "../utils/error";
 
 export type CreatePollFormProps = { ActionButtons?: JSX.Element[] } & Omit<
@@ -204,6 +205,8 @@ function PollOptionField({
   requiredPlan = "FREE",
   ...props
 }: PollOptionFieldProps) {
+  const { hasPermission } = useHasPermission();
+  const hasAccess = hasPermission(requiredPlan);
   return (
     <>
       <FormField
@@ -217,7 +220,7 @@ function PollOptionField({
               <div>
                 <FormLabel className="inline-flex items-center space-x-2">
                   <span>{heading}</span>
-                  {requiredPlan !== "FREE" ? (
+                  {!hasAccess ? (
                     <Badge className="capitalize">
                       {requiredPlan.toLowerCase()}
                     </Badge>
@@ -230,6 +233,7 @@ function PollOptionField({
             </div>
             <FormControl>
               <Switch
+                disabled={!hasAccess}
                 checked={field.value as boolean}
                 onCheckedChange={field.onChange}
               />
