@@ -3,6 +3,7 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import * as React from "react";
 
 const TooltipProvider = TooltipPrimitive.Provider;
+const TooltipPortal = TooltipPrimitive.Portal;
 
 const Tooltip = TooltipPrimitive.Root;
 
@@ -24,4 +25,10 @@ const TooltipContent = React.forwardRef<
 ));
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+export {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+};
