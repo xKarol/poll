@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@poll/lib";
+import type { Plan } from "@poll/prisma";
 import type { Poll } from "@poll/types";
 import {
   Button,
@@ -9,6 +10,7 @@ import {
   Alert,
   AlertTitle,
   Icon,
+  Badge,
 } from "@poll/ui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -164,6 +166,7 @@ export const CreatePollForm = ({
               description="Make this poll public"
             />
             <PollOptionField
+              requiredPlan="STANDARD"
               control={form.control}
               name="requireRecaptcha"
               Icon={<Icon.Shield className="h-7 w-7" />}
@@ -190,6 +193,7 @@ export const CreatePollForm = ({
 type PollOptionFieldProps = {
   Icon: JSX.Element;
   heading: string;
+  requiredPlan?: Plan;
   description: string;
 } & Omit<React.ComponentProps<typeof FormField<FormValues>>, "render">;
 
@@ -197,6 +201,7 @@ function PollOptionField({
   Icon,
   heading,
   description,
+  requiredPlan = "FREE",
   ...props
 }: PollOptionFieldProps) {
   return (
@@ -210,7 +215,14 @@ function PollOptionField({
                 {Icon}
               </div>
               <div>
-                <FormLabel>{heading}</FormLabel>
+                <FormLabel className="inline-flex items-center space-x-2">
+                  <span>{heading}</span>
+                  {requiredPlan !== "FREE" ? (
+                    <Badge className="capitalize">
+                      {requiredPlan.toLowerCase()}
+                    </Badge>
+                  ) : null}
+                </FormLabel>
                 <FormDescription className="text-sm font-medium">
                   {description}
                 </FormDescription>
