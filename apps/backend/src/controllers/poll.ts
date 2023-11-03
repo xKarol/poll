@@ -1,6 +1,8 @@
+import { hasUserPermission } from "@poll/lib";
 import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
+import httpError from "http-errors";
 
 import { getGeoData } from "../lib/geoip";
 import { ua } from "../lib/useragent";
@@ -52,7 +54,13 @@ export const Create = async (
 ) => {
   try {
     const data = req.body;
+    const user = req.user!;
 
+    if (data?.requireRecaptcha === true) {
+      const hasPermission = hasUserPermission("BASIC", user?.plan);
+      if (!hasPermission)
+        throw httpError(httpError.Forbidden, "Basic plan is required.");
+    }
     const poll = await createPoll({
       ...data,
       userId: req.user?.id,
