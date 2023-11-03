@@ -4,7 +4,7 @@ export type GetPollData = {
 
 export type Devices = "mobile" | "tablet" | "desktop";
 export type GroupBy = "month" | "day" | "hour" | "minute";
-
+export type Interval = "1h" | "24h" | "7d" | "30d" | "1y";
 export type VotesData = { timestamp: number; total: number };
 
 export type TopCountriesData = {
@@ -60,7 +60,7 @@ export interface Api {
 export interface Services {
   getUserPollVotes: (
     params: AnalyticsParams<{
-      groupBy: Interval;
+      groupBy: GroupBy;
     }>
   ) => Promise<TinyBirdResponse<VotesData[]>>;
   getUserPollTopDevices: (

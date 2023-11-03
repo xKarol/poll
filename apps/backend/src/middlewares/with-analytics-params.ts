@@ -34,6 +34,7 @@ const groupByName = {
   h: "hour",
   d: "day",
   m: "month",
+  y: "year",
 } as const;
 
 export const withAnalyticsParams = async (
@@ -52,8 +53,10 @@ export const withAnalyticsParams = async (
     const [value, unit] = interval;
     const fullInterval = `${value}${unit}`;
 
-    const getGroupBy = (interval: string) => {
+    const getGroupBy = (interval: string): Analytics.GroupBy => {
       if (interval === "1h") return "minute";
+      if (interval === "1y") return "month";
+      // @ts-expect-error never
       return groupByName[unit];
     };
 
