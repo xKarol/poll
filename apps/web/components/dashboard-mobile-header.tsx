@@ -22,7 +22,7 @@ export function DashboardMobileHeader({
       {...props}>
       <Button
         variant="text"
-        className="rounded-[4px] p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+        className="rounded p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700"
         onClick={onOpen}
         asChild>
         {MenuComponent}

@@ -91,7 +91,7 @@ const MyVotesPage = () => {
                           <DropdownMenuTrigger asChild>
                             <button
                               type="button"
-                              className="ml-auto rounded-[4px] p-1 transition-colors hover:bg-neutral-200 hover:dark:bg-neutral-800">
+                              className="ml-auto rounded p-1 transition-colors hover:bg-neutral-200 hover:dark:bg-neutral-800">
                               <Icon.MoreHorizontal className="h-5 w-5" />
                             </button>
                           </DropdownMenuTrigger>

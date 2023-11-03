@@ -101,7 +101,7 @@ export default function PublicPage() {
                 <Link
                   key={poll.id}
                   href={routes.poll(poll.id)}
-                  className="space-y-4 rounded-[4px] bg-neutral-100 px-3 py-4 dark:bg-neutral-800">
+                  className="space-y-4 rounded bg-neutral-100 px-3 py-4 dark:bg-neutral-800">
                   <h1 className="text-lg">{poll.question}</h1>
                   <div className="flex items-center justify-between text-sm font-normal text-neutral-400">
                     <div className="flex items-center space-x-2">

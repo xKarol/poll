@@ -44,7 +44,7 @@ export default function TopDevices({ className, ...props }: TopDevicesProps) {
           {Object.entries(data).map(([deviceName, total]) => (
             <div
               key={deviceName}
-              className="relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
+              className="relative flex w-full items-center justify-between rounded bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800">
               <div className="flex items-center space-x-4">
                 {deviceIcon[deviceName]}
                 <span className="capitalize">{deviceName}</span>

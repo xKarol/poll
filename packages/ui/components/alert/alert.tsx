@@ -9,7 +9,7 @@ import {
 import * as React from "react";
 
 const alertVariants = cva(
-  "relative w-full rounded-[4px] p-4 [&>svg~*]:pl-8 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3 [&>svg]:text-foreground text-neutral-900",
+  "relative w-full rounded p-4 [&>svg~*]:pl-8 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3 [&>svg]:text-foreground text-neutral-900",
   {
     variants: {
       variant: {

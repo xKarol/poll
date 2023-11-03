@@ -64,7 +64,7 @@ export default function VotesAreaChart({
       height="100%"
       aspect={16 / 9}
       className={cn(
-        "rounded-[4px] border border-neutral-300 dark:border-neutral-800",
+        "rounded border border-neutral-300 dark:border-neutral-800",
         className
       )}
       {...props}>
@@ -122,7 +122,7 @@ function CustomTooltip({
 }: TooltipProps<ValueType, NameType>) {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-[4px] border border-neutral-200 bg-neutral-100 px-4 py-2 text-sm dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="rounded border border-neutral-200 bg-neutral-100 px-4 py-2 text-sm dark:border-neutral-800 dark:bg-neutral-900">
         <p>
           <strong className="font-medium">Date:</strong>{" "}
           <span>{dayjs(label).format("DD MMM YYYY  HH:mm:ss")}</span>

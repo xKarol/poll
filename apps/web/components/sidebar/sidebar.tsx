@@ -44,7 +44,7 @@ export function SidebarNavigationLink<T extends React.ElementType = "div">({
   return (
     <Component
       className={cn(
-        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-200 hover:text-black dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white [&_svg]:h-4 [&_svg]:w-4",
+        "flex cursor-pointer items-center space-x-2 rounded p-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-200 hover:text-black dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white [&_svg]:h-4 [&_svg]:w-4",
         isActive && "bg-neutral-200 dark:bg-neutral-800",
         className
       )}
@@ -92,7 +92,7 @@ export function SidebarProfile({
   return (
     <div
       className={cn(
-        "flex cursor-pointer items-center space-x-2 rounded-[4px] p-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-200 hover:text-black dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white",
+        "flex cursor-pointer items-center space-x-2 rounded p-2 text-sm font-medium text-neutral-800 transition-colors hover:bg-neutral-200 hover:text-black dark:text-neutral-200 hover:dark:bg-neutral-800 hover:dark:text-white",
         className
       )}
       {...props}>

@@ -104,7 +104,7 @@ function StatisticCard({
   return (
     <section
       className={cn(
-        "rounded-[4px] border border-neutral-300 p-6 dark:border-neutral-800",
+        "rounded border border-neutral-300 p-6 dark:border-neutral-800",
         className
       )}>
       <div className="mb-2 flex items-center justify-between">

@@ -151,7 +151,7 @@ function FeatureCard({
   return (
     <div
       className={cn(
-        "relative flex flex-col space-y-8 rounded-[4px] border border-neutral-100 bg-white px-8 py-16 dark:border-neutral-800 dark:bg-neutral-800/25",
+        "relative flex flex-col space-y-8 rounded border border-neutral-100 bg-white px-8 py-16 dark:border-neutral-800 dark:bg-neutral-800/25",
         className
       )}
       {...props}>

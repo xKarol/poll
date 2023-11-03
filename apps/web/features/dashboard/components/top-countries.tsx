@@ -72,7 +72,7 @@ function Country({ countryCode, countryName, value, className }: CountryProps) {
   return (
     <div
       className={cn(
-        "relative flex w-full items-center justify-between rounded-[4px] bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800",
+        "relative flex w-full items-center justify-between rounded bg-neutral-100 px-4 py-2 text-xs dark:bg-neutral-800",
         className
       )}>
       <div className="flex items-center space-x-4">

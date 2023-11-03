@@ -39,7 +39,7 @@ function ThemeCard({
   return (
     <div
       className={cn(
-        "cursor-pointer rounded-[4px] border border-neutral-200 dark:border-neutral-700/50",
+        "cursor-pointer rounded border border-neutral-200 dark:border-neutral-700/50",
         isActive && "outline outline-2 outline-neutral-900 dark:outline-white",
         className
       )}

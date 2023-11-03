@@ -30,7 +30,7 @@ export const AnswerItem = ({
       className={cn(
         "flex space-x-4 px-4 py-3",
         variant === "selected" &&
-          "rounded-[4px] border border-neutral-900 dark:border-green-500",
+          "rounded border border-neutral-900 dark:border-green-500",
         className
       )}
       {...rest}>

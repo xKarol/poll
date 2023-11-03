@@ -371,7 +371,7 @@ function ShareContainer() {
   };
 
   return (
-    <div className="rounded-[4px] border-[2px] border-neutral-300 dark:border-neutral-800">
+    <div className="rounded border-[2px] border-neutral-300 dark:border-neutral-800">
       <div className="flex items-center space-x-2 border-b-[2px] border-neutral-300 p-4 dark:border-neutral-800">
         <Icon.LucideShare2 className="h-4 w-4" />
         <h1 className="text-base font-medium">Share</h1>

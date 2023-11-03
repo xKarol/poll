@@ -27,7 +27,7 @@ export const toast = (
   _toast(message, {
     ...opts,
     className: cn(
-      "!rounded-[4px] [&_svg]:w-4 [&_svg]:h-4 flex text-sm",
+      "!rounded [&_svg]:w-4 [&_svg]:h-4 flex text-sm",
       opts?.className
     ),
   });
