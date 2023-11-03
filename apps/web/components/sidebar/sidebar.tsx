@@ -12,7 +12,7 @@ export default function Sidebar({
   return (
     <aside
       className={cn(
-        "sticky bottom-0 left-0 top-0 flex h-screen min-w-[220px] flex-col border-r border-neutral-200/50 bg-neutral-100 px-2 py-4 dark:border-neutral-800/50 dark:bg-neutral-800/25",
+        "sticky left-0 top-0 flex h-full min-w-[220px] flex-col border-r border-neutral-200/50 bg-neutral-100 px-2 py-4 dark:border-neutral-800/50 dark:bg-neutral-800/25",
         className
       )}
       {...props}>

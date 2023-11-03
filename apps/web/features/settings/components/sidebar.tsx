@@ -4,8 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Sidebar, SidebarNavigationLink } from "../../../components/sidebar";
-import { SidebarNavigationList } from "../../../components/sidebar/sidebar";
+import {
+  Sidebar,
+  SidebarNavigationLink,
+  SidebarNavigationList,
+} from "../../../components/sidebar";
 import { routes } from "../../../config/routes";
 
 type Props = React.ComponentProps<typeof Sidebar>;

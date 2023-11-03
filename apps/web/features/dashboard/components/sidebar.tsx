@@ -8,8 +8,8 @@ import {
   Sidebar,
   SidebarNavigationLink,
   SidebarProfile,
+  SidebarNavigationList,
 } from "../../../components/sidebar";
-import { SidebarNavigationList } from "../../../components/sidebar/sidebar";
 import { routes } from "../../../config/routes";
 
 type Props = React.ComponentProps<typeof Sidebar>;
@@ -59,6 +59,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
             </SidebarNavigationLink>
           ))}
         </SidebarNavigationList>
+
         <SidebarNavigationList as="div">
           {isLoggedIn ? (
             <SidebarProfile

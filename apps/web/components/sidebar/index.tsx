@@ -1,5 +1,2 @@
-export {
-  default as Sidebar,
-  SidebarNavigationLink,
-  SidebarProfile,
-} from "./sidebar";
+export { default as Sidebar } from "./sidebar";
+export * from "./sidebar";
