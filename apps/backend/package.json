@@ -7,6 +7,7 @@
     "build": "esbuild src/index.ts --bundle --packages=external --platform=node --target=node18 --outfile=dist/index.js --tsconfig=tsconfig.json",
     "dev": "cross-env NODE_ENV=development concurrently \"esbuild src/index.ts --bundle --packages=external --platform=node --target=node18 --outfile=dist/index.js --watch\" \"nodemon -q dist/index.js'\"",
     "start": "cross-env NODE_ENV=production node ./dist/index.js",
+    "test": "vitest",
     "type-check": "tsc --noEmit",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
