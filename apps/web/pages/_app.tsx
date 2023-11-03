@@ -5,6 +5,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import type { NextComponentType, NextPageContext } from "next";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
@@ -75,6 +76,7 @@ export default function MyApp({
                 <div>
                   <Toaster position="bottom-right" />
                 </div>
+                <Analytics />
                 <ReactQueryDevtools initialIsOpen={false} />
                 {showDevtools && (
                   <React.Suspense fallback={null}>
