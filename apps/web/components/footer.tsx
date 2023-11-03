@@ -107,7 +107,7 @@ const Footer = ({ className, ...props }: FooterProps) => {
         <span>
           © {new Date().getFullYear()} Quick Poll. All rights reserved.
         </span>
-        <div className="space-x flex space-x-4 underline">
+        <div className="flex space-x-4 underline">
           <Link href={routes.HOME}>Privacy Policy</Link>
           <Link href={routes.HOME}>Terms & Conditions</Link>
         </div>

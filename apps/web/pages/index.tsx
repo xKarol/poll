@@ -52,7 +52,7 @@ export default function HomePage({
           <Image src={HeroImage} alt="hero" />
         </div>
       </section>
-      <section className="border-b-2 border-t-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
+      <section className="border-y-2 border-neutral-100 bg-white dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex max-w-4xl flex-col items-center space-y-4 py-8 md:flex-row md:justify-between md:space-x-4 md:space-y-0">
           <div className="flex flex-1 flex-col items-center">
             <p className="text-4xl font-bold uppercase md:text-5xl">
@@ -115,7 +115,7 @@ export default function HomePage({
           />
         </div>
       </section>
-      <section className="border-b-2 border-t-2 border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-800/25">
+      <section className="border-y-2 border-neutral-100 bg-white py-16 dark:border-neutral-800 dark:bg-neutral-800/25">
         <div className="container flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-8">
             <h1 className="text-2xl font-bold xl:text-4xl">

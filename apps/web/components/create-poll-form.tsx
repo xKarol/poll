@@ -154,7 +154,7 @@ export const CreatePollForm = ({
         </div>
 
         <div className="mb-8 space-y-2">
-          <h2 className="text-normal font-medium">Settings</h2>
+          <h2 className="text-base font-medium">Settings</h2>
           <div className="space-y-2">
             <PollOptionField
               control={form.control}
