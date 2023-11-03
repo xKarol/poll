@@ -41,7 +41,7 @@ export function generateFakeUserData() {
     name: faker.internet.displayName(),
     emailVerified: faker.date.past(),
     image: faker.internet.avatar(),
-    plan: faker.helpers.arrayElement(["FREE", "STANDARD", "PREMIUM"]),
+    plan: faker.helpers.arrayElement(["FREE", "BASIC", "PRO"]),
     timeZone: faker.location.timeZone(),
     clockType: 12,
     ...getFakeDate(),

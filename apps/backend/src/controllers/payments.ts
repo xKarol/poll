@@ -5,8 +5,8 @@ import type { Stripe } from "stripe";
 import { stripe } from "../lib/stripe";
 
 const productIds = [
-  process.env.STRIPE_STANDARD_PLAN_PRODUCT_ID,
-  process.env.STRIPE_PREMIUM_PLAN_PRODUCT_ID,
+  process.env.STRIPE_BASIC_PLAN_PRODUCT_ID,
+  process.env.STRIPE_PRO_PLAN_PRODUCT_ID,
 ];
 
 export const GetPricingPlans = async (
@@ -15,14 +15,14 @@ export const GetPricingPlans = async (
   next: NextFunction
 ) => {
   try {
-    const [standardPlanProductId, premiumPlanProductId] = productIds;
+    const [basicPlanProductId, proPlanProductId] = productIds;
 
-    const [standardPrices, premiumPrices] = await Promise.all([
+    const [basicPlanPrices, proPlanPrices] = await Promise.all([
       stripe.prices.list({
-        product: standardPlanProductId,
+        product: basicPlanProductId,
       }),
       stripe.prices.list({
-        product: premiumPlanProductId,
+        product: proPlanProductId,
       }),
     ]);
 
@@ -41,9 +41,9 @@ export const GetPricingPlans = async (
 
     const data: Payment.PlanData[] = [
       {
-        name: "STANDARD",
+        name: "BASIC",
         // @ts-ignore
-        prices: filterPrices(standardPrices).map((price) => {
+        prices: filterPrices(basicPlanPrices).map((price) => {
           return {
             id: price.id,
             interval: price.recurring?.interval,
@@ -53,9 +53,9 @@ export const GetPricingPlans = async (
         }),
       },
       {
-        name: "PREMIUM",
+        name: "PRO",
         // @ts-ignore
-        prices: filterPrices(premiumPrices).map((price) => ({
+        prices: filterPrices(proPlanPrices).map((price) => ({
           id: price.id,
           interval: price.recurring?.interval,
           amount: price.unit_amount,

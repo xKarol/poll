@@ -166,7 +166,7 @@ export const CreatePollForm = ({
               description="Make this poll public"
             />
             <PollOptionField
-              requiredPlan="STANDARD"
+              requiredPlan={"BASIC"}
               control={form.control}
               name="requireRecaptcha"
               Icon={<Icon.Shield className="h-7 w-7" />}

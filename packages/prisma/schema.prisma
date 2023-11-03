@@ -37,8 +37,8 @@ model Session {
 
 enum Plan {
   FREE
-  STANDARD
-  PREMIUM
+  BASIC
+  PRO
 }
 
 model User {

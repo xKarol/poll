@@ -29,17 +29,17 @@ const plansData: {
   description: string;
 }[] = [
   {
-    name: "STANDARD",
+    name: "BASIC",
     description: "For users seeking more options and capabilities.",
   },
   {
-    name: "PREMIUM",
-    description: "Go premium for advanced features and maximum impact",
+    name: "PRO",
+    description: "Go pro for advanced features and maximum impact",
   },
 ];
 
+const plans: Plan[] = ["FREE", "BASIC", "PRO"];
 const isPlanOwned = (planName: Plan, currentPlan: Plan) => {
-  const plans: Plan[] = ["FREE", "STANDARD", "PREMIUM"];
   if (plans.indexOf(currentPlan) >= plans.indexOf(planName)) return true;
   return false;
 };
