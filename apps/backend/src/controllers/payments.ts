@@ -77,7 +77,7 @@ export const CreatePlanCheckoutSession = async (
 ) => {
   try {
     const { priceId } = req.body;
-    const { id: userId } = req.user!;
+    const { id: userId } = req.user.data!;
     const redirectUrl = process.env.FRONTEND_URL as string;
 
     const payment = await stripe.checkout.sessions.create({

@@ -7,7 +7,7 @@ export const requireAuth = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.user) throw httpError.Unauthorized("Please Log In.");
+    if (!req.user.isLoggedIn) throw httpError.Unauthorized("Please Log In.");
     next();
   } catch (error) {
     next(error);

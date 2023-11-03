@@ -54,16 +54,15 @@ export const Create = async (
 ) => {
   try {
     const data = req.body;
-    const user = req.user!;
+    const { data: user } = req.user;
 
     if (data?.requireRecaptcha === true) {
-      const hasPermission = hasUserPermission("BASIC", user?.plan);
-      if (!hasPermission)
-        throw httpError(httpError.Forbidden, "Basic plan is required.");
+      const hasPermission = hasUserPermission("BASIC", user?.plan ?? "FREE");
+      if (!hasPermission) throw httpError.Forbidden("Basic plan is required.");
     }
     const poll = await createPoll({
       ...data,
-      userId: req.user?.id,
+      userId: user?.id,
     });
 
     return res.send(poll);
@@ -94,7 +93,7 @@ export const Vote = async (
   try {
     const { pollId, answerId } = req.params;
     const { reCaptchaToken } = req.body as { reCaptchaToken: string };
-    const { id: userId } = req.user || {};
+    const { data: user } = req.user;
 
     const { requireRecaptcha: isReCaptchaRequired, userId: ownerId } =
       await prisma.poll.findUniqueOrThrow({
@@ -106,7 +105,7 @@ export const Vote = async (
       if (!isValidCaptcha) throw new Error("Invalid reCAPTCHA verification.");
     }
 
-    const data = await votePoll({ userId, pollId, answerId });
+    const data = await votePoll({ userId: user?.id, pollId, answerId });
 
     const ip = (req.headers["true-client-ip"] as string | undefined) || req.ip;
     const geo = await getGeoData(ip).catch(() => null);
@@ -114,7 +113,7 @@ export const Vote = async (
     ua.setUA(userAgent).getResult();
 
     await Analytics.sendPollVoteData({
-      user_id: userId,
+      user_id: user?.id,
       poll_id: pollId,
       owner_id: ownerId || undefined,
       vote_id: data.id,
@@ -165,7 +164,7 @@ export const GetPollUserAnswerChoice = async (
 ) => {
   try {
     const { pollId } = req.params;
-    const { id: userId } = req.user || {};
+    const { id: userId } = req.user.data!;
 
     if (!userId) return res.status(200).send({});
 

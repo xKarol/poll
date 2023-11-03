@@ -14,7 +14,7 @@ export const GetUserPollVotesData = async (
 ) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user!;
+    const { id: userId } = req.user.data!;
 
     const { data } = await getUserPollVotesData({
       ownerId: userId,
@@ -43,7 +43,7 @@ export const GetPollData = async (
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user!;
+    const { id: userId } = req.user.data!;
 
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
@@ -69,7 +69,7 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user!;
+    const { id: userId } = req.user.data!;
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
       ...params,

@@ -7,7 +7,10 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
-      user: Auth.JWTPayload | null;
+      user: {
+        data: Auth.JWTPayload | undefined;
+        isLoggedIn: boolean;
+      };
     }
   }
 }
@@ -26,6 +29,9 @@ export const withAuth = async (
       `${cookiePrefix}next-auth.session-token`
     ],
   })) as Auth.JWTPayload | null;
-  req.user = jwtData;
+  req.user = {
+    isLoggedIn: !!jwtData,
+    data: jwtData || undefined,
+  };
   next();
 };
