@@ -7,11 +7,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
 } from "@poll/ui";
 import { useQueryState } from "next-usequerystate";
 import numeral from "numeral";
 import React from "react";
 
+import { useHasPermission } from "../../../hooks/use-has-permission";
 import { nFormatter } from "../../../utils/misc";
 import {
   Header,
@@ -23,6 +28,8 @@ import { BaseLayout } from "../layouts";
 
 const AnalyticsPage = () => {
   const [interval, setInterval] = useQueryState("interval");
+  const { hasPermission } = useHasPermission();
+  const hasBasicPlan = hasPermission("BASIC");
   return (
     <BaseLayout>
       <Header
@@ -44,9 +51,20 @@ const AnalyticsPage = () => {
               <SelectItem value="24h">Last 24 hours</SelectItem>
               <SelectItem value="7d">Last 7 days</SelectItem>
               <SelectItem value="30d">Last 30 days</SelectItem>
-              <SelectItem value="1y" disabled>
-                Last year
-              </SelectItem>
+              <Tooltip
+                open={hasBasicPlan ? false : undefined}
+                disableHoverableContent>
+                <TooltipTrigger asChild>
+                  <SelectItem value="1y" disabled={!hasBasicPlan}>
+                    Last year
+                  </SelectItem>
+                </TooltipTrigger>
+                <TooltipPortal>
+                  <TooltipContent>
+                    <p>Basic plan or higher is required to use this option.</p>
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
             </SelectContent>
           </Select>
         }
