@@ -28,6 +28,12 @@ import { paymentOptions } from "../queries/payment";
 import { createPlanCheckoutSession } from "../services/api";
 import { getBaseUrl } from "../utils/get-base-url";
 
+const features: string[][] = [
+  ["Basic poll creation", "Limited analytics", "Ad-Supported"],
+  ["Enhanced poll creation", "Basic analytics", "No Ads"],
+  ["Custom poll links", "Advanced analytics", "Priority Support"],
+];
+
 const plansData: {
   name: Plan;
   description: string;
@@ -137,11 +143,7 @@ export default function PricingPage() {
                   description="Ideal for simple polls and initial experimentation."
                   price={0}
                   planType={cycle}
-                  features={[
-                    "Some feature 1",
-                    "Some feature 2",
-                    "Some feature 3",
-                  ]}
+                  features={features[0]}
                   ActionComponent={
                     <Button
                       type="button"
@@ -152,7 +154,7 @@ export default function PricingPage() {
                       }
                       onClick={redirectUnauthenticatedToLoginPage}
                       className="capitalize">
-                      Get Free
+                      Create account
                     </Button>
                   }
                 />
@@ -175,11 +177,7 @@ export default function PricingPage() {
                           : undefined
                       }
                       planType={cycle}
-                      features={[
-                        "Some feature 1",
-                        "Some feature 2",
-                        "Some feature 3",
-                      ]}
+                      features={features[index + 1]}
                       ActionComponent={
                         <Button
                           type="button"
