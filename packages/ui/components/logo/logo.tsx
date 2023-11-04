@@ -1,27 +1,35 @@
 import { cn } from "@poll/lib";
 import React from "react";
 
-import logoLight from "../../../../apps/web/public/logo-with-label-dark.svg";
-import logoDark from "../../../../apps/web/public/logo-with-label-light.svg";
+import logoTextLight from "../../../../apps/web/public/logo-with-label-dark.svg";
+import logoTextDark from "../../../../apps/web/public/logo-with-label-light.svg";
+import logo from "../../../../apps/web/public/logo.svg";
 
 export type LogoProps = {
-  href?: string;
+  href?: string | null;
+  variant?: "default" | "text";
 } & React.ComponentPropsWithoutRef<"div">;
 
-export const Logo = ({ href = "/", className, ...rest }: LogoProps) => {
+export const Logo = ({
+  href = "/",
+  variant = "default",
+  className,
+  ...rest
+}: LogoProps) => {
+  const Component = href === null ? React.Fragment : "a";
+
   return (
-    <div className={cn("", className)} {...rest}>
-      {href ? (
-        <a href={href}>
-          <img src={logoLight.src} className="hidden dark:block" />
-          <img src={logoDark.src} className="block dark:hidden" />
-        </a>
-      ) : (
-        <>
-          <img src={logoLight.src} className="hidden dark:block" />
-          <img src={logoDark.src} className="block dark:hidden" />
-        </>
-      )}
+    <div className={cn("w-max", className)} {...rest}>
+      <Component {...(href && { href: href })}>
+        {variant === "text" ? (
+          <>
+            <img src={logoTextLight.src} className="hidden dark:block" />
+            <img src={logoTextDark.src} className="block dark:hidden" />
+          </>
+        ) : (
+          <img src={logo.src} />
+        )}
+      </Component>
     </div>
   );
 };

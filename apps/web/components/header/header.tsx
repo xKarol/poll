@@ -104,7 +104,7 @@ export function HeaderRoot({
 type HeaderLogoProps = React.ComponentProps<typeof Logo>;
 
 export function HeaderLogo({ className, ...rest }: HeaderLogoProps) {
-  return <Logo className={cn("z-50", className)} {...rest} />;
+  return <Logo variant="text" className={cn("z-50", className)} {...rest} />;
 }
 
 export function HeaderNavigation() {
