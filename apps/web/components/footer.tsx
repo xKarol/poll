@@ -72,18 +72,18 @@ const Footer = ({ className, ...props }: FooterProps) => {
 
       <div className="mb-16 flex justify-between md:flex-col md:space-y-8">
         <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
-          <li>
-            <Link href={"x.com"}>
+          <li className="transition-colors hover:text-black hover:dark:text-white">
+            <Link href={"https://x.com"}>
               <Icon.XTwitter />
             </Link>
           </li>
-          <li>
-            <Link href={"instagram.com"}>
+          <li className="transition-colors hover:text-black hover:dark:text-white">
+            <Link href={"https://instagram.com"}>
               <Icon.Instagram />
             </Link>
           </li>
-          <li>
-            <Link href={"facebook.com"}>
+          <li className="transition-colors hover:text-black hover:dark:text-white">
+            <Link href={"https://facebook.com"}>
               <Icon.Facebook />
             </Link>
           </li>
