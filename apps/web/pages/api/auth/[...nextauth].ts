@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import type { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -9,7 +10,7 @@ import prisma from "../../../lib/prisma";
 
 const isSecure = process.env.NODE_ENV === "production";
 
-export const authOptions: NextAuthOptions = {
+export const getAuthOptions = (req: NextApiRequest): NextAuthOptions => ({
   adapter: PrismaAdapter(prisma),
   cookies: defaultCookies(isSecure),
   useSecureCookies: isSecure,
@@ -45,6 +46,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token }) {
+      console.log(req);
       const user = await prisma.user.findFirst({
         where: { email: token.email },
         select: {
@@ -57,6 +59,16 @@ export const authOptions: NextAuthOptions = {
         },
       });
       if (!user) return token;
+      if (!user.timeZone) {
+        const timeZone = req.headers["x-vercel-ip-timezone"] as string;
+        // TODO timezone validation
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            timeZone: timeZone,
+          },
+        });
+      }
       return {
         ...token,
         ...user,
@@ -79,6 +91,10 @@ export const authOptions: NextAuthOptions = {
     signIn: routes.LOGIN,
   },
   secret: process.env.NEXTAUTH_SECRET,
+});
+
+const Auth = (req: NextApiRequest, res: NextApiResponse) => {
+  return NextAuth(req, res, getAuthOptions(req));
 };
 
-export default NextAuth(authOptions);
+export default Auth;
