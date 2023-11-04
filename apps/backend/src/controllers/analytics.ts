@@ -1,5 +1,9 @@
+import { hasUserPermission } from "@poll/lib";
+import type { Plan } from "@poll/prisma";
 import type { Analytics } from "@poll/types";
+import dayjs from "dayjs";
 import type { Handler, NextFunction, Request, Response } from "express";
+import httpError from "http-errors";
 
 import {
   getUserPollTopDevices,
@@ -14,7 +18,9 @@ export const GetUserPollVotesData = async (
 ) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user.data!;
+    const { id: userId, plan } = req.user.data!;
+
+    checkPermissions(params.dateFrom, params.dateTo, plan);
 
     const { data } = await getUserPollVotesData({
       ownerId: userId,
@@ -43,7 +49,9 @@ export const GetPollData = async (
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user.data!;
+    const { id: userId, plan } = req.user.data!;
+
+    checkPermissions(params.dateFrom, params.dateTo, plan);
 
     const { data: rawData } = await getUserPollTopDevices({
       ownerId: userId,
@@ -69,7 +77,10 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
-    const { id: userId } = req.user.data!;
+    const { id: userId, plan } = req.user.data!;
+
+    checkPermissions(params.dateFrom, params.dateTo, plan);
+
     const { data: rawData } = await getUserPollTopCountries({
       ownerId: userId,
       ...params,
@@ -84,3 +95,12 @@ export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
     next(error);
   }
 };
+
+function checkPermissions(dateFrom: number, dateTo: number, plan: Plan) {
+  if (
+    dayjs(dateTo).diff(dateFrom, "year") >= 1 &&
+    !hasUserPermission("BASIC", plan)
+  ) {
+    throw httpError.Forbidden("Basic plan or higher is required.");
+  }
+}
