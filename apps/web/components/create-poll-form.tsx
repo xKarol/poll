@@ -11,6 +11,9 @@ import {
   AlertTitle,
   Icon,
   Badge,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from "@poll/ui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -233,11 +236,20 @@ function PollOptionField({
               </div>
             </div>
             <FormControl>
-              <Switch
-                disabled={!hasAccess}
-                checked={field.value as boolean}
-                onCheckedChange={field.onChange}
-              />
+              <Tooltip open={hasAccess ? false : undefined}>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Switch
+                      disabled={!hasAccess}
+                      checked={field.value as boolean}
+                      onCheckedChange={field.onChange}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  Basic or higher plan is required to change this option.
+                </TooltipContent>
+              </Tooltip>
             </FormControl>
           </FormItem>
         )}
