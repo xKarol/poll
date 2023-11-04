@@ -73,8 +73,8 @@ const Footer = ({ className, ...props }: FooterProps) => {
       <div className="mb-16 flex justify-between md:flex-col md:space-y-8">
         <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
           <li>
-            <Link href={"twitter.com"}>
-              <Icon.Twitter />
+            <Link href={"x.com"}>
+              <Icon.XTwitter />
             </Link>
           </li>
           <li>
