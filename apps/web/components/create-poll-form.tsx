@@ -162,7 +162,7 @@ export const CreatePollForm = ({
             <PollOptionField
               control={form.control}
               name="isPublic"
-              Icon={<Icon.Globe className="h-7 w-7" />}
+              IconElement={<Icon.Globe className="h-7 w-7" />}
               heading="Public"
               description="Make this poll public"
             />
@@ -170,7 +170,7 @@ export const CreatePollForm = ({
               requiredPlan={"BASIC"}
               control={form.control}
               name="requireRecaptcha"
-              Icon={<Icon.Shield className="h-7 w-7" />}
+              IconElement={<Icon.Shield className="h-7 w-7" />}
               heading="Require ReCAPTCHA"
               description="Protect your poll from bot spam"
             />
@@ -192,14 +192,14 @@ export const CreatePollForm = ({
 };
 
 type PollOptionFieldProps = {
-  Icon: JSX.Element;
+  IconElement: JSX.Element;
   heading: string;
   requiredPlan?: Plan;
   description: string;
 } & Omit<React.ComponentProps<typeof FormField<FormValues>>, "render">;
 
 function PollOptionField({
-  Icon,
+  IconElement,
   heading,
   description,
   requiredPlan = "FREE",
@@ -215,14 +215,15 @@ function PollOptionField({
           <FormItem className="flex flex-row items-center justify-between rounded-sm border-2 border-neutral-100 bg-white px-4 py-6 dark:border-none dark:bg-neutral-800 sm:pl-0">
             <div className="flex">
               <div className="my-auto hidden justify-center px-4 sm:flex">
-                {Icon}
+                {IconElement}
               </div>
               <div>
                 <FormLabel className="inline-flex items-center space-x-2">
                   <span>{heading}</span>
                   {!hasAccess ? (
                     <Badge className="capitalize">
-                      {requiredPlan.toLowerCase()}
+                      <Icon.Gem />
+                      <span>{requiredPlan.toLowerCase()}</span>
                     </Badge>
                   ) : null}
                 </FormLabel>
