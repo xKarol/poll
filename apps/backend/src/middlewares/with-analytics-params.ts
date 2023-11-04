@@ -28,7 +28,26 @@ export const analyticsParamsSchema = z
       .default(DEFAULT_ANALYTICS_INTERVAL)
       .transform(parseInterval),
   })
-  .extend(defaultParameters);
+  .merge(defaultParameters)
+  .superRefine((val, ctx) => {
+    if (val.dateFrom && val.dateTo) {
+      if (val.dateFrom > val.dateTo) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "DateFrom cannot be greater than DateTo.",
+        });
+      }
+      if (
+        Math.abs(dayjs(val.dateFrom * 1000).diff(val.dateTo * 1000, "minute")) <
+        60
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Difference between dates should be at least 1 hour.",
+        });
+      }
+    }
+  });
 
 const groupByName = {
   h: "hour",

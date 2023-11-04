@@ -81,7 +81,7 @@ test.each([
   await request().query({ dateFrom: date }).expect(500);
 });
 
-test.todo("future dateTo value should throw error", async () => {
+test.todo("should throw error when future dateTo param is set", async () => {
   await request()
     .query({ dateTo: dayjs().add(1, "minute").unix() })
     .expect(500);
@@ -89,4 +89,22 @@ test.todo("future dateTo value should throw error", async () => {
     .query({ dateTo: dayjs().add(1, "year").unix() })
     .expect(500);
   await request().query({ dateTo: dayjs().unix() }).expect(200);
+});
+
+test("should throw error when param dateFrom is greater than dateTo", async () => {
+  await request()
+    .query({
+      dateFrom: dayjs().add(2, "day").unix(),
+      dateTo: dayjs().add(1, "day").unix(),
+    })
+    .expect(500);
+});
+
+test("should throw error when difference between dates is less than 1 hour", async () => {
+  await request()
+    .query({
+      dateFrom: dayjs().subtract(30, "minute").unix(), //30 minutes diff
+      dateTo: dayjs().unix(),
+    })
+    .expect(500);
 });

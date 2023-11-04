@@ -12,7 +12,7 @@ export const getPollData: z.Schema<{ params: Analytics.GetPollData }> =
     }),
   });
 
-export const defaultParameters = {
+export const defaultParameters = z.object({
   limit: z.coerce.number().positive().optional(),
   dateFrom: z.coerce.number().positive().optional(),
   // TODO fix validating unix timestamp, 122121 - this should fail
@@ -32,4 +32,4 @@ export const defaultParameters = {
   //     message: "Invalid dateTo unix time.",
   //   }
   // ),
-};
+});
