@@ -1,8 +1,8 @@
 import type { DefaultSeoProps } from "next-seo";
 
 const nextSeoConfig: DefaultSeoProps = {
-  defaultTitle: "Poll",
-  titleTemplate: "Poll - %s",
+  defaultTitle: "Quick Poll",
+  titleTemplate: "%s | Quick Poll",
   themeColor: "#000",
 };
 
