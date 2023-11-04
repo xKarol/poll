@@ -58,7 +58,8 @@ export const Create = async (
 
     if (data?.requireRecaptcha === true) {
       const hasPermission = hasUserPermission("BASIC", user?.plan ?? "FREE");
-      if (!hasPermission) throw httpError.Forbidden("Basic plan is required.");
+      if (!hasPermission)
+        throw httpError.Forbidden("Basic plan or higher is required.");
     }
     const poll = await createPoll({
       ...data,
