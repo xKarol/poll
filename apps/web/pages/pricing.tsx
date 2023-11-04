@@ -2,8 +2,11 @@ import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
 import type { Payment } from "@poll/types";
 import {
+  Alert,
+  AlertTitle,
   Button,
   Icon,
+  Skeleton,
   Tabs,
   TabsContent,
   TabsList,
@@ -61,7 +64,7 @@ export default function PricingPage() {
   const { status } = useSession();
   const router = useRouter();
   const { hasPermission } = useHasPermission();
-  const { data: pricingPlans } = usePricingPlans();
+  const { isError, data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
     mutationFn: ({ priceId }: { priceId: string }) => {
       return createPlanCheckoutSession(priceId);
@@ -98,6 +101,11 @@ export default function PricingPage() {
       <NextSeo title="Pricing" />
       <div className="container">
         <div className="mx-auto my-4 flex max-w-4xl flex-col items-center space-y-8 md:my-8 xl:my-16">
+          {isError ? (
+            <Alert variant="error">
+              <AlertTitle>Something went wrong...</AlertTitle>
+            </Alert>
+          ) : null}
           <div className="flex flex-col items-center space-y-3">
             <h1 className="text-3xl font-medium">Pricing</h1>
             <p className="text-center text-xl font-medium text-neutral-400">
@@ -149,16 +157,23 @@ export default function PricingPage() {
                   }
                 />
                 {plansData.map(({ name, description }, index) => {
-                  const selectedCyclePrice = pricingPlans[index].prices.find(
-                    (price) => price.interval === cycle
-                  );
+                  const selectedCyclePrice =
+                    pricingPlans === undefined
+                      ? undefined
+                      : pricingPlans[index].prices?.find(
+                          (price) => price.interval === cycle
+                        );
                   return (
                     <PricingCard
                       key={name}
                       className="h-full w-full md:max-w-[calc((100%/2)-16px)] xl:max-w-[calc((100%/3)-16px)]"
                       planName={name}
                       description={description}
-                      price={selectedCyclePrice.amount / 100}
+                      price={
+                        selectedCyclePrice
+                          ? selectedCyclePrice.amount / 100
+                          : undefined
+                      }
                       planType={cycle}
                       features={[
                         "Some feature 1",
@@ -196,7 +211,7 @@ PricingPage.Layout = BaseLayout;
 
 type PricingCardProps = {
   planName: string;
-  price: number;
+  price: number | undefined;
   description: string;
   features: string[];
   planType: Payment.PaymentCycle;
@@ -225,12 +240,16 @@ function PricingCard({
           <h2 className="mb-4 text-xl font-medium capitalize">
             {planName.toLowerCase()}
           </h2>
-          <p className="mb-2 text-xl font-medium">
-            ${price}{" "}
-            <span className="text-base text-neutral-400">
-              per {planType === "month" ? "month" : "year"}
-            </span>
-          </p>
+          {price === undefined ? (
+            <Skeleton className="mb-2 h-6 w-20" />
+          ) : (
+            <p className="mb-2 text-xl font-medium">
+              ${price}{" "}
+              <span className="text-base text-neutral-400">
+                per {planType === "month" ? "month" : "year"}
+              </span>
+            </p>
+          )}
           <p className="mb-2 text-base font-medium text-neutral-500">
             {description}
           </p>
