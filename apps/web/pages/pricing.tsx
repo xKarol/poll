@@ -7,6 +7,12 @@ import {
   Button,
   Icon,
   Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
   Tabs,
   TabsContent,
   TabsList,
@@ -46,6 +52,19 @@ const plansData: {
     name: "PRO",
     description: "Go pro for advanced features and maximum impact",
   },
+];
+
+const featuresTable: [string, boolean, boolean, boolean][] = [
+  ["Basic poll creation", true, true, true],
+  ["Poll Management Dashboard", true, true, true],
+  ["No Ads", false, true, true],
+  ["Create Unlimited Polls", false, true, true],
+  ["Poll Editing", false, true, true],
+  ["Email Notifications", false, true, true],
+  ["Custom Poll Link", false, false, true],
+  ["Advanced Analytics", false, false, true],
+  ["Priority Customer Support", false, false, true],
+  ["API Access", false, false, true],
 ];
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -199,6 +218,36 @@ export default function PricingPage() {
               </TabsContent>
             ))}
           </Tabs>
+          <Table className="mt-16 min-w-max">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Feature</TableHead>
+                <TableHead className="text-center">Free</TableHead>
+                <TableHead className="text-center">Basic</TableHead>
+                <TableHead className="text-center">Pro</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {featuresTable.map(([description, ...isAvailable]) => (
+                <TableRow key={description}>
+                  <TableCell
+                    className="max-w-xs truncate capitalize"
+                    title={description}>
+                    {description}
+                  </TableCell>
+                  {isAvailable.map((planAvailable, index) => (
+                    <TableCell key={description + index}>
+                      {planAvailable ? (
+                        <Icon.Check className="mx-auto" />
+                      ) : (
+                        <Icon.X className="mx-auto text-red-500" />
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </>
