@@ -11,7 +11,7 @@ import {
   toast,
 } from "@poll/ui";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -75,6 +75,7 @@ export const updateUserSchema = z.object({
 
 function EditAccountForm() {
   const { data: session, update } = useSession();
+  const [disabled, setDisabled] = useState(false);
 
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
@@ -86,6 +87,7 @@ function EditAccountForm() {
         session?.user.timeZone ||
         Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
+    disabled,
   });
   const { mutateAsync, isLoading } = useUpdateAccount();
   const hasChanges =
@@ -94,6 +96,7 @@ function EditAccountForm() {
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
+      setDisabled(true);
       await mutateAsync({
         ...data,
         clockType: data.clockType === "12h" ? 12 : 24,
@@ -103,6 +106,8 @@ function EditAccountForm() {
       form.reset(data);
     } catch {
       toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+    } finally {
+      setDisabled(false);
     }
   });
 

@@ -17,7 +17,7 @@ import {
   toast,
 } from "@poll/ui";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -73,7 +73,7 @@ export default function AccountEditPage() {
 
 function EditAccountForm() {
   const { data: session, update } = useSession();
-
+  const [disabled, setDisabled] = useState(false);
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
     resolver: zodResolver(updateUserSchema),
@@ -82,6 +82,7 @@ function EditAccountForm() {
       image: session?.user.image ?? "",
       name: session?.user.name ?? "",
     },
+    disabled,
   });
   const { mutateAsync, isLoading } = useUpdateAccount();
   const hasChanges =
@@ -90,12 +91,15 @@ function EditAccountForm() {
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
+      setDisabled(true);
       await mutateAsync(data);
       await update();
       toast("Account updated successfully.", { icon: <Icon.Check /> });
       form.reset(data);
     } catch {
       toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+    } finally {
+      setDisabled(false);
     }
   });
   return (
