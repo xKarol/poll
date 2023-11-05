@@ -6,8 +6,10 @@ import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import { useQueryState } from "next-usequerystate";
 
-// @ts-ignore TODO fix
-const intervals: Record<Analytics.Interval, [number, Analytics.GroupBy]> = {
+const intervals: Record<
+  Analytics.Interval,
+  readonly [number, Analytics.GroupBy]
+> = {
   "1h": [60, "minute"],
   "24h": [24, "hour"],
   "7d": [7, "day"],
