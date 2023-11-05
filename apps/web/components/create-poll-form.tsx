@@ -16,7 +16,7 @@ import {
   TooltipContent,
 } from "@poll/ui";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 
@@ -63,7 +63,7 @@ export const CreatePollForm = ({
   ...props
 }: CreatePollFormProps) => {
   const router = useRouter();
-
+  const [disabled, setDisabled] = useState(false);
   const form = useForm<FormValues>({
     // @ts-expect-error TODO FIX
     resolver: zodResolver(createPollSchema),
@@ -72,6 +72,7 @@ export const CreatePollForm = ({
       answers: Array.from({ length: 2 }, () => ({ text: "" })),
       isPublic: true,
     },
+    disabled: disabled,
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -82,12 +83,14 @@ export const CreatePollForm = ({
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
-      console.log(data);
+      setDisabled(true);
       const response = await mutateAsync(data);
       form.reset();
       await router.push(routes.poll(response.id));
     } catch (error) {
       form.setError("root", { message: getErrorMessage(error) });
+    } finally {
+      setDisabled(false);
     }
   });
   return (
@@ -152,6 +155,7 @@ export const CreatePollForm = ({
           </div>
 
           <Button
+            disabled={disabled}
             type="button"
             className="w-full bg-neutral-200 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
             onClick={() => append({ text: "" })}>
@@ -164,6 +168,7 @@ export const CreatePollForm = ({
           <div className="space-y-2">
             <PollOptionField
               control={form.control}
+              disabled={disabled}
               name="isPublic"
               IconElement={<Icon.Globe className="h-7 w-7" />}
               heading="Public"
@@ -172,6 +177,7 @@ export const CreatePollForm = ({
             <PollOptionField
               requiredPlan={"BASIC"}
               control={form.control}
+              disabled={disabled}
               name="requireRecaptcha"
               IconElement={<Icon.Shield className="h-7 w-7" />}
               heading="Require ReCAPTCHA"
@@ -206,6 +212,7 @@ function PollOptionField({
   heading,
   description,
   requiredPlan = "FREE",
+  disabled,
   ...props
 }: PollOptionFieldProps) {
   const { hasPermission } = useHasPermission();
@@ -236,11 +243,11 @@ function PollOptionField({
               </div>
             </div>
             <FormControl>
-              <Tooltip open={hasAccess ? false : undefined}>
+              <Tooltip open={disabled || hasAccess ? false : undefined}>
                 <TooltipTrigger asChild>
                   <div>
                     <Switch
-                      disabled={!hasAccess}
+                      disabled={disabled || !hasAccess}
                       checked={field.value as boolean}
                       onCheckedChange={field.onChange}
                     />
