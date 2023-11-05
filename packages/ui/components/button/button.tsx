@@ -4,15 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 
 const buttonVariants = cva(
-  "[&_svg]:w-4 [&_svg]:h-4 space-x-2 inline-flex items-center justify-center rounded text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80",
+  "ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center space-x-2 rounded text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-80 [&_svg]:h-4 [&_svg]:w-4",
   {
     variants: {
       variant: {
         default:
-          "bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white hover:bg-neutral-900/90 hover:dark:bg-white/50",
-        text: "hover:dark:bg-white/5 hover:bg-neutral-900/5",
+          "bg-neutral-900 text-white hover:bg-neutral-900/90 dark:bg-white dark:text-neutral-900 hover:dark:bg-white/50",
+        text: "hover:bg-neutral-900/5 hover:dark:bg-white/5",
         destructive:
-          "dark:bg-red-700 hover:dark:bg-red-700/90 bg-red-500 text-neutral-900 hover:bg-red-500/90",
+          "bg-red-500 text-neutral-900 hover:bg-red-500/90 dark:bg-red-700 hover:dark:bg-red-700/90",
         // outline:
         //   "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-white text-neutral-900 hover:bg-white/50",
