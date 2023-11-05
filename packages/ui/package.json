@@ -8,6 +8,7 @@
     "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {
+    "@poll/config": "*",
     "@poll/lib": "*",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
