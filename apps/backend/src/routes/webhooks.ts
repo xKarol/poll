@@ -1,7 +1,9 @@
 import { apiUrls } from "@poll/config";
 import prisma, { type Plan } from "@poll/prisma";
 import express from "express";
+import httpError from "http-errors";
 
+import { productIds } from "../constants";
 import { stripe } from "../lib/stripe";
 
 const router = express.Router();
@@ -20,14 +22,23 @@ router.post(
       switch (event.type) {
         case "customer.subscription.created": {
           // @ts-expect-error
-          const { userId, planName } = event.data.object.metadata as {
+          const { userId, productId } = event.data.object.metadata as {
             userId: string;
-            planName: Plan;
+            priceId: string;
+            productId: string;
           };
+
+          const planIndex = productIds.findIndex(
+            (findProductId) => findProductId === productId
+          );
+
+          if (!planIndex) throw httpError("Invalid plan productId.");
+
+          const planNames: readonly Plan[] = ["BASIC", "PRO"] as const;
 
           await prisma.user.update({
             where: { id: userId },
-            data: { plan: planName },
+            data: { plan: planNames[planIndex] },
           });
           break;
         }

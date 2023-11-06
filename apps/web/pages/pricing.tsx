@@ -89,20 +89,26 @@ export default function PricingPage() {
   const { status } = useSession();
   const router = useRouter();
   const { hasPermission } = useHasPermission();
-  const { isError, data: pricingPlans } = usePricingPlans();
+  const { isLoading, isError, data: pricingPlans } = usePricingPlans();
   const { mutateAsync } = useMutation({
-    mutationFn: ({ priceId }: { priceId: string }) => {
-      return createPlanCheckoutSession(priceId);
+    mutationFn: ({
+      priceId,
+      productId,
+    }: {
+      priceId: string;
+      productId: string;
+    }) => {
+      return createPlanCheckoutSession(priceId, productId);
     },
   });
 
-  const handlePayment = async (priceId: string) => {
+  const handlePayment = async (priceId: string, productId: string) => {
     try {
       if (status == "unauthenticated") {
         return void redirectUnauthenticatedToLoginPage();
       }
       if (status === "authenticated") {
-        const url = await mutateAsync({ priceId });
+        const url = await mutateAsync({ priceId, productId });
         await router.push(url);
       }
     } catch (e) {
@@ -167,7 +173,7 @@ export default function PricingPage() {
                     <Button
                       type="button"
                       disabled={
-                        status === "unauthenticated"
+                        isLoading && status === "unauthenticated"
                           ? false
                           : hasPermission("FREE")
                       }
@@ -201,12 +207,15 @@ export default function PricingPage() {
                         <Button
                           type="button"
                           disabled={
-                            status === "unauthenticated"
+                            isLoading && status === "unauthenticated"
                               ? false
                               : hasPermission(name)
                           }
                           onClick={async () =>
-                            handlePayment(selectedCyclePrice.id)
+                            handlePayment(
+                              selectedCyclePrice.id,
+                              pricingPlans[index].productId
+                            )
                           }
                           className="capitalize">
                           Get {name.toLowerCase()}

@@ -14,7 +14,12 @@ router.post(
   apiUrls.payment.createPlanCheckoutSession,
   requireAuth,
   validateSchema(
-    z.object({ body: z.object({ priceId: z.string().nonempty() }) })
+    z.object({
+      body: z.object({
+        priceId: z.string().nonempty(),
+        productId: z.string().nonempty(),
+      }),
+    })
   ),
   PaymentsController.CreatePlanCheckoutSession
 );

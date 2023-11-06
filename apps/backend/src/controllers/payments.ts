@@ -2,12 +2,8 @@ import type { Payment } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
 import type { Stripe } from "stripe";
 
+import { productIds } from "../constants";
 import { stripe } from "../lib/stripe";
-
-const productIds = [
-  process.env.STRIPE_BASIC_PLAN_PRODUCT_ID,
-  process.env.STRIPE_PRO_PLAN_PRODUCT_ID,
-];
 
 export const GetPricingPlans = async (
   req: Request,
@@ -41,6 +37,7 @@ export const GetPricingPlans = async (
 
     const data: Payment.PlanData[] = [
       {
+        productId: basicPlanProductId,
         name: "BASIC",
         // @ts-ignore
         prices: filterPrices(basicPlanPrices).map((price) => {
@@ -53,6 +50,7 @@ export const GetPricingPlans = async (
         }),
       },
       {
+        productId: proPlanProductId,
         name: "PRO",
         // @ts-ignore
         prices: filterPrices(proPlanPrices).map((price) => ({
@@ -71,12 +69,12 @@ export const GetPricingPlans = async (
 };
 
 export const CreatePlanCheckoutSession = async (
-  req: Request<unknown, unknown, { priceId: string }>,
+  req: Request<unknown, unknown, { priceId: string; productId: string }>,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { priceId } = req.body;
+    const { priceId, productId } = req.body;
     const { id: userId } = req.user.data!;
     const redirectUrl = process.env.FRONTEND_URL as string;
 
@@ -86,6 +84,7 @@ export const CreatePlanCheckoutSession = async (
       subscription_data: {
         metadata: {
           userId,
+          productId,
           priceId,
         },
         trial_period_days: 14,

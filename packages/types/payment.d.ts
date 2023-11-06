@@ -7,6 +7,7 @@ export type PaymentCycle = Extract<
 >;
 
 export type PlanData = {
+  productId: string;
   name: Plan;
   prices: {
     id: string;
@@ -19,7 +20,10 @@ export type PlanData = {
 // Frontend
 export interface Api {
   getPricingPlans: () => Promise<PlanData[]>;
-  createPlanCheckoutSession: (priceId: string) => Promise<string>;
+  createPlanCheckoutSession: (
+    priceId: string,
+    productId: string
+  ) => Promise<string>;
 }
 
 // Backend
