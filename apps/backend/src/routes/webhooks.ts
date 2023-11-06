@@ -32,7 +32,7 @@ router.post(
             (findProductId) => findProductId === productId
           );
 
-          if (!planIndex) throw httpError("Invalid plan productId.");
+          if (planIndex === -1) throw httpError("Invalid plan productId.");
 
           const planNames: readonly Plan[] = ["BASIC", "PRO"] as const;
 
