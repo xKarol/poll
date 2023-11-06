@@ -8,6 +8,8 @@ import { stripe } from "../lib/stripe";
 
 const router = express.Router();
 
+const planNames: readonly Plan[] = ["BASIC", "PRO"] as const;
+
 router.post(
   apiUrls.webhooks.stripe,
   express.raw({ type: "application/json" }),
@@ -33,8 +35,6 @@ router.post(
           );
 
           if (planIndex === -1) throw httpError("Invalid plan productId.");
-
-          const planNames: readonly Plan[] = ["BASIC", "PRO"] as const;
 
           await prisma.user.update({
             where: { id: userId },
