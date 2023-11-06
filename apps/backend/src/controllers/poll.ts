@@ -59,7 +59,20 @@ export const Create = async (
     if (data?.requireRecaptcha === true) {
       const hasPermission = hasUserPermission("BASIC", user?.plan ?? "FREE");
       if (!hasPermission)
-        throw httpError.Forbidden("Basic plan or higher is required.");
+        throw httpError.Forbidden(
+          "Basic plan or higher is required to use reCAPTCHA."
+        );
+    }
+
+    if (data?.answers.length > 6) {
+      const hasPermission = hasUserPermission("BASIC", user?.plan ?? "FREE");
+      if (!hasPermission)
+        throw httpError.Forbidden(
+          "Basic plan or higher is required to create more than 6 answers."
+        );
+    }
+    if (data?.answers.length > 10) {
+      throw httpError.Forbidden("Maximum Answers Limit Exceeded.");
     }
     const poll = await createPoll({
       ...data,
