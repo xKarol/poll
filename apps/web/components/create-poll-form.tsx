@@ -14,7 +14,9 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  ScrollArea,
 } from "@poll/ui";
+import { ScrollAreaScrollbar } from "@radix-ui/react-scroll-area";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -125,33 +127,37 @@ export const CreatePollForm = ({
               </FormItem>
             )}
           />
-
-          <div className="flex flex-col space-y-3">
-            {fields.map((field, index) => (
-              <div key={field.id}>
-                <FormField
-                  control={form.control}
-                  name={`answers.${index}.text`}
-                  render={({ field }) => (
-                    <FormItem>
-                      {index === 0 && <FormLabel>Answer options</FormLabel>}
-                      <FormControl>
-                        <Input
-                          placeholder={`Option ${index + 1}`}
-                          {...field}
-                          RightIcon={
-                            fields.length > 2 && !disabled ? (
-                              <Icon.X onClick={() => remove(index)} />
-                            ) : null
-                          }
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <div className="space-y-3">
+            <FormLabel>Answer options</FormLabel>
+            <ScrollArea className="max-h-96 overflow-auto">
+              {/* FIXME replace default scrollbar with custom */}
+              <div className="flex flex-col space-y-3">
+                {fields.map((field, index) => (
+                  <div key={field.id}>
+                    <FormField
+                      control={form.control}
+                      name={`answers.${index}.text`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder={`Option ${index + 1}`}
+                              {...field}
+                              RightIcon={
+                                fields.length > 2 && !disabled ? (
+                                  <Icon.X onClick={() => remove(index)} />
+                                ) : null
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
+            </ScrollArea>
           </div>
 
           <Button
