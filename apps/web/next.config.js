@@ -6,7 +6,7 @@ module.exports = {
       beforeFiles: [
         {
           source: "/dashboard",
-          destination: "/dashboard/polls",
+          destination: "/dashboard/analytics",
         },
         {
           source: "/settings",
