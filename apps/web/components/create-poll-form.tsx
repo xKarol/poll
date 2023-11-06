@@ -140,7 +140,7 @@ export const CreatePollForm = ({
                           placeholder={`Option ${index + 1}`}
                           {...field}
                           RightIcon={
-                            fields.length > 2 ? (
+                            fields.length > 2 && !disabled ? (
                               <Icon.X onClick={() => remove(index)} />
                             ) : null
                           }
