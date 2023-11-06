@@ -23,6 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../components/form";
+import dayjs from "../../../lib/dayjs";
 import SettingsHeader from "../components/settings-header";
 import { useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
@@ -83,9 +84,7 @@ function EditAccountForm() {
     defaultValues: {
       language: "English",
       clockType: session.user.clockType === 12 ? "12h" : "24h",
-      timeZone:
-        session?.user.timeZone ||
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZone: session?.user.timeZone || dayjs.tz.guess(),
     },
     disabled,
   });
