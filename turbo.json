@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": ["CI", "NODE_ENV", "NEXTAUTH_SECRET"],
   "pipeline": {
     "@poll/web": {
       "env": [
@@ -8,18 +9,15 @@
         "NEXT_PUBLIC_BACKEND_URL",
         "GOOGLE_OAUTH_ID",
         "GOOGLE_OAUTH_SECRET",
-        "NEXTAUTH_SECRET",
         "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
         "NEXT_PUBLIC_API_URL"
       ]
     },
     "@poll/backend": {
       "env": [
-        "NODE_ENV",
         "PORT",
         "ORIGIN_URL",
         "FRONTEND_URL",
-        "NEXTAUTH_SECRET",
         "STRIPE_SECRET_API_KEY",
         "STRIPE_WEBHOOK_SECRET",
         "STRIPE_BASIC_PLAN_PRODUCT_ID",

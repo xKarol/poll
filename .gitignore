@@ -37,3 +37,9 @@ yarn-error.log*
 
 tsconfig.tsbuildinfo
 dist
+
+#playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
