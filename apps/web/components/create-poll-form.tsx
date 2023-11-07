@@ -16,7 +16,6 @@ import {
   TooltipContent,
   ScrollArea,
 } from "@poll/ui";
-import { ScrollAreaScrollbar } from "@radix-ui/react-scroll-area";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
