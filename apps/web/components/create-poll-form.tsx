@@ -87,7 +87,7 @@ export const CreatePollForm = ({
     try {
       setDisabled(true);
       const response = await mutateAsync(data);
-      toast("Poll created successfully!", { variant: "info" });
+      toast("Poll created successfully!", { variant: "success" });
       await router.push(routes.poll(response.id));
       form.reset();
     } catch (error) {
