@@ -47,6 +47,7 @@ export const toast = (
     return _toast.custom(
       (toast) => (
         <CustomToast
+          data-testid="toast-info"
           IconElement={<InfoIcon />}
           onClick={() => _toast.remove(toast.id)}>
           {message}
@@ -58,6 +59,7 @@ export const toast = (
     return _toast.custom(
       (toast) => (
         <CustomToast
+          data-testid="toast-success"
           IconElement={<CheckIcon />}
           onClick={() => _toast.remove(toast.id)}>
           {message}
@@ -70,6 +72,7 @@ export const toast = (
     return _toast.custom(
       (toast) => (
         <CustomToast
+          data-testid="toast-warning"
           IconElement={<AlertTriangleIcon />}
           onClick={() => _toast.remove(toast.id)}>
           {message}
@@ -82,6 +85,7 @@ export const toast = (
     return _toast.custom(
       (toast) => (
         <CustomToast
+          data-testid="toast-error"
           IconElement={<AlertCircleIcon />}
           onClick={() => _toast.remove(toast.id)}>
           {message}
@@ -92,7 +96,9 @@ export const toast = (
   }
   return _toast.custom(
     (toast) => (
-      <CustomToast onClick={() => _toast.remove(toast.id)}>
+      <CustomToast
+        data-testid="toast-blank"
+        onClick={() => _toast.remove(toast.id)}>
         {message}
       </CustomToast>
     ),
