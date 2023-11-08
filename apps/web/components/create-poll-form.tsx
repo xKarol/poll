@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   ScrollArea,
+  toast,
 } from "@poll/ui";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -86,8 +87,9 @@ export const CreatePollForm = ({
     try {
       setDisabled(true);
       const response = await mutateAsync(data);
-      form.reset();
+      toast("Poll created successfully!", { variant: "info" });
       await router.push(routes.poll(response.id));
+      form.reset();
     } catch (error) {
       form.setError("root", { message: getErrorMessage(error) });
     } finally {
