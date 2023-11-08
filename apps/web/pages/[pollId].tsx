@@ -115,7 +115,7 @@ const PollPage = () => {
         reCaptchaToken: token,
       });
     } catch (error) {
-      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+      toast("Something went wrong...", { variant: "error" });
       console.log(error);
     }
   };
@@ -367,7 +367,7 @@ function ShareContainer() {
 
   const copyLink = () => {
     copy(shareUrl);
-    toast("Copied to clipboard", { icon: <Icon.Check /> });
+    toast("Copied to clipboard", { variant: "info" });
   };
 
   return (

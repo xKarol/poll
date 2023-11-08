@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  Icon,
   LoadingButton,
   Select,
   SelectContent,
@@ -101,10 +100,10 @@ function EditAccountForm() {
         clockType: data.clockType === "12h" ? 12 : 24,
       });
       await update();
-      toast("Account updated successfully.", { icon: <Icon.Check /> });
+      toast("Account updated successfully.", { variant: "info" });
       form.reset(data);
     } catch {
-      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+      toast("Something went wrong...", { variant: "error" });
     } finally {
       setDisabled(false);
     }

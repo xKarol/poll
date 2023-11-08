@@ -1,4 +1,4 @@
-import { Icon, toast } from "@poll/ui";
+import { toast } from "@poll/ui";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 
@@ -10,7 +10,7 @@ export const useDeleteAccount = () => {
     mutationFn: deleteUser,
     onSuccess: async () => {
       signOut({ callbackUrl: routes.HOME });
-      toast("The account has been deleted.", { icon: <Icon.Check /> });
+      toast("The account has been deleted.", { variant: "info" });
     },
   });
 };

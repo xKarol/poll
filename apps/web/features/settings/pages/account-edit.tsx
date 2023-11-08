@@ -94,10 +94,10 @@ function EditAccountForm() {
       setDisabled(true);
       await mutateAsync(data);
       await update();
-      toast("Account updated successfully.", { icon: <Icon.Check /> });
+      toast("Account updated successfully.", { variant: "info" });
       form.reset(data);
     } catch {
-      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+      toast("Something went wrong...", { variant: "error" });
     } finally {
       setDisabled(false);
     }

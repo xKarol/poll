@@ -32,10 +32,10 @@ export default function DeletePollDialog({
 
   const { isLoading, mutateAsync: deletePoll } = useDeletePoll({
     onError: () => {
-      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+      toast("Something went wrong...", { variant: "error" });
     },
     onSuccess: () => {
-      toast("Poll has been deleted", { icon: <Icon.Check /> });
+      toast("Poll has been deleted", { variant: "info" });
       queryClient.setQueryData(userKeys.userPolls, (data) => {
         return {
           // @ts-ignore

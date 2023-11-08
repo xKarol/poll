@@ -113,7 +113,7 @@ export default function PricingPage() {
       }
     } catch (e) {
       console.log(e);
-      toast("Something went wrong...", { icon: <Icon.AlertCircle /> });
+      toast("Something went wrong...", { variant: "error" });
     }
   };
 
