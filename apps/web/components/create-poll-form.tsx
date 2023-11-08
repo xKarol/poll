@@ -164,7 +164,7 @@ export const CreatePollForm = ({
           <Button
             disabled={disabled}
             type="button"
-            className="w-full bg-neutral-200 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
+            className="w-full bg-neutral-200 text-neutral-900 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
             onClick={() => append({ text: "" })}>
             Add option
           </Button>
