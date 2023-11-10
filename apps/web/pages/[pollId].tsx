@@ -1,4 +1,4 @@
-import { AvatarGroup, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
 import {
   Avatar,
@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  AvatarGroup,
 } from "@poll/ui";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
@@ -271,8 +272,8 @@ const PollPage = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   {voters?.length >= 2 ? (
-                    <AvatarGroup max={4} spacing="small">
-                      {voters.slice(0, 4).map((voter) => (
+                    <AvatarGroup max={4}>
+                      {voters.map((voter) => (
                         <Avatar
                           key={voter.id}
                           alt={`${voter.name} voter`}
