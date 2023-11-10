@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import { cn } from "@poll/lib";
 import {
   Avatar,
@@ -160,7 +159,12 @@ const PollPage = () => {
     );
   };
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading)
+    return (
+      <div className="flex h-96 flex-col">
+        <Icon.Loader2Icon className="m-auto animate-spin" />
+      </div>
+    );
   return (
     <>
       {isSuccess && (
