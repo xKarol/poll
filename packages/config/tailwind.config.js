@@ -23,6 +23,9 @@ module.exports = {
       center: true,
     },
     extend: {
+      colors: {
+        dark: "#1b1b1b",
+      },
       fontFamily: {
         sans: ["var(--font-inter)"],
       },

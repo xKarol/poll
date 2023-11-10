@@ -287,7 +287,7 @@ function PricingCard({
   return (
     <div
       className={cn(
-        "flex min-w-[240px] flex-col justify-between rounded-[8px] border-2 border-neutral-100 bg-white px-4 py-8 dark:border-neutral-800 dark:bg-neutral-800/50",
+        "dark:bg-dark flex min-w-[240px] flex-col justify-between rounded-[8px] border-2 border-neutral-100 bg-white px-4 py-8 dark:border-neutral-800",
         className
       )}
       {...props}>
