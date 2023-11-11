@@ -47,20 +47,26 @@ const Footer = ({ className, ...props }: FooterProps) => {
   return (
     <footer className={cn("container py-16", className)} {...props}>
       <div className="flex flex-col md:flex-row md:justify-between">
-        <div className="mb-8 flex flex-col space-y-16">
+        <div className="mb-8 flex flex-col space-y-8 md:mb-0">
           <Logo />
           <p className="max-w-xs text-neutral-600 dark:text-neutral-300">
             Discover, Share, and Engage with Quick Poll – Your Polling Partner!
           </p>
         </div>
-        <nav className="mb-16 flex justify-between md:space-x-8">
+        <nav className="mb-16 flex flex-col justify-between space-y-8 sm:flex-row sm:space-y-0 md:mb-0 md:space-x-8">
           {navLinks.map((linksGroup) => (
-            <div className="flex flex-col space-y-8" key={linksGroup.heading}>
-              <p className="font-semibold uppercase">{linksGroup.heading}</p>
-              <ul className="space-y-4">
+            <div
+              className="flex flex-col space-y-2 md:space-y-4"
+              key={linksGroup.heading}>
+              <p className="font-medium uppercase">{linksGroup.heading}</p>
+              <ul className="space-y-2 text-neutral-600  dark:text-neutral-300">
                 {linksGroup.links.map((link) => (
                   <li key={link.name}>
-                    <Link href={link.href}>{link.name}</Link>
+                    <Link
+                      href={link.href}
+                      className="transition-colors hover:text-neutral-900 hover:dark:text-white">
+                      {link.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -69,7 +75,7 @@ const Footer = ({ className, ...props }: FooterProps) => {
         </nav>
       </div>
 
-      <div className="mb-16 flex justify-between md:flex-col md:space-y-8">
+      <div className="mb-16 flex flex-wrap justify-between gap-4 md:my-8 md:flex-col md:space-y-8">
         <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
           <li className="transition-colors hover:text-black hover:dark:text-white">
             <Link href={"https://x.com"}>
