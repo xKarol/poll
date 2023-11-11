@@ -2,6 +2,7 @@ import "./config/env";
 
 import cors from "cors";
 import express from "express";
+import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
 
@@ -24,8 +25,19 @@ app.use((req, res, next) => {
     express.json()(req, res, next);
   }
 });
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
+
 app.use(withAuth);
 app.use(routes);
+
 app.use(errorHandler);
 
 const PORT = (process.env.PORT || 4000) as number;
