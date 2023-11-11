@@ -91,7 +91,7 @@ export function HeaderRoot({
     <HeaderContext.Provider value={{ isOpen, setIsOpen, session }}>
       <header
         className={cn(
-          "container z-50 flex items-center justify-between py-6",
+          "container z-50 flex items-center justify-between py-4",
           className
         )}
         {...rest}>
@@ -113,7 +113,7 @@ export function HeaderNavigation() {
     <>
       {isOpen ? <MobileNavigationMenu /> : null}
       <nav className="hidden items-center space-x-12 xl:flex">
-        <ul className="flex space-x-12 font-semibold">
+        <ul className="flex space-x-12 font-medium">
           {navLinks.map((link) => (
             <li key={link.text}>
               <Link href={link.href}>{link.text}</Link>
@@ -124,14 +124,17 @@ export function HeaderNavigation() {
         {session ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="flex items-center justify-center space-x-2">
+              <div className="flex cursor-pointer items-center justify-center space-x-2">
                 <Avatar src={session.user.image} className="h-8 w-8">
                   {session.user.name[0]}
                 </Avatar>
-                <span>{session.user.name}</span>
+                <div className="flex items-center space-x-1">
+                  <span className="font-medium">{session.user.name}</span>
+                  <Icon.ChevronDown className="h-4 w-4" />
+                </div>
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent align="end">
               <DropdownMenuItem asChild>
                 <Link href={routes.DASHBOARD.HOME}>
                   <Icon.Home className="mr-2 h-4 w-4" />
@@ -252,17 +255,17 @@ function HamburgerMenu({ className, ...rest }: HamburgerMenuProps) {
       {...rest}>
       <div
         className={cn(
-          "absolute top-0 h-0.5 w-6 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          "absolute top-0 h-0.5 w-6 rounded bg-neutral-900 transition-all dark:bg-neutral-50",
           isOpen && "top-1/2 w-full -translate-y-1/2 -rotate-45"
         )}></div>
       <div
         className={cn(
-          "absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          "absolute top-1/2 h-0.5 w-full -translate-y-1/2 rounded bg-neutral-900 transition-all dark:bg-neutral-50",
           isOpen && "top-1/2 w-full -translate-y-1/2 rotate-45"
         )}></div>
       <div
         className={cn(
-          "absolute bottom-0 h-0.5 w-5 rounded-[0.25rem] bg-neutral-900 transition-all dark:bg-neutral-50",
+          "absolute bottom-0 h-0.5 w-5 rounded bg-neutral-900 transition-all dark:bg-neutral-50",
           isOpen && "top-1/2 w-full -translate-y-1/2 -rotate-45 opacity-0"
         )}></div>
     </div>
