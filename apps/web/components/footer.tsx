@@ -21,9 +21,9 @@ const navLinks = [
   {
     heading: "Product",
     links: [
-      { name: "Pricing", href: routes.HOME },
-      { name: "FAQ", href: routes.HOME },
-      { name: "Help Center", href: routes.HOME },
+      { name: "Pricing", href: routes.PRICING },
+      { name: "FAQ", href: routes.FAQ },
+      { name: "Help Center", href: routes.HELP },
     ],
   },
   {
@@ -31,15 +31,14 @@ const navLinks = [
     links: [
       { name: "Create Poll", href: routes.CREATE_POLL },
       { name: "Public Polls", href: routes.PUBLIC_POLLS },
-      { name: "Lorem", href: routes.HOME },
     ],
   },
 
   {
     heading: "Company",
     links: [
-      { name: "Contact", href: routes.HOME },
-      { name: "About Us", href: routes.HOME },
+      { name: "Contact", href: routes.CONTACT },
+      { name: "About Us", href: routes.ABOUT_US },
     ],
   },
 ];
