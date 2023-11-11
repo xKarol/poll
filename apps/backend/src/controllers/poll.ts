@@ -17,6 +17,7 @@ import {
 } from "../services/poll";
 import { verifyReCaptcha } from "../services/recaptcha";
 import * as Analytics from "../services/tinybird";
+import { getIP } from "../utils/get-ip";
 
 export const Get = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -121,7 +122,7 @@ export const Vote = async (
 
     const data = await votePoll({ userId: user?.id, pollId, answerId });
 
-    const ip = (req.headers["true-client-ip"] as string | undefined) || req.ip;
+    const ip = getIP(req);
     const geo = await getGeoData(ip).catch(() => null);
     const userAgent = req.headers["user-agent"] || "";
     ua.setUA(userAgent).getResult();
