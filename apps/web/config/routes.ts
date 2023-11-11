@@ -12,6 +12,10 @@ export const routes = {
   LOGIN: "/login",
   TERMS_AND_CONDITIONS: "#",
   PRIVACY_POLICY: "#",
+  FAQ: "/",
+  HELP: "/",
+  CONTACT: "/",
+  ABOUT_US: "/",
   DASHBOARD: {
     HOME: "/dashboard/analytics", //alias
     POLLS: "/dashboard/polls",
