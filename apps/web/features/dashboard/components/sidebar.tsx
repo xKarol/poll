@@ -45,7 +45,7 @@ export default function SidebarContainer({ className, ...props }: Props) {
 
   return (
     <Sidebar className={className} {...props}>
-      <Logo variant="text" className="mb-6 w-20" />
+      <Logo variant="text" className="mb-4 h-8" />
       <div className="flex flex-1 flex-col justify-between">
         <SidebarNavigationList>
           {sidebarLinks.map((link) => (
