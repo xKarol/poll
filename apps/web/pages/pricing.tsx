@@ -247,9 +247,9 @@ export default function PricingPage() {
                   {isAvailable.map((planAvailable, index) => (
                     <TableCell key={description + index}>
                       {planAvailable ? (
-                        <Icon.Check className="mx-auto" />
+                        <Icon.Check className="mx-auto text-green-500" />
                       ) : (
-                        <Icon.X className="mx-auto text-red-500" />
+                        <Icon.X className="mx-auto text-neutral-500" />
                       )}
                     </TableCell>
                   ))}
