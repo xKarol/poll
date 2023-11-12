@@ -46,7 +46,6 @@ export const getAuthOptions = (req: NextApiRequest): NextAuthOptions => ({
 
   callbacks: {
     async jwt({ token }) {
-      console.log(req);
       const user = await prisma.user.findFirst({
         where: { email: token.email },
         select: {
@@ -61,13 +60,14 @@ export const getAuthOptions = (req: NextApiRequest): NextAuthOptions => ({
       if (!user) return token;
       if (!user.timeZone) {
         const timeZone = req.headers["x-vercel-ip-timezone"] as string;
-        // TODO timezone validation
-        await prisma.user.update({
-          where: { id: user.id },
-          data: {
-            timeZone: timeZone,
-          },
-        });
+        if (isValidTimeZone(timeZone)) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              timeZone: timeZone,
+            },
+          });
+        }
       }
       return {
         ...token,
@@ -98,3 +98,15 @@ const Auth = (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default Auth;
+
+function isValidTimeZone(tz: string) {
+  if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
+    throw new Error("Time zones are not available in this environment");
+  }
+  try {
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
+    return true;
+  } catch {
+    return false;
+  }
+}
