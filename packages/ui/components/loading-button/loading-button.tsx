@@ -12,10 +12,7 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps>(
   ({ isLoading, className, children, ...props }, ref) => {
     return (
       <Button
-        className={cn(
-          "disabled:pointer-events-auto disabled:cursor-not-allowed",
-          className
-        )}
+        className={cn(className)}
         ref={ref}
         {...props}
         disabled={isLoading || props.disabled}>
