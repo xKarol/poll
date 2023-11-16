@@ -9,13 +9,13 @@ import {
 import * as React from "react";
 
 const alertVariants = cva(
-  "relative w-full rounded p-4 text-neutral-900 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3 [&>svg~*]:pl-8",
+  "relative w-full rounded p-4 text-neutral-900 dark:text-white [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3 [&>svg~*]:pl-8",
   {
     variants: {
       variant: {
         error: "bg-red-300 dark:bg-red-500",
         warning: "bg-orange-300 dark:bg-orange-500",
-        info: "bg-blue-300 dark:bg-blue-500",
+        info: "dark:bg-dark border border-neutral-100 bg-white dark:border-neutral-800",
         success: "bg-green-300 dark:bg-green-500",
       },
     },
