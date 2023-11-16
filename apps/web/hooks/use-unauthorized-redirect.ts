@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { routes } from "../config/routes";
 import { getBaseUrl } from "../utils/get-base-url";
 
-export const useUnauthorizedRedirect = (redirectPath: string | undefined) => {
+export const useUnauthorizedRedirect = (redirectPath?: string) => {
   const { status } = useSession();
   const router = useRouter();
 
