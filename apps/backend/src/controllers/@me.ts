@@ -1,12 +1,24 @@
+import type { SortingParams, User } from "@poll/types";
 import type { Handler } from "express";
 
-import { getUserPolls } from "../services/poll";
-import { deleteUser, updateUserData, getUserVotes } from "../services/user";
+import {
+  deleteUser,
+  updateUserData,
+  getUserVotes,
+  getUserPolls,
+} from "../services/user";
 
 export const GetPolls: Handler = async (req, res, next) => {
   try {
     const { id: userId } = req.user.data!;
-    const user = await getUserPolls(userId, req.pagination);
+    const { sortBy, orderBy } =
+      req.sorting as SortingParams<User.SortPollsFields>;
+    const user = await getUserPolls({
+      userId,
+      sortBy,
+      orderBy,
+      ...req.pagination,
+    });
 
     return res.send(user);
   } catch (error) {
@@ -40,7 +52,14 @@ export const DeleteUser: Handler = async (req, res, next) => {
 export const GetUserVotes: Handler = async (req, res, next) => {
   try {
     const { id: userId } = req.user.data!;
-    const votes = await getUserVotes(userId, req.pagination);
+    const { sortBy, orderBy } =
+      req.sorting as SortingParams<User.SortVotesFields>;
+    const votes = await getUserVotes({
+      userId,
+      ...req.pagination,
+      sortBy,
+      orderBy,
+    });
 
     return res.send(votes);
   } catch (error) {

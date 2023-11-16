@@ -46,10 +46,6 @@ export interface Api {
   ) => Promise<
     PaginationResult<(Poll & { user: User; userId: string | null })[]>
   >;
-  getUserPolls: (
-    page?: number,
-    limit?: number
-  ) => Promise<PaginationResult<Poll[]>>;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
   updatePoll: (data: UpdatePollData) => Promise<Poll>;
@@ -74,14 +70,6 @@ export interface Services extends Api {
   ) => Promise<
     PaginationResult<(Poll & { user: User; userId: string | null })[]>
   >;
-  getUserPolls: (
-    userId: string,
-    params: {
-      page?: number;
-      skip: number;
-      limit?: number;
-    }
-  ) => Promise<PaginationResult<Poll[]>>;
   updatePoll: (pollId: string, data: UpdatePollData) => Promise<Poll>;
   votePoll: (params: {
     userId?: string;

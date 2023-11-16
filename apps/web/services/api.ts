@@ -77,28 +77,16 @@ export const createPlanCheckoutSession: Payment.Api["createPlanCheckoutSession"]
   };
 
 // USER
-export const getUserPolls: Poll.Api["getUserPolls"] = async (
-  page = 1,
-  limit = 10
-) => {
+export const getUserPolls: User.Api["getUserPolls"] = async (params) => {
   const { data } = await axios.get(apiUrls.user.getPolls, {
-    params: {
-      page,
-      limit,
-    },
+    params,
   });
   return data;
 };
 
-export const getUserVotes: User.Api["getUserVotes"] = async (
-  page = 1,
-  limit = 10
-) => {
+export const getUserVotes: User.Api["getUserVotes"] = async (params) => {
   const { data } = await axios.get(apiUrls.user.getVotes, {
-    params: {
-      page,
-      limit,
-    },
+    params,
   });
   return data;
 };

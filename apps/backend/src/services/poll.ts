@@ -37,27 +37,6 @@ export const getPoll: Poll.Services["getPoll"] = async (pollId) => {
   return response;
 };
 
-export const getUserPolls: Poll.Services["getUserPolls"] = async (
-  userId,
-  { page = 1, skip, limit = 10 }
-) => {
-  const response = await prisma.poll.findMany({
-    skip: skip,
-    take: limit + 1,
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      updatedAt: "desc",
-    },
-    include: { answers: true },
-  });
-  return {
-    data: response.slice(0, limit),
-    nextPage: response.length > limit ? page + 1 : undefined,
-  };
-};
-
 export const getPollVotes = async (pollId: string) => {
   const response = await prisma.answer.findMany({
     where: {

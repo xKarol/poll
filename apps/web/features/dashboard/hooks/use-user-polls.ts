@@ -6,7 +6,8 @@ import { getUserPolls } from "../../../services/api";
 const useUserPolls = () => {
   return useInfiniteQuery({
     queryKey: userKeys.userPolls,
-    queryFn: ({ pageParam = 1 }) => getUserPolls(pageParam, 10),
+    queryFn: ({ pageParam = 1 }) =>
+      getUserPolls({ page: pageParam, limit: 10 }),
     getNextPageParam: ({ nextPage }) => nextPage,
   });
 };

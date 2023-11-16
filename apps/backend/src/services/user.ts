@@ -24,10 +24,40 @@ export const deleteUser: User.Services["deleteUser"] = async (userId) => {
   await prisma.user.delete({ where: { id: userId } });
 };
 
-export const getUserVotes: User.Services["getUserVotes"] = async (
+export const getUserPolls: User.Services["getUserPolls"] = async ({
   userId,
-  { page = 1, skip, limit = 10 }
-) => {
+  page = 1,
+  skip,
+  limit = 10,
+  orderBy = "desc",
+  sortBy = "createdAt",
+}) => {
+  const response = await prisma.poll.findMany({
+    skip: skip,
+    take: limit + 1,
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      [sortBy]: orderBy,
+    },
+    include: { answers: true },
+  });
+  return {
+    data: response.slice(0, limit),
+    nextPage: response.length > limit ? page + 1 : undefined,
+  };
+};
+
+// @ts-expect-error TODO fix
+export const getUserVotes: User.Services["getUserVotes"] = async ({
+  userId,
+  page = 1,
+  skip,
+  limit = 10,
+  orderBy = "desc",
+  sortBy = "createdAt",
+}) => {
   const response = await prisma.vote.findMany({
     skip: skip,
     take: limit + 1,
@@ -35,7 +65,7 @@ export const getUserVotes: User.Services["getUserVotes"] = async (
       userId: userId,
     },
     orderBy: {
-      updatedAt: "desc",
+      [sortBy]: orderBy,
     },
     include: { poll: true, answer: true },
   });
