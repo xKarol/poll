@@ -24,7 +24,7 @@ import {
 } from "../components";
 import { BaseLayout } from "../layouts";
 
-const AnalyticsPage = () => {
+const PollAnalyticsPage = () => {
   const [interval, setInterval] = useQueryState("interval");
   const { hasPermission } = useHasPermission();
   const hasBasicPlan = hasPermission("BASIC");
@@ -96,4 +96,4 @@ const AnalyticsPage = () => {
   );
 };
 
-export default AnalyticsPage;
+export default PollAnalyticsPage;
