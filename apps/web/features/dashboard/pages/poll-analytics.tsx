@@ -32,6 +32,7 @@ const PollAnalyticsPage = () => {
     <BaseLayout>
       <Header
         heading="Analytics"
+        description="Poll analytics"
         ActionComponent={
           <Select
             onValueChange={setInterval}

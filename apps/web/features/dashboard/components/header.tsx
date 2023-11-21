@@ -4,17 +4,24 @@ import Heading from "./heading";
 
 type HeaderProps = {
   heading: string;
+  description?: string;
   ActionComponent?: React.ReactNode;
 } & React.ComponentPropsWithoutRef<"div">;
 
 export default function Header({
   ActionComponent,
   heading,
+  description,
   ...props
 }: HeaderProps) {
   return (
     <div className="mb-8 flex items-center justify-between" {...props}>
-      <Heading className="mb-5">{heading}</Heading>
+      <div className="mb-5 flex flex-col">
+        <Heading>{heading}</Heading>
+        {description ? (
+          <p className="text-sm font-medium text-neutral-600">{description}</p>
+        ) : null}
+      </div>
       {ActionComponent}
     </div>
   );
