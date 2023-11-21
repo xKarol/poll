@@ -19,13 +19,16 @@ export default function TopDevices({ className, ...props }: TopDevicesProps) {
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices({
     interval: interval,
   });
+
   return (
     <div className={cn("flex flex-col space-y-2", className)} {...props}>
       <h1 className="text-sm font-medium">Top devices</h1>
       {isError && (
-        <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
-          Something went wrong...
-        </span>
+        <div className="flex">
+          <span className="mx-auto my-10 text-xs text-neutral-400 dark:text-neutral-300">
+            Something went wrong...
+          </span>
+        </div>
       )}
       {isLoading && (
         <div className="flex flex-col space-y-1">

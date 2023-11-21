@@ -22,9 +22,11 @@ export default function TopCountries({
       <h1 className="text-sm font-medium">Top countries</h1>
       <div className="flex max-h-[192px] flex-col overflow-y-auto">
         {isError && (
-          <span className="mx-auto text-xs text-neutral-400 dark:text-neutral-300">
-            Something went wrong...
-          </span>
+          <div className="flex">
+            <span className="mx-auto my-10 text-xs text-neutral-400 dark:text-neutral-300">
+              Something went wrong...
+            </span>
+          </div>
         )}
         {isEmpty && (
           <div className="flex">
