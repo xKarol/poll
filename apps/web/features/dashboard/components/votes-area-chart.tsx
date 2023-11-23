@@ -30,9 +30,10 @@ export default function VotesAreaChart({
   className,
   ...props
 }: VotesAreaChartProps) {
-  const { interval, groupBy, dateFrom, dateTo } = useAnalyticsContext();
+  const { interval, groupBy, dateFrom, dateTo, pollId } = useAnalyticsContext();
   const { data } = useAnalyticsVotes({
     interval: interval,
+    pollId,
   });
 
   const generatePlaceholderData = useCallback(() => {

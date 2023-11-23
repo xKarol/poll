@@ -32,6 +32,7 @@ const parametersSchema = z.object({
   limit: z.number().positive().optional(),
   date_from: z.number().positive().optional(),
   date_to: z.number().positive().optional(),
+  poll_id: z.string().optional(),
 });
 
 const votesPipe = tinybird.buildPipe({
@@ -73,19 +74,26 @@ export const getUserPollVotesData: Analytics.Services["getUserPollVotes"] = (
   params
 ) => {
   return votesPipe({
-    ...transformParamsToSnakeCase(params),
+    poll_id: params.pollId,
     group_by: params.groupBy,
+    ...transformParamsToSnakeCase(params),
   });
 };
 
 export const getUserPollTopDevices: Analytics.Services["getUserPollTopDevices"] =
   (params) => {
-    return topDevicesPipe(transformParamsToSnakeCase(params));
+    return topDevicesPipe({
+      poll_id: params.pollId,
+      ...transformParamsToSnakeCase(params),
+    });
   };
 
 export const getUserPollTopCountries: Analytics.Services["getUserPollTopCountries"] =
   (params) => {
-    return topCountriesPipe(transformParamsToSnakeCase(params));
+    return topCountriesPipe({
+      poll_id: params.pollId,
+      ...transformParamsToSnakeCase(params),
+    });
   };
 
 function transformParamsToSnakeCase(params: Analytics.AnalyticsParams) {

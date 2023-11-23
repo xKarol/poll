@@ -13,8 +13,9 @@ export default function TopCountries({
   className,
   ...props
 }: TopCountriesProps) {
-  const { interval } = useAnalyticsContext();
+  const { interval, pollId } = useAnalyticsContext();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries({
+    pollId,
     interval: interval,
   });
   const isEmpty = isSuccess && data.length === 0;

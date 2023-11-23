@@ -16,6 +16,7 @@ export type TopCountriesData = {
 export type TopDevicesData = Record<Devices, number>;
 
 export type ClientAnalyticsParams = {
+  pollId?: string;
   dateFrom?: number;
   dateTo?: number;
   limit?: number;
@@ -23,8 +24,9 @@ export type ClientAnalyticsParams = {
 };
 
 export type AnalyticsParams<TParams = Record<string, unknown>> = Required<
-  Omit<ClientAnalyticsParams, "interval">
+  Omit<ClientAnalyticsParams, "interval" | "pollId">
 > & {
+  pollId?: string;
   ownerId: string;
 } & TParams;
 

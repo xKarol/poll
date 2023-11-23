@@ -3,20 +3,16 @@ import express from "express";
 
 import * as AnalyticsController from "../controllers/analytics";
 import { requireAuth } from "../middlewares/require-auth";
+import { validateSchema } from "../middlewares/validate-schema";
 import { withAnalyticsParams } from "../middlewares/with-analytics-params";
+import * as AnalyticsSchema from "../schemas/analytics";
 
 const router = express.Router();
-
-// router.get(
-//   "/analytics/poll/:pollId",
-//   requireAuth,
-//   validateSchema(AnalyticsSchema.getPollData),
-//   AnalyticsController.GetPollData
-// );
 
 router.get(
   apiUrls.analytics.userPollVotes,
   requireAuth,
+  validateSchema(AnalyticsSchema.pollQueryParams),
   withAnalyticsParams,
   AnalyticsController.GetUserPollVotesData
 );
@@ -24,6 +20,7 @@ router.get(
 router.get(
   apiUrls.analytics.getUserPollTopDevices,
   requireAuth,
+  validateSchema(AnalyticsSchema.pollQueryParams),
   withAnalyticsParams,
   AnalyticsController.GetUserPollTopDevicesData
 );
@@ -31,6 +28,7 @@ router.get(
 router.get(
   apiUrls.analytics.getUserPollTopCountries,
   requireAuth,
+  validateSchema(AnalyticsSchema.pollQueryParams),
   withAnalyticsParams,
   AnalyticsController.GetUserPollTopCountriesData
 );

@@ -16,8 +16,9 @@ const deviceIcon: Record<Analytics.Devices, JSX.Element> = {
 };
 
 export default function TopDevices({ className, ...props }: TopDevicesProps) {
-  const { interval } = useAnalyticsContext();
+  const { interval, pollId } = useAnalyticsContext();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices({
+    pollId,
     interval: interval,
   });
 

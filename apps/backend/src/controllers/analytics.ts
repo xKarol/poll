@@ -1,10 +1,10 @@
 import { hasUserPermission } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
-import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import type { Handler, NextFunction, Request, Response } from "express";
 import httpError from "http-errors";
 
+import type { AnalyticsPollQueryParams } from "../schemas/analytics";
 import {
   getUserPollTopDevices,
   getUserPollVotesData,
@@ -18,11 +18,13 @@ export const GetUserPollVotesData = async (
 ) => {
   try {
     const params = req.analytics;
+    const { pollId = undefined } = req.query as AnalyticsPollQueryParams;
     const { id: userId, plan } = req.user.data!;
 
     checkPermissions(params.dateFrom, params.dateTo, plan);
 
     const { data } = await getUserPollVotesData({
+      pollId,
       ownerId: userId,
       ...params,
     });
@@ -32,28 +34,16 @@ export const GetUserPollVotesData = async (
   }
 };
 
-export const GetPollData = async (
-  req: Request<Analytics.GetPollData>,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { pollId } = req.params;
-
-    return res.send(pollId);
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
+    const { pollId = undefined } = req.query as AnalyticsPollQueryParams;
     const { id: userId, plan } = req.user.data!;
 
     checkPermissions(params.dateFrom, params.dateTo, plan);
 
     const { data: rawData } = await getUserPollTopDevices({
+      pollId,
       ownerId: userId,
       ...params,
     });
@@ -77,11 +67,13 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
   try {
     const params = req.analytics;
+    const { pollId = undefined } = req.query as AnalyticsPollQueryParams;
     const { id: userId, plan } = req.user.data!;
 
     checkPermissions(params.dateFrom, params.dateTo, plan);
 
     const { data: rawData } = await getUserPollTopCountries({
+      pollId,
       ownerId: userId,
       ...params,
     });

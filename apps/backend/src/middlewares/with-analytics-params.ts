@@ -1,11 +1,8 @@
-import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import type { NextFunction, Request, Response } from "express";
-import z from "zod";
 
-import { defaultParameters } from "../schemas/analytics";
-import { parseInterval } from "../utils/parse-interval";
+import * as AnalyticsSchema from "../schemas/analytics";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -20,34 +17,6 @@ declare global {
     }
   }
 }
-
-export const analyticsParamsSchema = z
-  .object({
-    interval: z
-      .string()
-      .default(DEFAULT_ANALYTICS_INTERVAL)
-      .transform(parseInterval),
-  })
-  .merge(defaultParameters)
-  .superRefine((val, ctx) => {
-    if (val.dateFrom && val.dateTo) {
-      if (val.dateFrom > val.dateTo) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "DateFrom cannot be greater than DateTo.",
-        });
-      }
-      if (
-        Math.abs(dayjs(val.dateFrom * 1000).diff(val.dateTo * 1000, "minute")) <
-        60
-      ) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Difference between dates should be at least 1 hour.",
-        });
-      }
-    }
-  });
 
 const groupByName = {
   h: "hour",
@@ -67,7 +36,7 @@ export const withAnalyticsParams = async (
       limit = 50,
       dateTo = dayjs().unix(),
       ...params
-    } = analyticsParamsSchema.parse(req.query);
+    } = AnalyticsSchema.defaultQueryParams.parse(req.query);
 
     const [value, unit] = interval;
     const fullInterval = `${value}${unit}`;
