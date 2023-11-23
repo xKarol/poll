@@ -24,10 +24,14 @@ export const analyticsKeys = {
 
 export const analyticsOptions = {
   getUserPollsVotes: (
-    params: Analytics.ClientAnalyticsParams
+    params: Analytics.ClientAnalyticsParams,
+    options?: UseQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
+    >
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
   > => ({
+    ...options,
     queryKey: analyticsKeys.getUserPollsVotes({
       interval: params.interval,
       pollId: params.pollId,
@@ -35,10 +39,14 @@ export const analyticsOptions = {
     queryFn: () => getAnalyticsUserPollVotes(params),
   }),
   getUserPollTopDevices: (
-    params: Analytics.ClientAnalyticsParams
+    params: Analytics.ClientAnalyticsParams,
+    options?: UseQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
+    >
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopDevices>>
   > => ({
+    ...options,
     queryKey: analyticsKeys.getUserPollTopDevices({
       interval: params.interval,
       pollId: params.pollId,
@@ -46,10 +54,14 @@ export const analyticsOptions = {
     queryFn: () => getAnalyticsUserPollTopDevices(params),
   }),
   getUserPollTopCountries: (
-    params: Analytics.ClientAnalyticsParams
+    params: Analytics.ClientAnalyticsParams,
+    options?: UseQueryOptions<
+      Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
+    >
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollTopCountries>>
   > => ({
+    ...options,
     queryKey: analyticsKeys.getUserPollTopCountries({
       interval: params.interval,
       pollId: params.pollId,
