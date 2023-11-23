@@ -20,7 +20,7 @@ export const pollKeys = {
   ) => {
     return ["poll", { sortBy, orderBy }] as const;
   },
-  single: (pollId: string) => [...pollKeys.all(), pollId] as const,
+  single: (pollId: string) => ["poll", pollId] as const,
   getPollVoters: (pollId: string) => ["poll-voters", pollId] as const,
   getPollAnswerUserChoice: (pollId: string) =>
     ["poll-answer-user-choice", pollId] as const,
@@ -28,8 +28,10 @@ export const pollKeys = {
 
 export const pollOptions = {
   all: (
-    sortParams?: SortingParams<Poll.SortPollFields>
+    sortParams?: SortingParams<Poll.SortPollFields>,
+    options?: UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPolls>>>
   ): UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPolls>>> => ({
+    ...options,
     queryKey: pollKeys.all(sortParams),
     queryFn: ({ pageParam = 1 }) => {
       return getPolls({ page: pageParam, limit: 10, ...sortParams });
@@ -37,24 +39,32 @@ export const pollOptions = {
     getNextPageParam: ({ nextPage }) => nextPage,
   }),
   single: (
-    pollId: string
+    pollId: string,
+    options?: UseQueryOptions<Awaited<ReturnType<typeof getPoll>>>
   ): UseQueryOptions<Awaited<ReturnType<typeof getPoll>>> => ({
+    enabled: !!pollId,
+    ...options,
     queryKey: pollKeys.single(pollId),
     queryFn: () => getPoll(pollId),
-    enabled: !!pollId,
   }),
   getPollVoters: (
-    pollId: string
+    pollId: string,
+    options?: UseQueryOptions<Awaited<ReturnType<typeof getPollVoters>>>
   ): UseQueryOptions<Awaited<ReturnType<typeof getPollVoters>>> => ({
+    enabled: !!pollId,
+    ...options,
     queryKey: pollKeys.getPollVoters(pollId),
     queryFn: () => getPollVoters(pollId),
-    enabled: !!pollId,
   }),
   getPollAnswerUserChoice: (
-    pollId: string
+    pollId: string,
+    options?: UseQueryOptions<
+      Awaited<ReturnType<typeof getPollUserAnswerChoice>>
+    >
   ): UseQueryOptions<Awaited<ReturnType<typeof getPollUserAnswerChoice>>> => ({
+    enabled: !!pollId,
+    ...options,
     queryKey: pollKeys.getPollAnswerUserChoice(pollId),
     queryFn: () => getPollUserAnswerChoice(pollId),
-    enabled: !!pollId,
   }),
 } satisfies Record<keyof typeof pollKeys, unknown>;

@@ -7,12 +7,15 @@ export const paymentKeys = {
 };
 
 export const paymentOptions = {
-  getPricingPlans: {
-    queryKey: paymentKeys.getPricingPlans,
-    queryFn: getPricingPlans,
+  getPricingPlans: (
+    options?: UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>>
+  ): UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>> => ({
     cacheTime: Number.POSITIVE_INFINITY,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
-  } satisfies UseQueryOptions<Awaited<ReturnType<typeof getPricingPlans>>>,
+    ...options,
+    queryKey: paymentKeys.getPricingPlans,
+    queryFn: getPricingPlans,
+  }),
 } satisfies Record<keyof typeof paymentKeys, unknown>;

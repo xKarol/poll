@@ -1,14 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { userKeys } from "../../../queries/user";
-import { getUserPolls } from "../../../services/api";
+import { userOptions } from "../../../queries/user";
 
-const useUserPolls = () => {
-  return useInfiniteQuery({
-    queryKey: userKeys.userPolls,
-    queryFn: ({ pageParam = 1 }) =>
-      getUserPolls({ page: pageParam, limit: 10 }),
-    getNextPageParam: ({ nextPage }) => nextPage,
-  });
+const useUserPolls = (...args: Parameters<typeof userOptions.getUserPolls>) => {
+  return useInfiniteQuery(userOptions.getUserPolls(...args));
 };
 export default useUserPolls;

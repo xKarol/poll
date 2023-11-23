@@ -70,7 +70,7 @@ const featuresTable: [string, boolean, boolean, boolean][] = [
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const queryClient = new QueryClient();
-    await queryClient.fetchQuery(paymentOptions.getPricingPlans);
+    await queryClient.fetchQuery(paymentOptions.getPricingPlans());
     return {
       props: {
         dehydratedState: dehydrate(queryClient),

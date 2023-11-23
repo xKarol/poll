@@ -36,7 +36,7 @@ export default function DeletePollDialog({
     },
     onSuccess: () => {
       toast("Poll has been deleted", { variant: "info" });
-      queryClient.setQueryData(userKeys.userPolls, (data) => {
+      queryClient.setQueryData(userKeys.getUserPolls, (data) => {
         return {
           // @ts-ignore
           ...data,
