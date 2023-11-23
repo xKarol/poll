@@ -27,6 +27,7 @@ const PollAnalyticsPage = () => {
   const pollId = router.query.pollId as string;
   const { data, isSuccess } = useGetPoll(pollId);
 
+  if (!pollId) return null;
   return (
     <AnalyticsProvider value={{ pollId, ...analyticsParams }}>
       <BaseLayout>
