@@ -1,8 +1,10 @@
 import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import { Icon } from "@poll/ui";
 import { useQueryState } from "next-usequerystate";
+import { useRouter } from "next/router";
 import React from "react";
 
+import { useGetPoll } from "../../../hooks/use-get-poll";
 import { useHasPermission } from "../../../hooks/use-has-permission";
 import {
   AnalyticsCard,
@@ -21,13 +23,16 @@ const PollAnalyticsPage = () => {
   const { hasPermission } = useHasPermission();
   const hasBasicPlan = hasPermission("BASIC");
   const analyticsParams = useAnalyticsParams();
+  const router = useRouter();
+  const pollId = router.query.pollId as string;
+  const { data, isSuccess } = useGetPoll(pollId);
 
   return (
-    <AnalyticsProvider value={{ pollId: undefined, ...analyticsParams }}>
+    <AnalyticsProvider value={{ pollId, ...analyticsParams }}>
       <BaseLayout>
         <Header
           heading="Analytics"
-          description="Poll analytics"
+          description={isSuccess ? `Poll: ${data.question}` : ""}
           ActionComponent={
             <AnalyticsIntervalSelect
               hasBasicPlan={hasBasicPlan}
