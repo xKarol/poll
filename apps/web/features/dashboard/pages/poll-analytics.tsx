@@ -1,9 +1,10 @@
 import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
-import { Icon } from "@poll/ui";
+import { Icon, toast } from "@poll/ui";
 import { useQueryState } from "next-usequerystate";
 import { useRouter } from "next/router";
 import React from "react";
 
+import { routes } from "../../../config/routes";
 import { useGetPoll } from "../../../hooks/use-get-poll";
 import { useHasPermission } from "../../../hooks/use-has-permission";
 import {
@@ -25,9 +26,15 @@ const PollAnalyticsPage = () => {
   const analyticsParams = useAnalyticsParams();
   const router = useRouter();
   const pollId = router.query.pollId as string;
-  const { data, isSuccess } = useGetPoll(pollId);
+  const { data, isSuccess } = useGetPoll(pollId, {
+    onError: () => {
+      toast("This poll does not exist.", { variant: "error" });
+      router.push(routes.DASHBOARD.HOME);
+    },
+    retry: false,
+  });
 
-  if (!pollId) return null;
+  if (!pollId && !isSuccess) return null;
   return (
     <AnalyticsProvider value={{ pollId, ...analyticsParams }}>
       <BaseLayout>
