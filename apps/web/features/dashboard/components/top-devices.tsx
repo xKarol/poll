@@ -4,7 +4,8 @@ import { Icon, Skeleton } from "@poll/ui";
 import React from "react";
 
 import { nFormatter } from "../../../utils/misc";
-import { useAnalyticsParams, useAnalyticsTopDevices } from "../hooks";
+import { useAnalyticsContext } from "../context";
+import { useAnalyticsTopDevices } from "../hooks";
 
 type TopDevicesProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -15,7 +16,7 @@ const deviceIcon: Record<Analytics.Devices, JSX.Element> = {
 };
 
 export default function TopDevices({ className, ...props }: TopDevicesProps) {
-  const { interval } = useAnalyticsParams();
+  const { interval } = useAnalyticsContext();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopDevices({
     interval: interval,
   });

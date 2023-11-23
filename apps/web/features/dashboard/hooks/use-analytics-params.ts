@@ -28,8 +28,9 @@ export default function useAnalyticsQueryParams() {
     dateFrom,
     dateTo,
     groupBy: groupBy as Analytics.GroupBy,
-    interval: isValidInterval ? interval : DEFAULT_ANALYTICS_INTERVAL,
-    queryParams: { interval },
+    interval: (isValidInterval
+      ? interval
+      : DEFAULT_ANALYTICS_INTERVAL) as Analytics.Interval,
   };
 }
 

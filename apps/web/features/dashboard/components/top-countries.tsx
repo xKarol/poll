@@ -4,7 +4,8 @@ import Image from "next/image";
 import React from "react";
 
 import { nFormatter } from "../../../utils/misc";
-import { useAnalyticsParams, useAnalyticsTopCountries } from "../hooks";
+import { useAnalyticsContext } from "../context";
+import { useAnalyticsTopCountries } from "../hooks";
 
 type TopCountriesProps = React.ComponentPropsWithoutRef<"div">;
 
@@ -12,7 +13,7 @@ export default function TopCountries({
   className,
   ...props
 }: TopCountriesProps) {
-  const { interval } = useAnalyticsParams();
+  const { interval } = useAnalyticsContext();
   const { data, isSuccess, isError, isLoading } = useAnalyticsTopCountries({
     interval: interval,
   });

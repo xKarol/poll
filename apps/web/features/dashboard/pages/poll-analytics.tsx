@@ -12,51 +12,57 @@ import {
   TopDevices,
   VotesAreaChart,
 } from "../components";
+import { AnalyticsProvider } from "../context";
+import { useAnalyticsParams } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 const PollAnalyticsPage = () => {
   const [interval, setInterval] = useQueryState("interval");
   const { hasPermission } = useHasPermission();
   const hasBasicPlan = hasPermission("BASIC");
+  const analyticsParams = useAnalyticsParams();
+
   return (
-    <BaseLayout>
-      <Header
-        heading="Analytics"
-        description="Poll analytics"
-        ActionComponent={
-          <AnalyticsIntervalSelect
-            hasBasicPlan={hasBasicPlan}
-            onValueChange={setInterval}
-            value={interval || DEFAULT_ANALYTICS_INTERVAL}
+    <AnalyticsProvider value={{ pollId: undefined, ...analyticsParams }}>
+      <BaseLayout>
+        <Header
+          heading="Analytics"
+          description="Poll analytics"
+          ActionComponent={
+            <AnalyticsIntervalSelect
+              hasBasicPlan={hasBasicPlan}
+              onValueChange={setInterval}
+              value={interval || DEFAULT_ANALYTICS_INTERVAL}
+            />
+          }
+        />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <AnalyticsCard
+            heading="Total Views"
+            statsValue={0}
+            lastMonthValue={0}
+            StatIcon={<Icon.Eye className="h-4 w-4" />}
           />
-        }
-      />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <AnalyticsCard
-          heading="Total Views"
-          statsValue={0}
-          lastMonthValue={0}
-          StatIcon={<Icon.Eye className="h-4 w-4" />}
-        />
-        <AnalyticsCard
-          heading="Total Votes"
-          statsValue={0}
-          lastMonthValue={0}
-          StatIcon={<Icon.CheckCircle className="h-4 w-4" />}
-        />
-        <AnalyticsCard
-          heading="Total Shares"
-          statsValue={0}
-          lastMonthValue={0}
-          StatIcon={<Icon.Share2 className="h-4 w-4" />}
-        />
-        <VotesAreaChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
-        <div className="flex flex-wrap gap-4 lg:flex-col lg:flex-nowrap lg:gap-0 lg:space-y-8">
-          <TopCountries className="min-w-[160px] flex-1" />
-          <TopDevices className="min-w-[160px] flex-1" />
+          <AnalyticsCard
+            heading="Total Votes"
+            statsValue={0}
+            lastMonthValue={0}
+            StatIcon={<Icon.CheckCircle className="h-4 w-4" />}
+          />
+          <AnalyticsCard
+            heading="Total Shares"
+            statsValue={0}
+            lastMonthValue={0}
+            StatIcon={<Icon.Share2 className="h-4 w-4" />}
+          />
+          <VotesAreaChart className="row-span-2 h-[300px] sm:col-span-2 lg:h-[500px]" />
+          <div className="flex flex-wrap gap-4 lg:flex-col lg:flex-nowrap lg:gap-0 lg:space-y-8">
+            <TopCountries className="min-w-[160px] flex-1" />
+            <TopDevices className="min-w-[160px] flex-1" />
+          </div>
         </div>
-      </div>
-    </BaseLayout>
+      </BaseLayout>
+    </AnalyticsProvider>
   );
 };
 

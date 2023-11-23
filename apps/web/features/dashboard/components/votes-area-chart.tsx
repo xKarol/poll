@@ -18,7 +18,8 @@ import type {
 } from "recharts/types/component/DefaultTooltipContent";
 
 import { nFormatter } from "../../../utils/misc";
-import { useAnalyticsParams, useAnalyticsVotes } from "../hooks";
+import { useAnalyticsContext } from "../context";
+import { useAnalyticsVotes } from "../hooks";
 
 type VotesAreaChartProps = Omit<
   React.ComponentProps<typeof ResponsiveContainer>,
@@ -29,7 +30,7 @@ export default function VotesAreaChart({
   className,
   ...props
 }: VotesAreaChartProps) {
-  const { interval, groupBy, dateFrom, dateTo } = useAnalyticsParams();
+  const { interval, groupBy, dateFrom, dateTo } = useAnalyticsContext();
   const { data } = useAnalyticsVotes({
     interval: interval,
   });
@@ -149,7 +150,7 @@ function sortData(data: Analytics.VotesData[]) {
   ];
 }
 
-function formatTick(tick: number, group: "hour" | "day" | "month") {
+function formatTick(tick: number, group: Analytics.GroupBy) {
   if (group === "month") return dayjs(tick).format("MMM");
   if (group === "day") return dayjs(tick).format("DD.MM");
   return dayjs(tick).format("HH:mm");
