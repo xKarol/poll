@@ -8,12 +8,18 @@ import {
 } from "../services/api";
 
 export const analyticsKeys = {
-  getUserPollsVotes: ({ interval }: Analytics.ClientAnalyticsParams) =>
-    ["analytics.votes", { interval }] as const,
-  getUserPollTopDevices: ({ interval }: Analytics.ClientAnalyticsParams) =>
-    ["analytics.top-devices", { interval }] as const,
-  getUserPollTopCountries: ({ interval }: Analytics.ClientAnalyticsParams) =>
-    ["analytics.top-countries", { interval }] as const,
+  getUserPollsVotes: ({ interval, pollId }: Analytics.ClientAnalyticsParams) =>
+    ["analytics.votes", { interval, pollId }] as const,
+  getUserPollTopDevices: ({
+    interval,
+    pollId,
+  }: Analytics.ClientAnalyticsParams) =>
+    ["analytics.top-devices", { interval, pollId }] as const,
+  getUserPollTopCountries: ({
+    interval,
+    pollId,
+  }: Analytics.ClientAnalyticsParams) =>
+    ["analytics.top-countries", { interval, pollId }] as const,
 };
 
 export const analyticsOptions = {
@@ -22,7 +28,10 @@ export const analyticsOptions = {
   ): UseQueryOptions<
     Awaited<ReturnType<typeof getAnalyticsUserPollVotes>>
   > => ({
-    queryKey: analyticsKeys.getUserPollsVotes({ interval: params.interval }),
+    queryKey: analyticsKeys.getUserPollsVotes({
+      interval: params.interval,
+      pollId: params.pollId,
+    }),
     queryFn: () => getAnalyticsUserPollVotes(params),
   }),
   getUserPollTopDevices: (
@@ -32,6 +41,7 @@ export const analyticsOptions = {
   > => ({
     queryKey: analyticsKeys.getUserPollTopDevices({
       interval: params.interval,
+      pollId: params.pollId,
     }),
     queryFn: () => getAnalyticsUserPollTopDevices(params),
   }),
@@ -42,6 +52,7 @@ export const analyticsOptions = {
   > => ({
     queryKey: analyticsKeys.getUserPollTopCountries({
       interval: params.interval,
+      pollId: params.pollId,
     }),
     queryFn: () => getAnalyticsUserPollTopCountries(params),
   }),
