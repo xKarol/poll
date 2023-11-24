@@ -21,6 +21,7 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import type { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useMemo, useRef, useState } from "react";
 // eslint-disable-next-line import/no-named-as-default
@@ -217,6 +218,12 @@ const PollPage = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
+                      <DropdownMenuItem className="space-x-2" asChild>
+                        <Link href={routes.DASHBOARD.ANALYTICS.poll(pollId)}>
+                          <Icon.BarChart2 className="h-4 w-4" />
+                          <span>Analytics</span>
+                        </Link>
+                      </DropdownMenuItem>
                       <DeletePollDialog
                         pollId={pollId}
                         onDelete={() => {
