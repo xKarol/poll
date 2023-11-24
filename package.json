@@ -6,7 +6,6 @@
     "npm": ">=7.0.0",
     "yarn": ">=1.19.0"
   },
-  "packageManager": "yarn@3.4.1",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --concurrency 11",
