@@ -3,7 +3,7 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { getQRCodeImage } from "../services/api";
 
 export const qrCodeKeys = {
-  getQRCode: ["qr"] as const,
+  getQRCode: (text: string) => ["qr", { text }] as const,
 };
 
 export const qrCodeOptions = {
@@ -16,7 +16,7 @@ export const qrCodeOptions = {
     refetchOnReconnect: false,
     refetchOnMount: false,
     ...options,
-    queryKey: qrCodeKeys.getQRCode,
+    queryKey: qrCodeKeys.getQRCode(text),
     queryFn: () => getQRCodeImage(text),
   }),
 } satisfies Record<keyof typeof qrCodeKeys, unknown>;
