@@ -9,7 +9,6 @@ import {
   Icon,
   Separator,
 } from "@poll/ui";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 import {
@@ -24,7 +23,7 @@ import {
 
 import { ShareSocial } from "../../../components/share-social";
 import { routes } from "../../../config/routes";
-import { getQRCodeImage } from "../../../services/api";
+import { useQRCode } from "../../../hooks/use-qr-code";
 
 type DeletePollDialogProps = {
   pollId: string;
@@ -45,9 +44,7 @@ export default function SharePollDialog({
     isLoading,
     isError,
     refetch: refetchQRCode,
-  } = useQuery({
-    queryFn: () => getQRCodeImage(shareUrl),
-  });
+  } = useQRCode(shareUrl);
 
   return (
     <Dialog {...props}>
