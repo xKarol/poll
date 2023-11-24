@@ -1,5 +1,5 @@
 import { apiUrls } from "@poll/config/api-urls";
-import type { Poll, Payment, User, Analytics } from "@poll/types";
+import type { Poll, Payment, User, Analytics, QR } from "@poll/types";
 
 import axios from "../lib/axios";
 
@@ -129,3 +129,13 @@ export const getAnalyticsUserPollTopCountries: Analytics.Api["getUserPollTopCoun
     );
     return data;
   };
+
+// QR CODE
+
+export const getQRCodeImage: QR.Api["getQRCodeImage"] = async (text) => {
+  const { data: buffer } = await axios.get(
+    apiUrls.qr.getImage(encodeURIComponent(text)),
+    { responseType: "arraybuffer" }
+  );
+  return `data:image/png;base64,${Buffer.from(buffer).toString("base64")}`;
+};

@@ -9,6 +9,7 @@ import {
   Icon,
   Separator,
 } from "@poll/ui";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 import {
@@ -23,6 +24,7 @@ import {
 
 import { ShareSocial } from "../../../components/share-social";
 import { routes } from "../../../config/routes";
+import { getQRCodeImage } from "../../../services/api";
 
 type DeletePollDialogProps = {
   pollId: string;
@@ -37,6 +39,16 @@ export default function SharePollDialog({
     typeof window === "undefined"
       ? ""
       : `${window.location.origin}${routes.poll(pollId)}`;
+
+  const {
+    data: qrCodeSrc,
+    isLoading,
+    isError,
+    refetch: refetchQRCode,
+  } = useQuery({
+    queryFn: () => getQRCodeImage(shareUrl),
+  });
+
   return (
     <Dialog {...props}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -48,9 +60,30 @@ export default function SharePollDialog({
         </DialogHeader>
 
         <div className="mb-4 mt-8 flex w-full flex-col items-center">
-          <div className="h-40 w-40 rounded border border-neutral-800 p-4">
-            {/* TODO get qr code url */}
-            <Image width={40} height={40} src="" alt="poll share qr code" />
+          <div className="flex h-40 w-40 items-center justify-center rounded border-2 border-neutral-800 p-0.5">
+            {isLoading && (
+              <Icon.Loader2 className="h-6 w-6 animate-spin text-neutral-500" />
+            )}
+            {isError && (
+              <div className="flex flex-col items-center space-y-2">
+                <Icon.X className="h-6 w-6 text-red-500" />
+                <Button
+                  onClick={() => refetchQRCode()}
+                  className="text-xs"
+                  size="sm"
+                  variant="text">
+                  Try Again
+                </Button>
+              </div>
+            )}
+            {qrCodeSrc ? (
+              <Image
+                width={160}
+                height={160}
+                src={Buffer.from(qrCodeSrc).toString()}
+                alt="poll share qr code"
+              />
+            ) : null}
           </div>
           <Separator className="my-12" />
           <div className="flex flex-wrap gap-4">

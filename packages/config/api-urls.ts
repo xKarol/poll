@@ -30,6 +30,9 @@ export const apiUrls = {
     getUserPollTopDevices: "/analytics/poll/top-devices",
     getUserPollTopCountries: "/analytics/poll/top-countries",
   },
+  qr: {
+    getImage: (text) => `/qr/${text}` as const,
+  },
   webhooks: {
     stripe: "/webhook/stripe",
   },

@@ -6,6 +6,7 @@ import analytics from "./analytics";
 import healthCheckRoute from "./health-check";
 import paymentsRoutes from "./payments";
 import pollRoutes from "./poll";
+import qrCode from "./qr";
 import webhooks from "./webhooks";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.use(paymentsRoutes);
 router.use(meRoutes);
 router.use(pollRoutes);
 router.use(analytics);
+router.use(qrCode);
 router.use(webhooks);
 // must be the last
 router.use(notFoundRoutes);
