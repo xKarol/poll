@@ -57,7 +57,7 @@ export default function SharePollDialog({
         </DialogHeader>
 
         <div className="mb-4 mt-8 flex w-full flex-col items-center">
-          <div className="flex h-40 w-40 items-center justify-center rounded border-2 border-neutral-800 p-0.5">
+          <div className="flex h-40 w-40 items-center justify-center rounded border-2 border-neutral-200 p-0.5 dark:border-neutral-800">
             {isLoading && (
               <Icon.Loader2 className="h-6 w-6 animate-spin text-neutral-500" />
             )}
