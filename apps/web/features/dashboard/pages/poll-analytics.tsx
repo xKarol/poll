@@ -38,7 +38,9 @@ const PollAnalyticsPage = () => {
   if (!pollId && !isSuccess) return null;
   return (
     <>
-      <NextSeo title={`Analytics - ${data.question}`} />
+      <NextSeo
+        title={isSuccess ? `Analytics - ${data.question}` : `Analytics`}
+      />
       <AnalyticsProvider value={{ pollId, ...analyticsParams }}>
         <BaseLayout>
           <Header
