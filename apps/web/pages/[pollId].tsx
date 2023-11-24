@@ -1,4 +1,3 @@
-import { cn } from "@poll/lib";
 import {
   Avatar,
   Icon,
@@ -41,6 +40,7 @@ import { ResponsiveContainer, Pie, PieChart, Cell, Legend } from "recharts";
 import { AnswerItem } from "../components/answer-item";
 import DeletePollDialog from "../components/delete-poll-dialog";
 import { RadioGroup } from "../components/radio-group";
+import { ShareSocial } from "../components/share-social";
 import { routes } from "../config/routes";
 import { useGetPoll } from "../hooks/use-get-poll";
 import { useGetPollVoters } from "../hooks/use-get-poll-voters";
@@ -344,30 +344,6 @@ const PollPage = () => {
 export default PollPage;
 
 PollPage.Layout = BaseLayout;
-
-export type ShareSocialProps<T extends React.ElementType> = {
-  as?: T;
-};
-
-export function ShareSocial<T extends React.ElementType = "button">({
-  className,
-  children,
-  as,
-  ...props
-}: ShareSocialProps<T> &
-  Omit<React.ComponentPropsWithoutRef<T>, keyof ShareSocialProps<T>>) {
-  const Component = as || "button";
-  return (
-    <Component
-      className={cn(
-        "!text-neutral-600 transition-colors hover:!text-black dark:!text-neutral-500 hover:dark:!text-neutral-300 [&_svg]:h-5 [&_svg]:w-5",
-        className
-      )}
-      {...props}>
-      {children}
-    </Component>
-  );
-}
 
 function ShareContainer() {
   const router = useRouter();

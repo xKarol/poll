@@ -26,6 +26,7 @@ import { InfiniteScrollContainer } from "../../../components/infinite-scroll-con
 import { routes } from "../../../config/routes";
 import { getBaseUrl } from "../../../utils/get-base-url";
 import { nFormatter } from "../../../utils/misc";
+import SharePollDialog from "./share-poll-dialog";
 
 type Props = {
   data: (Poll & { totalVotes: number })[];
@@ -174,6 +175,14 @@ function PollItemRow({
                   <span>Analytics</span>
                 </Link>
               </DropdownMenuItem>
+              <SharePollDialog pollId={id}>
+                <DropdownMenuItem
+                  className="space-x-2"
+                  onSelect={(e) => e.preventDefault()}>
+                  <Icon.Share2 className="h-4 w-4" />
+                  <span>Share</span>
+                </DropdownMenuItem>
+              </SharePollDialog>
               <DeletePollDialog pollId={id}>
                 <DropdownMenuItem
                   className="space-x-2 text-red-400"
