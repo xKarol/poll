@@ -31,7 +31,7 @@ export const apiUrls = {
     getUserPollTopCountries: "/analytics/poll/top-countries",
   },
   qr: {
-    getImage: (text) => `/qr/${text}` as const,
+    getQRCode: `/qr`,
   },
   webhooks: {
     stripe: "/webhook/stripe",

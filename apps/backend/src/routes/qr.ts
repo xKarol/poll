@@ -8,7 +8,7 @@ import * as QRSchema from "../schemas/qr";
 const router = express.Router();
 
 router.get(
-  apiUrls.qr.getImage(":text"),
+  apiUrls.qr.getQRCode,
   validateSchema(QRSchema.getQRCode),
   QRController.GetQRCode
 );

@@ -1,8 +1,8 @@
 import type { QR } from "@poll/types";
 import { z } from "zod";
 
-export const getQRCode: z.Schema<{ params: QR.GetQRParams }> = z.object({
-  params: z.object({
+export const getQRCode: z.Schema<{ query: QR.GetQRParams }> = z.object({
+  query: z.object({
     text: z.string().nonempty(),
   }),
 });

@@ -133,9 +133,11 @@ export const getAnalyticsUserPollTopCountries: Analytics.Api["getUserPollTopCoun
 // QR CODE
 
 export const getQRCodeImage: QR.Api["getQRCodeImage"] = async (text) => {
-  const { data: buffer } = await axios.get(
-    apiUrls.qr.getImage(encodeURIComponent(text)),
-    { responseType: "arraybuffer" }
-  );
+  const { data: buffer } = await axios.get(apiUrls.qr.getQRCode, {
+    params: {
+      text: encodeURIComponent(text),
+    },
+    responseType: "arraybuffer",
+  });
   return `data:image/png;base64,${Buffer.from(buffer).toString("base64")}`;
 };
