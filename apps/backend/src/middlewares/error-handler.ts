@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import type { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 
@@ -10,6 +11,7 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _next: NextFunction
 ) => {
+  Sentry.captureException(error);
   const message = getErrorMessage(error);
   const errorData = error instanceof createError.HttpError ? error : undefined;
   const status: number = errorData ? errorData.statusCode : 400;
