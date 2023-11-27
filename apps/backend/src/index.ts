@@ -35,7 +35,7 @@ app.use(Sentry.Handlers.requestHandler());
 app.use(favicon(path.join(path.resolve(), "public", "favicon.ico")));
 app.use(cors(corsConfig));
 app.use(helmet());
-app.use(morgan("dev"));
+app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
 app.use((req, res, next) => {
   if (req.originalUrl.includes("/webhook")) {
     next();
