@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MAX_POLL_OPTIONS } from "@poll/config";
 import { cn } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
 import type { Poll } from "@poll/types";
@@ -52,7 +53,8 @@ export const createPollSchema = z.object({
           .nonempty(),
       })
     )
-    .min(2),
+    .min(2)
+    .max(MAX_POLL_OPTIONS),
   isPublic: z.boolean().optional(),
   requireRecaptcha: z.boolean().optional(),
 });
@@ -161,13 +163,15 @@ export const CreatePollForm = ({
             </ScrollArea>
           </div>
 
-          <Button
-            disabled={disabled}
-            type="button"
-            className="w-full bg-neutral-200 text-neutral-900 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
-            onClick={() => append({ text: "" })}>
-            Add option
-          </Button>
+          {fields.length !== MAX_POLL_OPTIONS ? (
+            <Button
+              disabled={disabled}
+              type="button"
+              className="w-full bg-neutral-200 text-neutral-900 hover:bg-neutral-200/50 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-700/90"
+              onClick={() => append({ text: "" })}>
+              Add option
+            </Button>
+          ) : null}
         </div>
 
         <div className="mb-8 space-y-2">

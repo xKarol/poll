@@ -9,3 +9,5 @@ export const validAnalyticsIntervals: Analytics.Interval[] = [
   "30d",
   "1y",
 ] as const;
+
+export const MAX_POLL_OPTIONS = 10;
