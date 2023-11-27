@@ -75,7 +75,6 @@ function EditAccountForm() {
   const { data: session, update } = useSession();
   const [disabled, setDisabled] = useState(false);
   const form = useForm<FormValues>({
-    // @ts-expect-error TODO FIX
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
       email: session?.user.email ?? "",

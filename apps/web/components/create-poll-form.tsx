@@ -18,10 +18,10 @@ import {
   ScrollArea,
   toast,
 } from "@poll/ui";
+import { PollValidator } from "@poll/validators";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { z } from "zod";
 
 import {
   Form,
@@ -42,23 +42,6 @@ export type CreatePollFormProps = { ActionButtons?: JSX.Element[] } & Omit<
   "children"
 >;
 
-// TODO reuse schema from global `schemas` package
-export const createPollSchema = z.object({
-  question: z.string().min(3),
-  answers: z
-    .array(
-      z.object({
-        text: z
-          .string({ required_error: "Answer should not be empty" })
-          .nonempty(),
-      })
-    )
-    .min(2)
-    .max(MAX_POLL_OPTIONS),
-  isPublic: z.boolean().optional(),
-  requireRecaptcha: z.boolean().optional(),
-});
-
 type FormValues = Poll.CreatePollData;
 
 export const CreatePollForm = ({
@@ -69,8 +52,7 @@ export const CreatePollForm = ({
   const router = useRouter();
   const [disabled, setDisabled] = useState(false);
   const form = useForm<FormValues>({
-    // @ts-expect-error TODO FIX
-    resolver: zodResolver(createPollSchema),
+    resolver: zodResolver(PollValidator.createPollSchema),
     defaultValues: {
       question: "",
       answers: Array.from({ length: 2 }, () => ({ text: "" })),

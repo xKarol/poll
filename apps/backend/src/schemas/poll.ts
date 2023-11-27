@@ -1,4 +1,5 @@
 import type { Poll } from "@poll/types";
+import { PollValidator } from "@poll/validators";
 import { z } from "zod";
 
 export const getPoll: z.Schema<{ params: Poll.GetPollData }> = z.object({
@@ -9,20 +10,7 @@ export const getPoll: z.Schema<{ params: Poll.GetPollData }> = z.object({
 export type GetPoll = z.infer<typeof getPoll>;
 
 export const createPoll: z.Schema<{ body: Poll.CreatePollData }> = z.object({
-  body: z.object({
-    question: z.string().min(3),
-    answers: z
-      .array(
-        z.object({
-          text: z
-            .string({ required_error: "Answer should not be empty" })
-            .nonempty(),
-        })
-      )
-      .min(2),
-    isPublic: z.boolean().optional(),
-    requireReCaptcha: z.boolean().optional(),
-  }),
+  body: PollValidator.createPollSchema,
 });
 export type CreatePoll = z.infer<typeof createPoll>;
 

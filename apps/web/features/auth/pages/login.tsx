@@ -38,7 +38,6 @@ export default function LoginPage() {
     redirectUrl: router.query.redirect as string | undefined,
   });
   const form = useForm<FormValues>({
-    // @ts-expect-error
     resolver: zodResolver(credentialsSchema),
     defaultValues: {
       email: "",
