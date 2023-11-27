@@ -33,6 +33,7 @@ import { BaseLayout } from "../layouts";
 import { paymentOptions } from "../queries/payment";
 import { createPlanCheckoutSession } from "../services/api";
 import { getBaseUrl } from "../utils/get-base-url";
+import { getLayout } from "../utils/get-layout";
 
 const features: string[][] = [
   ["Basic poll creation", "Limited analytics", "Ad-Supported"],
@@ -263,7 +264,7 @@ export default function PricingPage() {
   );
 }
 
-PricingPage.Layout = BaseLayout;
+PricingPage.getLayout = getLayout(BaseLayout);
 
 type PricingCardProps = {
   planName: string;

@@ -50,6 +50,7 @@ import { useVotePoll } from "../hooks/use-vote-poll";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
+import { getLayout } from "../utils/get-layout";
 import { getServerSession } from "../utils/get-server-session";
 import { nFormatter } from "../utils/misc";
 
@@ -343,7 +344,7 @@ const PollPage = () => {
 
 export default PollPage;
 
-PollPage.Layout = BaseLayout;
+PollPage.getLayout = getLayout(BaseLayout);
 
 function ShareContainer() {
   const router = useRouter();

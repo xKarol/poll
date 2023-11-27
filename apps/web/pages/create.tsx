@@ -2,6 +2,7 @@ import { NextSeo } from "next-seo";
 
 import { CreatePollForm } from "../components/create-poll-form";
 import { BaseLayout } from "../layouts";
+import { getLayout } from "../utils/get-layout";
 
 export default function CreatePollPage() {
   return (
@@ -14,4 +15,4 @@ export default function CreatePollPage() {
   );
 }
 
-CreatePollPage.Layout = BaseLayout;
+CreatePollPage.getLayout = getLayout(BaseLayout);

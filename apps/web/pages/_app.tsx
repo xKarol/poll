@@ -6,13 +6,12 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Analytics } from "@vercel/analytics/react";
-import type { NextComponentType, NextPageContext } from "next";
+import type { NextPage } from "next";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
-import type { AppInitialProps } from "next/app";
+import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
-import type { Router } from "next/router";
 import React, { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
@@ -30,23 +29,24 @@ const ReactQueryDevtoolsProduction = React.lazy(() =>
   )
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AppProps<P = any> = AppInitialProps<P> & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Component: NextComponentType<NextPageContext, any, any> & {
-    Layout: React.ElementType;
-  };
-  router: Router;
-  __N_SSG?: boolean;
-  __N_SSP?: boolean;
+export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<
+  P,
+  IP
+> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
 };
 
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-}: AppProps) {
+}: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient(queryClientConfig));
   const [showDevtools, setShowDevtools] = useState(false);
+  const getLayout = Component.getLayout ?? ((page) => page);
 
   useEffect(() => {
     // @ts-expect-error
@@ -66,13 +66,7 @@ export default function MyApp({
                 }
               `}</style>
               <TooltipProvider>
-                {Component.Layout !== undefined ? (
-                  <Component.Layout>
-                    <Component {...pageProps} />
-                  </Component.Layout>
-                ) : (
-                  <Component {...pageProps} />
-                )}
+                {getLayout(<Component {...pageProps} />)}
                 <div>
                   <Toaster position="bottom-right" />
                 </div>

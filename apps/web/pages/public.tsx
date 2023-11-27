@@ -21,6 +21,7 @@ import { usePolls } from "../hooks/use-polls";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { getErrorMessage } from "../utils/error";
+import { getLayout } from "../utils/get-layout";
 import { nFormatter } from "../utils/misc";
 
 type SortValue = `${Poll.SortPollFields}.${"desc" | "asc"}`;
@@ -128,4 +129,4 @@ export default function PublicPage() {
   );
 }
 
-PublicPage.Layout = BaseLayout;
+PublicPage.getLayout = getLayout(BaseLayout);

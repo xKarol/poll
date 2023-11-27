@@ -9,6 +9,7 @@ import { routes } from "../config/routes";
 import { BaseLayout } from "../layouts";
 import prisma from "../lib/prisma";
 import HeroImage from "../public/hero-image.svg";
+import { getLayout } from "../utils/get-layout";
 import { nFormatter } from "../utils/misc";
 
 type Stats = {
@@ -134,7 +135,7 @@ export default function HomePage({
   );
 }
 
-HomePage.Layout = BaseLayout;
+HomePage.getLayout = getLayout(BaseLayout);
 
 type FeatureCardProps = {
   heading: string;
