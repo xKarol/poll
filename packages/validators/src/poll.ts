@@ -1,7 +1,8 @@
 import { MAX_POLL_OPTIONS } from "@poll/config";
+import type { Poll } from "@poll/types";
 import { z } from "zod";
 
-export const createPollSchema = z.object({
+export const createPollSchema: z.ZodSchema<Poll.CreatePollData> = z.object({
   question: z.string().min(3),
   answers: z
     .array(

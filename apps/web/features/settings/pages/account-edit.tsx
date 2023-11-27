@@ -16,10 +16,10 @@ import {
   Skeleton,
   toast,
 } from "@poll/ui";
+import { UserValidator } from "@poll/validators";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import {
   Form,
@@ -32,11 +32,6 @@ import {
 import SettingsHeader from "../components/settings-header";
 import { useDeleteAccount, useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
-
-export const updateUserSchema = z.object({
-  email: z.string().email(),
-  name: z.string().nonempty(),
-});
 
 type FormValues = User.UpdateUserData;
 
@@ -75,7 +70,7 @@ function EditAccountForm() {
   const { data: session, update } = useSession();
   const [disabled, setDisabled] = useState(false);
   const form = useForm<FormValues>({
-    resolver: zodResolver(updateUserSchema),
+    resolver: zodResolver(UserValidator.updateUserSchema),
     defaultValues: {
       email: session?.user.email ?? "",
       image: session?.user.image ?? "",
