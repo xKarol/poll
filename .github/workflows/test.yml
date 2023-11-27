@@ -15,6 +15,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Build packages
+        run: turbo run build --filter=./packages/*
+
       - name: Test
         env:
           PORT: 4000
