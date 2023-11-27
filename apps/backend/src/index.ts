@@ -7,6 +7,8 @@ import express from "express";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "node:path";
+import favicon from "serve-favicon";
 
 import { corsConfig } from "./config/cors";
 import { errorHandler } from "./middlewares/error-handler";
@@ -30,6 +32,7 @@ Sentry.init({
 
 app.use(Sentry.Handlers.requestHandler());
 
+app.use(favicon(path.join(path.resolve(), "public", "favicon.ico")));
 app.use(cors(corsConfig));
 app.use(helmet());
 app.use(morgan("dev"));
