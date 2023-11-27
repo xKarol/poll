@@ -1,3 +1,4 @@
+import { MAX_POLL_OPTIONS } from "@poll/config";
 import { hasUserPermission } from "@poll/lib";
 import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
@@ -72,7 +73,7 @@ export const Create = async (
           "Basic plan or higher is required to create more than 6 answers."
         );
     }
-    if (data?.answers.length > 10) {
+    if (data?.answers.length > MAX_POLL_OPTIONS) {
       throw httpError.Forbidden("Maximum Answers Limit Exceeded.");
     }
     const poll = await createPoll({
