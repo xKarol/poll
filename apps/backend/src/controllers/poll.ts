@@ -1,4 +1,3 @@
-import { MAX_POLL_OPTIONS } from "@poll/config";
 import { hasUserPermission } from "@poll/lib";
 import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
@@ -66,7 +65,7 @@ export const Create = async (
         );
     }
 
-    if (data?.answers.length > 6) {
+    if (data.answers.length > 6) {
       const hasPermission = hasUserPermission("BASIC", user?.plan ?? "FREE");
       if (!hasPermission)
         throw httpError.Forbidden(
