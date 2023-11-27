@@ -8,11 +8,8 @@
 </h1>
 
 <p align="center">
-
-<a href="https://github.com/xKarol/poll/actions/workflows/main.yml" target="blank">
-<img src="https://github.com/xKarol/poll/actions/workflows/main.yml/badge.svg" alt="code quality" />
-</a>
-
+<img src="https://github.com/xKarol/poll/actions/workflows/main.yml/badge.svg?event=push&branch=main" alt="status">
+<img src="https://github.com/xKarol/poll/actions/workflows/test.yml/badge.svg?event=push&branch=main" alt="status">
 </p>
 
 ## ❔ About
