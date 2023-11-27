@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <img alt="Quick Poll" src="./apps/web/public/logo-with-label-dark.svg" width="120" />
+    <img alt="Quick Poll" src="./apps/web/public/logo.svg" width="120" />
   </a>
 </p>
 <h1 align="center">
