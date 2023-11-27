@@ -65,7 +65,7 @@ cd poll
 3. Install dependencies
 
 ```bash
-npm install
+yarn install
 ```
 
 4. Set up `.env` file
