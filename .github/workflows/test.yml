@@ -16,7 +16,7 @@ jobs:
         run: yarn install
 
       - name: Build packages
-        run: turbo run build --filter=./packages/*
+        run: yarn turbo run build --filter=./packages/*
 
       - name: Test
         env:
