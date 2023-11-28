@@ -55,12 +55,21 @@ import { getServerSession } from "../utils/get-server-session";
 import { nFormatter } from "../utils/misc";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const queryClient = new QueryClient();
+  const pollId = context.params.pollId as string;
+
+  try {
+    await queryClient.fetchQuery(pollOptions.single(pollId));
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
+
   try {
     const { req, res } = context;
     await getServerSession({ req, res });
-    const queryClient = new QueryClient();
-    const pollId = context.params.pollId as string;
-    await queryClient.fetchQuery(pollOptions.single(pollId));
+
     await queryClient.fetchQuery(pollOptions.getPollVoters(pollId));
     // TODO for some reason cookies are not being passed in this request, SSR is disabled for now
     // await queryClient.fetchQuery(pollOptions.getPollAnswerUserChoice(pollId));
