@@ -103,7 +103,7 @@ export default function VotesAreaChart({
           domain={[0, "auto"]}
           tickFormatter={nFormatter}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip groupBy={groupBy} />} />
 
         <Area
           dataKey="total"
@@ -117,17 +117,28 @@ export default function VotesAreaChart({
   );
 }
 
+const formatTemplate = (groupBy: Analytics.GroupBy) => {
+  if (groupBy === "month") {
+    return "MMMM YYYY";
+  } else if (groupBy === "day") {
+    return "DD MMM YYYY";
+  } else {
+    return "DD MMM YYYY HH:mm:ss";
+  }
+};
+
 function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<ValueType, NameType>) {
+  groupBy,
+}: TooltipProps<ValueType, NameType> & { groupBy: Analytics.GroupBy }) {
   if (active && payload && payload.length) {
     return (
       <div className="rounded border border-neutral-200 bg-neutral-100 px-4 py-2 text-sm dark:border-neutral-800 dark:bg-neutral-900">
         <p>
           <strong className="font-medium">Date:</strong>{" "}
-          <span>{dayjs(label).format("DD MMM YYYY  HH:mm:ss")}</span>
+          <span>{dayjs(label).format(formatTemplate(groupBy))}</span>
         </p>
         <p>
           <strong className="font-medium">Total:</strong>{" "}
