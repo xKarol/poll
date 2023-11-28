@@ -26,14 +26,15 @@ This project is designed to create a simple and interactive poll website where u
   - [/backend](./apps/backend)
   - [/web](./apps/web)
 - /packages
-  - [/eslint-config-custom](./packages/eslint-config-custom)
-  - [/prettier-config](./packages/prettier-config)
   - [/config](./packages/config)
+  - [/eslint-config-custom](./packages/eslint-config-custom)
   - [/lib](./packages/lib)
-  - [/ui](./packages/ui)
+  - [/prettier-config](./packages/prettier-config)
   - [/prisma](./packages/prisma)
   - [/tsconfig](./packages/tsconfig)
   - [/types](./packages/types)
+  - [/ui](./packages/ui)
+  - [/validators](./packages/validators)
 
 ## 🚀 Demo
 
@@ -75,7 +76,7 @@ npm run dev
 
 ## 💻 Built with
 
-- [Turbo Repo](https://turbo.build/)
+- [Turbo Repo](https://turbo.build/repo)
 - [Typescript](https://www.typescriptlang.org/)
 - [NextJS](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
