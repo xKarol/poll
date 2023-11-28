@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   } catch {
     return {
-      notFound: true,
+      props: {},
     };
   }
 };
@@ -92,12 +92,12 @@ const PollPage = () => {
 
   const sortedAnswers = useMemo(
     () =>
-      data.answers.sort((a, b) => {
+      data?.answers.sort((a, b) => {
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
       }),
-    [data.answers]
+    [data?.answers]
   );
   const isVoted = !!userChoiceAnswerId;
 
@@ -123,12 +123,12 @@ const PollPage = () => {
   };
 
   const onChange = (value: string) => {
-    if (!data.answers) return;
+    if (!data?.answers) return;
     const [answer] = data.answers.filter((answer) => answer.id === value);
     setSelectedAnswerId(answer.id);
   };
 
-  const dataChart = data.answers.map((answer) => ({
+  const dataChart = data?.answers.map((answer) => ({
     name: answer.text,
     value: (answer.votes / data.totalVotes) * 100,
   }));
