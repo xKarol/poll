@@ -177,7 +177,7 @@ export const GetPollUserAnswerChoice = async (
 ) => {
   try {
     const { pollId } = req.params;
-    const { id: userId } = req.user.data!;
+    const { id: userId } = req.user.data || {};
 
     if (!userId) return res.status(200).send({});
 
