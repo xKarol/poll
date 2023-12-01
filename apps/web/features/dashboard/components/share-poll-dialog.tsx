@@ -21,6 +21,7 @@ import {
 import QRCode from "../../../components/qr-code";
 import { ShareSocial } from "../../../components/share-social";
 import { routes } from "../../../config/routes";
+import { getBaseUrl } from "../../../utils/get-base-url";
 
 type DeletePollDialogProps = {
   pollId: string;
@@ -31,10 +32,7 @@ export default function SharePollDialog({
   children,
   ...props
 }: DeletePollDialogProps) {
-  const shareUrl =
-    typeof window === "undefined"
-      ? ""
-      : `${window.location.origin}${routes.poll(pollId)}`;
+  const shareUrl = `${getBaseUrl()}${routes.poll(pollId)}`;
 
   return (
     <Dialog {...props}>

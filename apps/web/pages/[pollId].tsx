@@ -50,6 +50,7 @@ import { useVotePoll } from "../hooks/use-vote-poll";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
 import { pollOptions } from "../queries/poll";
+import { getBaseUrl } from "../utils/get-base-url";
 import { getLayout } from "../utils/get-layout";
 import { getServerSession } from "../utils/get-server-session";
 import { nFormatter } from "../utils/misc";
@@ -358,10 +359,7 @@ PollPage.getLayout = getLayout(BaseLayout);
 function ShareContainer() {
   const router = useRouter();
   const [, copy] = useCopyToClipboard();
-  const shareUrl =
-    typeof window === "undefined"
-      ? ""
-      : `${window.location.origin}${router.asPath}`;
+  const shareUrl = `${getBaseUrl()}${router.asPath}`;
 
   const copyLink = () => {
     copy(shareUrl);
