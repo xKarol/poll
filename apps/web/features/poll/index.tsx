@@ -42,7 +42,8 @@ import { useLiveAnswers } from "./hooks";
 const PollPage = () => {
   const router = useRouter();
   const pollId = router.query.pollId as string;
-  const { isLoading, isSuccess, data } = useGetPoll(pollId);
+  const { isLoading, isFetching, isSuccess, isError, data, refetch } =
+    useGetPoll(pollId);
   const { data: voters } = useGetPollVoters(pollId);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string>();
   const { mutateAsync, isLoading: isVoteLoading } = useVotePoll();
@@ -81,6 +82,15 @@ const PollPage = () => {
     value: (answer.votes / data.totalVotes) * 100,
   }));
 
+  if (isError)
+    return (
+      <div className="container flex h-96 flex-col items-center space-y-4 xl:max-w-6xl">
+        <h1 className="text-center">Something went wrong...</h1>
+        <LoadingButton isLoading={isFetching} onClick={() => refetch()}>
+          Try again
+        </LoadingButton>
+      </div>
+    );
   return (
     <div className="container m-auto flex flex-col space-y-16 xl:max-w-6xl">
       {isLoading && <SkeletonLoading />}
