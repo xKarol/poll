@@ -99,7 +99,7 @@ function EditAccountForm() {
         clockType: data.clockType === "12h" ? 12 : 24,
       });
       await update();
-      toast("Account updated successfully.", { variant: "info" });
+      toast("Account updated successfully.", { variant: "success" });
       form.reset(data);
     } catch {
       toast("Something went wrong...", { variant: "error" });

@@ -99,7 +99,7 @@ function PollItemRow({
 
   useEffect(() => {
     if (isCopied) {
-      toast("Copied to clipboard.", { variant: "info" });
+      toast("Copied to clipboard.", { variant: "success" });
     }
     const timeout = setTimeout(() => {
       if (isCopied) setIsCopied(false);

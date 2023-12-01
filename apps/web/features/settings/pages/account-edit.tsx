@@ -88,7 +88,7 @@ function EditAccountForm() {
       setDisabled(true);
       await mutateAsync(data);
       await update();
-      toast("Account updated successfully.", { variant: "info" });
+      toast("Account updated successfully.", { variant: "success" });
       form.reset(data);
     } catch {
       toast("Something went wrong...", { variant: "error" });

@@ -365,7 +365,7 @@ function ShareContainer() {
 
   const copyLink = () => {
     copy(shareUrl);
-    toast("Copied to clipboard", { variant: "info" });
+    toast("Copied to clipboard", { variant: "success" });
   };
 
   return (
