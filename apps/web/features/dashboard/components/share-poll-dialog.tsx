@@ -64,7 +64,7 @@ export default function SharePollDialog({
               <Icon.Telegram />
             </ShareSocial>
             <ShareSocial as={TwitterShareButton} url={shareUrl}>
-              <Icon.Twitter />
+              <Icon.XTwitter />
             </ShareSocial>
             <ShareSocial as={WhatsappShareButton} url={shareUrl}>
               <Icon.Whatsapp />

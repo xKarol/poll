@@ -412,7 +412,7 @@ function ShareContainer() {
           </ShareSocial>
 
           <ShareSocial as={TwitterShareButton} url={shareUrl}>
-            <Icon.Twitter />
+            <Icon.XTwitter />
           </ShareSocial>
 
           <ShareSocial as={WhatsappShareButton} url={shareUrl}>
