@@ -8,8 +8,6 @@ import {
   LoadingButton,
   Input,
   Switch,
-  Alert,
-  AlertTitle,
   Icon,
   Badge,
   Tooltip,
@@ -75,7 +73,7 @@ export const CreatePollForm = ({
       await router.push(routes.poll(response.id));
       form.reset();
     } catch (error) {
-      form.setError("root", { message: getErrorMessage(error) });
+      toast(getErrorMessage(error), { variant: "error" });
     } finally {
       setDisabled(false);
     }
@@ -86,11 +84,6 @@ export const CreatePollForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn("flex flex-col", className)}
         {...props}>
-        {form.formState.errors.root?.message ? (
-          <Alert variant="error" className="mb-8">
-            <AlertTitle>{form.formState.errors.root.message}</AlertTitle>
-          </Alert>
-        ) : null}
         <div className="mb-8 flex flex-col space-y-1">
           <h1 className="text-xl font-bold">Create Poll</h1>
           <p className="text-lg font-medium text-neutral-400">
