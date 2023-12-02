@@ -19,8 +19,6 @@ import websocketInit from "./websockets";
 
 const app = express();
 
-app.set("trust proxy", true);
-
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   integrations: [
