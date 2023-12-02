@@ -9,7 +9,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts",
+    "build": "tsup index.ts --target node18 --format cjs,esm --dts",
     "lint": "eslint \"**/*.ts*\""
   },
   "dependencies": {

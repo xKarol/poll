@@ -8,7 +8,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "tsup ./src/index.ts --format cjs,esm --dts"
+    "build": "tsup ./src/index.ts --target node18 --format cjs,esm --dts"
   },
   "dependencies": {
     "@poll/config": "*",

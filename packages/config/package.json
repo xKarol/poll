@@ -8,7 +8,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts"
+    "build": "tsup index.ts --target node18 --format cjs,esm --dts"
   },
   "dependencies": {
     "tailwindcss": "^3.3.3",
