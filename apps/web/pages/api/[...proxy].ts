@@ -8,6 +8,7 @@ const proxy = httpProxy.createProxyServer();
 export const config = {
   api: {
     bodyParser: false,
+    externalResolver: true,
   },
 };
 
@@ -15,7 +16,10 @@ export const config = {
 export default (req: IncomingMessage, res: ServerResponse) => {
   return new Promise<void>((resolve, reject) => {
     req.url = req.url.replace("/api", "");
-    proxy.once("error", reject);
+    proxy.once("error", (error) => {
+      console.log("Proxy Error:", error);
+      reject(error);
+    });
     proxy.web(req, res, { target: API_URL, changeOrigin: true });
   });
 };
