@@ -3,8 +3,6 @@ import httpProxy from "http-proxy";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const proxy = httpProxy.createProxyServer();
-
 export const config = {
   api: {
     bodyParser: false,
@@ -13,13 +11,12 @@ export const config = {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (req: IncomingMessage, res: ServerResponse) => {
-  return new Promise<void>((resolve, reject) => {
+export default (req: IncomingMessage, res: ServerResponse) =>
+  new Promise((resolve, reject) => {
     req.url = req.url.replace("/api", "");
-    proxy.once("error", (error) => {
-      console.log("Proxy Error:", error);
-      reject(error);
+    const proxy: httpProxy = httpProxy.createProxy();
+    proxy.once("proxyRes", resolve).once("error", reject).web(req, res, {
+      changeOrigin: true,
+      target: API_URL,
     });
-    proxy.web(req, res, { target: API_URL, changeOrigin: true });
   });
-};
