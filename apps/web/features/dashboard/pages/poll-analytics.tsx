@@ -1,4 +1,3 @@
-import { DEFAULT_ANALYTICS_INTERVAL } from "@poll/config";
 import { Icon, toast } from "@poll/ui";
 import { NextSeo } from "next-seo";
 import { useQueryState } from "next-usequerystate";
@@ -21,7 +20,7 @@ import { useAnalyticsParams } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 const PollAnalyticsPage = () => {
-  const [interval, setInterval] = useQueryState("interval");
+  const [, setInterval] = useQueryState("interval");
   const { hasPermission } = useHasPermission();
   const hasBasicPlan = hasPermission("BASIC");
   const analyticsParams = useAnalyticsParams();
@@ -50,7 +49,7 @@ const PollAnalyticsPage = () => {
               <AnalyticsIntervalSelect
                 hasBasicPlan={hasBasicPlan}
                 onValueChange={setInterval}
-                value={interval || DEFAULT_ANALYTICS_INTERVAL}
+                value={analyticsParams.interval}
               />
             }
           />
