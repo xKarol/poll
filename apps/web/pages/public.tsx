@@ -1,6 +1,7 @@
 import type { OrderBy, Poll } from "@poll/types";
 import {
   Avatar,
+  LoadingButton,
   Select,
   SelectContent,
   SelectGroup,
@@ -41,9 +42,11 @@ export default function PublicPage() {
     isSuccess,
     isError,
     isFetchingNextPage,
+    isFetching,
     error,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = usePolls({ sortBy, orderBy });
   const data = pages?.pages.flatMap(({ data }) => data);
 
@@ -51,32 +54,38 @@ export default function PublicPage() {
     <>
       <NextSeo title="Public Polls" />
       <div className="container mt-8 space-y-8 md:max-w-2xl lg:mt-16 xl:max-w-4xl">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-medium">Public Polls</h1>
-          <Select onValueChange={(value: SortValue) => setSortValue(value)}>
-            <SelectTrigger className="min-w-[120px] max-w-max">
-              <SelectValue placeholder="Sort" />
-            </SelectTrigger>
-            <SelectContent
-              align="end"
-              onCloseAutoFocus={(e) => e.preventDefault()}>
-              <SelectGroup>
-                <SelectLabel>Sort by</SelectLabel>
-                <SelectSeparator />
-                <SelectItem value="createdAt.desc">
-                  Date - Descending
-                </SelectItem>
-                <SelectItem value="createdAt.asc">Date - Ascending</SelectItem>
-                <SelectItem value="totalVotes.desc">
-                  Votes - Descending
-                </SelectItem>
-                <SelectItem value="totalVotes.asc">
-                  Votes - Ascending
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        {!isError ? (
+          <>
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-medium">Public Polls</h1>
+              <Select onValueChange={(value: SortValue) => setSortValue(value)}>
+                <SelectTrigger className="min-w-[120px] max-w-max">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent
+                  align="end"
+                  onCloseAutoFocus={(e) => e.preventDefault()}>
+                  <SelectGroup>
+                    <SelectLabel>Sort by</SelectLabel>
+                    <SelectSeparator />
+                    <SelectItem value="createdAt.desc">
+                      Date - Descending
+                    </SelectItem>
+                    <SelectItem value="createdAt.asc">
+                      Date - Ascending
+                    </SelectItem>
+                    <SelectItem value="totalVotes.desc">
+                      Votes - Descending
+                    </SelectItem>
+                    <SelectItem value="totalVotes.asc">
+                      Votes - Ascending
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        ) : null}
         {isLoading && (
           <div className="flex flex-col space-y-8">
             {Array.from({ length: 5 }).map((_, index) => (
@@ -90,8 +99,14 @@ export default function PublicPage() {
             ))}
           </div>
         )}
-        {/* TODO ADD error UI */}
-        {isError && <div>{getErrorMessage(error)}</div>}
+        {isError && (
+          <div className="flex flex-col items-center space-y-4 py-40">
+            <h1>{getErrorMessage(error)}</h1>
+            <LoadingButton isLoading={isFetching} onClick={() => refetch()}>
+              Try Again
+            </LoadingButton>
+          </div>
+        )}
         {isSuccess && (
           <InfiniteScrollContainer
             fetchNextPage={fetchNextPage}
