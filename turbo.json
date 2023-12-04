@@ -39,6 +39,7 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {},
+    "start": {},
     "type-check": {},
     "post-install": {},
     "dev": {
