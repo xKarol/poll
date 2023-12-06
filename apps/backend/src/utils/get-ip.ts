@@ -1,10 +1,7 @@
 import type { Request } from "express";
+import requestIp from "request-ip";
 
 export const getIP = (req: Request) => {
-  const ip =
-    req.headers["x-forwarded-for"] ||
-    req.headers["true-client-ip"] ||
-    req.headers["x-real-ip"] ||
-    req.ip;
+  const ip = requestIp.getClientIp(req);
   return ip as string;
 };
