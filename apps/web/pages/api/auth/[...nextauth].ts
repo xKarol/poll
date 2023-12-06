@@ -45,7 +45,7 @@ export const getAuthOptions = (req: NextApiRequest): NextAuthOptions => ({
   ],
 
   callbacks: {
-    async jwt({ token }) {
+    async jwt({ token, trigger }) {
       const user = await prisma.user.findFirst({
         where: { email: token.email },
         select: {
@@ -57,6 +57,13 @@ export const getAuthOptions = (req: NextApiRequest): NextAuthOptions => ({
           clockType: true,
         },
       });
+
+      if (trigger === "update") {
+        token.name = user.name;
+        token.email = user.email;
+        token.clockType = user.clockType;
+      }
+
       if (!user) return token;
       if (!user.timeZone) {
         const timeZone = req.headers["x-vercel-ip-timezone"] as string;
