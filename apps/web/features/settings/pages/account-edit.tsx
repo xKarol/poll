@@ -36,12 +36,12 @@ import { BaseLayout } from "../layouts";
 type FormValues = User.UpdateUserData;
 
 export default function AccountEditPage() {
-  const { status } = useSession();
+  const { data } = useSession();
 
   return (
     <BaseLayout>
       <SettingsHeader heading="Edit" description="Edit your account" />
-      {status === "loading" ? (
+      {!data?.user ? (
         <div className="flex flex-col space-y-3">
           <div className="space-y-6">
             <div className="space-y-2">

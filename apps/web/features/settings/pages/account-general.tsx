@@ -28,7 +28,7 @@ import { useUpdateAccount } from "../hooks";
 import { BaseLayout } from "../layouts";
 
 export default function AccountGeneralPage() {
-  const { status } = useSession();
+  const { data } = useSession();
 
   return (
     <BaseLayout>
@@ -36,7 +36,7 @@ export default function AccountGeneralPage() {
         heading="General"
         description="Manage your account preferences"
       />
-      {status === "loading" ? (
+      {!data?.user ? (
         <div className="flex flex-col space-y-3">
           <div className="space-y-6">
             <div className="space-y-2">
