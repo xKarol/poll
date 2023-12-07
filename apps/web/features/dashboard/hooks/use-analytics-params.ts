@@ -5,6 +5,7 @@ import {
 import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
 import { useQueryState } from "next-usequerystate";
+import { useMemo } from "react";
 
 const intervals: Record<
   Analytics.Interval,
@@ -18,20 +19,29 @@ const intervals: Record<
 } as const;
 
 export default function useAnalyticsQueryParams() {
-  const [interval] = useQueryState("interval");
-  const isValidInterval = validAnalyticsIntervals.includes(
-    interval as unknown as Analytics.Interval
-  );
-  const [, groupBy] = isValidInterval ? intervals[interval] : [24, "hour"];
-  const { dateFrom, dateTo } = calculateDate(interval);
-  return {
-    dateFrom,
-    dateTo,
-    groupBy: groupBy as Analytics.GroupBy,
-    interval: (isValidInterval
-      ? interval
-      : DEFAULT_ANALYTICS_INTERVAL) as Analytics.Interval,
-  };
+  const [interval] = useQueryState("interval", {
+    defaultValue: DEFAULT_ANALYTICS_INTERVAL,
+  });
+
+  const params = useMemo(() => {
+    const validInterval = (
+      validAnalyticsIntervals.includes(interval as Analytics.Interval)
+        ? interval
+        : DEFAULT_ANALYTICS_INTERVAL
+    ) as Analytics.Interval;
+
+    const [, groupBy] = intervals[interval];
+    const { dateFrom, dateTo } = calculateDate(interval);
+
+    return {
+      dateFrom,
+      dateTo,
+      groupBy: groupBy as Analytics.GroupBy,
+      interval: validInterval,
+    };
+  }, [interval]);
+
+  return params;
 }
 
 function calculateDate(value: string) {
