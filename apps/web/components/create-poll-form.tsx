@@ -99,7 +99,11 @@ export const CreatePollForm = ({
               <FormItem>
                 <FormLabel>Question</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your question..." {...field} />
+                  <Input
+                    variant="fill"
+                    placeholder="Your question..."
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,6 +123,7 @@ export const CreatePollForm = ({
                         <FormItem>
                           <FormControl>
                             <Input
+                              variant="fill"
                               placeholder={`Option ${index + 1}`}
                               {...field}
                               RightIcon={
