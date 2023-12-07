@@ -1,6 +1,6 @@
 import type { Analytics } from "@poll/types";
 
-export const DEFAULT_ANALYTICS_INTERVAL: Analytics.Interval = "24h" as const;
+export const DEFAULT_ANALYTICS_INTERVAL: Analytics.Interval = "7d" as const;
 // @ts-ignore
 export const validAnalyticsIntervals: Analytics.Interval[] = [
   "1h",
