@@ -22,6 +22,10 @@ export const updateUserData: User.Services["updateUser"] = async (
 
 export const deleteUser: User.Services["deleteUser"] = async (userId) => {
   await prisma.user.delete({ where: { id: userId } });
+  await prisma.vote.updateMany({
+    where: { userId },
+    data: { userId: "__deleted" },
+  });
 };
 
 export const getUserPolls: User.Services["getUserPolls"] = async ({

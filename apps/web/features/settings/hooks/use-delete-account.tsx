@@ -10,7 +10,7 @@ export const useDeleteAccount = () => {
     mutationFn: deleteUser,
     onSuccess: async () => {
       signOut({ callbackUrl: routes.HOME });
-      toast("The account has been deleted.", { variant: "success" });
+      toast("Your account has been deleted.", { variant: "success" });
     },
   });
 };

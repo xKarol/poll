@@ -70,7 +70,7 @@ model Poll {
   id               String   @id @unique @default(cuid())
   question         String
   answers          Answer[]
-  user             User?    @relation(fields: [userId], references: [id])
+  user             User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String?
   vote             Vote[]
   totalVotes       Int      @default(0)

@@ -43,7 +43,7 @@ export const DeleteUser: Handler = async (req, res, next) => {
     const { id: userId } = req.user.data!;
     await deleteUser(userId);
 
-    return res.status(200);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }
