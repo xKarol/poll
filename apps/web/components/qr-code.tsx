@@ -21,7 +21,7 @@ export default function QRCode({ text, className, ...props }: QRCodeProps) {
   return (
     <div
       className={cn(
-        "flex h-40 w-40 items-center justify-center overflow-hidden rounded border-2 border-neutral-200 dark:border-neutral-800",
+        "flex h-40 w-40 items-center justify-center overflow-hidden",
         className
       )}
       {...props}>
