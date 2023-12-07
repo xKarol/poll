@@ -1,4 +1,5 @@
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -10,8 +11,9 @@ import {
   SelectItem,
   SelectTrigger,
   Separator,
+  toast,
 } from "@poll/ui";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -65,7 +67,9 @@ export default function SharePollDialog({
             text={shareUrl}
           />
           <div className="mt-4 flex space-x-4">
-            <Select onValueChange={downloadQRCode}>
+            <CopyQRCodeButton value={qrCodeSrc} disabled={!qrCodeSrc} />
+
+            <Select onValueChange={downloadQRCode} disabled={!qrCodeSrc}>
               <SelectTrigger>
                 <Icon.Download className="h-4 w-4" />
                 <span>Download</span>
@@ -105,4 +109,51 @@ export default function SharePollDialog({
       </DialogContent>
     </Dialog>
   );
+}
+
+type CopyQRCodeButtonProps = {
+  value: string;
+} & React.ComponentProps<typeof Button>;
+
+function CopyQRCodeButton({ value, ...props }: CopyQRCodeButtonProps) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const copyQRCode = async () => {
+    const blob = b64toBlob(value.split(",")[1], "image/png");
+
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "image/png": blob,
+      }),
+    ]);
+    setIsCopied(true);
+    toast("Copied QR Code to clipboard.", { variant: "success" });
+    setTimeout(() => setIsCopied(false), 3000);
+  };
+  return (
+    <Button {...props} variant="outline" onClick={copyQRCode}>
+      {isCopied ? <Icon.Check /> : <Icon.Clipboard />}
+      <span>Copy</span>
+    </Button>
+  );
+}
+
+function b64toBlob(b64Data: string, contentType = "", sliceSize = 512) {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, { type: contentType });
+  return blob;
 }
