@@ -120,6 +120,7 @@ function EditAccountForm() {
                 <FormItem>
                   <FormLabel>Language</FormLabel>
                   <Select
+                    disabled={disabled}
                     onValueChange={field.onChange}
                     defaultValue={field.value}>
                     <FormControl>
@@ -146,7 +147,8 @@ function EditAccountForm() {
                   <FormLabel>Clock type</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}>
+                    defaultValue={field.value}
+                    disabled={disabled}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
@@ -172,7 +174,8 @@ function EditAccountForm() {
                   <FormLabel>Timezone</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}>
+                    defaultValue={field.value}
+                    disabled={disabled}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue
