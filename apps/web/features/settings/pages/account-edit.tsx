@@ -78,7 +78,7 @@ function EditAccountForm() {
     },
     disabled,
   });
-  const { mutateAsync, isLoading } = useUpdateAccount();
+  const { mutateAsync } = useUpdateAccount();
   const hasChanges =
     JSON.stringify(form.formState.defaultValues) !==
     JSON.stringify(form.getValues());
@@ -132,7 +132,7 @@ function EditAccountForm() {
           <LoadingButton
             type="submit"
             disabled={!hasChanges}
-            isLoading={isLoading}>
+            isLoading={disabled}>
             Update
           </LoadingButton>
         </div>
