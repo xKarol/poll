@@ -3,6 +3,8 @@ import type { DefaultSeoProps } from "next-seo";
 const nextSeoConfig: DefaultSeoProps = {
   defaultTitle: "Quick Poll",
   titleTemplate: "%s | Quick Poll",
+  description:
+    "Create and share polls for free. Capture opinions, insights, and feedback. Start polling now!",
   themeColor: "#000",
   openGraph: {
     type: "website",
