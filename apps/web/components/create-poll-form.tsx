@@ -63,14 +63,14 @@ export const CreatePollForm = ({
     control: form.control,
     name: "answers",
   });
-  const { mutateAsync, isLoading } = useCreatePoll();
+  const { mutateAsync } = useCreatePoll();
 
   const onSubmit = form.handleSubmit(async (data: FormValues) => {
     try {
       setDisabled(true);
       const response = await mutateAsync(data);
-      toast("Poll created successfully!", { variant: "success" });
       await router.push(routes.poll(response.id));
+      toast("Poll created successfully!", { variant: "success" });
       form.reset();
     } catch (error) {
       toast(getErrorMessage(error), { variant: "error" });
@@ -182,7 +182,7 @@ export const CreatePollForm = ({
           <LoadingButton
             className="min-w-[100px]"
             type="submit"
-            isLoading={isLoading}>
+            isLoading={disabled}>
             Create
           </LoadingButton>
         </div>
