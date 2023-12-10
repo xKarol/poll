@@ -31,7 +31,8 @@
         "TINYBIRD_PIPE_USER_POLL_VOTES_ID",
         "TINYBIRD_PIPE_USER_TOP_DEVICES_ID",
         "TINYBIRD_PIPE_USER_TOP_COUNTRIES_ID",
-        "SENTRY_DSN"
+        "SENTRY_DSN",
+        "REDIS_URL"
       ]
     },
     "build": {
