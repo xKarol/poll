@@ -7,7 +7,7 @@ declare global {
   namespace Express {
     interface Request {
       cache: {
-        set: (data: Record<string, unknown>) => Promise<void>;
+        set: (data: Record<string, unknown> | unknown[]) => Promise<void>;
         delete: (cacheKey: string) => Promise<void>;
       };
     }
