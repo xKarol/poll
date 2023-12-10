@@ -41,10 +41,16 @@ export function withCache(
 
       req.cache = {
         set: async (data) => {
-          cacheQueue.add(cacheKey, {
-            ex: secondsToExpire,
-            data: JSON.stringify(data),
-          });
+          cacheQueue.add(
+            cacheKey,
+            {
+              ex: secondsToExpire,
+              data: JSON.stringify(data),
+            },
+            {
+              removeOnComplete: true,
+            }
+          );
         },
         delete: async () => {
           await redis.del(cacheKey);
@@ -63,7 +69,15 @@ type QueueData = {
 };
 
 const cacheQueue = createQueue<QueueData>("cache-queue");
-createWorker<QueueData>("cache-queue", async (job) => {
-  const { ex, data } = job.data;
-  return await redis.setex(job.name, ex, data);
-});
+createWorker<QueueData>(
+  "cache-queue",
+  async (job) => {
+    const { ex, data } = job.data;
+    return await redis.setex(job.name, ex, data);
+  },
+  {
+    removeOnFail: {
+      age: 1 * 3600, // keep up to 1 hour
+    },
+  }
+);
