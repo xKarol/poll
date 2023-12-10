@@ -165,6 +165,7 @@ export const GetPollVoters = async (
   try {
     const { pollId } = req.params;
     const data = await getPollVoters(pollId);
+    await req.cache.set(data);
 
     return res.send(data);
   } catch (error) {
@@ -182,8 +183,10 @@ export const GetPollUserAnswerChoice = async (
     const { id: userId } = req.user.data || {};
 
     if (!userId) return res.status(200).send({});
-
     const data = await getPollUserAnswerChoice(userId, pollId);
+    if (data) {
+      await req.cache.set(data);
+    }
 
     return res.send(data);
   } catch (error) {

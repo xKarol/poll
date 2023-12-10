@@ -47,10 +47,15 @@ router.post(
   PollController.Vote
 );
 
-router.get(apiUrls.poll.getVoters(":pollId"), PollController.GetPollVoters);
+router.get(
+  apiUrls.poll.getVoters(":pollId"),
+  withCache(60 * 60), // 1 hour
+  PollController.GetPollVoters
+);
 
 router.get(
   apiUrls.poll.getUserAnswerChoice(":pollId"),
+  withCache(60 * 60 * 12, { requireUser: true }), //12 hours
   PollController.GetPollUserAnswerChoice
 );
 
