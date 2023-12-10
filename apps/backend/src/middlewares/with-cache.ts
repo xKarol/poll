@@ -14,10 +14,24 @@ declare global {
   }
 }
 
-export const withCache = (secondsToExpire: number) => {
+type WithCacheOptions = {
+  requireUser?: boolean;
+};
+
+export const withCache = (
+  secondsToExpire: number,
+  options: WithCacheOptions = {}
+) => {
+  const { requireUser = false } = options;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const cacheKey = req.originalUrl;
+      const userId = req.user.data?.id;
+      const cacheKey = `${req.originalUrl}${requireUser ? `:${userId}` : ""}`;
+
+      if (requireUser && !userId) {
+        next();
+      }
+
       const cacheDataRaw = await redis.get(cacheKey);
       if (cacheDataRaw) {
         const cacheData = JSON.parse(cacheDataRaw);
