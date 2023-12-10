@@ -178,14 +178,11 @@ function EditAccountForm() {
                     disabled={disabled}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue
-                          defaultValue="Europe/Warsaw"
-                          placeholder="Select your timezone"
-                        />
+                        <SelectValue placeholder="Select your timezone" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {/* TODO optimize this and add scroll */}
+                      {/* TODO optimize this */}
                       {/* @ts-ignore */}
                       {Intl.supportedValuesOf("timeZone").map((timezone) => (
                         <SelectItem key={timezone} value={timezone}>
