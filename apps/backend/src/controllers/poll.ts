@@ -26,6 +26,7 @@ export const Get = async (req: Request, res: Response, next: NextFunction) => {
       req.sorting as SortingParams<Poll.SortPollFields>;
 
     const data = await getPolls({ page, limit, skip, sortBy, orderBy });
+    await req.cache.set(data);
 
     return res.send(data);
   } catch (error) {
@@ -41,6 +42,7 @@ export const GetOne = async (
   try {
     const { pollId } = req.params;
     const data = await getPoll(pollId);
+    await req.cache.set(data);
 
     return res.send(data);
   } catch (error) {
