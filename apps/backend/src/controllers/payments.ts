@@ -62,6 +62,8 @@ export const GetPricingPlans = async (
       },
     ];
 
+    await req.cache.set(data);
+
     return res.status(200).send(data);
   } catch (error) {
     next(error);
