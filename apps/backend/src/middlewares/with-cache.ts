@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
+import { createQueue, createWorker } from "../lib/queue";
 import redis from "../lib/redis";
 
 declare global {
@@ -18,10 +19,10 @@ type WithCacheOptions = {
   requireUser?: boolean;
 };
 
-export const withCache = (
+export function withCache(
   secondsToExpire: number,
   options: WithCacheOptions = {}
-) => {
+) {
   const { requireUser = false } = options;
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -40,7 +41,10 @@ export const withCache = (
 
       req.cache = {
         set: async (data) => {
-          await redis.setex(cacheKey, secondsToExpire, JSON.stringify(data));
+          cacheQueue.add(cacheKey, {
+            ex: secondsToExpire,
+            data: JSON.stringify(data),
+          });
         },
         delete: async () => {
           await redis.del(cacheKey);
@@ -51,4 +55,15 @@ export const withCache = (
       next(error);
     }
   };
+}
+
+type QueueData = {
+  ex: number;
+  data: string;
 };
+
+const cacheQueue = createQueue<QueueData>("cache-queue");
+createWorker<QueueData>("cache-queue", async (job) => {
+  const { ex, data } = job.data;
+  return await redis.setex(job.name, ex, data);
+});
