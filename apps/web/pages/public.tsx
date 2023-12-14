@@ -112,7 +112,7 @@ export default function PublicPage() {
             fetchNextPage={fetchNextPage}
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}>
-            <ul className="flex flex-col space-y-8">
+            <ul className="flex min-h-[40vh] flex-col space-y-8">
               {data?.map((poll) => (
                 <Link
                   key={poll.id}
