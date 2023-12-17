@@ -36,7 +36,7 @@ export const Get = async (req: Request, res: Response, next: NextFunction) => {
 
 export const GetOne = async (
   req: Request<Poll.GetPollData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["getPoll"]>,
   next: NextFunction
 ) => {
   try {
@@ -52,7 +52,7 @@ export const GetOne = async (
 
 export const Create = async (
   req: Request<unknown, unknown, Poll.CreatePollData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["createPoll"]>,
   next: NextFunction
 ) => {
   try {
@@ -88,13 +88,13 @@ export const Create = async (
 
 export const Delete = async (
   req: Request<Poll.DeletePollData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["deletePoll"]>,
   next: NextFunction
 ) => {
   try {
     const { pollId } = req.params;
     await deletePoll(pollId);
-    return res.status(200).send(null);
+    return res.sendStatus(200);
   } catch (error) {
     next(error);
   }
@@ -102,7 +102,7 @@ export const Delete = async (
 
 export const Vote = async (
   req: Request<Poll.VotePollData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["votePoll"]>,
   next: NextFunction
 ) => {
   try {
@@ -159,7 +159,7 @@ export const Vote = async (
 
 export const GetPollVoters = async (
   req: Request<Poll.GetVoteUsersData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["getPollVoters"]>,
   next: NextFunction
 ) => {
   try {
@@ -175,7 +175,7 @@ export const GetPollVoters = async (
 
 export const GetPollUserAnswerChoice = async (
   req: Request<Poll.GetPollData>,
-  res: Response,
+  res: Response<Poll.ApiResponse["getPollUserAnswerChoice"]>,
   next: NextFunction
 ) => {
   try {
@@ -188,6 +188,7 @@ export const GetPollUserAnswerChoice = async (
       await req.cache.set(data);
     }
 
+    if (!data) return res.send({});
     return res.send(data);
   } catch (error) {
     next(error);

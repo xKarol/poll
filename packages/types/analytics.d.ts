@@ -49,13 +49,15 @@ type TinyBirdResponse<TData extends Record<string, unknown>> = {
 
 // Frontend
 export interface Api {
-  getUserPollVotes: (params?: ClientAnalyticsParams) => Promise<VotesData[]>;
+  getUserPollVotes: (
+    params?: ClientAnalyticsParams
+  ) => Promise<ApiResponse["getUserPollVotes"]>;
   getUserPollTopDevices: (
     params?: ClientAnalyticsParams
-  ) => Promise<TopDevicesData>;
+  ) => Promise<ApiResponse["getUserPollTopDevices"]>;
   getUserPollTopCountries: (
     params?: ClientAnalyticsParams
-  ) => Promise<TopCountriesData[]>;
+  ) => Promise<ApiResponse["getUserPollTopCountries"]>;
 }
 
 // Backend
@@ -64,11 +66,17 @@ export interface Services {
     params: AnalyticsParams<{
       groupBy: GroupBy;
     }>
-  ) => Promise<TinyBirdResponse<VotesData[]>>;
+  ) => Promise<TinyBirdResponse<ApiResponse["getUserPollVotes"]>>;
   getUserPollTopDevices: (
     params: AnalyticsParams
   ) => Promise<TinyBirdResponse<{ device: Devices; total: number }[]>>;
   getUserPollTopCountries: (
     params: AnalyticsParams
-  ) => Promise<TinyBirdResponse<TopCountriesData[]>>;
+  ) => Promise<TinyBirdResponse<ApiResponse["getUserPollTopCountries"]>>;
 }
+
+export type ApiResponse = {
+  getUserPollVotes: VotesData[];
+  getUserPollTopDevices: TopDevicesData;
+  getUserPollTopCountries: TopCountriesData[];
+};

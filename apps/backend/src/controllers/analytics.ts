@@ -1,7 +1,8 @@
 import { hasUserPermission } from "@poll/lib";
 import type { Plan } from "@poll/prisma";
+import type { Analytics } from "@poll/types";
 import dayjs from "dayjs";
-import type { Handler, NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import httpError from "http-errors";
 
 import type { AnalyticsPollQueryParams } from "../schemas/analytics";
@@ -13,7 +14,7 @@ import {
 
 export const GetUserPollVotesData = async (
   req: Request,
-  res: Response,
+  res: Response<Analytics.ApiResponse["getUserPollVotes"]>,
   next: NextFunction
 ) => {
   try {
@@ -34,7 +35,11 @@ export const GetUserPollVotesData = async (
   }
 };
 
-export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
+export const GetUserPollTopDevicesData = async (
+  req: Request,
+  res: Response<Analytics.ApiResponse["getUserPollTopDevices"]>,
+  next: NextFunction
+) => {
   try {
     const params = req.analytics;
     const { pollId = undefined } = req.query as AnalyticsPollQueryParams;
@@ -56,7 +61,7 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
 
     const sortedData = Object.entries(data)
       .sort(([, a], [, b]) => b - a)
-      .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+      .reduce((r, [k, v]) => ({ ...r, [k]: v }), {}) as typeof data;
 
     return res.send(sortedData);
   } catch (error) {
@@ -64,7 +69,11 @@ export const GetUserPollTopDevicesData: Handler = async (req, res, next) => {
   }
 };
 
-export const GetUserPollTopCountriesData: Handler = async (req, res, next) => {
+export const GetUserPollTopCountriesData = async (
+  req: Request,
+  res: Response<Analytics.ApiResponse["getUserPollTopCountries"]>,
+  next: NextFunction
+) => {
   try {
     const params = req.analytics;
     const { pollId = undefined } = req.query as AnalyticsPollQueryParams;

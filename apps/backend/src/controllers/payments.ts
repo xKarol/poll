@@ -1,5 +1,6 @@
 import type { Payment } from "@poll/types";
 import type { NextFunction, Request, Response } from "express";
+import httpError from "http-errors";
 import type { Stripe } from "stripe";
 
 import { productIds } from "../constants";
@@ -7,7 +8,7 @@ import { stripe } from "../lib/stripe";
 
 export const GetPricingPlans = async (
   req: Request,
-  res: Response,
+  res: Response<Payment.ApiResponse["getPricingPlans"]>,
   next: NextFunction
 ) => {
   try {
@@ -72,7 +73,7 @@ export const GetPricingPlans = async (
 
 export const CreatePlanCheckoutSession = async (
   req: Request<unknown, unknown, { priceId: string; productId: string }>,
-  res: Response,
+  res: Response<Payment.ApiResponse["createPlanCheckoutSession"]>,
   next: NextFunction
 ) => {
   try {
@@ -94,6 +95,8 @@ export const CreatePlanCheckoutSession = async (
       success_url: redirectUrl,
       cancel_url: `${redirectUrl}/pricing`,
     });
+
+    if (!payment.url) throw httpError(400, "Something went wrong...");
 
     return res.send(payment.url);
   } catch (error) {

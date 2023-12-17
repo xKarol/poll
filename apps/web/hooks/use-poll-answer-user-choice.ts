@@ -5,20 +5,21 @@ import { pollOptions } from "../queries/poll";
 import { useGetPoll } from "./use-get-poll";
 import { useGetVotedAnswer } from "./use-get-voted-answer";
 
-export const usePollAnswerUserChoice = (pollId: string | undefined) => {
+export const usePollAnswerUserChoice = (
+  pollId: string | undefined
+): string | undefined => {
   const { status } = useSession();
   const isLoggedIn = status === "authenticated";
-  const { data } = useQuery({
-    ...pollOptions.getPollAnswerUserChoice(pollId),
-    enabled: !!pollId && isLoggedIn,
-  });
+  const { data: userChoice } = useQuery(
+    pollOptions.getPollAnswerUserChoice(pollId, {
+      enabled: !!pollId && isLoggedIn,
+    })
+  );
   const { data: pollData } = useGetPoll(pollId);
   const answerId = useGetVotedAnswer(pollId, pollData?.answers ?? []);
 
   if (status === "loading") return undefined;
   if (status === "unauthenticated") return answerId;
-  return (
-    (Object.keys(data || {}).length === 0 ? undefined : data.answerId) ||
-    undefined
-  );
+  if (userChoice?.answerId) return userChoice.answerId as string;
+  return undefined;
 };

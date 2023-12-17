@@ -23,30 +23,40 @@ export type SortPollsFields = Extract<
 
 // Frontend
 export interface Api {
-  updateUser: (data: UpdateUserData) => Promise<User>;
-  deleteUser: () => Promise<undefined>;
+  updateUser: (data: UpdateUserData) => Promise<ApiResponse["updateUser"]>;
+  deleteUser: () => Promise<ApiResponse["deleteUser"]>;
   getUserPolls: (
     params: PaginationParams & SortingParams<SortPollsFields>
-  ) => Promise<PaginationResponse<Poll[]>>;
+  ) => Promise<ApiResponse["getUserPolls"]>;
   getUserVotes: (
     params: PaginationParams & SortingParams<SortVotesFields>
-  ) => Promise<PaginationResponse<GetUserVotesResponse>>;
+  ) => Promise<ApiResponse["getUserVotes"]>;
 }
 
 // Backend
 export interface Services {
-  updateUser: (userId: string, data: UpdateUserData) => Promise<User>;
-  deleteUser: (userId: string) => Promise<undefined>;
+  updateUser: (
+    userId: string,
+    data: UpdateUserData
+  ) => Promise<ApiResponse["updateUser"]>;
+  deleteUser: (userId: string) => Promise<ApiResponse["deleteUser"]>;
   getUserPolls: (
     params: PaginationParams & {
       userId: string;
       skip: number;
     } & SortingParams<SortPollsFields>
-  ) => Promise<PaginationResponse<Poll[]>>;
+  ) => Promise<ApiResponse["getUserPolls"]>;
   getUserVotes: (
     params: PaginationParams & {
       userId: string;
       skip: number;
     } & SortingParams<SortVotesFields>
-  ) => Promise<PaginationResponse<GetUserVotesResponse>>;
+  ) => Promise<ApiResponse["getUserVotes"]>;
 }
+
+export type ApiResponse = {
+  updateUser: User;
+  deleteUser: undefined;
+  getUserPolls: PaginationResponse<Poll[]>;
+  getUserVotes: PaginationResponse<GetUserVotesResponse>;
+};

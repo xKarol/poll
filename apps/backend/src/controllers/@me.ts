@@ -1,5 +1,5 @@
 import type { SortingParams, User } from "@poll/types";
-import type { Handler } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 import {
   deleteUser,
@@ -8,7 +8,42 @@ import {
   getUserPolls,
 } from "../services/user";
 
-export const GetPolls: Handler = async (req, res, next) => {
+export const UpdateData = async (
+  req: Request,
+  res: Response<User.ApiResponse["updateUser"]>,
+  next: NextFunction
+) => {
+  try {
+    const { id: userId } = req.user.data!;
+    const data = req.body;
+    const user = await updateUserData(userId, data);
+
+    return res.send(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const DeleteUser = async (
+  req: Request,
+  res: Response<User.ApiResponse["deleteUser"]>,
+  next: NextFunction
+) => {
+  try {
+    const { id: userId } = req.user.data!;
+    await deleteUser(userId);
+
+    return res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetPolls = async (
+  req: Request,
+  res: Response<User.ApiResponse["getUserPolls"]>,
+  next: NextFunction
+) => {
   try {
     const { id: userId } = req.user.data!;
     const { sortBy, orderBy } =
@@ -26,30 +61,11 @@ export const GetPolls: Handler = async (req, res, next) => {
   }
 };
 
-export const UpdateData: Handler = async (req, res, next) => {
-  try {
-    const { id: userId } = req.user.data!;
-    const data = req.body;
-    const user = await updateUserData(userId, data);
-
-    return res.send(user);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const DeleteUser: Handler = async (req, res, next) => {
-  try {
-    const { id: userId } = req.user.data!;
-    await deleteUser(userId);
-
-    return res.sendStatus(200);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const GetUserVotes: Handler = async (req, res, next) => {
+export const GetUserVotes = async (
+  req: Request,
+  res: Response<User.ApiResponse["getUserVotes"]>,
+  next: NextFunction
+) => {
   try {
     const { id: userId } = req.user.data!;
     const { sortBy, orderBy } =
