@@ -1,6 +1,10 @@
 import type { Poll, Answer, User, Vote } from "@poll/prisma";
 
-import type { PaginationResult, SortingParams } from "./global.d.ts";
+import type {
+  PaginationParams,
+  PaginationResponse,
+  SortingParams,
+} from "./global.d.ts";
 
 export type CreatePollData = {
   userId?: string;
@@ -39,12 +43,9 @@ export interface Api {
     pollId: string
   ) => Promise<Poll & { answers: Answer[]; user: User | null }>;
   getPolls: (
-    params: {
-      page?: number;
-      limit?: number;
-    } & SortingParams<SortPollFields>
+    params: PaginationParams & SortingParams<SortPollFields>
   ) => Promise<
-    PaginationResult<(Poll & { user: User; userId: string | null })[]>
+    PaginationResponse<(Poll & { user: User; userId: string | null })[]>
   >;
   createPoll: (pollData: CreatePollData) => Promise<Poll>;
   deletePoll: (pollId: string) => Promise<void>;
@@ -62,13 +63,11 @@ export interface Api {
 // @ts-expect-error
 export interface Services extends Api {
   getPolls: (
-    params: {
-      page?: number;
+    params: PaginationParams & {
       skip: number;
-      limit?: number;
     } & SortingParams<SortPollFields>
   ) => Promise<
-    PaginationResult<(Poll & { user: User; userId: string | null })[]>
+    PaginationResponse<(Poll & { user: User; userId: string | null })[]>
   >;
   updatePoll: (pollId: string, data: UpdatePollData) => Promise<Poll>;
   votePoll: (params: {

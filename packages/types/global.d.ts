@@ -1,6 +1,11 @@
-export type PaginationResult<T = unknown> = {
+export type PaginationResponse<T = unknown> = {
   data: T;
   nextPage: number | undefined;
+};
+
+export type PaginationParams = {
+  page?: number;
+  limit?: number;
 };
 
 export type OrderBy = "asc" | "desc";
