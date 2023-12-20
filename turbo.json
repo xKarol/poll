@@ -13,7 +13,8 @@
         "NEXT_PUBLIC_API_URL",
         "SENTRY_DSN",
         "SENTRY_ORG",
-        "SENTRY_PROJECT"
+        "SENTRY_PROJECT",
+        "ANALYZE"
       ]
     },
     "@poll/backend": {
