@@ -19,15 +19,13 @@ export const PollAnswerOptions = ({
   const sortedAnswers = useMemo(
     () =>
       options.sort((a, b) => {
-        return (
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        );
+        return b.votes - a.votes;
       }),
     [options]
   );
 
   const totalVotes = options.reduce((acc, curr) => acc + curr.votes, 0);
-  console.log({ totalVotes });
+
   const calcPercent = (votes: number) => {
     const percent = (votes / totalVotes) * 100;
     return Number.isNaN(percent) || !Number.isFinite(percent) ? 0 : percent;
