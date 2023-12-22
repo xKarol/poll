@@ -1,3 +1,4 @@
+import { apiUrls } from "@poll/config";
 import { hasUserPermission } from "@poll/lib";
 import prisma from "@poll/prisma";
 import type { Poll, SortingParams } from "@poll/types";
@@ -5,6 +6,7 @@ import type { NextFunction, Request, Response } from "express";
 import httpError from "http-errors";
 
 import { getGeoData } from "../lib/geoip";
+import redis from "../lib/redis";
 import { ua } from "../lib/useragent";
 import {
   createPoll,
@@ -126,6 +128,11 @@ export const Vote = async (
     const geo = await getGeoData(ip).catch(() => null);
     const userAgent = req.headers["user-agent"] || "";
     ua.setUA(userAgent).getResult();
+
+    await Promise.all([
+      redis.del(apiUrls.poll.getOne(pollId)),
+      redis.del(apiUrls.poll.getVoters(pollId)),
+    ]).catch(() => null);
 
     await Analytics.sendPollVoteData({
       user_id: user?.id,
