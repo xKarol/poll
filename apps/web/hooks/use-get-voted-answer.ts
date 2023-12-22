@@ -31,7 +31,8 @@ export const useGetVotedAnswer = (pollId: string, answers: Answer[]) => {
   }, [pollId, answers]);
 
   useEffect(() => {
-    queryClient.getQueryCache().subscribe((queryCacheNotifyEvent) => {
+    const queryCache = queryClient.getQueryCache();
+    const unsubscribe = queryCache.subscribe((queryCacheNotifyEvent) => {
       if (!queryCacheNotifyEvent) return;
 
       if (
@@ -41,6 +42,7 @@ export const useGetVotedAnswer = (pollId: string, answers: Answer[]) => {
         setVotedAnswer(getVotedVote());
       }
     });
+    return () => unsubscribe();
   }, [pollId, queryClient, getVotedVote, setVotedAnswer]);
 
   return votedAnswer === "" ? undefined : (votedAnswer as string | undefined);
