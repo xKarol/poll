@@ -7,6 +7,7 @@ import express from "express";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import morgan from "morgan";
+import { createServer } from "node:http";
 import path from "node:path";
 import favicon from "serve-favicon";
 
@@ -60,10 +61,12 @@ app.use(errorHandler);
 
 const PORT = (process.env.PORT || 4000) as number;
 
-const server = app.listen(PORT, () => {
-  console.log(`Server is running at ${getOriginURL()}`);
+const httpServer = createServer(app);
+
+websocketInit(httpServer);
+
+httpServer.listen(PORT, () => {
+  console.log(`-  Server is running at ${getOriginURL()}`);
 });
 
-if (process.env.NODE_ENV !== "test") websocketInit(server); //TODO disabled in tests for now, fix later
-
-export default server;
+export default httpServer;

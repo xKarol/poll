@@ -1,9 +1,9 @@
 import type { Answer, Poll } from "@poll/prisma";
-import type { WebSocket as WebSocketType } from "@poll/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useLocalStorage } from "react-use";
 
+import { socket } from "../lib/socket";
 import { pollKeys } from "../queries/poll";
 import { votePoll } from "../services/api";
 
@@ -11,6 +11,7 @@ export const useVotePoll = () => {
   const queryClient = useQueryClient();
   const [oldValue, setLocalStorageValue] = useLocalStorage("poll-voted", []);
   const { data: session } = useSession();
+
   return useMutation({
     mutationFn: ({
       pollId,
@@ -51,15 +52,8 @@ export const useVotePoll = () => {
       });
       setLocalStorageValue([...oldValue, [pollId, answerId]]);
 
-      const websocket = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-
-      websocket.onopen = () => {
-        const data: { e: WebSocketType.Events; data: string } = {
-          e: "POLL_VOTES",
-          data: pollId,
-        };
-        websocket.send(JSON.stringify(data));
-      };
+      socket.connect();
+      socket.emit("poll-vote-trigger", { pollId });
     },
   });
 };

@@ -1,40 +1,31 @@
-import type { WebSocket as WebSocketType } from "@poll/types";
+import type { WebSocket } from "@poll/types";
 import type http from "http";
-import WebSocket from "ws";
+import { Server } from "socket.io";
 
+import { corsConfig } from "../config/cors";
 import { getPollVotes } from "../services/poll";
 
 async function websocketInit(
-  server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+  httpServer: http.Server<
+    typeof http.IncomingMessage,
+    typeof http.ServerResponse
+  >
 ) {
-  const wss = new WebSocket.Server({
-    noServer: true,
+  const io: WebSocket.ServerSocket = new Server(httpServer, {
+    cors: corsConfig,
   });
 
-  server.on("upgrade", (request, socket, head) => {
-    wss.handleUpgrade(request, socket, head, (websocket) => {
-      wss.emit("connection", websocket, request);
+  io.on("connection", (socket) => {
+    socket.on("join-poll", (pollId) => {
+      socket.join(`poll:${pollId}`);
+    });
+
+    socket.on("poll-vote-trigger", async (data) => {
+      const { pollId } = data;
+      const pollAnswers = await getPollVotes(pollId);
+      socket.to(`poll:${pollId}`).emit("poll-vote-update", pollAnswers);
     });
   });
-
-  wss.on("connection", (ws) => {
-    ws.on("message", async (message) => {
-      const parsedMessage = JSON.parse(message.toString()) as {
-        e: WebSocketType.Events;
-        data: unknown;
-      };
-
-      const { e, data } = parsedMessage;
-      if (e === "POLL_VOTES") {
-        if (typeof data !== "string") return;
-        const pollAnswers = await getPollVotes(data);
-        wss.clients.forEach((client) => {
-          client.send(JSON.stringify(pollAnswers));
-        });
-      }
-    });
-  });
-  return wss;
 }
 
 export default websocketInit;

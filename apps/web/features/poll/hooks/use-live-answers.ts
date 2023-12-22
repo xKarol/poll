@@ -2,34 +2,38 @@ import type { Poll, Answer } from "@poll/prisma";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
+import { socket } from "../../../lib/socket";
 import { pollKeys } from "../../../queries/poll";
 
 export const useLiveAnswers = (pollId: string) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const websocket = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_URL);
-
-    websocket.onmessage = (message) => {
-      const { data: msgData } = message;
-      const parsedData: Answer[] = JSON.parse(msgData.toString());
+    socket.connect();
+    socket.on("poll-vote-update", (updatedData) => {
       queryClient.setQueryData(
         pollKeys.single(pollId),
         (old: Poll & { answers: Answer[] }) => {
           return {
             ...old,
             totalVotes:
-              parsedData
-                ?.map((answer) => answer.votes)
+              updatedData
+                .map((answer) => answer.votes)
                 .reduce((prev, next) => prev + next) || old.totalVotes,
-            answers: parsedData,
+            answers: updatedData,
           };
         }
       );
-    };
-
+    });
     return () => {
-      websocket.close();
+      socket.close();
+      socket.off("poll-vote-update");
     };
   }, [pollId, queryClient]);
+
+  useEffect(() => {
+    if (pollId) {
+      socket.emit("join-poll", pollId);
+    }
+  }, [pollId]);
 };
