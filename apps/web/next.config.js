@@ -5,6 +5,10 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["ui"],
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en"],
+  },
   async rewrites() {
     return {
       beforeFiles: [
