@@ -23,11 +23,19 @@ export const Logo = ({
       <Component {...(href && { href: href })}>
         {variant === "text" ? (
           <>
-            <img src={logoTextLight.src} className="hidden dark:block" />
-            <img src={logoTextDark.src} className="block dark:hidden" />
+            <img
+              src={logoTextLight.src}
+              className="hidden dark:block"
+              alt="logo"
+            />
+            <img
+              src={logoTextDark.src}
+              className="block dark:hidden"
+              alt="logo"
+            />
           </>
         ) : (
-          <img src={logo.src} />
+          <img src={logo.src} alt="logo" />
         )}
       </Component>
     </div>
