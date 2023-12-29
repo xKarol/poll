@@ -1,19 +1,16 @@
-import {
-  Button,
-  Icon,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  ScrollArea,
-} from "@poll/ui";
+import { Button, Icon } from "@poll/ui";
+import dynamic from "next/dynamic";
 import React from "react";
 
-import { CreatePollForm } from "../../../components/create-poll-form";
 import { getErrorMessage } from "../../../utils/error";
 import { Header } from "../components";
 import PollsTable from "../components/polls-table";
 import { useUserPolls } from "../hooks";
 import { BaseLayout } from "../layouts";
+
+const DynamicCreatePollDialog = dynamic(() =>
+  import("../components/create-poll-dialog").then((mod) => mod.CreatePollDialog)
+);
 
 const MyPollsPage = () => {
   const {
@@ -26,30 +23,18 @@ const MyPollsPage = () => {
     fetchNextPage,
   } = useUserPolls();
   const data = pages?.pages.flatMap(({ data }) => data);
+
   return (
     <BaseLayout>
       <Header
         heading="Your polls"
         ActionComponent={
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button size="sm">
-                <Icon.Plus />
-                <span>Create a poll</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent hideClose className="px-0">
-              <ScrollArea className="h-[80vh] px-6">
-                <CreatePollForm
-                  ActionButtons={[
-                    <Button variant="text" key="close-modal-btn" asChild>
-                      <DialogTrigger>Close</DialogTrigger>
-                    </Button>,
-                  ]}
-                />
-              </ScrollArea>
-            </DialogContent>
-          </Dialog>
+          <DynamicCreatePollDialog>
+            <Button size="sm">
+              <Icon.Plus />
+              <span>Create a poll</span>
+            </Button>
+          </DynamicCreatePollDialog>
         }
       />
       <div className="flex flex-col">
