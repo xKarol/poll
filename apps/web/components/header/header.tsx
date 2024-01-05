@@ -113,7 +113,7 @@ export function HeaderNavigation() {
     <>
       {isOpen ? <MobileNavigationMenu /> : null}
       <nav className="hidden items-center space-x-12 xl:flex">
-        <ul className="flex space-x-12 font-medium">
+        <ul className="flex space-x-12 text-sm">
           {navLinks.map((link) => (
             <li key={link.text}>
               <Link href={link.href}>{link.text}</Link>
@@ -125,11 +125,11 @@ export function HeaderNavigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="flex cursor-pointer items-center justify-center space-x-2">
-                <Avatar src={session.user.image} className="h-8 w-8">
+                <Avatar src={session.user.image} className="h-6 w-6">
                   {session.user.name[0]}
                 </Avatar>
                 <div className="flex items-center space-x-1">
-                  <span className="font-medium">{session.user.name}</span>
+                  <span className="text-sm">{session.user.name}</span>
                   <Icon.ChevronDown className="h-4 w-4" />
                 </div>
               </div>
@@ -138,26 +138,26 @@ export function HeaderNavigation() {
               <DropdownMenuItem asChild>
                 <Link href={routes.DASHBOARD.HOME}>
                   <Icon.Home className="mr-2 h-4 w-4" />
-                  <span>Dashboard</span>
+                  <span className="text-xs">Dashboard</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={routes.DASHBOARD.POLLS}>
                   <Icon.BarChart2 className="mr-2 h-4 w-4" />
-                  <span>Your polls</span>
+                  <span className="text-xs">Your polls</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link href={routes.SETTINGS.HOME}>
                   <Icon.Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
+                  <span className="text-xs">Settings</span>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => signOut({ callbackUrl: routes.LOGIN })}>
                 <Icon.LogOut className="mr-2 h-4 w-4" />
-                <span>Log Out</span>
+                <span className="text-xs">Log Out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
