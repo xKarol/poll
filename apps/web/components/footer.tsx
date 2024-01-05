@@ -8,7 +8,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@poll/ui";
-import * as SwitchPrimitives from "@radix-ui/react-switch";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
