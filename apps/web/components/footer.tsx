@@ -81,44 +81,45 @@ const Footer = ({ className, ...props }: FooterProps) => {
         </nav>
       </div>
 
-      <div className="mb-8 flex max-w-sm items-center space-x-8 md:mt-8">
-        <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
-          <li className="transition-colors hover:text-black hover:dark:text-white">
-            <Link href={"https://x.com"}>
-              <Icon.XTwitter className="h-5 w-5" />
-            </Link>
-          </li>
-          <li className="transition-colors hover:text-black hover:dark:text-white">
-            <Link href={"https://instagram.com"}>
-              <Icon.Instagram className="h-5 w-5" />
-            </Link>
-          </li>
-          <li className="transition-colors hover:text-black hover:dark:text-white">
-            <Link href={"https://facebook.com"}>
-              <Icon.Facebook className="h-5 w-5" />
-            </Link>
-          </li>
-        </ul>
-        <div className="flex space-x-8">
-          <Select>
-            <SelectTrigger className="w-[130px]">
-              <div className="flex items-center space-x-2">
-                <Icon.Globe className="h-4 w-4" />
-                <SelectValue defaultValue="English" placeholder="English" />
-              </div>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="English">English</SelectItem>
-            </SelectContent>
-          </Select>
+      <div className="mb-8 flex flex-wrap gap-2 md:mt-8">
+        <div className="flex items-center space-x-8">
+          <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
+            <li className="transition-colors hover:text-black hover:dark:text-white">
+              <Link href={"https://x.com"}>
+                <Icon.XTwitter className="h-5 w-5" />
+              </Link>
+            </li>
+            <li className="transition-colors hover:text-black hover:dark:text-white">
+              <Link href={"https://instagram.com"}>
+                <Icon.Instagram className="h-5 w-5" />
+              </Link>
+            </li>
+            <li className="transition-colors hover:text-black hover:dark:text-white">
+              <Link href={"https://facebook.com"}>
+                <Icon.Facebook className="h-5 w-5" />
+              </Link>
+            </li>
+          </ul>
+          <div className="flex space-x-8">
+            <ThemeSelect />
+          </div>
         </div>
+        <Select>
+          <SelectTrigger className="w-[130px]">
+            <div className="flex items-center space-x-2">
+              <Icon.Globe className="h-4 w-4" />
+              <SelectValue defaultValue="English" placeholder="English" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="English">English</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
-      <div className="flex items-center justify-between">
-        <ThemeSwitcher />
+      <div className="flex justify-center">
         <span className="text-xs text-neutral-600 dark:text-neutral-300">
           © {new Date().getFullYear()} Quick Poll. All rights reserved.
         </span>
-        <div />
       </div>
     </footer>
   );
@@ -126,13 +127,11 @@ const Footer = ({ className, ...props }: FooterProps) => {
 
 export default Footer;
 
-function ThemeSwitcher({
+function ThemeSelect({
   className,
-  onCheckedChange,
-  checked,
   ...props
-}: React.ComponentProps<typeof SwitchPrimitives.Root>) {
-  const { resolvedTheme, setTheme } = useTheme();
+}: React.ComponentProps<typeof Select> & { className?: string }) {
+  const { resolvedTheme, theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -144,24 +143,32 @@ function ThemeSwitcher({
   }
 
   return (
-    <SwitchPrimitives.Root
-      onCheckedChange={(checked) => {
-        setTheme(checked ? "dark" : "light");
-        onCheckedChange?.(checked);
-      }}
-      checked={checked || resolvedTheme === "dark"}
-      className={cn(
-        "focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-neutral-950 data-[state=unchecked]:bg-neutral-200 dark:data-[state=unchecked]:bg-neutral-700",
-        className
-      )}
-      {...props}>
-      <SwitchPrimitives.Thumb
+    <Select defaultValue={theme} onValueChange={setTheme} {...props}>
+      <SelectTrigger
         className={cn(
-          "pointer-events-none flex h-5 w-5 items-center justify-center rounded-full bg-white text-neutral-900 shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 [&>*]:h-4 [&>*]:w-4"
+          "w-[100px] border-none !bg-transparent text-xs [&>svg]:hidden",
+          className
         )}>
-        <Icon.Sun className={cn(resolvedTheme !== "light" && "hidden")} />
-        <Icon.Moon className={cn(resolvedTheme !== "dark" && "hidden")} />
-      </SwitchPrimitives.Thumb>
-    </SwitchPrimitives.Root>
+        <div className="flex items-center space-x-2">
+          {resolvedTheme === "dark" ? (
+            <Icon.Moon className="h-4 w-4" />
+          ) : (
+            <Icon.Sun className="h-4 w-4" />
+          )}
+          <SelectValue defaultValue="system" />
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem className="text-xs" value="system">
+          System
+        </SelectItem>
+        <SelectItem className="text-xs" value="dark">
+          Dark
+        </SelectItem>
+        <SelectItem className="text-xs" value="light">
+          Light
+        </SelectItem>
+      </SelectContent>
+    </Select>
   );
 }
