@@ -81,8 +81,8 @@ const Footer = ({ className, ...props }: FooterProps) => {
         </nav>
       </div>
 
-      <div className="mb-8 flex flex-wrap gap-2 md:mt-8">
-        <div className="flex items-center space-x-8">
+      <div className="mb-8 flex flex-wrap md:mt-8">
+        <div className="flex items-center space-x-4">
           <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
             <li className="transition-colors hover:text-black hover:dark:text-white">
               <Link href={"https://x.com"}>
@@ -100,21 +100,9 @@ const Footer = ({ className, ...props }: FooterProps) => {
               </Link>
             </li>
           </ul>
-          <div className="flex space-x-8">
-            <ThemeSelect />
-          </div>
+          <ThemeSelect />
         </div>
-        <Select>
-          <SelectTrigger className="w-[130px]">
-            <div className="flex items-center space-x-2">
-              <Icon.Globe className="h-4 w-4" />
-              <SelectValue defaultValue="English" placeholder="English" />
-            </div>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="English">English</SelectItem>
-          </SelectContent>
-        </Select>
+        <LanguageSelect />
       </div>
       <div className="flex justify-center">
         <span className="text-xs text-neutral-600 dark:text-neutral-300">
@@ -168,6 +156,32 @@ function ThemeSelect({
         <SelectItem className="text-xs" value="light">
           Light
         </SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
+function LanguageSelect({
+  className,
+  ...props
+}: React.ComponentProps<typeof Select> & { className?: string }) {
+  return (
+    <Select defaultValue="english" {...props}>
+      <SelectTrigger
+        className={cn(
+          "w-[100px] border-none !bg-transparent text-xs [&>svg]:hidden",
+          className
+        )}>
+        <div className="flex items-center space-x-2">
+          <Icon.Globe className="h-4 w-4" />
+          <SelectValue
+            defaultValue="english"
+            placeholder="Select language..."
+          />
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="english">English</SelectItem>
       </SelectContent>
     </Select>
   );
