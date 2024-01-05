@@ -7,15 +7,15 @@ export const routes = {
   HOME: "/",
   CREATE_POLL: "/create",
   PRICING: "/pricing",
-  FEATURES: "/", //TODO change
+  FEATURES: "/features",
   PUBLIC_POLLS: "/public",
   LOGIN: "/login",
-  TERMS_AND_CONDITIONS: "#",
-  PRIVACY_POLICY: "#",
-  FAQ: "/",
-  HELP: "/",
-  CONTACT: "/",
-  ABOUT_US: "/",
+  TERMS_AND_CONDITIONS: "/terms",
+  PRIVACY_POLICY: "/privacy",
+  FAQ: "/faq",
+  HELP: "/help",
+  CONTACT: "/contact",
+  ABOUT_US: "/about-us",
   DASHBOARD: {
     HOME: "/dashboard/analytics", //alias
     POLLS: "/dashboard/polls",
