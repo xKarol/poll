@@ -41,10 +41,10 @@ export default function HomePage({
       <section className="container flex flex-col md:flex-row">
         <div className="flex-1">
           <div className="flex max-w-xl flex-col space-y-2 xl:space-y-8">
-            <h1 className="text-3xl font-extrabold xl:text-6xl">
+            <h1 className="text-center text-5xl font-extrabold md:text-start xl:text-6xl">
               Get Quick Answers with Polls
             </h1>
-            <p className="text-lg font-semibold text-neutral-500 xl:text-3xl">
+            <p className="mx-auto max-w-sm text-center text-xl font-medium text-neutral-500 md:mx-0 md:text-start md:text-2xl">
               Create polls for quick decisions. Get answers in seconds.
             </p>
           </div>
@@ -122,7 +122,7 @@ export default function HomePage({
             <h1 className="text-2xl font-bold xl:text-4xl">
               Join the Poll Now!
             </h1>
-            <p className="text-lg font-semibold text-neutral-500 xl:text-2xl">
+            <p className="text-lg font-medium text-neutral-500 xl:text-2xl">
               Start polling and engaging instantly.
             </p>
           </div>
