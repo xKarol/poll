@@ -107,6 +107,20 @@ export function HeaderLogo({ className, ...rest }: HeaderLogoProps) {
   return <Logo variant="text" className={cn("z-50", className)} {...rest} />;
 }
 
+function HeaderLink({
+  href,
+  className,
+  children,
+}: React.ComponentProps<typeof Link>) {
+  const router = useRouter();
+  const isActive = href === router.asPath;
+  return (
+    <Link href={href} className={cn(isActive && "font-semibold", className)}>
+      {children}
+    </Link>
+  );
+}
+
 export function HeaderNavigation() {
   const { isOpen, session } = useHeaderContext();
   return (
@@ -115,9 +129,9 @@ export function HeaderNavigation() {
       <nav className="hidden items-center space-x-12 xl:flex">
         <ul className="flex space-x-12 text-sm">
           {navLinks.map((link) => (
-            <li key={link.text}>
-              <Link href={link.href}>{link.text}</Link>
-            </li>
+            <HeaderLink href={link.href} key={link.text}>
+              {link.text}
+            </HeaderLink>
           ))}
         </ul>
 
