@@ -33,7 +33,6 @@ const navLinks = [
       { name: "Public Polls", href: routes.PUBLIC_POLLS },
     ],
   },
-
   {
     heading: "Company",
     links: [
@@ -41,25 +40,32 @@ const navLinks = [
       { name: "About Us", href: routes.ABOUT_US },
     ],
   },
+  {
+    heading: "Legal",
+    links: [
+      { name: "Privacy Policy", href: routes.HOME },
+      { name: "Terms & Conditions", href: routes.HOME },
+    ],
+  },
 ];
 
 const Footer = ({ className, ...props }: FooterProps) => {
   return (
-    <footer className={cn("container py-16", className)} {...props}>
-      <div className="flex flex-col md:flex-row md:justify-between">
-        <div className="mb-8 flex flex-col space-y-8 md:mb-0">
-          <Logo />
-          <p className="max-w-xs text-neutral-600 dark:text-neutral-300">
+    <footer className={cn("container pb-8 pt-16", className)} {...props}>
+      <div className="flex flex-col md:flex-row md:justify-between md:space-x-16">
+        <div className="mb-8 flex flex-wrap items-center gap-4 md:mb-0 md:flex-col md:flex-nowrap md:items-start">
+          <Logo className="shrink-0" />
+          <p className="max-w-[240px] text-sm text-neutral-600 dark:text-neutral-300">
             Discover, Share, and Engage with Quick Poll – Your Polling Partner!
           </p>
         </div>
-        <nav className="mb-16 flex flex-col justify-between space-y-8 sm:flex-row sm:space-y-0 md:mb-0 md:space-x-8">
+        <nav className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4 md:mb-0">
           {navLinks.map((linksGroup) => (
             <div
-              className="flex flex-col space-y-2 md:space-y-4"
+              className="flex flex-col space-y-4 md:space-y-4"
               key={linksGroup.heading}>
-              <p className="font-medium uppercase">{linksGroup.heading}</p>
-              <ul className="space-y-2 text-neutral-600  dark:text-neutral-300">
+              <p className="text-sm font-medium">{linksGroup.heading}</p>
+              <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
                 {linksGroup.links.map((link) => (
                   <li key={link.name}>
                     <Link
@@ -75,21 +81,21 @@ const Footer = ({ className, ...props }: FooterProps) => {
         </nav>
       </div>
 
-      <div className="mb-16 flex flex-wrap justify-between gap-4 md:my-8 md:flex-col md:space-y-8">
+      <div className="mb-8 flex max-w-sm items-center space-x-8 md:mt-8">
         <ul className="flex space-x-4 text-neutral-600 dark:text-neutral-300">
           <li className="transition-colors hover:text-black hover:dark:text-white">
             <Link href={"https://x.com"}>
-              <Icon.XTwitter />
+              <Icon.XTwitter className="h-5 w-5" />
             </Link>
           </li>
           <li className="transition-colors hover:text-black hover:dark:text-white">
             <Link href={"https://instagram.com"}>
-              <Icon.Instagram />
+              <Icon.Instagram className="h-5 w-5" />
             </Link>
           </li>
           <li className="transition-colors hover:text-black hover:dark:text-white">
             <Link href={"https://facebook.com"}>
-              <Icon.Facebook />
+              <Icon.Facebook className="h-5 w-5" />
             </Link>
           </li>
         </ul>
@@ -105,17 +111,14 @@ const Footer = ({ className, ...props }: FooterProps) => {
               <SelectItem value="English">English</SelectItem>
             </SelectContent>
           </Select>
-          <ThemeSwitcher />
         </div>
       </div>
-      <div className="flex flex-col items-center space-y-4">
-        <span>
+      <div className="flex items-center justify-between">
+        <ThemeSwitcher />
+        <span className="text-xs text-neutral-600 dark:text-neutral-300">
           © {new Date().getFullYear()} Quick Poll. All rights reserved.
         </span>
-        <div className="flex space-x-4 underline">
-          <Link href={routes.HOME}>Privacy Policy</Link>
-          <Link href={routes.HOME}>Terms & Conditions</Link>
-        </div>
+        <div />
       </div>
     </footer>
   );
