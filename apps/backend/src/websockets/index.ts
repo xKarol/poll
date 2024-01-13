@@ -23,7 +23,7 @@ async function websocketInit(
     socket.on("poll-vote-trigger", async (data) => {
       const { pollId } = data;
       const pollAnswers = await getPollVotes(pollId);
-      socket.to(`poll:${pollId}`).emit("poll-vote-update", pollAnswers);
+      io.to(`poll:${pollId}`).emit("poll-vote-update", pollAnswers);
     });
   });
 }
