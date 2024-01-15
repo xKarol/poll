@@ -15,8 +15,8 @@ const request = () => supertest(app).get("/test");
 
 test("should return default values", async () => {
   const { body } = await request().expect(200);
-  expect(body.groupBy).toBe("hour");
-  expect(body.dateFrom).toBe(dayjs().subtract(24, "hour").unix());
+  expect(body.groupBy).toBe("day");
+  expect(body.dateFrom).toBe(dayjs().subtract(7, "days").unix());
   expect(body.dateTo).toBe(dayjs().unix());
   expect(body.limit).toBe(50);
 });
