@@ -1,8 +1,7 @@
 import * as Sentry from "@sentry/node";
 import type { NextFunction, Request, Response } from "express";
-import createError from "http-errors";
 
-import { getErrorMessage } from "../utils/error";
+import { captureError } from "../utils/capture-error";
 
 export const errorHandler = (
   error: unknown,
@@ -12,13 +11,13 @@ export const errorHandler = (
   _next: NextFunction
 ) => {
   Sentry.captureException(error);
-  const message = getErrorMessage(error);
-  const errorData = error instanceof createError.HttpError ? error : undefined;
-  const status: number = errorData ? errorData.statusCode : 400;
-  const stack = errorData ? errorData.stack : undefined;
+  const capturedError = captureError(error);
+  const status = capturedError.statusCode;
   res.status(status).send({
-    status: status,
-    message: message,
-    ...(process.env.NODE_ENV !== "production" && { stack: stack }),
+    status,
+    message: capturedError.message,
+    ...(process.env.NODE_ENV !== "production" && {
+      stack: capturedError.stack,
+    }),
   });
 };

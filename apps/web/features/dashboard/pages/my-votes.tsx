@@ -1,7 +1,7 @@
 import { Icon } from "@poll/ui";
 import React from "react";
 
-import { getErrorMessage } from "../../../utils/error";
+import { getErrorMessage } from "../../../utils/get-error-message";
 import { Header } from "../components";
 import { VotesTable } from "../components/votes-table";
 import { useUserPollVotes } from "../hooks";

@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "../../../components/form";
 import { routes } from "../../../config/routes";
-import { getErrorMessage } from "../../../utils/error";
+import { getErrorMessage } from "../../../utils/get-error-message";
 import { AuthProvider } from "../components";
 import { useSignIn } from "../hooks/use-sign-in";
 

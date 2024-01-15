@@ -33,7 +33,7 @@ import {
 import { routes } from "../config/routes";
 import { useCreatePoll } from "../hooks/use-create-poll";
 import { useHasPermission } from "../hooks/use-has-permission";
-import { getErrorMessage } from "../utils/error";
+import { getErrorMessage } from "../utils/get-error-message";
 
 export type CreatePollFormProps = { ActionButtons?: JSX.Element[] } & Omit<
   React.ComponentPropsWithoutRef<"form">,

@@ -21,7 +21,7 @@ import { routes } from "../config/routes";
 import { usePolls } from "../hooks/use-polls";
 import { BaseLayout } from "../layouts";
 import dayjs from "../lib/dayjs";
-import { getErrorMessage } from "../utils/error";
+import { getErrorMessage } from "../utils/get-error-message";
 import { getLayout } from "../utils/get-layout";
 import { nFormatter } from "../utils/misc";
 
