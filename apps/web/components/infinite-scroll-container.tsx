@@ -1,5 +1,5 @@
 import { cn } from "@poll/lib";
-import { Button, Icon } from "@poll/ui";
+import { LoadingButton } from "@poll/ui";
 import React from "react";
 
 export type InfiniteScrollContainerProps<T extends React.ElementType> = {
@@ -29,9 +29,13 @@ export function InfiniteScrollContainer<
     <Component className={cn("flex flex-col space-y-8", className)} {...props}>
       <div className="flex flex-col">{children}</div>
       <div className="mx-auto my-8">
-        {isFetchingNextPage && <Icon.Loader2 className="animate-spin" />}
-        {!isFetchingNextPage && hasNextPage && (
-          <Button onClick={() => fetchNextPage()}>Load more</Button>
+        {hasNextPage && (
+          <LoadingButton
+            isLoading={isFetchingNextPage}
+            onClick={() => fetchNextPage()}
+            className="rounded-full">
+            Load more
+          </LoadingButton>
         )}
       </div>
     </Component>

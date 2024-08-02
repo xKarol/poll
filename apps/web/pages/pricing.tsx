@@ -138,21 +138,21 @@ export default function PricingPage() {
               <AlertTitle>Something went wrong...</AlertTitle>
             </Alert>
           ) : null}
-          <div className="flex flex-col items-center space-y-3">
-            <h1 className="text-3xl font-medium">Pricing</h1>
-            <p className="text-center text-xl font-medium text-neutral-400">
+          <div className="flex flex-col items-center space-y-2">
+            <h1 className="text-2xl font-semibold">Pricing</h1>
+            <p className="text-center text-lg text-neutral-400">
               Find your ideal plan and unleash the full potential of our poll
-              platform.
+              platform
             </p>
           </div>
 
           <Tabs defaultValue="month" className="flex flex-col items-center">
-            <TabsList className="mb-4 flex w-full max-w-[300px] sm:max-w-[400px]">
+            <TabsList className="mb-4 flex w-full max-w-[300px] rounded-full sm:max-w-[400px]">
               {paymentCycles.map((cycle) => (
                 <TabsTrigger
                   key={cycle}
                   value={cycle}
-                  className="flex-1 capitalize">
+                  className="flex-1 rounded-full capitalize">
                   {cycle + "ly"}
                 </TabsTrigger>
               ))}
@@ -179,7 +179,7 @@ export default function PricingPage() {
                           : hasPermission("FREE")
                       }
                       onClick={redirectUnauthenticatedToLoginPage}
-                      className="capitalize">
+                      className="rounded-full capitalize">
                       Create account
                     </Button>
                   }
@@ -218,7 +218,7 @@ export default function PricingPage() {
                               pricingPlans[index].productId
                             )
                           }
-                          className="capitalize">
+                          className="rounded-full capitalize">
                           Get {name.toLowerCase()}
                         </Button>
                       }

@@ -193,7 +193,7 @@ const PollPage = () => {
               </div>
               {!isVoted ? (
                 <LoadingButton
-                  className="min-w-[100px]"
+                  className="min-w-[100px] rounded-full"
                   type="submit"
                   isLoading={isVoteLoading}>
                   Vote

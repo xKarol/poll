@@ -57,7 +57,7 @@ export default function PublicPage() {
         {!isError ? (
           <>
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-medium">Public Polls</h1>
+              <h1 className="text-xl font-medium">Public Polls</h1>
               <Select onValueChange={(value: SortValue) => setSortValue(value)}>
                 <SelectTrigger className="min-w-[120px] max-w-max">
                   <SelectValue placeholder="Sort" />
@@ -117,7 +117,7 @@ export default function PublicPage() {
                 <Link
                   key={poll.id}
                   href={routes.poll(poll.id)}
-                  className="space-y-4 rounded bg-neutral-100 px-3 py-4 dark:bg-neutral-800">
+                  className="dark:bg-dark space-y-4 rounded border border-neutral-100 bg-white px-6 py-8  dark:border-neutral-800">
                   <h1 className="text-lg">{poll.question}</h1>
                   <div className="flex items-center justify-between text-sm font-normal text-neutral-400">
                     <div className="flex items-center space-x-2">

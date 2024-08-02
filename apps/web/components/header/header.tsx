@@ -115,7 +115,13 @@ function HeaderLink({
   const router = useRouter();
   const isActive = href === router.asPath;
   return (
-    <Link href={href} className={cn(isActive && "font-semibold", className)}>
+    <Link
+      href={href}
+      className={cn(
+        "text-neutral-400",
+        isActive && "font-semibold text-white",
+        className
+      )}>
       {children}
     </Link>
   );
@@ -176,7 +182,10 @@ export function HeaderNavigation() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Button asChild variant="secondary" className="!bg-green-500">
+          <Button
+            asChild
+            variant="secondary"
+            className="w-28 rounded-full !bg-green-500 hover:!bg-green-500/80">
             <Link href={routes.LOGIN}>Login</Link>
           </Button>
         )}
@@ -238,7 +247,10 @@ function MobileNavigationMenu({
                 <span>{session?.user.name}</span>
               </div>
             ) : (
-              <Button asChild variant="secondary" className="!bg-green-500">
+              <Button
+                asChild
+                variant="secondary"
+                className="w-32 rounded-full !bg-green-500">
                 <Link href={routes.LOGIN}>Login</Link>
               </Button>
             )}

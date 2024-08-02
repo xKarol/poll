@@ -119,14 +119,14 @@ export default function HomePage({
       <section className="dark:bg-dark border-y-2 border-neutral-100 bg-white py-16 dark:border-neutral-800">
         <div className="container flex flex-col md:flex-row md:items-center md:justify-between">
           <div className="mb-8">
-            <h1 className="text-2xl font-bold xl:text-4xl">
+            <h1 className="text-2xl font-semibold xl:text-3xl">
               Join the Poll Now!
             </h1>
-            <p className="text-lg font-medium text-neutral-500 xl:text-2xl">
+            <p className="text-lg text-neutral-500 xl:text-xl">
               Start polling and engaging instantly.
             </p>
           </div>
-          <Button asChild className="w-full md:w-auto">
+          <Button asChild className="w-full rounded-full md:w-auto">
             <Link href={routes.CREATE_POLL}>Create a poll</Link>
           </Button>
         </div>

@@ -42,9 +42,9 @@ export const AnswerItem = ({
         )}
         {variant === "default" && React.cloneElement(RadioComponent, { id })}
       </div>
-      <div className="flex w-full flex-col space-y-4">
+      <div className="flex w-full flex-col justify-center space-y-4">
         <div className="flex items-center justify-between">
-          <Label className="text-base font-bold md:text-lg" htmlFor={id}>
+          <Label className="text-base font-medium" htmlFor={id}>
             {text}
           </Label>
           {variant === "selected" && (
