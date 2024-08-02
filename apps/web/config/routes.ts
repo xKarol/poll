@@ -38,5 +38,5 @@ export const routes = {
       MY_PLAN: "/settings/billing/my-plan",
     },
   },
-  poll: (pollId: string) => `/${pollId}` as const,
+  poll: (pollId: string) => `/poll/${pollId}` as const,
 } as const satisfies Route;
