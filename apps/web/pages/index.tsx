@@ -38,8 +38,8 @@ export default function HomePage({
 
   return (
     <div className="mt-8 space-y-16 xl:mt-32 xl:space-y-32">
-      <section className="container flex flex-col items-center space-y-16">
-        <div className="flex max-w-4xl flex-col items-center space-y-4">
+      <section className="flex flex-col items-center space-y-16">
+        <div className="container flex max-w-4xl flex-col items-center space-y-4">
           <h1 className="text-center text-3xl font-semibold lg:text-5xl">
             Make your own Polling and Share easily with Poll
           </h1>
@@ -49,9 +49,11 @@ export default function HomePage({
             realtime for your polling and polling discover
           </p>
         </div>
-        <div className="relative">
-          <div className="absolute left-1/2 top-1/2 -z-50 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(34,197,94,0.20)_0%,rgba(0,0,0,0.00)_70%)]"></div>
-          <Image src={HeroImage} alt="hero" draggable="false" />
+        <div className="relative flex w-full">
+          <div className="absolute left-1/2 top-1/2 -z-50 h-[1200px] w-screen max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(34,197,94,0.20)_0%,rgba(0,0,0,0.00)_70%)]"></div>
+          <div className="container flex justify-center">
+            <Image src={HeroImage} alt="hero" draggable="false" />
+          </div>
         </div>
       </section>
       <section className="dark:bg-dark border-y-2 border-neutral-100 bg-white dark:border-neutral-800">
