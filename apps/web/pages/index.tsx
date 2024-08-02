@@ -8,7 +8,7 @@ import Link from "next/link";
 import { routes } from "../config/routes";
 import { BaseLayout } from "../layouts";
 import prisma from "../lib/prisma";
-import HeroImage from "../public/hero-image.svg";
+import HeroImage from "../public/hero-image.png";
 import { getLayout } from "../utils/get-layout";
 import { nFormatter } from "../utils/misc";
 
@@ -38,19 +38,20 @@ export default function HomePage({
 
   return (
     <div className="mt-8 space-y-16 xl:mt-32 xl:space-y-32">
-      <section className="container flex flex-col md:flex-row">
-        <div className="flex-1">
-          <div className="flex max-w-xl flex-col space-y-2 xl:space-y-8">
-            <h1 className="text-center text-5xl font-extrabold md:text-start xl:text-6xl">
-              Get Quick Answers with Polls
-            </h1>
-            <p className="mx-auto max-w-sm text-center text-xl font-medium text-neutral-500 md:mx-0 md:text-start md:text-2xl">
-              Create polls for quick decisions. Get answers in seconds.
-            </p>
-          </div>
+      <section className="container flex flex-col items-center space-y-16">
+        <div className="flex max-w-4xl flex-col items-center space-y-4">
+          <h1 className="text-center text-3xl font-semibold lg:text-5xl">
+            Make your own Polling and Share easily with Poll
+          </h1>
+          <p className="max-w-2xl text-center font-medium text-neutral-500 lg:text-lg">
+            Share your polling and receive your friend polling. It’s totally
+            free for all and you can pay to get more feature on poll, poll have
+            realtime for your polling and polling discover
+          </p>
         </div>
-        <div className="mt-8 flex-1 md:mt-0">
-          <Image src={HeroImage} alt="hero" />
+        <div className="relative">
+          <div className="absolute left-1/2 top-1/2 -z-50 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(34,197,94,0.20)_0%,rgba(0,0,0,0.00)_70%)]"></div>
+          <Image src={HeroImage} alt="hero" draggable="false" />
         </div>
       </section>
       <section className="dark:bg-dark border-y-2 border-neutral-100 bg-white dark:border-neutral-800">
@@ -85,17 +86,15 @@ export default function HomePage({
         </div>
       </section>
       <section className="container flex flex-col">
-        <div className="mx-auto mb-32 flex max-w-4xl flex-col space-y-8">
-          <h1 className="text-center text-3xl font-bold xl:text-5xl">
-            Discover Our Powerful Features
+        <div className="mx-auto mb-16 flex max-w-3xl flex-col space-y-4">
+          <h1 className="text-center text-2xl font-semibold xl:text-3xl">
+            Explore the powerful features that make our poll website exceptional
           </h1>
-          <p className="text-center text-lg font-medium text-neutral-500 xl:text-xl">
-            Our platform is designed to make polling and engagement easy,
-            informative, and engaging. See how we can help you make better
-            decisions and gather insights effortlessly.
+          <p className="text-center font-medium text-neutral-500 xl:text-lg">
+            Discover how our platform can elevate your polling experience
           </p>
         </div>
-        <div className="flex flex-col gap-16 md:flex-row md:flex-wrap md:gap-12 lg:gap-8">
+        <div className="flex flex-col gap-8 md:flex-row md:flex-wrap">
           <FeatureCard
             heading="User-Friendly Poll Creation"
             description="Easily create polls using a simple and intuitive interface. No technical skills required"
@@ -109,9 +108,27 @@ export default function HomePage({
             className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
           />
           <FeatureCard
-            heading="In-Depth Poll Analytics"
+            heading="No Login Required"
+            description="Create and participate in polls without the hassle of signing up or logging in."
+            Icon={<Icon.LineChart />}
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
+          />
+          <FeatureCard
+            heading="Customizable Poll Options"
+            description="Gain insights from comprehensive data analytics to understand voting patterns and trends."
+            Icon={<Icon.Settings2 />}
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
+          />
+          <FeatureCard
+            heading="Detailed Analytics"
             description="Get valuable data and insights to make informed decisions with our detailed poll statistics"
             Icon={<Icon.LineChart />}
+            className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
+          />
+          <FeatureCard
+            heading="Share Polls Easily"
+            description="Spread your polls through social media, email, or direct links to gather more responses."
+            Icon={<Icon.Globe />}
             className="min-h-max w-full md:max-w-[calc((100%/2)-24px)] lg:max-w-[calc((100%/3)-32px)]"
           />
         </div>
@@ -142,6 +159,7 @@ type FeatureCardProps = {
   description: string;
   Icon: JSX.Element;
 } & React.ComponentPropsWithoutRef<"div">;
+
 function FeatureCard({
   heading,
   description,
@@ -152,17 +170,15 @@ function FeatureCard({
   return (
     <div
       className={cn(
-        "dark:bg-dark relative flex flex-col space-y-8 rounded border border-neutral-100 bg-white px-8 py-16 dark:border-neutral-800",
+        "dark:bg-dark relative flex flex-col space-y-6 rounded border border-neutral-100 bg-white px-8 py-16 dark:border-neutral-800",
         className
       )}
       {...props}>
-      <div className="absolute left-1/2 top-[-40px] flex h-[80px] w-[80px] -translate-x-1/2 items-center justify-center rounded-full bg-green-500 text-neutral-900 [&>svg]:h-[40px] [&>svg]:w-[40px]">
-        {Icon}
+      <div className="[&>svg]:text-green-500">{Icon}</div>
+      <div className="space-y-4">
+        <h1 className="text-lg font-medium lg:text-xl">{heading}</h1>
+        <p className="text-neutral-500">{description}</p>
       </div>
-      <h1 className="text-center text-xl font-bold">{heading}</h1>
-      <p className="text-center text-base font-medium text-neutral-500">
-        {description}
-      </p>
     </div>
   );
 }
