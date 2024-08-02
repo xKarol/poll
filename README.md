@@ -11,6 +11,7 @@ This project is designed to create a simple and interactive poll website where u
 
 - [x] Responsive design
 - [x] User Authentication using OAuth
+- [x] Stripe Integration for Payments
 - [x] Google reCAPTCHA Integration
 - [x] Share Poll via QR Code
 - [x] Realtime Poll Results
@@ -30,6 +31,7 @@ This project is designed to create a simple and interactive poll website where u
 ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 ![Zod](https://img.shields.io/badge/Zod-000000?style=for-the-badge&logo=zod&logoColor=3068B7)
 ![Socket.io](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=Stripe&logoColor=white)
 ![ReactQuery](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white)
 ![LucideIcons](https://img.shields.io/badge/Lucide_Icons-f67373?style=for-the-badge&logo=lucide&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
